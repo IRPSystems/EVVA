@@ -1,0 +1,45 @@
+{
+  "$type": "ScriptHandler.Models.ScriptData, ScriptHandler",
+  "Name": "Abort MCU",
+  "ScriptItemsList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[ScriptHandler.Interfaces.IScriptItem, ScriptHandler]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "ScriptHandler.Models.ScriptNodes.ScriptNodeSetParameter, ScriptHandler",
+        "Name": "Set Parameter 1",
+        "Parameter": {
+          "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+          "GroupName": "Operation",
+          "Description": "Manual Current Set Point",
+          "Default": "0",
+          "Cmd": "mancurrsp",
+          "Range": {
+            "$type": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib]], System.Private.CoreLib",
+            "$values": [
+              -32768.0,
+              32767.0
+            ]
+          },
+          "Scale": 10.0,
+          "Note": null,
+          "Save": false,
+          "DropDown": null,
+          "Name": "Manual Current Set Point",
+          "Units": "A",
+          "Value": "0",
+          "DeviceType": 1,
+          "IsExpanded": false,
+          "IsSelected": false,
+          "Visibility": 0,
+          "GetSetVisibility": 0
+        },
+        "Value": 0.0,
+        "IsPass": false,
+        "PassNextId": 0,
+        "FailNextId": 0,
+        "ID": 1
+      }
+    ]
+  },
+  "IsPass": null
+}

@@ -1,0 +1,34 @@
+{
+  "$type": "Entities.Models.DeviceData, Entities",
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[Entities.Models.DeviceParameterData, Entities]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.TorqueKistler.TorqueKistler_ParamData, DeviceCommunicators",
+        "Command": "MEAS:TORQ?",
+        "Name": "Torque",
+        "Units": "Nm",
+        "Value": null,
+        "DeviceType": 5
+      },
+      {
+        "$type": "DeviceCommunicators.TorqueKistler.TorqueKistler_ParamData, DeviceCommunicators",
+        "Command": "MEAS:SPE?",
+        "Name": "Speed",
+        "Units": "RPM",
+        "Value": null,
+        "DeviceType": 5
+      },
+      {
+        "$type": "DeviceCommunicators.TorqueKistler.TorqueKistler_ParamData, DeviceCommunicators",
+        "Command": "OUTP:TARE:AUTO",
+        "Name": "Calibrate Zero offset",
+        "Units": "",
+        "Value": null,
+        "DeviceType": 5
+      }
+    ]
+  },
+  "Name": "Torque Kistler",
+  "DeviceType": 5
+}

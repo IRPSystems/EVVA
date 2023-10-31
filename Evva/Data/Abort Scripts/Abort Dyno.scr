@@ -1,0 +1,34 @@
+{
+  "$type": "ScriptHandler.Models.ScriptData, ScriptHandler",
+  "Name": "Abort Dyno",
+  "ScriptItemsList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[ScriptHandler.Interfaces.IScriptItem, ScriptHandler]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "ScriptHandler.Models.ScriptNodes.ScriptNodeSetParameter, ScriptHandler",
+        "Name": "Set Parameter 1",
+        "Parameter": {
+          "$type": "DeviceCommunicators.Models.Dyno_ParamData, DeviceCommunicators",
+          "Index": 470,
+          "SubIndex": 1,
+          "Description": null,
+          "Coefficient": 1.0,
+          "Name": "Enable",
+          "Units": "",
+          "Value": 0,
+          "DeviceType": 0,
+          "IsExpanded": false,
+          "IsSelected": false,
+          "Visibility": 0,
+          "GetSetVisibility": 0
+        },
+        "Value": 0.0,
+        "IsPass": false,
+        "PassNextId": 0,
+        "FailNextId": 0,
+        "ID": 1
+      }
+    ]
+  },
+  "IsPass": null
+}

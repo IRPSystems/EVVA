@@ -1,0 +1,90 @@
+{
+  "$type": "Entities.Models.DeviceData, Entities",
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[Entities.Models.DeviceParameterData, Entities]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.SwitchRelay32.SwitchRelay_ParamData, DeviceCommunicators",
+        "Command": "RELAY-SET-255",
+        "TypeCommand": 0,
+        "Channel_SW": 0,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ON",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "OFF",
+              "Value": "0"
+            }
+          ]
+        },
+        "Name": "Single channel",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 8
+      },
+      {
+        "$type": "DeviceCommunicators.SwitchRelay32.SwitchRelay_ParamData, DeviceCommunicators",
+        "Command": "RELAY-AON-255",
+        "TypeCommand": 0,
+        "Channel_SW": 0,
+        "DropDown": null,
+        "Name": "All channels ON",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 8
+      },
+      {
+        "$type": "DeviceCommunicators.SwitchRelay32.SwitchRelay_ParamData, DeviceCommunicators",
+        "Command": "RELAY-AOF-255",
+        "TypeCommand": 0,
+        "Channel_SW": 0,
+        "DropDown": null,
+        "Name": "All channels OFF",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 8
+      },
+      {
+        "$type": "DeviceCommunicators.SwitchRelay32.SwitchRelay_ParamData, DeviceCommunicators",
+        "Command": "RELAY-SET_ALL-255",
+        "TypeCommand": 0,
+        "Channel_SW": 0,
+        "DropDown": null,
+        "Name": "Relay registers",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 8
+      },
+      {
+        "$type": "DeviceCommunicators.SwitchRelay32.SwitchRelay_ParamData, DeviceCommunicators",
+        "Command": "RELAY-READ-255",
+        "TypeCommand": 0,
+        "Channel_SW": 0,
+        "DropDown": null,
+        "Name": "Switch status",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 8
+      },
+      {
+        "$type": "DeviceCommunicators.SwitchRelay32.SwitchRelay_ParamData, DeviceCommunicators",
+        "Command": "RELAY-STATE-255",
+        "TypeCommand": 0,
+        "Channel_SW": 0,
+        "DropDown": null,
+        "Name": "All relay status",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 8
+      }
+    ]
+  },
+  "Name": "Switch Relay",
+  "DeviceType": 8
+}

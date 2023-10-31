@@ -1,0 +1,290 @@
+{
+  "$type": "Entities.Models.DeviceData, Entities",
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[Entities.Models.DeviceParameterData, Entities]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Phase Voltage-U",
+        "data": null,
+        "DropDown": null,
+        "Name": "Phase Voltage-U",
+        "Units": "[Vrms]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Phase Voltage-V",
+        "data": null,
+        "DropDown": null,
+        "Name": "Phase Voltage-V",
+        "Units": "[Vrms]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Phase Voltage-W",
+        "data": null,
+        "DropDown": null,
+        "Name": "Phase Voltage-W",
+        "Units": "[Vrms]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "DC Bus Voltage",
+        "data": null,
+        "DropDown": null,
+        "Name": "DC Bus Voltage",
+        "Units": "[V]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Phase Current-U",
+        "data": null,
+        "DropDown": null,
+        "Name": "Phase Current-U",
+        "Units": "[Arms]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Phase Current-V",
+        "data": null,
+        "DropDown": null,
+        "Name": "Phase Current-V",
+        "Units": "[Arms]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Phase Current-W",
+        "data": null,
+        "DropDown": null,
+        "Name": "Phase Current-W",
+        "Units": "[Arms]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "DC Bus current",
+        "data": null,
+        "DropDown": null,
+        "Name": "DC Bus current",
+        "Units": "[A]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "System Efficiency",
+        "data": null,
+        "DropDown": null,
+        "Name": "System Efficiency",
+        "Units": "[%]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Motor Efficiency",
+        "data": null,
+        "DropDown": null,
+        "Name": "Motor Efficiency",
+        "Units": "[%]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Regenerative Controller Efficiency",
+        "data": null,
+        "DropDown": null,
+        "Name": "Regenerative Controller Efficiency",
+        "Units": "[%]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Controller Efficiency",
+        "data": null,
+        "DropDown": null,
+        "Name": "Controller Efficiency",
+        "Units": "[%]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Motor power",
+        "data": null,
+        "DropDown": null,
+        "Name": "Motor power",
+        "Units": "[W]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Power - U",
+        "data": null,
+        "DropDown": null,
+        "Name": "Power - U",
+        "Units": "[W]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Power - V",
+        "data": null,
+        "DropDown": null,
+        "Name": "Power - V",
+        "Units": "[W]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Power - W",
+        "data": null,
+        "DropDown": null,
+        "Name": "Power - W",
+        "Units": "[W]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Power - DC BUS",
+        "data": null,
+        "DropDown": null,
+        "Name": "Power - DC BUS",
+        "Units": "[W]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Controller Output Power",
+        "data": null,
+        "DropDown": null,
+        "Name": "Controller Output Power",
+        "Units": "[W]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Speed [RPM]",
+        "data": null,
+        "DropDown": null,
+        "Name": "Speed [RPM]",
+        "Units": "[RPM]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Torque [Nm]",
+        "data": null,
+        "DropDown": null,
+        "Name": "Torque [Nm]",
+        "Units": "[Nm]",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Power Factor-U",
+        "data": null,
+        "DropDown": null,
+        "Name": "Power Factor-U",
+        "Units": "",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Power Factor-V",
+        "data": null,
+        "DropDown": null,
+        "Name": "Power Factor-V",
+        "Units": "",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Power Factor-W",
+        "data": null,
+        "DropDown": null,
+        "Name": "Power Factor-W",
+        "Units": "",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "Power Factor-Controller",
+        "data": null,
+        "DropDown": null,
+        "Name": "Power Factor-Controller",
+        "Units": "",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "φ angle-U",
+        "data": null,
+        "DropDown": null,
+        "Name": "φ angle-U",
+        "Units": "",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "φ angle-V",
+        "data": null,
+        "DropDown": null,
+        "Name": "φ angle-V",
+        "Units": "",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "φ angle-W",
+        "data": null,
+        "DropDown": null,
+        "Name": "φ angleW",
+        "Units": "",
+        "Value": null,
+        "DeviceType": 10
+      },
+      {
+        "$type": "DeviceCommunicators.YokogawaWT1804E.YokogawaWT1804E_ParamData, DeviceCommunicators",
+        "Command": "φ angle-Controller",
+        "data": null,
+        "DropDown": null,
+        "Name": "φ angle-Controller",
+        "Units": "",
+        "Value": null,
+        "DeviceType": 10
+      }
+    ]
+  },
+  "Name": "Yokogawa WT1804E",
+  "DeviceType": 10
+}

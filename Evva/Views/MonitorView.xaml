@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="Evva.Views.MonitorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:Evva.Converter"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:Evva.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="800">
+
+    <i:Interaction.Triggers>
+
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Path=DataContext.LoadedCommand, 
+                                                             Mode=OneWay, 
+                                                             RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
+                                   PassEventArgsToCommand="True"/>
+        </i:EventTrigger>
+
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding Path=DataContext.UnLoadedCommand, 
+                                                             Mode=OneWay, 
+                                                             RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
+                                   PassEventArgsToCommand="False"/>
+        </i:EventTrigger>
+        
+    </i:Interaction.Triggers>
+
+    <UserControl.Resources>
+
+        <converters:RemoveBreakLineFromNameConverter x:Key="RemoveBreakLineFromNameConverter" />
+
+        <Style x:Key="MotintorListStyle" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="75"/>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="75"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="{Binding Converter={StaticResource RemoveBreakLineFromNameConverter}}" 
+                                       ToolTip="{Binding }" 
+                                       TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Center" 
+                                       FontSize="12"/>
+
+                            <TextBlock Grid.Column="2"  
+                                       Text="{Binding Value}"
+                                       VerticalAlignment="Center" 
+                                       FontWeight="DemiBold"
+                                       FontSize="12"/>
+
+                            <TextBlock Grid.Column="4" Text="{Binding Units}" VerticalAlignment="Center" 
+                                       FontSize="12"/>
+
+                            <Line Grid.ColumnSpan="20" X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}"
+                              VerticalAlignment="Bottom"/>
+
+                        </Grid>
+
+                        
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+        
+
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <ListView Grid.Column="2"
+                  ItemsSource="{Binding MonitorParamsList}"
+                  ItemContainerStyle="{StaticResource MotintorListStyle}"
+                  HorizontalAlignment="Left"/>
+
+
+    </Grid>
+</UserControl>

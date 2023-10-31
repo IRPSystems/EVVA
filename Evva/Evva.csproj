@@ -1,0 +1,95 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <UseWPF>true</UseWPF>
+
+	  <Version>1.2.18.2</Version>
+	  <AssemblyVersion>1.2.18.2</AssemblyVersion>
+	  <FileVersion>1.2.18.2</FileVersion>
+	  <ApplicationIcon>Resources\EVVA ICON.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Enums\**" />
+    <EmbeddedResource Remove="Enums\**" />
+    <None Remove="Enums\**" />
+    <Page Remove="Enums\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\EVVA_LOGO_No_BG_White.png" />
+    <None Remove="Resources\ExportFooter.png" />
+    <None Remove="Resources\ExportHeader.png" />
+    <None Remove="Resources\ExportWarnings.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\EVVA ICON.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\EVVA_LOGO_No_BG_White.png" />
+    <Resource Include="Resources\ExportFooter.png" />
+    <Resource Include="Resources\ExportHeader.png" />
+    <Resource Include="Resources\ExportWarnings.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="FontAwesome6.Svg" Version="2.5.1" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
+    <PackageReference Include="Serilog" Version="2.12.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Syncfusion.DocIO.Wpf" Version="20.4.0.44" />
+    <PackageReference Include="Syncfusion.SfDiagram.WPF" Version="20.3.0.61" />
+    <PackageReference Include="Syncfusion.Shared.WPF" Version="20.3.0.61" />
+    <PackageReference Include="Syncfusion.Tools.WPF" Version="20.3.0.61" />
+    <PackageReference Include="Syncfusion.XpsToPdfConverter.Net.Core" Version="20.4.0.44" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
+    <PackageReference Include="WindowsAPICodePack" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj" />
+    <ProjectReference Include="..\Controls\Controls.csproj" />
+    <ProjectReference Include="..\Converters\Converters.csproj" />
+    <ProjectReference Include="..\DBCFileParser\DBCFileParser.csproj" />
+    <ProjectReference Include="..\DeviceCommunicators\DeviceCommunicators.csproj" />
+    <ProjectReference Include="..\DeviceSimulators\DeviceSimulators.csproj" />
+    <ProjectReference Include="..\Entities\Entities.csproj" />
+    <ProjectReference Include="..\ScriptHandler\ScriptHandler.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
+    <ProjectReference Include="..\DeviceHandler\DeviceHandler.csproj" />
+    <ProjectReference Include="..\ScriptRunner\ScriptRunner.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\DeviceSimulatorsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\RecordParamView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\RecordParamView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(OutDir)Data&quot;&#xD;&#xA;mkdir &quot;$(OutDir)Data\Device Communications&quot;&#xD;&#xA;mkdir &quot;$(OutDir)Data\Abort Scripts&quot;&#xD;&#xA;mkdir &quot;$(SolutionDir)TestCommunication\$(OutDir)Data\Device Communications&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\*.*&quot; &quot;$(OutDir)Data\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\Device Communications\*.*&quot; &quot;$(OutDir)Data\Device Communications\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\Abort Scripts\*.*&quot; &quot;$(OutDir)Data\Abort Scripts\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\Device Communications\*.*&quot; &quot;$(SolutionDir)TestCommunication\$(OutDir)Data\Device Communications\*.*&quot;&#xD;&#xA;copy &quot;$(SolutionDir)Lib\PCANBasic.dll&quot; &quot;$(OutDir)PCANBasic.dll&quot;&#xD;&#xA;copy &quot;$(SolutionDir)Lib\tmctl64.dll&quot; &quot;$(OutDir)tmctl64.dll&quot;&#xD;&#xA;mkdir &quot;$(OutDir)EvvaCANMessageSender&quot;&#xD;&#xA;copy &quot;$(ProjectDir)..\EvvaCANMessageSender\bin\$(ConfigurationName)\net6.0-windows\*.*&quot; &quot;$(OutDir)EvvaCANMessageSender\*.*&quot;&#xD;&#xA;" />
+  </Target>
+
+</Project>

@@ -1,0 +1,1100 @@
+{
+  "$type": "System.Collections.ObjectModel.ObservableCollection`1[[Entities.Models.DeviceParameterData, Entities]], System.ObjectModel",
+  "$values": [
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Motor Temperature",
+      "Default": "0",
+      "Cmd": "mtrtmp",
+      "Range": null,
+      "Scale": 100.0,
+      "Note": "38",
+      "Save": false,
+      "DropDown": null,
+      "Name": "Motor Temperature",
+      "Units": "˚C",
+      "Value": "38",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "MCU Temperature",
+      "Default": "0",
+      "Cmd": "brdtmp",
+      "Range": null,
+      "Scale": 100.0,
+      "Note": "34.13",
+      "Save": false,
+      "DropDown": null,
+      "Name": "MCU Temperature",
+      "Units": "˚C",
+      "Value": "34.13",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "CPU Temperature",
+      "Default": "0",
+      "Cmd": "cputmp",
+      "Range": null,
+      "Scale": 100.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "CPU Temperature",
+      "Units": "˚C",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Pre-Charge Temperature",
+      "Default": "0",
+      "Cmd": "pctemp",
+      "Range": null,
+      "Scale": 100.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Pre-Charge Temperature",
+      "Units": "˚C",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Highest Active Fault Code",
+      "Default": "0",
+      "Cmd": "flthi",
+      "Range": null,
+      "Scale": 1.0,
+      "Note": "33153",
+      "Save": false,
+      "DropDown": null,
+      "Name": "Highest Active Fault",
+      "Units": null,
+      "Value": "33153",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Faults Vector, 32 bits bitwise\r\nLower bits of the whole faults vector",
+      "Default": "0",
+      "Cmd": "fltvlsb",
+      "Range": null,
+      "Scale": 1.0,
+      "Note": "No Active Fault",
+      "Save": false,
+      "DropDown": {
+        "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+        "$values": [
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "No Active Fault",
+            "Value": "0"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Motor Over Temperature",
+            "Value": "1"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Motor Under Temperature",
+            "Value": "2"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Motor Temperature Sensor",
+            "Value": "4"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Controller Over Temperature",
+            "Value": "8"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Controller Under Temperature",
+            "Value": "16"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Controller Temperature Sensor",
+            "Value": "32"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Pre-Charge Over Temperature (P-BIT)",
+            "Value": "64"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Pre-Charge Over Temperature (C-BIT)",
+            "Value": "128"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Pre-Charge Temperature Sensor",
+            "Value": "256"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase U Over Current RMS",
+            "Value": "512"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase U Over Current Peak",
+            "Value": "1024"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase U Current Sensor",
+            "Value": "2048"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase V Over Current RMS",
+            "Value": "4096"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase V Over Current Peak",
+            "Value": "8192"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase V Current Sensor",
+            "Value": "16384"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase W Over Current RMS",
+            "Value": "32768"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase W Over Current Peak",
+            "Value": "65536"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase Sensor Offset",
+            "Value": "131072"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase U Disconnected",
+            "Value": "262144"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase V Disconnected",
+            "Value": "524288"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Phase W Disconnected",
+            "Value": "1048576"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Bus Over Current",
+            "Value": "2097152"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Bus Current Sensor",
+            "Value": "4194304"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Pre-Charge Under Voltage",
+            "Value": "8388608"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Bus Low Voltage",
+            "Value": "16777216"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Bus Over Voltage",
+            "Value": "33554432"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Pre-Charge Capacitors Low",
+            "Value": "67108864"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Capacitors Low",
+            "Value": "134217728"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Pre-Charge Latch",
+            "Value": "268435456"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Pre-Charge Timeout",
+            "Value": "536870912"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Pre-Charge Over Current",
+            "Value": "1073741824"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Gate Driver Voltage",
+            "Value": "-2147483648"
+          }
+        ]
+      },
+      "Name": "Faults Vector LSB",
+      "Units": null,
+      "Value": "0",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Faults Vector, 32 bits bitwise\r\nHigher bits of the whole faults vector",
+      "Default": "0",
+      "Cmd": "fltvmsb",
+      "Range": null,
+      "Scale": 1.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": {
+        "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+        "$values": [
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "No Active Fault",
+            "Value": "0"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "VSW Under Voltage",
+            "Value": "1"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Hall Sensor",
+            "Value": "2"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "AqB Sensor",
+            "Value": "4"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Memory Read",
+            "Value": "8"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "CAN No Communication",
+            "Value": "16"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "CAN Timeout",
+            "Value": "32"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "CAN-ID 0x401/2 Timeout",
+            "Value": "64"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "CAN-ID 0x421/2 Timeout",
+            "Value": "128"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "CAN Mailbox 0x1AA/B Timeout",
+            "Value": "256"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "CAN Mailbox 3 Timeout",
+            "Value": "512"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "CAN Invalid Command",
+            "Value": "1024"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "CAN Digital Input",
+            "Value": "2048"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Throttle Invalid",
+            "Value": "4096"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Throttle",
+            "Value": "8192"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Performance Derating Bus Voltage",
+            "Value": "16384"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Performance Derating Motor Temperature",
+            "Value": "32768"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Performance Derating Controller Temperature",
+            "Value": "65536"
+          }
+        ]
+      },
+      "Name": "Faults Vector MSB",
+      "Units": null,
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Current Phase U RMS",
+      "Default": "0",
+      "Cmd": "currarms",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": "0",
+      "Save": false,
+      "DropDown": null,
+      "Name": "Current U",
+      "Units": "A-RMS",
+      "Value": "0",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Current Phase V RMS",
+      "Default": "0",
+      "Cmd": "currbrms",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": "0",
+      "Save": false,
+      "DropDown": null,
+      "Name": "Current V",
+      "Units": "A-RMS",
+      "Value": "0",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Current Phase W RMS",
+      "Default": "0",
+      "Cmd": "currcrms",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": "0",
+      "Save": false,
+      "DropDown": null,
+      "Name": "Current W",
+      "Units": "A-RMS",
+      "Value": "0",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Bus Current",
+      "Default": "0",
+      "Cmd": "currbus",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": "0",
+      "Save": false,
+      "DropDown": null,
+      "Name": "Bus Current",
+      "Units": "A",
+      "Value": "0",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Motor IQ Command",
+      "Default": "0",
+      "Cmd": "miqcmd",
+      "Range": null,
+      "Scale": 10.0,
+      "Note": "0",
+      "Save": false,
+      "DropDown": null,
+      "Name": "IQ Command",
+      "Units": "A",
+      "Value": "0",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Motor ID Command",
+      "Default": "0",
+      "Cmd": "midcmd",
+      "Range": null,
+      "Scale": 10.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "ID Command",
+      "Units": "A",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "FOC vDQ Size",
+      "Default": "0",
+      "Cmd": "focvdqsz",
+      "Range": null,
+      "Scale": 1.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "FOC vDQ Size",
+      "Units": null,
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "FOC Iq Command",
+      "Default": "0",
+      "Cmd": "focirefq",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "FOC Iq Command",
+      "Units": "A",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "FOC Id Command",
+      "Default": "0",
+      "Cmd": "focirefd",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "FOC Id Command",
+      "Units": "A",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Motor Power In",
+      "Default": "0",
+      "Cmd": "mpwrin",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Power In",
+      "Units": "W",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Motor Power Out",
+      "Default": "0",
+      "Cmd": "mpwrout",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Power Out",
+      "Units": "W",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Torque",
+      "Default": "0",
+      "Cmd": "mtorque",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Torque",
+      "Units": "Nm",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Motor Brake Input In",
+      "Default": "0",
+      "Cmd": "minbrkin",
+      "Range": null,
+      "Scale": 10.24,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Brake In",
+      "Units": "%",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Motor Normalized Throttle Input In",
+      "Default": "0",
+      "Cmd": "minthrin",
+      "Range": null,
+      "Scale": 10.24,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Throttle In",
+      "Units": "%",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "MCU Operational State",
+      "Default": "0",
+      "Cmd": "opstate",
+      "Range": null,
+      "Scale": 1.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": {
+        "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+        "$values": [
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Init",
+            "Value": "0"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Neutral",
+            "Value": "1"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Forward",
+            "Value": "2"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Reverse",
+            "Value": "3"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Lock",
+            "Value": "4"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Fault",
+            "Value": "5"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE",
+            "Value": "6"
+          }
+        ]
+      },
+      "Name": "Operational State",
+      "Units": null,
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Operation",
+      "Description": "Motor State",
+      "Default": "Neutral",
+      "Cmd": "mstate",
+      "Range": null,
+      "Scale": 1.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": {
+        "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+        "$values": [
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Neutral",
+            "Value": "0"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Run",
+            "Value": "1"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Lock",
+            "Value": "2"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Fault",
+            "Value": "3"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE",
+            "Value": "4"
+          }
+        ]
+      },
+      "Name": "Motor State (Operation)",
+      "Units": null,
+      "Value": "1",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Active Driving Profile",
+      "Default": "",
+      "Cmd": "mtractp",
+      "Range": null,
+      "Scale": 1.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": {
+        "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+        "$values": [
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Sport",
+            "Value": "0"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "City",
+            "Value": "1"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "Eco",
+            "Value": "2"
+          },
+          {
+            "$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "PTP",
+            "Value": "3"
+          }
+        ]
+      },
+      "Name": "Active Profile",
+      "Units": null,
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Runtime",
+      "Default": "0",
+      "Cmd": "runtime",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": "58.189",
+      "Save": false,
+      "DropDown": null,
+      "Name": "Runtime",
+      "Units": "Seconds",
+      "Value": "58.189",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Speed - Electric RPM",
+      "Default": "0",
+      "Cmd": "mspdelecrpm",
+      "Range": null,
+      "Scale": 1.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Speed - Electric RPM",
+      "Units": "Electric RPM",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Speed - KMH",
+      "Default": "0",
+      "Cmd": "mspdkmh",
+      "Range": null,
+      "Scale": 1.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Speed - KMH",
+      "Units": "KMH",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Bus Voltage (Post capacitors)",
+      "Default": "0",
+      "Cmd": "vbus",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": "59.938",
+      "Save": false,
+      "DropDown": null,
+      "Name": "Vbus",
+      "Units": "V",
+      "Value": "59.938",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Switch Voltage",
+      "Default": "0",
+      "Cmd": "vsw",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Vsw",
+      "Units": "V",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Bus In Voltage (Prior to capacitors)",
+      "Default": "0",
+      "Cmd": "vbusin",
+      "Range": null,
+      "Scale": 1000.0,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Vbus In",
+      "Units": "V",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "MCU Temperature Active Derating Level",
+      "Default": "0",
+      "Cmd": "madlte",
+      "Range": null,
+      "Scale": 10.24,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "MCU Temp\nActive Derating Level",
+      "Units": "%",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Max Bus Current Active Limit Level",
+      "Default": "0",
+      "Cmd": "mpidalmxbc",
+      "Range": null,
+      "Scale": 10.24,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Max Bus Current\nActive Limit Level",
+      "Units": "%",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Min Bus Current Active Limit Level",
+      "Default": "0",
+      "Cmd": "mpidalmnbc",
+      "Range": null,
+      "Scale": 10.24,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Min Bus Current\nActive Limit Level",
+      "Units": "%",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Max Speed Active Limit Level",
+      "Default": "0",
+      "Cmd": "mpidalmxs",
+      "Range": null,
+      "Scale": 10.24,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Max Speed\nActive Limit Level",
+      "Units": "%",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Bus Voltage Active Derating Level",
+      "Default": "0",
+      "Cmd": "madlbv",
+      "Range": null,
+      "Scale": 10.24,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Bus Voltage\nActive Derating Level",
+      "Units": "%",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Min Bus Current Active Limit Level",
+      "Default": "0",
+      "Cmd": "mpidalmnbv",
+      "Range": null,
+      "Scale": 10.24,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Min Bus Voltage\nActive Limit Level",
+      "Units": "%",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    },
+    {
+      "$type": "DeviceCommunicators.MCU.MCU_ParamData, DeviceCommunicators",
+      "GroupName": "Monitor",
+      "Description": "Motor Temperature Active Derating Level",
+      "Default": "0",
+      "Cmd": "madltm",
+      "Range": null,
+      "Scale": 10.24,
+      "Note": null,
+      "Save": false,
+      "DropDown": null,
+      "Name": "Motor Temp\nActive Derating Level",
+      "Units": "%",
+      "Value": "",
+      "DeviceType": 1,
+      "IsExpanded": false,
+      "IsSelected": false,
+      "Visibility": 0,
+      "GetSetVisibility": 0
+    }
+  ]
+}

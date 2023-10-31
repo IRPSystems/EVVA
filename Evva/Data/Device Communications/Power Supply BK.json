@@ -1,0 +1,195 @@
+{
+  "$type": "Entities.Models.DeviceData, Entities",
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[Entities.Models.DeviceParameterData, Entities]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
+        "Command": "SYST",
+        "TypeCommand": 0,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "Remote",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "Local",
+              "Value": "0"
+            }
+          ]
+        },
+        "DeviceType": 2,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Remote command",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
+        "Command": "INST ",
+        "TypeCommand": 0,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "CH1",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "CH2",
+              "Value": "2"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "CH3",
+              "Value": "3"
+            }
+          ]
+        },
+        "DeviceType": 2,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Choose channel",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
+        "Command": "CHANnel:OUTPut",
+        "TypeCommand": 0,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "OFF",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ON",
+              "Value": "1"
+            }
+          ]
+        },
+        "DeviceType": 2,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Turn ON channel",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
+        "Command": "VOLTage",
+        "TypeCommand": 0,
+        "DropDown": null,
+        "DeviceType": 2,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Voltage",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
+        "Command": "Current",
+        "TypeCommand": 0,
+        "DropDown": null,
+        "DeviceType": 2,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Current",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
+        "Command": "MEASure:SCALar:VOLTage:ALL:DC?",
+        "TypeCommand": 3,
+        "DropDown": null,
+        "DeviceType": 2,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "MEASure voltage in supply",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
+        "Command": "VAPPLY:VOLTage:LEVel?",
+        "TypeCommand": 3,
+        "DropDown": null,
+        "DeviceType": 2,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Voltage in supply",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
+        "Command": "APPLY:CURRent:LEVel?",
+        "TypeCommand": 3,
+        "DropDown": null,
+        "DeviceType": 2,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Current status",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
+        "Command": "APPLY:OUTput?",
+        "TypeCommand": 3,
+        "DropDown": null,
+        "DeviceType": 2,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Current value",
+        "DeviceTypes": 0
+      }
+    ]
+  },
+  "IsExpanded": false,
+  "IsSelected": false,
+  "Visibility": 0,
+  "Name": "Power Supply BK",
+  "DeviceType": 2
+}

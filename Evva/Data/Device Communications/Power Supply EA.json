@@ -1,0 +1,121 @@
+{
+  "$type": "Entities.Models.DeviceData, Entities",
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[Entities.Models.DeviceParameterData, Entities]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Voltage Limit",
+        "Cmd": "SOUR:VOLTAGE",
+        "Max": 100,
+        "Units": "V",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Current Limit",
+        "Cmd": "SOUR:CURRENT",
+        "Max": 300,
+        "Units": "A",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Actual Voltage",
+        "Cmd": "MEAS:VOLT",
+        "Max": 0,
+        "Units": "V",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Actual Current",
+        "Cmd": "MEAS:CURR",
+        "Max": 0,
+        "Units": "A",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Remote On/Off",
+        "Cmd": "SYST:LOCK",
+        "Max": 1,
+        "Units": null,
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ON",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "OFF",
+              "Value": "1"
+            }
+          ]
+        }
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Output On/Off",
+        "Cmd": "OUTP",
+        "Max": 1,
+        "Units": null,
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ON",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "OFF",
+              "Value": "1"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "IsExpanded": false,
+  "IsSelected": false,
+  "Visibility": 0,
+  "Name": "Power Supply EA",
+  "DeviceType": 3
+}
