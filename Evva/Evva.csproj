@@ -38,12 +38,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     <PackageReference Include="FontAwesome6.Svg" Version="2.5.1" />
-    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
@@ -59,17 +58,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Communication\Communication.csproj" />
-    <ProjectReference Include="..\Controls\Controls.csproj" />
-    <ProjectReference Include="..\Converters\Converters.csproj" />
-    <ProjectReference Include="..\DBCFileParser\DBCFileParser.csproj" />
-    <ProjectReference Include="..\DeviceCommunicators\DeviceCommunicators.csproj" />
-    <ProjectReference Include="..\DeviceSimulators\DeviceSimulators.csproj" />
-    <ProjectReference Include="..\Entities\Entities.csproj" />
-    <ProjectReference Include="..\ScriptHandler\ScriptHandler.csproj" />
-    <ProjectReference Include="..\Services\Services.csproj" />
-    <ProjectReference Include="..\DeviceHandler\DeviceHandler.csproj" />
-    <ProjectReference Include="..\ScriptRunner\ScriptRunner.csproj" />
+    <ProjectReference Include="..\..\DevicesInfrastructures\DeviceCommunicators\DeviceCommunicators.csproj" />
+    <ProjectReference Include="..\..\DevicesInfrastructures\DeviceHandler\DeviceHandler.csproj" />
+    <ProjectReference Include="..\..\DevicesInfrastructures\DeviceSimulators\DeviceSimulators.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Communication\Communication.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Controls\Controls.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Converters\Converters.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\DBCFileParser\DBCFileParser.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Entities\Entities.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Services\Services.csproj" />
+    <ProjectReference Include="..\..\ScriptsInfrastructure\ScriptHandler\ScriptHandler.csproj" />
+    <ProjectReference Include="..\..\ScriptsInfrastructure\ScriptRunner\ScriptRunner.csproj" />
+    <ProjectReference Include="..\EvvaCANMessageSender\EvvaCANMessageSender.csproj" />
   </ItemGroup>
 
   <ItemGroup>
