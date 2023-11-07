@@ -7,12 +7,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
-    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="MahApps.Metro" Version="2.4.10" />
+		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
+	</ItemGroup>
+	  
   <ItemGroup>
     <ProjectReference Include="..\..\DevicesInfrastructures\DeviceHandler\DeviceHandler.csproj" />
     <ProjectReference Include="..\..\DevicesInfrastructures\DeviceSimulators\DeviceSimulators.csproj" />

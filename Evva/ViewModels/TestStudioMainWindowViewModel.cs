@@ -2,8 +2,11 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DeviceCommunicators.MCU;
 using DeviceCommunicators.Services;
 using DeviceHandler.Models;
+using DeviceSimulators.ViewModels;
+using DeviceSimulators.Views;
 using Entities.Enums;
 using Entities.Models;
 using Evva.Models;
@@ -535,6 +538,10 @@ namespace Evva.ViewModels
 
 			devicesList[0].Name = deviceData.Device.Name;
 			deviceData.Device = devicesList[0] as DeviceData;
+
+			((MCU_Communicator)(deviceData.DeviceCommunicator)).InitMessageDict(
+						deviceData.Device);
+			
 		}
 
 
@@ -640,8 +647,16 @@ namespace Evva.ViewModels
 
 			foreach (DeviceBase device in deviceList)
 			{
-				DeviceFullData deviceFullData = new DeviceFullData(device as DeviceData);
+				DeviceFullData deviceFullData = new DeviceFullData(device as DeviceData);				
+
 				deviceFullData.Init();
+
+				if (device.DeviceType == DeviceTypesEnum.MCU)
+				{
+					((MCU_Communicator)(deviceFullData.DeviceCommunicator)).InitMessageDict(
+						device as DeviceData);
+				}
+
 				DevicesContainter.DevicesFullDataList.Add(deviceFullData);
 				DevicesContainter.DevicesList.Add(device as DeviceData);
 				if(DevicesContainter.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)

@@ -73,9 +73,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\DeviceSimulatorsView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\RecordParamView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
