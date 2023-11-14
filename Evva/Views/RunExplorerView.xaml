@@ -55,7 +55,8 @@
                                                 </DataTrigger>
 
                                                 <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+                                                    <Setter Property="BorderThickness" Value="2" />
                                                 </DataTrigger>
 
                                             </Style.Triggers>
