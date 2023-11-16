@@ -230,8 +230,7 @@ namespace Evva.ViewModels
 				Tests = new TestsViewModel(
 					DevicesContainter,
 					motor,
-					controller,
-					RecordParam.LogParametersList);
+					controller);
 
 				Design = new DesignViewModel(
 					DevicesContainter, 
@@ -276,6 +275,7 @@ namespace Evva.ViewModels
 					_setupSelectionVM);
 
 				Run.CreateScriptLoggerWindow(Docking);
+				Tests.CreateTestParamsLimitWindow(Docking);
 
 
 				MonitorTypesList = new List<MonitorType>

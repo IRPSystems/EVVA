@@ -6,44 +6,31 @@ using System.Collections.ObjectModel;
 using Entities.Models;
 using System.Windows.Controls;
 using System;
-using ScriptRunner.Services;
-using CommunityToolkit.Mvvm.Messaging;
 using System.Windows;
 using DeviceCommunicators.Enums;
 using ScriptHandler.Models;
 using DeviceHandler.Models;
-using DeviceCommunicators.MCU;
+using Evva.Services;
+using Evva.Views;
 
 namespace Evva.ViewModels
 {
 	public class TestsViewModel: ObservableObject
 	{
-		#region Fields
-
-
-		private SaftyOfficerService _saftyOfficer;
+		#region Fields	
 
 		public ObservableCollection<MotorSettingsData> MotorSettingsList;
 		public ObservableCollection<ControllerSettingsData> ControllerSettingsList;
 
-		private ParamRecordingService _paramRecording;
+
+		private DocingViewModel _docking;
+		private TestParamsLimitViewModel _testParamsLimitViewModel;
 
 		#endregion Fields
 
 		#region Properties
 
 		public DevicesContainer DevicesContainer { get; set; }
-
-		public string SaftyOfficerStatus
-		{
-			get 
-			{ 
-				if(_saftyOfficer == null)
-					return ""; 
-
-				return _saftyOfficer.SaftyOfficerStatus;
-			}
-		}
 
 		public bool IsDoSaftyOfficerAbort { get; set; }
 
@@ -54,8 +41,7 @@ namespace Evva.ViewModels
 		public TestsViewModel(
 			DevicesContainer devicesContainer,
 			ObservableCollection<MotorSettingsData> motorSettingsList,
-			ObservableCollection<ControllerSettingsData> controllerSettingsList,
-			ObservableCollection<DeviceParameterData> logParametersList)
+			ObservableCollection<ControllerSettingsData> controllerSettingsList)
 		{
 			DevicesContainer = devicesContainer;
 			MotorSettingsList = motorSettingsList;
@@ -63,21 +49,8 @@ namespace Evva.ViewModels
 
 			SetCommand = new RelayCommand<DeviceParameterData>(Set);
 			GetCommand = new RelayCommand<DeviceParameterData>(Get);
-			StopScurityOfficerCommand = new RelayCommand(StopScurityOfficer);
-			RunRecordingCommand = new RelayCommand(RunRecording);
-			StopRecordingCommand = new RelayCommand(StopRecording);
+			TestParamsLimitCommand = new RelayCommand(TestParamsLimit);
 
-			SendCANMessageCommand = new RelayCommand(SendCANMessage);
-
-			_saftyOfficer = new SaftyOfficerService();
-			_saftyOfficer.StatusReportEvent += SafteyOfficerStatusReportEvent;
-
-			_paramRecording = new ParamRecordingService(
-				logParametersList,
-				DevicesContainer);
-
-			WeakReferenceMessenger.Default.Register<SETTINGS_UPDATEDMessage>(
-				this, new MessageHandler<object, SETTINGS_UPDATEDMessage>(SETTINGS_UPDATEDMessageHandler));
 
 		}
 
@@ -86,10 +59,18 @@ namespace Evva.ViewModels
 
 		#region Methods
 
-		private void SETTINGS_UPDATEDMessageHandler(object sender, SETTINGS_UPDATEDMessage e)
+		public void CreateTestParamsLimitWindow(
+			DocingViewModel docking)
 		{
-			
+			_docking = docking;
+
+			_testParamsLimitViewModel =
+				new TestParamsLimitViewModel();
+			_docking.CreateParamsLimitTester(_testParamsLimitViewModel);
+
 		}
+
+
 
 
 		private void Set(DeviceParameterData deviceParam)
@@ -112,29 +93,6 @@ namespace Evva.ViewModels
 			}
 		}
 
-		
-		private void StopScurityOfficer()
-		{
-			_saftyOfficer.Stop();
-		}
-
-		private void SafteyOfficerStatusReportEvent()
-		{
-			OnPropertyChanged(nameof(SaftyOfficerStatus));
-		}
-
-
-		private void RunRecording()
-		{
-			_paramRecording.StartRecording("Test Recording", null);
-		}
-
-		private void StopRecording()
-		{
-			_paramRecording.StopRecording();
-		}
-
-
 		private void SearchText_TextChanged(TextChangedEventArgs e)
 		{
 			if(!(e.Source is TextBox textBox))
@@ -152,33 +110,22 @@ namespace Evva.ViewModels
 			}
 		}
 
-
-
-		private void SendCANMessage()
+		private void TestParamsLimit()
 		{
-			byte[] buffer = new byte[] { 1, 0, 0, 0, 64, 0, 0, 0, 0, };
-			uint nodeId = 0;
-
-			DeviceFullData deviceFullData = 
-				DevicesContainer.TypeToDevicesFullData[Entities.Enums.DeviceTypesEnum.MCU];
-
-			deviceFullData.DeviceCommunicator.SendMessage(true, nodeId, buffer, null);
+			_docking.OpenTestParamsLimit();
 		}
 
 		#endregion Methods
 
 		#region Commands
 
+
+		public RelayCommand TestParamsLimitCommand { get; private set; }
+
 		public RelayCommand<DeviceParameterData> SetCommand { get; private set; }
 		public RelayCommand<DeviceParameterData> GetCommand { get; private set; }
-		public RelayCommand RunScurityOfficerCommand { get; private set; }
-		public RelayCommand StopScurityOfficerCommand { get; private set; }
-		public RelayCommand RunRecordingCommand { get; private set; }
-		public RelayCommand StopRecordingCommand { get; private set; }
 
 
-
-		public RelayCommand SendCANMessageCommand { get; private set; }
 
 		private RelayCommand<TextChangedEventArgs> _SearchText_TextChangedCommand;
 		public RelayCommand<TextChangedEventArgs> SearchText_TextChangedCommand

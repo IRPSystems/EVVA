@@ -89,17 +89,17 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <Button Grid.Row="0" 
+                Content="Test Params Limit" 
+                Command="{Binding TestParamsLimitCommand}" 
+                HorizontalAlignment="Left"
+                Margin="5"/>
 
-            <Button Width="120" Content="Send CAN Message" Command="{Binding SendCANMessageCommand}"
-                    Margin="2"/>
-
-
-        </StackPanel>
+        <Line Grid.Row="1" X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}" VerticalAlignment="Top"/>
 
         <ListView Grid.Row="2"
                   ItemsSource="{Binding DevicesContainer.DevicesList}"

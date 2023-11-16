@@ -17,6 +17,7 @@ namespace Evva.ViewModels
 		private ContentControl _appSettings;
 		private ContentControl _communicationSettings;
 		private ContentControl _mainScriptLogger;
+		private ContentControl _testParamsLimit;
 
 		private ContentControl _monitorRecParam;
 		private ContentControl _monitorSecurityParam;
@@ -193,6 +194,18 @@ namespace Evva.ViewModels
 			Children.Add(_mainScriptLogger);
 		}
 
+		public void CreateParamsLimitTester(
+			TestParamsLimitViewModel testParamsLimitViewModel)
+		{
+			_testParamsLimit = new ContentControl();
+			TestParamsLimitView scriptLog = new TestParamsLimitView() { DataContext = testParamsLimitViewModel };
+			_testParamsLimit.Content = scriptLog;
+			SetHeader(_testParamsLimit, "Test Params Limit");
+			SetState(_testParamsLimit, DockState.Hidden);
+			SetSideInDockedMode(_testParamsLimit, DockSide.Right);
+			Children.Add(_testParamsLimit);
+		}
+
 		private void SetFloatParams(ContentControl control)
 		{
 			SetSizetoContentInDock(control, true);
@@ -221,6 +234,11 @@ namespace Evva.ViewModels
 		public void OpenLogScript()
 		{
 			SetState(_mainScriptLogger, DockState.Dock);
+		}
+
+		public void OpenTestParamsLimit()
+		{
+			SetState(_testParamsLimit, DockState.Dock);
 		}
 
 		public void OpenSetupSelection()
