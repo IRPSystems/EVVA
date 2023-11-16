@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\DevicesInfrastructures\DeviceSimulators\DeviceSimulators.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Converters\Converters.csproj" />
     <ProjectReference Include="..\..\ScriptsInfrastructure\ScriptHandler\ScriptHandler.csproj" />
+    <ProjectReference Include="..\..\ScriptsInfrastructure\ScriptRunner\ScriptRunner.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
