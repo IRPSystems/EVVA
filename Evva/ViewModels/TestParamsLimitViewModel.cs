@@ -7,6 +7,7 @@ using Entities.Enums;
 using Entities.Models;
 using ScriptHandler.Models;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Evva.ViewModels
@@ -28,6 +29,8 @@ namespace Evva.ViewModels
 
 		public ObservableCollection<TestData> ParametersList { get; set; }
 
+		public double TestProgress { get; set; }
+
 		private DevicesContainer _devicesContainer;
 
 		#endregion Properties and Fields
@@ -47,26 +50,33 @@ namespace Evva.ViewModels
 
 		public void Test()
 		{
+			TestProgress = 0;
 			ParametersList = new ObservableCollection<TestData>();
 
 			if (_devicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.MCU) == false)
 				return;
 
 			DeviceFullData mcuDevice = _devicesContainer.TypeToDevicesFullData[DeviceTypesEnum.MCU];
-			if(mcuDevice == null || mcuDevice.Device == null) 
+			if (mcuDevice == null || mcuDevice.Device == null)
 				return;
 
-			Application.Current.Dispatcher.Invoke(() =>
-			{
 
-				foreach (DeviceParameterData param in mcuDevice.Device.ParemetersList)
+
+			foreach (DeviceParameterData param in mcuDevice.Device.ParemetersList)
+			{
+				Application.Current.Dispatcher.Invoke(() =>
 				{
 					ParametersList.Add(new TestData { Param = param, Result = TestResult.None });
-				}
-			});
+				});
 
+				System.Threading.Thread.Sleep(1);
+			}
 
+			RunTest(mcuDevice);
+		}
 
+		private void RunTest(DeviceFullData mcuDevice)
+		{
 			ScriptStepSetParameter scriptStepSetParameter = new ScriptStepSetParameter()
 			{
 				Communicator = mcuDevice.DeviceCommunicator,
@@ -77,22 +87,42 @@ namespace Evva.ViewModels
 				Communicator = mcuDevice.DeviceCommunicator,
 			};
 
-
-			foreach(TestData test in ParametersList) 
+			Task.Run(() =>
 			{
-				if (!(test.Param is MCU_ParamData mcuParam))
-					continue;
 
-				if(mcuParam.Range != null && mcuParam.Range.Count > 0)
+				for (int i = 0; i < ParametersList.Count; i++)
 				{
-					TestResult result = TestRangeParam(
-						mcuParam,
-						scriptStepSetParameter,
-						scriptStepGetParamValue);
-					test.Result = result;
+					TestData test = ParametersList[i];
+					if (!(test.Param is MCU_ParamData mcuParam))
+						continue;
+
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						TestProgress = (((double)i + 1.0) / (double)ParametersList.Count) * 100.0;
+					});
+
+					if (mcuParam.Range != null && mcuParam.Range.Count > 0)
+					{
+						TestResult result = TestRangeParam(
+							mcuParam,
+							scriptStepSetParameter,
+							scriptStepGetParamValue);
+						test.Result = result;
+					}
+
+					System.Threading.Thread.Sleep(1);
+
 				}
 
-			}
+				Application.Current.Dispatcher.Invoke(() =>
+				{
+					OnPropertyChanged(nameof(ParametersList));
+				});
+
+				
+			});
+
+			
 		}
 
 		private TestResult TestRangeParam(

@@ -11,12 +11,16 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="10"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="10"/>
             <RowDefinition />
         </Grid.RowDefinitions>
 
         <Button Grid.Row="0" Content="Test" Command="{Binding TestCommand}" HorizontalAlignment="Left"/>
 
-        <ListView Grid.Row="2" 
+        <ProgressBar Grid.Row="2" Minimum="0" Maximum="100" Value="{Binding TestProgress}"/>
+
+        <ListView Grid.Row="4" 
                   ItemsSource="{Binding ParametersList}"
                   HorizontalAlignment="Left">
 
