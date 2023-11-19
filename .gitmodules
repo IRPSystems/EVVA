@@ -1,3 +1,6 @@
 [submodule "Infrastructure"]
 	path = Infrastructure
 	url = https://github.com/IRPSystems/Infrastructure.git
+[submodule "DevicesInfrastructures"]
+	path = DevicesInfrastructures
+	url = https://github.com/IRPSystems/DevicesInfrastructures.git
