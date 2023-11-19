@@ -7,6 +7,7 @@ using Entities.Enums;
 using Entities.Models;
 using ScriptHandler.Models;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Evva.ViewModels
 {
@@ -55,10 +56,14 @@ namespace Evva.ViewModels
 			if(mcuDevice == null || mcuDevice.Device == null) 
 				return;
 
-			foreach (DeviceParameterData param in mcuDevice.Device.ParemetersList)
+			Application.Current.Dispatcher.Invoke(() =>
 			{
-				ParametersList.Add(new TestData { Param = param, Result = TestResult.None });
-			}
+
+				foreach (DeviceParameterData param in mcuDevice.Device.ParemetersList)
+				{
+					ParametersList.Add(new TestData { Param = param, Result = TestResult.None });
+				}
+			});
 
 
 

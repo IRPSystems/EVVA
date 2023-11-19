@@ -202,7 +202,6 @@ namespace Evva.ViewModels
 			_testParamsLimit.Content = scriptLog;
 			SetHeader(_testParamsLimit, "Test Params Limit");
 			SetState(_testParamsLimit, DockState.Hidden);
-			SetSideInDockedMode(_testParamsLimit, DockSide.Right);
 			Children.Add(_testParamsLimit);
 		}
 
@@ -238,7 +237,7 @@ namespace Evva.ViewModels
 
 		public void OpenTestParamsLimit()
 		{
-			SetState(_testParamsLimit, DockState.Dock);
+			SetState(_testParamsLimit, DockState.Float);
 		}
 
 		public void OpenSetupSelection()
