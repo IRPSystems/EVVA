@@ -439,8 +439,16 @@ namespace Evva.ViewModels
 			LogParametersList.RemoveAt(sourceIndex);
 			LogParametersList_WithIndex.RemoveAt(sourceIndex);
 
-			LogParametersList.Insert(destIndex, tempParam.Data);
-			LogParametersList_WithIndex.Insert(destIndex, tempParam);
+			if (destIndex < 0 || destIndex == (LogParametersList_WithIndex.Count - 1))
+			{
+				LogParametersList.Add(tempParam.Data);
+				LogParametersList_WithIndex.Add(tempParam);
+			}
+			else
+			{
+				LogParametersList.Insert(destIndex, tempParam.Data);
+				LogParametersList_WithIndex.Insert(destIndex, tempParam);
+			}
 		}
 
 		private void MoveUp(RecordData param)
