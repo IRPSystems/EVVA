@@ -65,7 +65,7 @@ namespace Evva.ViewModels
 			_docking = docking;
 
 			_testParamsLimitViewModel =
-				new TestParamsLimitViewModel();
+				new TestParamsLimitViewModel(DevicesContainer);
 			_docking.CreateParamsLimitTester(_testParamsLimitViewModel);
 
 		}
