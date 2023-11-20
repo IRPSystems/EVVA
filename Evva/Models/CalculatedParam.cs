@@ -58,7 +58,7 @@ namespace Evva.Models
 
 					if (_scriptStepGetParamValue.Parameter.Value == null)
 					{
-						_scriptStepGetParamValue.Parameter.Value = double.NaN;
+						Value = double.NaN;
 						return;
 					}
 
@@ -71,14 +71,14 @@ namespace Evva.Models
 				dt.Rows.Add(valuesList.ToArray());
 
 
-				dt.Columns.Add("result", typeof(int), Formula);
+				dt.Columns.Add("result", typeof(double), Formula);
 
 				var valResult = dt.Rows[0]["result"];
 				if (valResult == null)
-					_scriptStepGetParamValue.Parameter.Value = double.NaN;
+					Value = double.NaN;
 
 				double d = Convert.ToDouble(valResult);
-				_scriptStepGetParamValue.Parameter.Value = d;
+				Value = d;
 
 			}
 			catch (Exception ex) 
