@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 
@@ -289,7 +290,7 @@ namespace Evva.ViewModels
 				IsMCUError = new MCUError() { IsErrorExit = null };
 				Faults.ErrorEvent += MCUErrorEventHandler;
 
-				
+				AddMotorPowerOutputToTorqueKistler();
 
 			}
 			catch(Exception ex)
@@ -301,6 +302,32 @@ namespace Evva.ViewModels
 		#endregion Constructor
 
 		#region Methods
+
+		private void AddMotorPowerOutputToTorqueKistler()
+		{
+			if(DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.TorqueKistler) == false)
+			{
+				return;
+			}
+
+			DeviceFullData deviceFullData =
+				DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.TorqueKistler];
+
+			CalculatedParam calculatedParam = new CalculatedParam(DevicesContainter);
+			calculatedParam.Formula = "(Speed / 9.55) * Torque";
+
+			calculatedParam.ParametersList = new ObservableCollection<DeviceParameterData>();
+			calculatedParam.ParametersList.Add(
+				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Speed"));
+			calculatedParam.ParametersList.Add(
+				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Torque"));
+
+			calculatedParam.Name = "Motor Power Output";
+			deviceFullData.Device.ParemetersList.Add(calculatedParam);
+
+			SETTINGS_UPDATEDMessage e = new SETTINGS_UPDATEDMessage();
+			WeakReferenceMessenger.Default.Send(e);
+		}
 
 		private void CopyUserFilesToEvvaDir()
 		{
