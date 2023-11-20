@@ -314,13 +314,16 @@ namespace Evva.ViewModels
 				DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.TorqueKistler];
 
 			CalculatedParam calculatedParam = new CalculatedParam(DevicesContainter);
-			calculatedParam.Formula = "(Speed / 9.55) * Torque";
+			calculatedParam.Formula = "(A / 9.55) * B";
 
 			calculatedParam.ParametersList = new ObservableCollection<DeviceParameterData>();
 			calculatedParam.ParametersList.Add(
 				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Speed"));
 			calculatedParam.ParametersList.Add(
 				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Torque"));
+
+			calculatedParam.Device = deviceFullData.Device;
+			calculatedParam.DeviceType = DeviceTypesEnum.TorqueKistler;
 
 			calculatedParam.Name = "Motor Power Output";
 			deviceFullData.Device.ParemetersList.Add(calculatedParam);

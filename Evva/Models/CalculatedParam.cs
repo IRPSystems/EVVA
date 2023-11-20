@@ -4,10 +4,12 @@ using DeviceHandler.Interfaces;
 using DeviceHandler.Models;
 using Entities.Models;
 using ScriptHandler.Models;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Windows;
 
 namespace Evva.Models
 {
@@ -26,42 +28,63 @@ namespace Evva.Models
 			_scriptStepGetParamValue = new ScriptStepGetParamValue();
 		}
 
-		public double Calculate()
+		public void Calculate()
 		{
-			DataTable dt = new DataTable();
-			for(byte i = 0; i < ParametersList.Count; i++) 
-			{ 
-				byte b = Convert.ToByte('A');
-				b += i;
-				string name = Convert.ToChar(b).ToString();
-				dt.Columns.Add(name, typeof(double));
-			}
-
-			List<object> valuesList = new List<object>();
-			foreach (DeviceParameterData parameterData in ParametersList) 
+			try
 			{
-				if (_devicesContainer.TypeToDevicesFullData.ContainsKey(parameterData.DeviceType) == false)
-					continue;
+				DataTable dt = new DataTable();
+				for (byte i = 0; i < ParametersList.Count; i++)
+				{
+					byte b = Convert.ToByte('A');
+					b += i;
+					string name = Convert.ToChar(b).ToString();
+					dt.Columns.Add(name, typeof(double));
+				}
 
-				DeviceFullData device = 
-					_devicesContainer.TypeToDevicesFullData[parameterData.DeviceType];
-				if (device == null || device.DeviceCommunicator == null)
-					continue;
+				List<object> valuesList = new List<object>();
+				foreach (DeviceParameterData parameterData in ParametersList)
+				{
+					if (_devicesContainer.TypeToDevicesFullData.ContainsKey(parameterData.DeviceType) == false)
+						continue;
 
-				_scriptStepGetParamValue.Parameter = parameterData;
-				_scriptStepGetParamValue.Communicator = device.DeviceCommunicator;
-				_scriptStepGetParamValue.SendAndReceive();
-				valuesList.Add((double)_scriptStepGetParamValue.Parameter.Value);
+					DeviceFullData device =
+						_devicesContainer.TypeToDevicesFullData[parameterData.DeviceType];
+					if (device == null || device.DeviceCommunicator == null)
+						continue;
 
-				System.Threading.Thread.Sleep(1);
+					_scriptStepGetParamValue.Parameter = parameterData;
+					_scriptStepGetParamValue.Communicator = device.DeviceCommunicator;
+					_scriptStepGetParamValue.SendAndReceive();
+
+					if (_scriptStepGetParamValue.Parameter.Value == null)
+					{
+						_scriptStepGetParamValue.Parameter.Value = double.NaN;
+						return;
+					}
+
+					valuesList.Add((double)_scriptStepGetParamValue.Parameter.Value);
+
+					System.Threading.Thread.Sleep(1);
+				}
+
+
+				dt.Rows.Add(valuesList.ToArray());
+
+
+				dt.Columns.Add("result", typeof(int), Formula);
+
+				var valResult = dt.Rows[0]["result"];
+				if (valResult == null)
+					_scriptStepGetParamValue.Parameter.Value = double.NaN;
+
+				double d = Convert.ToDouble(valResult);
+				_scriptStepGetParamValue.Parameter.Value = d;
+
 			}
-
-
-			dt.Rows.Add(valuesList.ToArray());
-
-			dt.Columns.Add("result", typeof(int), Formula);
-			var valResult = dt.Rows[0]["result"];
-			return (double)valResult;
+			catch (Exception ex) 
+			{
+				LoggerService.Error(this, "Failed to calculate", ex);
+			}
 		}
 	}
 }
