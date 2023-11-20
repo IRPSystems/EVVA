@@ -434,13 +434,9 @@ namespace Evva.Services
 					continue;
 
 				step.StopScriptStep = runScript.StopScriptStep;
-				if (step is ScriptStepCompare compare)
+				if (step is ScriptStepGetParamValue getParamValue)
 				{
-					compare.DevicesList = devicesContainer.DevicesFullDataList;
-				}
-				if (step is ScriptStepCompareRange compareRange)
-				{
-					compareRange.DevicesList = devicesContainer.DevicesFullDataList;
+					getParamValue.DevicesList = devicesContainer.DevicesFullDataList;
 				}
 				if (step is ScriptStepSweep sweep)
 				{

@@ -3,12 +3,14 @@ using DeviceCommunicators.General;
 using DeviceHandler.Interfaces;
 using DeviceHandler.Models;
 using Entities.Models;
+using Newtonsoft.Json;
 using ScriptHandler.Models;
 using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq;
 using System.Windows;
 
 namespace Evva.Models
@@ -18,13 +20,13 @@ namespace Evva.Models
 		public ObservableCollection<DeviceParameterData> ParametersList { get; set; }
 		public string Formula { get; set; }
 
-		private DevicesContainer _devicesContainer;
 		private ScriptStepGetParamValue _scriptStepGetParamValue;
 
-		public CalculatedParam(DevicesContainer devicesContainer) 
-		{
-			_devicesContainer = devicesContainer;
+		[JsonIgnore]
+		public ObservableCollection<DeviceFullData> DevicesList { get; set; }
 
+		public CalculatedParam() 
+		{
 			_scriptStepGetParamValue = new ScriptStepGetParamValue();
 		}
 
@@ -41,14 +43,12 @@ namespace Evva.Models
 					dt.Columns.Add(name, typeof(double));
 				}
 
+				List<DeviceFullData> devicedList = new List<DeviceFullData>(DevicesList);
 				List<object> valuesList = new List<object>();
 				foreach (DeviceParameterData parameterData in ParametersList)
 				{
-					if (_devicesContainer.TypeToDevicesFullData.ContainsKey(parameterData.DeviceType) == false)
-						continue;
-
-					DeviceFullData device =
-						_devicesContainer.TypeToDevicesFullData[parameterData.DeviceType];
+					DeviceFullData device = 
+						devicedList.Find((d) => d.Device.DeviceType == Entities.Enums.DeviceTypesEnum.TorqueKistler);
 					if (device == null || device.DeviceCommunicator == null)
 						continue;
 

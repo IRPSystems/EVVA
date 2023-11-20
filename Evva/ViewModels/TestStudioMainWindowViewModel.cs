@@ -313,7 +313,7 @@ namespace Evva.ViewModels
 			DeviceFullData deviceFullData =
 				DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.TorqueKistler];
 
-			CalculatedParam calculatedParam = new CalculatedParam(DevicesContainter);
+			CalculatedParam calculatedParam = new CalculatedParam();
 			calculatedParam.Formula = "(A / 9.55) * B";
 
 			calculatedParam.ParametersList = new ObservableCollection<DeviceParameterData>();
