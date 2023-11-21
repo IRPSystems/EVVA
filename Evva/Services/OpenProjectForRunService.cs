@@ -1,4 +1,5 @@
 ﻿
+using DeviceCommunicators.General;
 using DeviceHandler.Models;
 using Entities.Enums;
 using Entities.Models;
@@ -9,9 +10,11 @@ using ScriptHandler.Interfaces;
 using ScriptHandler.Models;
 using ScriptHandler.Models.ScriptSteps;
 using ScriptHandler.Services;
+using ScriptHandler.ViewModels;
 using ScriptRunner.Services;
 using Services.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -82,9 +85,11 @@ namespace Evva.Services
 			}
 			else if (extension == ".scr" || extension == ".tst")
 			{
-				// TODO
-				//GetSingleScript(path);
-				return null;
+				GeneratedScriptData script = GetSingleScript(path, devicesContainer);
+				currentProject = new GeneratedProjectData()
+				{
+					TestsList = new ObservableCollection<GeneratedScriptData>() { script },
+				};
 			}
 
 			if (currentProject == null)
@@ -150,6 +155,28 @@ namespace Evva.Services
 
 			return currentProject;
 		}
+
+		private GeneratedScriptData GetSingleScript(
+			string scriptPath,
+			DevicesContainer devicesContainer)
+		{
+			DesignScriptViewModel sdvm = new DesignScriptViewModel(null, devicesContainer, false);
+			sdvm.Open(path: scriptPath);
+
+			ScriptData scriptData = sdvm.CurrentScript;
+
+			GenerateProjectService generator = new GenerateProjectService();
+			List<DeviceCommunicator> usedCommunicatorsList = new List<DeviceCommunicator>();
+			GeneratedScriptData script = generator.GenerateScript(
+				scriptPath,
+				scriptData,
+				devicesContainer,
+				ref usedCommunicatorsList);
+
+			return script;
+		}
+
+
 
 		private void SetParentSweepToReset(IScript script)
 		{
