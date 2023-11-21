@@ -5,7 +5,12 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>EVVA ICON.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="EVVA ICON.ico" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
@@ -16,6 +21,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\DevicesInfrastructures\DeviceSimulators\DeviceSimulators.csproj" />
 	  <ProjectReference Include="..\..\ScriptsInfrastructure\ScriptHandler\ScriptHandler.csproj" />
+	  <ProjectReference Include="..\..\ScriptsInfrastructure\ScriptRunner\ScriptRunner.csproj" />
 	</ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
