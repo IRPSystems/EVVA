@@ -131,15 +131,15 @@ namespace EvvaCANMessageSender.ViewModels
 				Name = "Check MCU Comm",
 			};
 
-			Task.Run(() =>
-			{
-				while (MCUDevice.CommState != CommunicationStateEnum.Connected &&
-						!_cancellationToken.IsCancellationRequested)
-				{
-					MCUDevice.DeviceCommunicator.GetParamValue(param, GetValueCallback);
-					System.Threading.Thread.Sleep(1);
-				}
-			}, _cancellationToken);
+			//Task.Run(() =>
+			//{
+			//	while (MCUDevice.CommState != CommunicationStateEnum.Connected &&
+			//			!_cancellationToken.IsCancellationRequested)
+			//	{
+			//		MCUDevice.DeviceCommunicator.GetParamValue(param, GetValueCallback);
+			//		System.Threading.Thread.Sleep(1);
+			//	}
+			//}, _cancellationToken);
 		}
 
 		private void GetValueCallback(DeviceParameterData param, CommunicatorResultEnum result, string resultDescription)
