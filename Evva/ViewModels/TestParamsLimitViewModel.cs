@@ -7,6 +7,7 @@ using Entities.Enums;
 using Entities.Models;
 using ScriptHandler.Models;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -19,7 +20,7 @@ namespace Evva.ViewModels
 			Success, Failure, None
 		}
 
-		public class TestData
+		public class TestData : ObservableObject
 		{
 			public DeviceParameterData Param { get; set; }
 			public TestResult Result { get; set; }
@@ -33,6 +34,9 @@ namespace Evva.ViewModels
 
 		private DevicesContainer _devicesContainer;
 
+		protected CancellationTokenSource _cancellationTokenSource;
+		protected CancellationToken _cancellationToken;
+
 		#endregion Properties and Fields
 
 		#region Constructor
@@ -42,6 +46,8 @@ namespace Evva.ViewModels
 			_devicesContainer = devicesContainer;
 
 			TestCommand = new RelayCommand(Test);
+			CancelCommand = new RelayCommand(Cancel);
+			UnLoadedCommand = new RelayCommand(UnLoaded);
 		}
 
 		#endregion Constructor
@@ -50,6 +56,10 @@ namespace Evva.ViewModels
 
 		public void Test()
 		{
+			_cancellationTokenSource = new CancellationTokenSource();
+			_cancellationToken = _cancellationTokenSource.Token;
+
+
 			TestProgress = 0;
 			ParametersList = new ObservableCollection<TestData>();
 
@@ -90,7 +100,7 @@ namespace Evva.ViewModels
 			Task.Run(() =>
 			{
 
-				for (int i = 0; i < ParametersList.Count; i++)
+				for (int i = 0; i < ParametersList.Count && !_cancellationToken.IsCancellationRequested; i++)
 				{
 					TestData test = ParametersList[i];
 					if (!(test.Param is MCU_ParamData mcuParam))
@@ -107,20 +117,22 @@ namespace Evva.ViewModels
 							mcuParam,
 							scriptStepSetParameter,
 							scriptStepGetParamValue);
-						test.Result = result;
+
+
+						
+						Application.Current.Dispatcher.Invoke(() =>
+						{
+							test.Result = result;
+						});
+
 					}
 
 					System.Threading.Thread.Sleep(1);
 
 				}
 
-				Application.Current.Dispatcher.Invoke(() =>
-				{
-					OnPropertyChanged(nameof(ParametersList));
-				});
-
 				
-			});
+			}, _cancellationToken);
 
 			
 		}
@@ -170,11 +182,29 @@ namespace Evva.ViewModels
 			return TestResult.Success;
 		}
 
+
+		private void Cancel()
+		{
+			_cancellationTokenSource.Cancel();
+
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				TestProgress = 0;
+			});
+		}
+
+		protected void UnLoaded()
+		{
+			Cancel();
+		}
+
 		#endregion Methods
 
 		#region Commands
 
 		public RelayCommand TestCommand { get; private set; }
+		public RelayCommand CancelCommand { get; private set; }
+		public RelayCommand UnLoadedCommand { get; private set; }
 
 		#endregion Commands
 	}

@@ -3,10 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:Evva.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
+    <i:Interaction.Triggers>
+
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding Path=DataContext.UnLoadedCommand, 
+                                                             Mode=OneWay, 
+                                                             RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
+                                   PassEventArgsToCommand="False"/>
+        </i:EventTrigger>
+
+    </i:Interaction.Triggers>
+
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -16,7 +28,16 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Content="Test" Command="{Binding TestCommand}" HorizontalAlignment="Left"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0" Content="Test" Command="{Binding TestCommand}" />
+            <Button Grid.Column="2" Content="Cancel" Command="{Binding CancelCommand}" />
+        </Grid>
 
         <ProgressBar Grid.Row="2" Minimum="0" Maximum="100" Value="{Binding TestProgress}"/>
 
