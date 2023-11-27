@@ -33,14 +33,17 @@
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="5" />
                 <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="5" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
+
             <Button Grid.Column="0" Content="Test" Command="{Binding TestCommand}" />
             <Button Grid.Column="2" Content="Cancel" Command="{Binding CancelCommand}" />
+            <Button Grid.Column="4" Content="Export" Command="{Binding ExportCommand}" />
 
-            <Border Grid.Column="4" Background="{Binding ErrorBackground}">
+            <Border Grid.Column="6" Background="{Binding ErrorBackground}">
 
                 <TextBlock Text="{Binding ErrorText}" 
                            FontSize="16"
@@ -51,66 +54,58 @@
 
         <ProgressBar Grid.Row="2" Minimum="0" Maximum="100" Value="{Binding TestProgress}"/>
 
-        <Grid Grid.Row="4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
 
-            <ListView Grid.Column="0" 
-                      ItemsSource="{Binding ParametersList}"
-                      HorizontalAlignment="Left">
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
 
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="20"/>
-                            </Grid.ColumnDefinitions>
+        <DataGrid Grid.Row="4" 
+                  ItemsSource="{Binding TestReprotDataList}" 
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  FontSize="14"
+                  GridLinesVisibility="All">
 
-                            <TextBlock Grid.Column="0" Text="{Binding Param.Name}" VerticalAlignment="Center"/>
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="Param. Name" Binding="{Binding ParamName}" Width="200" IsReadOnly="True" />
+                <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="75" IsReadOnly="True" />
+                <DataGridTextColumn Header="Test Type" Binding="{Binding TestType}" Width="200" IsReadOnly="True" />
+
+                <DataGridTemplateColumn Header="Result">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
 
                             <Ellipse Grid.Column="2" 
                                      Name="elps"
                                      Stroke="{DynamicResource MahApps.Brushes.Gray1}"
-                                     Height="20">
+                                     Height="20" Width="20">
 
                             </Ellipse>
 
-                        </Grid>
+                            <DataTemplate.Triggers>
 
-                        <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsPass}" Value="True">
+                                    <Setter TargetName="elps" Property="Fill" Value="Green" />
+                                </DataTrigger>
 
-                            <DataTrigger Binding="{Binding Result}" Value="None">
-                                <Setter TargetName="elps" Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                            </DataTrigger>
+                                <DataTrigger Binding="{Binding IsPass}" Value="False">
+                                    <Setter TargetName="elps" Property="Fill" Value="Red" />
+                                </DataTrigger>
 
-                            <DataTrigger Binding="{Binding Result}" Value="Success">
-                                <Setter TargetName="elps" Property="Fill" Value="Green" />
-                            </DataTrigger>
-
-                            <DataTrigger Binding="{Binding Result}" Value="Failure">
-                                <Setter TargetName="elps" Property="Fill" Value="Red" />
-                            </DataTrigger>
-
-                        </DataTemplate.Triggers>
-
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-
-            </ListView>
+                            </DataTemplate.Triggers>
 
 
-            
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-        </Grid>
+                <DataGridTextColumn Header="Error Description" Binding="{Binding ErrorDescription}" Width="300" IsReadOnly="True" />
 
-        
+            </DataGrid.Columns>
+
+        </DataGrid>
+
 
     </Grid>
-    
+
 </UserControl>
