@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Evva.Views
+namespace ParamLimitsTest
 {
 	/// <summary>
 	/// Interaction logic for TestParamsLimitView.xaml

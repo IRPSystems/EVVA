@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScriptRunner", "ScriptsInfr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScriptHandler", "ScriptsInfrastructure\ScriptHandler\ScriptHandler.csproj", "{3D828664-1554-4F49-90DC-84B1EE0A1E54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParamLimitsTest", "ParamLimitsTest\ParamLimitsTest.csproj", "{EBEE9788-08E2-4753-80A1-343C68026D57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{3D828664-1554-4F49-90DC-84B1EE0A1E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D828664-1554-4F49-90DC-84B1EE0A1E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D828664-1554-4F49-90DC-84B1EE0A1E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBEE9788-08E2-4753-80A1-343C68026D57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBEE9788-08E2-4753-80A1-343C68026D57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBEE9788-08E2-4753-80A1-343C68026D57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBEE9788-08E2-4753-80A1-343C68026D57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

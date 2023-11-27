@@ -20,7 +20,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Xml.Linq;
 
-namespace Evva.ViewModels
+namespace ParamLimitsTest
 {
 	public class TestParamsLimitViewModel: ObservableObject
 	{
