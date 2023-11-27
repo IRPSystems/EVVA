@@ -6,25 +6,44 @@ using DeviceHandler.Models;
 using Entities.Enums;
 using Entities.Models;
 using ScriptHandler.Models;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace Evva.ViewModels
 {
 	public class TestParamsLimitViewModel: ObservableObject
 	{
-		public enum TestResult
+		public enum TestResultEnum
 		{
 			Success, Failure, None
+		}
+
+		public enum TestTypeEnum
+		{
+			ValueValid,
+			SmallerThanRange,
+			LargerThanRange,
+			DropDownValue
 		}
 
 		public class TestData : ObservableObject
 		{
 			public DeviceParameterData Param { get; set; }
-			public TestResult Result { get; set; }
+			public TestResultEnum Result { get; set; }
+		}
+
+		public class TestReprotData
+		{
+			public string ParamName { get; set; }
+			public double Value { get; set; }
+			public TestTypeEnum TestType { get; set; }
+			public bool IsPass { get; set; }
+			public string ErrorDescription { get; set; }
 		}
 
 		#region Properties and Fields
@@ -39,8 +58,10 @@ namespace Evva.ViewModels
 
 		private DevicesContainer _devicesContainer;
 
-		protected CancellationTokenSource _cancellationTokenSource;
-		protected CancellationToken _cancellationToken;
+		private CancellationTokenSource _cancellationTokenSource;
+		private CancellationToken _cancellationToken;
+
+		private List<TestReprotData> _testReprotDataList;
 
 		#endregion Properties and Fields
 
@@ -64,6 +85,7 @@ namespace Evva.ViewModels
 			_cancellationTokenSource = new CancellationTokenSource();
 			_cancellationToken = _cancellationTokenSource.Token;
 
+			_testReprotDataList = new List<TestReprotData>();
 
 			TestProgress = 0;
 			ParametersList = new ObservableCollection<TestData>();
@@ -81,7 +103,7 @@ namespace Evva.ViewModels
 			{
 				Application.Current.Dispatcher.Invoke(() =>
 				{
-					ParametersList.Add(new TestData { Param = param, Result = TestResult.None });
+					ParametersList.Add(new TestData { Param = param, Result = TestResultEnum.None });
 				});
 
 				System.Threading.Thread.Sleep(1);
@@ -114,7 +136,7 @@ namespace Evva.ViewModels
 						TestProgress = (((double)i + 1.0) / (double)ParametersList.Count) * 100.0;
 					});
 
-					TestResult result = TestResult.None;
+					TestResultEnum result = TestResultEnum.None;
 					if (mcuParam.Range != null && mcuParam.Range.Count > 0)
 					{
 						result = TestRangeParam(
@@ -134,6 +156,9 @@ namespace Evva.ViewModels
 							scriptStepSetParameter);
 					}
 
+
+					ErrorText = ErrorText.Replace("\r\n", " - ");
+
 					if (ErrorText.EndsWith("Communication timeout."))
 					{
 						Cancel();
@@ -145,22 +170,30 @@ namespace Evva.ViewModels
 					else ErrorBackground = Brushes.Transparent;
 
 
-					Application.Current.Dispatcher.Invoke(() =>
-					{
-						test.Result = result;
-					});
+					test.Result = result;
+					
 
 					System.Threading.Thread.Sleep(1);
 
 				}
 
-				
+				if (!ErrorText.EndsWith("Communication timeout."))
+				{
+					ErrorText = "Test Ended";
+					ErrorForeground = Application.Current.MainWindow.Foreground;
+					ErrorBackground = Brushes.Transparent;
+				}
+
+
 			}, _cancellationToken);
 
 			
 		}
 
-		private TestResult TestRangeParam(
+		#region Test param
+
+
+		private TestResultEnum TestRangeParam(
 			MCU_ParamData mcuParam,
 			ScriptStepSetParameter scriptStepSetParameter)
 		{
@@ -169,17 +202,36 @@ namespace Evva.ViewModels
 			scriptStepSetParameter.Value = mcuParam.Range[0] - 1;
 			scriptStepSetParameter.Execute();
 			if(scriptStepSetParameter.IsPass == true) 
-			{ 
-				return TestResult.Failure;
+			{
+				SetTestReprotItem(
+					mcuParam.Name,
+					TestTypeEnum.SmallerThanRange,
+					scriptStepSetParameter.Value,
+					false,
+					scriptStepSetParameter.ErrorMessage);
+				return TestResultEnum.Failure;
 			}
 			if (scriptStepSetParameter.IsPass == false)
 			{
 				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
 				{
+					SetTestReprotItem(
+						mcuParam.Name,
+						TestTypeEnum.SmallerThanRange,
+						scriptStepSetParameter.Value,
+						false,
+						scriptStepSetParameter.ErrorMessage);
 					ErrorText = scriptStepSetParameter.ErrorMessage;
-					return TestResult.Failure;
+					return TestResultEnum.Failure;
 				}				
 			}
+
+			SetTestReprotItem(
+					mcuParam.Name,
+					TestTypeEnum.SmallerThanRange,
+					scriptStepSetParameter.Value,
+					true,
+					null);
 			#endregion Test out of lower limit of range
 
 			#region Test higher limit of range
@@ -188,16 +240,35 @@ namespace Evva.ViewModels
 			scriptStepSetParameter.Execute();
 			if (scriptStepSetParameter.IsPass == true)
 			{
-				return TestResult.Failure;
+				SetTestReprotItem(
+					mcuParam.Name,
+					TestTypeEnum.LargerThanRange,
+					scriptStepSetParameter.Value,
+					false,
+					scriptStepSetParameter.ErrorMessage);
+				return TestResultEnum.Failure;
 			}
 			if (scriptStepSetParameter.IsPass == false)
 			{
 				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
 				{
+					SetTestReprotItem(
+						mcuParam.Name,
+						TestTypeEnum.LargerThanRange,
+						scriptStepSetParameter.Value,
+						false,
+						scriptStepSetParameter.ErrorMessage);
 					ErrorText = scriptStepSetParameter.ErrorMessage;
-					return TestResult.Failure;
+					return TestResultEnum.Failure;
 				}
 			}
+
+			SetTestReprotItem(
+					mcuParam.Name,
+					TestTypeEnum.LargerThanRange,
+					scriptStepSetParameter.Value,
+					true,
+					null);
 			#endregion Test higher limit of range
 
 			#region Test center of range
@@ -210,33 +281,59 @@ namespace Evva.ViewModels
 			scriptStepSetParameter.Execute();
 			if (scriptStepSetParameter.IsPass == false)
 			{
+				SetTestReprotItem(
+					mcuParam.Name,
+					TestTypeEnum.ValueValid,
+					scriptStepSetParameter.Value,
+					false,
+					scriptStepSetParameter.ErrorMessage);
+
 				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
 				{
 					ErrorText = scriptStepSetParameter.ErrorMessage;
-					return TestResult.Failure;
+					return TestResultEnum.Failure;
 				}
 
-				return TestResult.Failure;
+				return TestResultEnum.Failure;
 			}
+
+			SetTestReprotItem(
+					mcuParam.Name,
+					TestTypeEnum.ValueValid,
+					scriptStepSetParameter.Value,
+					true,
+					null);
 			#endregion center limit of range
 
-			return TestResult.Success;
+			return TestResultEnum.Success;
 		}
 
-		private TestResult TestDropDownParam(
+		private TestResultEnum TestDropDownParam(
 			MCU_ParamData mcuParam,
 			ScriptStepSetParameter scriptStepSetParameter)
 		{
 			if (mcuParam.DropDown == null && mcuParam.DropDown.Count == 0)
 			{
-				return TestResult.Failure;
+				SetTestReprotItem(
+					mcuParam.Name,
+					TestTypeEnum.DropDownValue,
+					0,
+					false,
+					"No drop-down values found");
+				return TestResultEnum.Failure;
 			}
 
 			double value;
 			bool res = double.TryParse(mcuParam.DropDown[0].Value, out value);
 			if (res == false) 
-			{ 
-				return TestResult.Failure;
+			{
+				SetTestReprotItem(
+					mcuParam.Name,
+					TestTypeEnum.DropDownValue,
+					value,
+					false,
+					"The value at the drop down is not value"); 
+				return TestResultEnum.Failure;
 			}
 
 			scriptStepSetParameter.Parameter = mcuParam;
@@ -246,17 +343,35 @@ namespace Evva.ViewModels
 			{
 				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
 				{
+					SetTestReprotItem(
+						mcuParam.Name,
+						TestTypeEnum.DropDownValue,
+						value,
+						false,
+						scriptStepSetParameter.ErrorMessage); 
 					ErrorText = scriptStepSetParameter.ErrorMessage;
-					return TestResult.Failure;
+					return TestResultEnum.Failure;
 				}
 
-				return TestResult.Failure;
+				SetTestReprotItem(
+						mcuParam.Name,
+						TestTypeEnum.DropDownValue,
+						value,
+						false,
+						scriptStepSetParameter.ErrorMessage);
+				return TestResultEnum.Failure;
 			}
 
-			return TestResult.Success;
+			SetTestReprotItem(
+				mcuParam.Name,
+				TestTypeEnum.DropDownValue,
+				value,
+				true,
+				null);
+			return TestResultEnum.Success;
 		}
 
-		private TestResult TestRegularParam(
+		private TestResultEnum TestRegularParam(
 			MCU_ParamData mcuParam,
 			ScriptStepSetParameter scriptStepSetParameter)
 		{
@@ -271,25 +386,63 @@ namespace Evva.ViewModels
 			{
 				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
 				{
+					SetTestReprotItem(
+						mcuParam.Name,
+						TestTypeEnum.ValueValid,
+						value,
+						false,
+						scriptStepSetParameter.ErrorMessage);
 					ErrorText = scriptStepSetParameter.ErrorMessage;
-					return TestResult.Failure;
+					return TestResultEnum.Failure;
 				}
 
-				return TestResult.Failure;
+				SetTestReprotItem(
+						mcuParam.Name,
+						TestTypeEnum.ValueValid,
+						value,
+						false,
+						scriptStepSetParameter.ErrorMessage);
+				return TestResultEnum.Failure;
 			}
 
-			return TestResult.Success;
+			SetTestReprotItem(
+						mcuParam.Name,
+						TestTypeEnum.ValueValid,
+						value,
+						true,
+						null);
+
+			return TestResultEnum.Success;
 		}
 
 
+		private void SetTestReprotItem(
+			string name,
+			TestTypeEnum testType,
+			double value,
+			bool isPass,
+			string errorDescription)
+		{
+			TestReprotData testReprotData = new TestReprotData()
+			{
+				ParamName = name,
+				TestType = testType,
+				Value = value,
+				IsPass = isPass,
+				ErrorDescription = errorDescription
+			};
+
+			_testReprotDataList.Add(testReprotData);
+		}
+
+		#endregion Test param
+
 		private void Cancel()
 		{
-			_cancellationTokenSource.Cancel();
+			if(_cancellationTokenSource != null)
+				_cancellationTokenSource.Cancel();
 
-			Application.Current.Dispatcher.Invoke(() =>
-			{
-				TestProgress = 0;
-			});
+			TestProgress = 0;
 		}
 
 		protected void UnLoaded()

@@ -33,10 +33,20 @@
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="5" />
                 <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             
             <Button Grid.Column="0" Content="Test" Command="{Binding TestCommand}" />
             <Button Grid.Column="2" Content="Cancel" Command="{Binding CancelCommand}" />
+
+            <Border Grid.Column="4" Background="{Binding ErrorBackground}">
+
+                <TextBlock Text="{Binding ErrorText}" 
+                           FontSize="16"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            </Border>
         </Grid>
 
         <ProgressBar Grid.Row="2" Minimum="0" Maximum="100" Value="{Binding TestProgress}"/>
@@ -95,13 +105,7 @@
             </ListView>
 
 
-            <Border Grid.Column="2" Background="{Binding ErrorBackground}">
-
-                <TextBlock Text="{Binding ErrorText}" 
-                           FontSize="30"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
-            </Border>
+            
 
         </Grid>
 
