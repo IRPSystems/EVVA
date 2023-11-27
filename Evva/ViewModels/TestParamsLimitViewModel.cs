@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Evva.ViewModels
 {
@@ -31,6 +32,10 @@ namespace Evva.ViewModels
 		public ObservableCollection<TestData> ParametersList { get; set; }
 
 		public double TestProgress { get; set; }
+
+		public string ErrorText { get; set; }
+		public Brush ErrorBackground { get; set; }
+		public Brush ErrorForeground { get; set; }
 
 		private DevicesContainer _devicesContainer;
 
@@ -92,10 +97,8 @@ namespace Evva.ViewModels
 				Communicator = mcuDevice.DeviceCommunicator,
 			};
 
-			ScriptStepGetParamValue scriptStepGetParamValue = new ScriptStepGetParamValue()
-			{
-				Communicator = mcuDevice.DeviceCommunicator,
-			};
+			ErrorText = "Test in progress, please wait...";
+			ErrorForeground = Application.Current.MainWindow.Foreground;
 
 			Task.Run(() =>
 			{
@@ -111,21 +114,41 @@ namespace Evva.ViewModels
 						TestProgress = (((double)i + 1.0) / (double)ParametersList.Count) * 100.0;
 					});
 
+					TestResult result = TestResult.None;
 					if (mcuParam.Range != null && mcuParam.Range.Count > 0)
 					{
-						TestResult result = TestRangeParam(
+						result = TestRangeParam(
 							mcuParam,
-							scriptStepSetParameter,
-							scriptStepGetParamValue);
-
-
-						
-						Application.Current.Dispatcher.Invoke(() =>
-						{
-							test.Result = result;
-						});
-
+							scriptStepSetParameter);
 					}
+					else if(mcuParam.DropDown != null && mcuParam.DropDown.Count > 0)
+					{
+						result = TestDropDownParam(
+							mcuParam,
+							scriptStepSetParameter);
+					}
+					else
+					{
+						result = TestRegularParam(
+							mcuParam,
+							scriptStepSetParameter);
+					}
+
+					if (ErrorText.EndsWith("Communication timeout."))
+					{
+						Cancel();
+						ErrorBackground = Brushes.Red;
+						ErrorForeground = Brushes.White;
+						continue;
+					}
+
+					else ErrorBackground = Brushes.Transparent;
+
+
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						test.Result = result;
+					});
 
 					System.Threading.Thread.Sleep(1);
 
@@ -139,29 +162,42 @@ namespace Evva.ViewModels
 
 		private TestResult TestRangeParam(
 			MCU_ParamData mcuParam,
-			ScriptStepSetParameter scriptStepSetParameter,
-			ScriptStepGetParamValue scriptStepGetParamValue)
+			ScriptStepSetParameter scriptStepSetParameter)
 		{
-			#region Test lower limit of range
+			#region Test out lower limit of range
 			scriptStepSetParameter.Parameter = mcuParam;
 			scriptStepSetParameter.Value = mcuParam.Range[0] - 1;
 			scriptStepSetParameter.Execute();
-
-			scriptStepGetParamValue.Parameter = mcuParam;
-			scriptStepGetParamValue.SendAndReceive();
-			if(scriptStepGetParamValue.IsPass == false)
+			if(scriptStepSetParameter.IsPass == true) 
+			{ 
 				return TestResult.Failure;
-			#endregion Test lower limit of range
+			}
+			if (scriptStepSetParameter.IsPass == false)
+			{
+				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
+				{
+					ErrorText = scriptStepSetParameter.ErrorMessage;
+					return TestResult.Failure;
+				}				
+			}
+			#endregion Test out of lower limit of range
 
 			#region Test higher limit of range
 			scriptStepSetParameter.Parameter = mcuParam;
 			scriptStepSetParameter.Value = mcuParam.Range[1] + 1;
 			scriptStepSetParameter.Execute();
-
-			scriptStepGetParamValue.Parameter = mcuParam;
-			scriptStepGetParamValue.SendAndReceive();
-			if (scriptStepGetParamValue.IsPass == false)
+			if (scriptStepSetParameter.IsPass == true)
+			{
 				return TestResult.Failure;
+			}
+			if (scriptStepSetParameter.IsPass == false)
+			{
+				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
+				{
+					ErrorText = scriptStepSetParameter.ErrorMessage;
+					return TestResult.Failure;
+				}
+			}
 			#endregion Test higher limit of range
 
 			#region Test center of range
@@ -172,12 +208,75 @@ namespace Evva.ViewModels
 			scriptStepSetParameter.Parameter = mcuParam;
 			scriptStepSetParameter.Value = center;
 			scriptStepSetParameter.Execute();
+			if (scriptStepSetParameter.IsPass == false)
+			{
+				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
+				{
+					ErrorText = scriptStepSetParameter.ErrorMessage;
+					return TestResult.Failure;
+				}
 
-			scriptStepGetParamValue.Parameter = mcuParam;
-			scriptStepGetParamValue.SendAndReceive();
-			if (scriptStepGetParamValue.IsPass == false)
 				return TestResult.Failure;
+			}
 			#endregion center limit of range
+
+			return TestResult.Success;
+		}
+
+		private TestResult TestDropDownParam(
+			MCU_ParamData mcuParam,
+			ScriptStepSetParameter scriptStepSetParameter)
+		{
+			if (mcuParam.DropDown == null && mcuParam.DropDown.Count == 0)
+			{
+				return TestResult.Failure;
+			}
+
+			double value;
+			bool res = double.TryParse(mcuParam.DropDown[0].Value, out value);
+			if (res == false) 
+			{ 
+				return TestResult.Failure;
+			}
+
+			scriptStepSetParameter.Parameter = mcuParam;
+			scriptStepSetParameter.Value = value;
+			scriptStepSetParameter.Execute();
+			if (scriptStepSetParameter.IsPass == false)
+			{
+				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
+				{
+					ErrorText = scriptStepSetParameter.ErrorMessage;
+					return TestResult.Failure;
+				}
+
+				return TestResult.Failure;
+			}
+
+			return TestResult.Success;
+		}
+
+		private TestResult TestRegularParam(
+			MCU_ParamData mcuParam,
+			ScriptStepSetParameter scriptStepSetParameter)
+		{
+
+			double value = 100;
+			
+
+			scriptStepSetParameter.Parameter = mcuParam;
+			scriptStepSetParameter.Value = value;
+			scriptStepSetParameter.Execute();
+			if (scriptStepSetParameter.IsPass == false)
+			{
+				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
+				{
+					ErrorText = scriptStepSetParameter.ErrorMessage;
+					return TestResult.Failure;
+				}
+
+				return TestResult.Failure;
+			}
 
 			return TestResult.Success;
 		}

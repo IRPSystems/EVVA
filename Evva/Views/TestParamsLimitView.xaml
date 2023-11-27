@@ -41,52 +41,71 @@
 
         <ProgressBar Grid.Row="2" Minimum="0" Maximum="100" Value="{Binding TestProgress}"/>
 
-        <ListView Grid.Row="4" 
-                  ItemsSource="{Binding ParametersList}"
-                  HorizontalAlignment="Left">
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
+            <ListView Grid.Column="0" 
+                      ItemsSource="{Binding ParametersList}"
+                      HorizontalAlignment="Left">
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="5"/>
-                            <ColumnDefinition Width="20"/>
-                        </Grid.ColumnDefinitions>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
 
-                        <TextBlock Grid.Column="0" Text="{Binding Param.Name}" VerticalAlignment="Center"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
 
-                        <Ellipse Grid.Column="2" 
-                                 Name="elps"
-                                 Stroke="{DynamicResource MahApps.Brushes.Gray1}"
-                                 Height="20">
-                            
-                            
-                        </Ellipse>
+                            <TextBlock Grid.Column="0" Text="{Binding Param.Name}" VerticalAlignment="Center"/>
 
-                    </Grid>
+                            <Ellipse Grid.Column="2" 
+                                     Name="elps"
+                                     Stroke="{DynamicResource MahApps.Brushes.Gray1}"
+                                     Height="20">
 
-                    <DataTemplate.Triggers>
+                            </Ellipse>
 
-                        <DataTrigger Binding="{Binding Result}" Value="None">
-                            <Setter TargetName="elps" Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                        </DataTrigger>
+                        </Grid>
 
-                        <DataTrigger Binding="{Binding Result}" Value="Success">
-                            <Setter TargetName="elps" Property="Fill" Value="Green" />
-                        </DataTrigger>
+                        <DataTemplate.Triggers>
 
-                        <DataTrigger Binding="{Binding Result}" Value="Failure">
-                            <Setter TargetName="elps" Property="Fill" Value="Red" />
-                        </DataTrigger>
+                            <DataTrigger Binding="{Binding Result}" Value="None">
+                                <Setter TargetName="elps" Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                            </DataTrigger>
 
-                    </DataTemplate.Triggers>
-                    
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            
-        </ListView>
+                            <DataTrigger Binding="{Binding Result}" Value="Success">
+                                <Setter TargetName="elps" Property="Fill" Value="Green" />
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding Result}" Value="Failure">
+                                <Setter TargetName="elps" Property="Fill" Value="Red" />
+                            </DataTrigger>
+
+                        </DataTemplate.Triggers>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+
+            <Border Grid.Column="2" Background="{Binding ErrorBackground}">
+
+                <TextBlock Text="{Binding ErrorText}" 
+                           FontSize="30"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            </Border>
+
+        </Grid>
+
+        
 
     </Grid>
     

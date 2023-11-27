@@ -240,7 +240,7 @@ namespace Evva.ViewModels
 		{
 			SetFloatingWindowRect(
 				_testParamsLimit, 
-				new System.Windows.Rect(new System.Windows.Size(600, 600)));
+				new System.Windows.Rect(new System.Windows.Size(1000, 1000)));
 			SetState(_testParamsLimit, DockState.Float);
 		}
 
