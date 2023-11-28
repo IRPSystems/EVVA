@@ -8,7 +8,7 @@
                  xmlns:device_handler_views="clr-namespace:DeviceHandler.Views;assembly=DeviceHandler"
                  xmlns:local="clr-namespace:ParamLimitsTest"
                  mc:Ignorable="d"
-                 Title="Parameters Limit Test" Height="1000" Width="1100"
+                 Title="Parameters Limit Test" Height="800" Width="1100"
                  WindowStartupLocation="CenterScreen">
 
 
@@ -50,7 +50,10 @@
             
             <device_handler_views:CanConnectView Grid.Column="0" DataContext="{Binding CanConnect}"/>
 
-            <ListView ItemsSource="{Binding DevicesContainter.DevicesFullDataList}" Grid.Column="4" >
+            <ListView ItemsSource="{Binding DevicesContainter.DevicesFullDataList}" 
+                      Grid.Column="4" 
+                      VerticalAlignment="Top"
+                      Height="35">
 
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -116,7 +119,12 @@
 
         <Line Grid.Row="1" X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}"/>
 
-        <Button Grid.Row="2" Content="Load JSON" Command="{Binding LoadJsonCommand}" HorizontalAlignment="Left" Margin="5"/>
+        <Button Grid.Row="2" 
+                Content="Load JSON" 
+                Command="{Binding LoadJsonCommand}" 
+                HorizontalAlignment="Left"
+                Margin="5"
+                Width="100"/>
 
         <Line Grid.Row="3" X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}"/>
 
