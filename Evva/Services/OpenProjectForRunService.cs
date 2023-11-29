@@ -393,6 +393,7 @@ namespace Evva.Services
 					//	SetStepToCanMessageUpdateStop(sweepItem.SubScript);
 						MatchPassFailNext(sweepItem.SubScript, devicesContainer, runScript);
 						SetScriptStop(sweepItem.SubScript, devicesContainer, runScript);
+						SetConvergeTargetValueCommunicator(sweepItem.SubScript, devicesContainer);
 					}
 				}
 
