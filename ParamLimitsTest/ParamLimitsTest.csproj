@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DevicesInfrastructures\DeviceCommunicators\DeviceCommunicators.csproj" />
+    <ProjectReference Include="..\DevicesInfrastructures\DeviceHandler\DeviceHandler.csproj" />
+    <ProjectReference Include="..\Infrastructure\Entities\Entities.csproj" />
+    <ProjectReference Include="..\Infrastructure\Services\Services.csproj" />
+    <ProjectReference Include="..\ScriptsInfrastructure\ScriptHandler\ScriptHandler.csproj" />
+    <ProjectReference Include="..\ScriptsInfrastructure\ScriptRunner\ScriptRunner.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="TestParamsLimitView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy &quot;$(SolutionDir)Evva\Data\Device Communications\param_defaults.json&quot; &quot;$(OutDir)param_defaults.json&quot;" />
+  </Target>
+
+</Project>

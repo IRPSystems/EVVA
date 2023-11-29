@@ -1,5 +1,6 @@
 ﻿using Controls.ViewModels;
 using Evva.Views;
+using ParamLimitsTest;
 using ScriptHandler.Services;
 using ScriptHandler.ViewModels;
 using ScriptHandler.Views;
@@ -50,6 +51,7 @@ namespace Evva.ViewModels
 			SetupSelectionViewModel setupSelectionVM) :
 			base("DockingMain")
 		{
+
 			CreateWindows(
 				appSettings,
 				tests,
@@ -237,6 +239,9 @@ namespace Evva.ViewModels
 
 		public void OpenTestParamsLimit()
 		{
+			SetFloatingWindowRect(
+				_testParamsLimit, 
+				new System.Windows.Rect(new System.Windows.Size(1100, 1000)));
 			SetState(_testParamsLimit, DockState.Float);
 		}
 
@@ -292,8 +297,6 @@ namespace Evva.ViewModels
 		{
 			SetState(_tests, DockState.Dock);
 		}
-
-
 
 		public void RestorWindowsLayout()
 		{

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Evva.Views
+namespace ParamLimitsTest
 {
 	/// <summary>
-	/// Interaction logic for TestParamsLimitView.xaml
+	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class TestParamsLimitView : UserControl
+	public partial class MainWindow : MetroWindow
 	{
-		public TestParamsLimitView()
+		public MainWindow()
 		{
 			InitializeComponent();
+
+			DataContext = new MainWindowViewModel();
 		}
 	}
 }
