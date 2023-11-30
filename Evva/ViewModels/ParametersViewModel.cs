@@ -17,7 +17,8 @@ namespace Evva.ViewModels
 
 		public DeviceHandler.ViewModel.ParametersViewModel FullParametersList { get; set; }
 
-		public SelectedParametersListViewModel RecordParamList { get; set; }
+		public Record_SelectedParametersListViewModel RecordParamList { get; set; }
+		public SelectedParametersListViewModel AbsoluteParamList { get; set; }
 
 		#endregion Properties
 
@@ -27,9 +28,10 @@ namespace Evva.ViewModels
 			DevicesContainer devicesContainer)
 		{
 
-			RecordParamList = new SelectedParametersListViewModel(devicesContainer);
+			RecordParamList = new Record_SelectedParametersListViewModel(devicesContainer, "Record Parameters List");
+			AbsoluteParamList = new SelectedParametersListViewModel(devicesContainer, "Absolute Parameters List");
 
-			
+
 			DragDropData dragDropData = new DragDropData();
 			FullParametersList = new DeviceHandler.ViewModel.ParametersViewModel(dragDropData, devicesContainer, true);
 

@@ -23,20 +23,20 @@ namespace Evva.ViewModels
 	{
 		#region Properties
 
-		public DeviceHandler.ViewModel.ParametersViewModel FullParametersList { get; set; }
+		public string Title { get; set; }
 
+		
+		public ObservableCollection<DeviceParameterData> ParametersList { get; set; }
+		public ObservableCollection<RecordData> ParametersList_WithIndex { get; set; }
 
-		public ObservableCollection<DeviceParameterData> LogParametersList { get; set; }
-		public ObservableCollection<RecordData> LogParametersList_WithIndex { get; set; }
+		public bool IsLimitParametersList { get; set; }
 
 		#endregion Properties
 
 		#region Fields
 
 
-		private DevicesContainer _devicesContainer;
-
-		private const int _maxLoggingParams = 40;
+		protected DevicesContainer _devicesContainer;
 
 
 		private System.Collections.IList _selectedItemsList;
@@ -45,14 +45,21 @@ namespace Evva.ViewModels
 
 		private DragDropData _designDragDropData;
 
+		protected int _limitOfParametersList;
+		
+
 		#endregion Fields
 
 		#region Constructor
 
 		public SelectedParametersListViewModel(
-			DevicesContainer devicesContainer)
+			DevicesContainer devicesContainer,
+			string title)
 		{
+			IsLimitParametersList = false;
+
 			_devicesContainer = devicesContainer;
+			Title = title;
 
 			_designDragDropData = new DragDropData();
 
@@ -65,11 +72,8 @@ namespace Evva.ViewModels
 
 
 
-			LogParametersList = new ObservableCollection<DeviceParameterData>();
-			LogParametersList_WithIndex = new ObservableCollection<RecordData>();
-
-
-			GetLogParamListFromFile();
+			ParametersList = new ObservableCollection<DeviceParameterData>();
+			ParametersList_WithIndex = new ObservableCollection<RecordData>();
 		}
 
 		#endregion Constructor
@@ -91,7 +95,7 @@ namespace Evva.ViewModels
 			JsonSerializerSettings settings = new JsonSerializerSettings();
 			settings.Formatting = Formatting.Indented;
 			settings.TypeNameHandling = TypeNameHandling.All;
-			var sz = JsonConvert.SerializeObject(LogParametersList, settings);
+			var sz = JsonConvert.SerializeObject(ParametersList, settings);
 			System.IO.File.WriteAllText(path, sz);
 		}
 
@@ -116,34 +120,22 @@ namespace Evva.ViewModels
 
 			GetActualParameters(parametersList);
 
-			WeakReferenceMessenger.Default.Send(new RECORD_LIST_CHANGEDMessage() { LogParametersList = LogParametersList });
+			if (this is Record_SelectedParametersListViewModel)
+				WeakReferenceMessenger.Default.Send(new RECORD_LIST_CHANGEDMessage() { LogParametersList = ParametersList });
 		}
 
 		#endregion Save / Load
 
-		private void GetLogParamListFromFile()
+		protected void GetActualParameters(ObservableCollection<DeviceParameterData> parametersList)
 		{
-			string jsonString = System.IO.File.ReadAllText("Data\\Logger Default Params.json");
+			if (ParametersList == null)
+				ParametersList = new ObservableCollection<DeviceParameterData>();
 
-			JsonSerializerSettings settings = new JsonSerializerSettings();
-			settings.Formatting = Formatting.Indented;
-			settings.TypeNameHandling = TypeNameHandling.All;
-			ObservableCollection<DeviceParameterData> parametersList = JsonConvert.DeserializeObject(jsonString, settings) as
-				ObservableCollection<DeviceParameterData>;
+			if (ParametersList_WithIndex == null)
+				ParametersList_WithIndex = new ObservableCollection<RecordData>();
 
-			GetActualParameters(parametersList);
-		}
-
-		public void GetActualParameters(ObservableCollection<DeviceParameterData> parametersList)
-		{
-			if (LogParametersList == null)
-				LogParametersList = new ObservableCollection<DeviceParameterData>();
-
-			if (LogParametersList_WithIndex == null)
-				LogParametersList_WithIndex = new ObservableCollection<RecordData>();
-
-			LogParametersList.Clear();
-			LogParametersList_WithIndex.Clear();
+			ParametersList.Clear();
+			ParametersList_WithIndex.Clear();
 
 			foreach (DeviceParameterData parameterData in parametersList)
 			{
@@ -160,20 +152,21 @@ namespace Evva.ViewModels
 				if (actualParameterData == null)
 					continue;
 
-				LogParametersList.Add(actualParameterData);
-				LogParametersList_WithIndex.Add(new RecordData() { Data = actualParameterData });
+				ParametersList.Add(actualParameterData);
+				ParametersList_WithIndex.Add(new RecordData() { Data = actualParameterData });
 			}
 
 
 
-			while (LogParametersList.Count > _maxLoggingParams)
+			while (IsLimitParametersList && ParametersList.Count > _limitOfParametersList)
 			{
-				LogParametersList.RemoveAt(LogParametersList.Count - 1);
-				LogParametersList_WithIndex.RemoveAt(LogParametersList.Count - 1);
+				ParametersList.RemoveAt(ParametersList.Count - 1);
+				ParametersList_WithIndex.RemoveAt(ParametersList.Count - 1);
 			}
 
 			SetIndeces();
 		}
+
 
 		private void DeletParameterLogList(System.Collections.IList paramsList)
 		{
@@ -183,13 +176,14 @@ namespace Evva.ViewModels
 
 			foreach (RecordData data in list)
 			{
-				LogParametersList.Remove(data.Data);
-				LogParametersList_WithIndex.Remove(data);
+				ParametersList.Remove(data.Data);
+				ParametersList_WithIndex.Remove(data);
 			}
 
 			SetIndeces();
 
-			WeakReferenceMessenger.Default.Send(new RECORD_LIST_CHANGEDMessage() { LogParametersList = LogParametersList });
+			if(this is Record_SelectedParametersListViewModel)
+				WeakReferenceMessenger.Default.Send(new RECORD_LIST_CHANGEDMessage() { LogParametersList = ParametersList });
 		}
 
 		#region Drag
@@ -283,7 +277,7 @@ namespace Evva.ViewModels
 				{
 					if (listViewItem.DataContext is RecordData recordData)
 					{
-						droppedOnIndex = LogParametersList_WithIndex.IndexOf(recordData);
+						droppedOnIndex = ParametersList_WithIndex.IndexOf(recordData);
 					}
 				}
 
@@ -299,7 +293,7 @@ namespace Evva.ViewModels
 						if (!(obj is DeviceParameterData param))
 							continue;
 
-						if (LogParametersList.Count == _maxLoggingParams)
+						if (IsLimitParametersList && ParametersList.Count == _limitOfParametersList)
 						{
 							MessageBox.Show("Only up to 40 parameters are allowed");
 							return;
@@ -334,7 +328,7 @@ namespace Evva.ViewModels
 							return;
 					}
 
-					int destIndex = LogParametersList_WithIndex.IndexOf(droppedOn);
+					int destIndex = ParametersList_WithIndex.IndexOf(droppedOn);
 
 
 					MoveGroupOfParam(destIndex);
@@ -348,7 +342,7 @@ namespace Evva.ViewModels
 			DeviceParameterData param,
 			int droppedOnIndex)
 		{
-			int index = LogParametersList.IndexOf(param);
+			int index = ParametersList.IndexOf(param);
 			if (index >= 0)
 			{
 				MessageBox.Show("The parameter already exist");
@@ -357,18 +351,19 @@ namespace Evva.ViewModels
 
 			if (droppedOnIndex == -1)
 			{
-				LogParametersList.Add(param);
-				LogParametersList_WithIndex.Add(new RecordData() { Data = param });
+				ParametersList.Add(param);
+				ParametersList_WithIndex.Add(new RecordData() { Data = param });
 			}
 			else
 			{
-				LogParametersList.Insert(droppedOnIndex, param);
-				LogParametersList_WithIndex.Insert(droppedOnIndex, new RecordData() { Data = param });
+				ParametersList.Insert(droppedOnIndex, param);
+				ParametersList_WithIndex.Insert(droppedOnIndex, new RecordData() { Data = param });
 			}
 
 			SetIndeces();
 
-			WeakReferenceMessenger.Default.Send(new RECORD_LIST_CHANGEDMessage() { LogParametersList = LogParametersList });
+			if (this is Record_SelectedParametersListViewModel)
+				WeakReferenceMessenger.Default.Send(new RECORD_LIST_CHANGEDMessage() { LogParametersList = ParametersList });
 		}
 
 
@@ -398,12 +393,13 @@ namespace Evva.ViewModels
 					item,
 					destIndex);
 
-				destIndex = LogParametersList_WithIndex.IndexOf(item);
+				destIndex = ParametersList_WithIndex.IndexOf(item);
 			}
 
 			SetIndeces();
 
-			WeakReferenceMessenger.Default.Send(new RECORD_LIST_CHANGEDMessage() { LogParametersList = LogParametersList });
+			if (this is Record_SelectedParametersListViewModel)
+				WeakReferenceMessenger.Default.Send(new RECORD_LIST_CHANGEDMessage() { LogParametersList = ParametersList });
 		}
 
 		private void MoveParam(
@@ -412,20 +408,20 @@ namespace Evva.ViewModels
 		{
 			RecordData tempParam = paramToMove;
 
-			int sourceIndex = LogParametersList_WithIndex.IndexOf(tempParam);
+			int sourceIndex = ParametersList_WithIndex.IndexOf(tempParam);
 
-			LogParametersList.RemoveAt(sourceIndex);
-			LogParametersList_WithIndex.RemoveAt(sourceIndex);
+			ParametersList.RemoveAt(sourceIndex);
+			ParametersList_WithIndex.RemoveAt(sourceIndex);
 
-			if (destIndex < 0 || destIndex == (LogParametersList_WithIndex.Count - 1))
+			if (destIndex < 0 || destIndex == (ParametersList_WithIndex.Count - 1))
 			{
-				LogParametersList.Add(tempParam.Data);
-				LogParametersList_WithIndex.Add(tempParam);
+				ParametersList.Add(tempParam.Data);
+				ParametersList_WithIndex.Add(tempParam);
 			}
 			else
 			{
-				LogParametersList.Insert(destIndex, tempParam.Data);
-				LogParametersList_WithIndex.Insert(destIndex, tempParam);
+				ParametersList.Insert(destIndex, tempParam.Data);
+				ParametersList_WithIndex.Insert(destIndex, tempParam);
 			}
 		}
 
@@ -433,7 +429,7 @@ namespace Evva.ViewModels
 		{
 			LoggerService.Inforamtion(this, "Moving parameter UP");
 
-			int index = LogParametersList_WithIndex.IndexOf(param);
+			int index = ParametersList_WithIndex.IndexOf(param);
 			if (index <= 0 || index - 1 < 0)
 				return;
 
@@ -444,8 +440,8 @@ namespace Evva.ViewModels
 		{
 			LoggerService.Inforamtion(this, "Moving node DOWN");
 
-			int index = LogParametersList_WithIndex.IndexOf(param);
-			if (index >= LogParametersList.Count || index + 1 >= LogParametersList.Count)
+			int index = ParametersList_WithIndex.IndexOf(param);
+			if (index >= ParametersList.Count || index + 1 >= ParametersList.Count)
 				return;
 
 			MoveGroupOfParam(index + _selectedItemsList.Count);
@@ -469,11 +465,11 @@ namespace Evva.ViewModels
 			}
 		}
 
-		private void SetIndeces()
+		protected void SetIndeces()
 		{
-			for (int i = 0; i < LogParametersList_WithIndex.Count; i++)
+			for (int i = 0; i < ParametersList_WithIndex.Count; i++)
 			{
-				LogParametersList_WithIndex[i].Index = i + 1;
+				ParametersList_WithIndex[i].Index = i + 1;
 			}
 		}
 

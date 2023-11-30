@@ -203,7 +203,7 @@ namespace Evva.ViewModels
 					DevicesContainter);
 
 				Run = new RunViewModel(
-					RecordParam.RecordParamList.LogParametersList,
+					RecordParam.RecordParamList.ParametersList,
 					DevicesContainter,
 					motorSettingsList,
 					controllerSettingsList,
@@ -212,7 +212,7 @@ namespace Evva.ViewModels
 
 				MonitorRecParam = new MonitorRecParamViewModel(
 					DevicesContainter,
-					RecordParam.RecordParamList.LogParametersList);
+					RecordParam.RecordParamList.ParametersList);
 				MonitorSecurityParam = new MonitorSecurityParamViewModel(
 					DevicesContainter,
 					motorSettingsList,
