@@ -58,7 +58,7 @@ namespace Evva.ViewModels
 		public TestsViewModel Tests { get; set; }
 		public RunViewModel Run { get; set; }
 		public DesignViewModel Design { get; set; }
-		public RecordParamViewModel RecordParam { get; set; }
+		public ParametersViewModel RecordParam { get; set; }
 		public MonitorRecParamViewModel MonitorRecParam { get; set; }
 		public MonitorSecurityParamViewModel MonitorSecurityParam { get; set; }
 		public FaultsMCUViewModel Faults { get; set; }
@@ -199,7 +199,7 @@ namespace Evva.ViewModels
 
 
 
-				RecordParam = new RecordParamViewModel(
+				RecordParam = new ParametersViewModel(
 					DevicesContainter);
 
 				Run = new RunViewModel(

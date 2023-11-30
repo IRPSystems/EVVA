@@ -42,7 +42,7 @@ namespace Evva.ViewModels
 			TestsViewModel tests,
 			RunViewModel run,
 			DesignViewModel design,
-			RecordParamViewModel recordParam,
+			ParametersViewModel recordParam,
 			MonitorRecParamViewModel monitorRecParam,
 			MonitorSecurityParamViewModel monitorSecurityParam,
 			FaultsMCUViewModel faults,
@@ -75,7 +75,7 @@ namespace Evva.ViewModels
 			TestsViewModel tests,
 			RunViewModel run,
 			DesignViewModel design,
-			RecordParamViewModel recordParam,
+			ParametersViewModel parameters,
 			MonitorRecParamViewModel monitorRecParam,
 			MonitorSecurityParamViewModel monitorSecurityParam,
 			FaultsMCUViewModel faultsMCU,
@@ -113,8 +113,8 @@ namespace Evva.ViewModels
 			CreateTabbedWindow(testsView, "Tests", "Design", out _tests);
 //#endif
 
-			RecordParamView paramView = new RecordParamView() { DataContext = recordParam };
-			CreateTabbedWindow(paramView, "Record", "Design", out _recording);
+			ParametersView paramView = new ParametersView() { DataContext = parameters };
+			CreateTabbedWindow(paramView, "Parameters", "Design", out _recording);
 
 			RunView runView = new RunView() { DataContext = run };
 			CreateTabbedWindow(runView, "Run", "Design", out _run);

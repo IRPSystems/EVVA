@@ -19,7 +19,7 @@ using DeviceHandler.ViewModel;
 
 namespace Evva.ViewModels
 {
-	public class RecordParamViewModel : ObservableObject, IDisposable
+	public class ParametersViewModel : ObservableObject, IDisposable
 	{
 		public class RecordData: ObservableObject
 		{
@@ -29,7 +29,7 @@ namespace Evva.ViewModels
 
 		#region Properties
 
-		public ParametersViewModel FullParametersList { get; set; }
+		public DeviceHandler.ViewModel.ParametersViewModel FullParametersList { get; set; }
 
 
 		public ObservableCollection<DeviceParameterData> LogParametersList { get; set; }
@@ -60,7 +60,7 @@ namespace Evva.ViewModels
 
 		#region Constructor
 
-		public RecordParamViewModel(
+		public ParametersViewModel(
 			DevicesContainer devicesContainer)
 		{
 			_devicesContainer = devicesContainer;
@@ -84,7 +84,7 @@ namespace Evva.ViewModels
 			GetLogParamListFromFile();
 
 			DragDropData dragDropData = new DragDropData();
-			FullParametersList = new ParametersViewModel(dragDropData, _devicesContainer, true);
+			FullParametersList = new DeviceHandler.ViewModel.ParametersViewModel(dragDropData, _devicesContainer, true);
 
 		}
 
@@ -297,7 +297,7 @@ namespace Evva.ViewModels
 		{
 			LoggerService.Inforamtion(this, "Object is dropped");
 
-			if (e.Data.GetDataPresent(ParametersViewModel.DragDropFormat))
+			if (e.Data.GetDataPresent(DeviceHandler.ViewModel.ParametersViewModel.DragDropFormat))
 			{
 				int droppedOnIndex = -1;
 				ListViewItem listViewItem =
@@ -313,7 +313,7 @@ namespace Evva.ViewModels
 				
 
 
-				var dragData = e.Data.GetData(ParametersViewModel.DragDropFormat);
+				var dragData = e.Data.GetData(DeviceHandler.ViewModel.ParametersViewModel.DragDropFormat);
 
 				if (dragData is ObservableCollection<object> list)
 				{
@@ -345,7 +345,7 @@ namespace Evva.ViewModels
 				var dragData = e.Data.GetData(DragDropFormat);
 
 				if (dragData is System.Collections.IList)
-				{				
+				{
 
 					RecordData droppedOn = null;
 					ListViewItem listViewItem =
@@ -397,7 +397,7 @@ namespace Evva.ViewModels
 
 		private void RecordingList_DragEnter(DragEventArgs e)
 		{
-			if (!e.Data.GetDataPresent(ParametersViewModel.DragDropFormat))
+			if (!e.Data.GetDataPresent(DeviceHandler.ViewModel.ParametersViewModel.DragDropFormat))
 			{
 				e.Effects = DragDropEffects.None;
 			}

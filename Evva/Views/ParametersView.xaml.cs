@@ -18,9 +18,9 @@ namespace Evva.Views
 	/// <summary>
 	/// Interaction logic for RecordParamView.xaml
 	/// </summary>
-	public partial class RecordParamView : UserControl
+	public partial class ParametersView : UserControl
 	{
-		public RecordParamView()
+		public ParametersView()
 		{
 			InitializeComponent();
 		}
