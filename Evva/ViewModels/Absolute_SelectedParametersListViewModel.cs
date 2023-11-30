@@ -33,7 +33,7 @@ namespace Evva.ViewModels
 		{
 			foreach (DeviceParameterData param in e.NewItems)
 			{
-				param.IsApsolute = (e.Action == NotifyCollectionChangedAction.Add);
+				param.IsAbsolute = (e.Action == NotifyCollectionChangedAction.Add);
 			}
 		}
 
