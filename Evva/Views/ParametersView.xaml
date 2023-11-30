@@ -24,6 +24,8 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" >
@@ -43,7 +45,9 @@
 
         <Line Grid.Column="1" Y1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}" />
 
-        <Grid Grid.Column="2">
+        <local:SelectedParametersListView Grid.Column="2" DataContext="{Binding RecordParamList}" />
+
+        <!--<Grid Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="5" />
@@ -214,7 +218,9 @@
 
             </ListView>
 
-        </Grid>
+        </Grid>-->
+
+        <Line Grid.Column="3" Y1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}" />
 
     </Grid>
 
