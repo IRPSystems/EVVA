@@ -75,8 +75,8 @@ namespace Evva.Services
 			GeneratedProjectData currentProject = null;
 			if (extension == ".gprj")
 			{
-				FixGeneratedProjectService fixGeneratedProjectService = new FixGeneratedProjectService();
-				fixGeneratedProjectService.Fixe(path);
+				FixOldScriptsAndProjectsService fixGeneratedProjectService = new FixOldScriptsAndProjectsService();
+				fixGeneratedProjectService.Fix(path);
 
 
 				string jsonString = System.IO.File.ReadAllText(path);
