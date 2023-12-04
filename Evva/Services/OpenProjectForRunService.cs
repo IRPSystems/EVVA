@@ -72,13 +72,11 @@ namespace Evva.Services
 
 			string extension = Path.GetExtension(path);
 
+			FixOldScriptsAndProjectsService fixGeneratedProjectService = new FixOldScriptsAndProjectsService();
+			fixGeneratedProjectService.Fix(path);
 			GeneratedProjectData currentProject = null;
 			if (extension == ".gprj")
 			{
-				FixOldScriptsAndProjectsService fixGeneratedProjectService = new FixOldScriptsAndProjectsService();
-				fixGeneratedProjectService.Fix(path);
-
-
 				string jsonString = System.IO.File.ReadAllText(path);
 
 				JsonSerializerSettings settings = new JsonSerializerSettings();
@@ -98,6 +96,9 @@ namespace Evva.Services
 
 			if (currentProject == null)
 				return null;
+
+			
+			
 
 			currentProject.ProjectPath = path;
 
@@ -131,6 +132,9 @@ namespace Evva.Services
 
 			foreach (GeneratedScriptData scriptData in currentProject.TestsList)
 			{
+				if(scriptData == null) 
+					continue;
+
 				MatchPassFailNext(scriptData, devicesContainer, runScript);
 				SetScriptStop(scriptData, devicesContainer, runScript);
 
