@@ -5,6 +5,7 @@ using DeviceHandler.Models;
 using Evva.Models;
 using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Windows.Controls;
 
 namespace Evva.ViewModels
@@ -17,6 +18,10 @@ namespace Evva.ViewModels
 		public string Param_defaultsB2BPath { get; set; }
 		public string DynoCommunicationPath { get; set; }
 		public string NI6002CommunicationPath { get; set; }
+
+
+		public string MotorCommandsPath { get; set; }
+		public string ControllerCommandsPath { get; set; }
 
 		#endregion Properties
 
@@ -41,6 +46,13 @@ namespace Evva.ViewModels
 			BrowseMCUB2BJsonCommand = new RelayCommand(BrowseMCUB2BJson);
 			BrowseDynoJsonCommand = new RelayCommand(BrowseDynoJson);
 			BrowseNI600JsonCommand = new RelayCommand(BrowseNI600Json);
+
+			BrowseMotorCommandsCommand = new RelayCommand(BrowseMotorCommands);
+			BrowseControllerCommandsCommand = new RelayCommand(BrowseControllerCommands);
+
+			RestoreMotorsDefaultCommand = new RelayCommand(RestoreMotorsDefault);
+			RestoreControllerDefaultCommand = new RelayCommand(RestoreControllerDefault);
+
 			UpdateCommand = new RelayCommand(Update);
 
 		}
@@ -92,6 +104,30 @@ namespace Evva.ViewModels
 			NI6002CommunicationPath = openFileDialog.FileName;
 		}
 
+
+
+		private void BrowseMotorCommands()
+		{
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = "Excel Files (*.xlsx) | *.xlsx";
+			bool? result = openFileDialog.ShowDialog();
+			if (result != true)
+				return;
+
+			MotorCommandsPath = openFileDialog.FileName;
+		}
+
+		private void BrowseControllerCommands()
+		{
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = "Excel Files (*.xlsx) | *.xlsx";
+			bool? result = openFileDialog.ShowDialog();
+			if (result != true)
+				return;
+
+			ControllerCommandsPath = openFileDialog.FileName;
+		}
+
 		private void Update()
 		{
 			SETTINGS_UPDATEDMessage settings = new SETTINGS_UPDATEDMessage();
@@ -113,10 +149,42 @@ namespace Evva.ViewModels
 			_EvvaUserData.DynoCommunicationPath = DynoCommunicationPath;
 			_EvvaUserData.NI6002CommunicationPath = NI6002CommunicationPath;
 
+
+			string currentPath = Directory.GetCurrentDirectory();
+			string path = Path.Combine(currentPath, @"Data\Motor Security Command Parameters.xlsx");
+			if (string.IsNullOrEmpty(MotorCommandsPath) == false && MotorCommandsPath != path)
+			{
+				settings.IsMotorCommandsPathChanged = true;
+				settings.MotorCommandsPath = MotorCommandsPath;
+			}
+
+			path = Path.Combine(currentPath, @"Data\Controller Security Command Parameters.xlsx");
+			if (string.IsNullOrEmpty(ControllerCommandsPath) == false && ControllerCommandsPath != path)
+			{
+				settings.IsControllerCommandsPathChanged = true;
+				settings.ControllerCommandsPath = ControllerCommandsPath;
+			}
+
+
 			SettingsUpdatedEvent?.Invoke(settings);
 		}
 
+		private void RestoreMotorsDefault()
+		{
+			SETTINGS_UPDATEDMessage settings = new SETTINGS_UPDATEDMessage();
+			settings.IsMotorCommandsPathChanged = true;
+			settings.MotorCommandsPath = @"Data\Motor Security Command Parameters.xlsx";
+			SettingsUpdatedEvent?.Invoke(settings);
+		}
 
+		private void RestoreControllerDefault()
+		{
+
+			SETTINGS_UPDATEDMessage settings = new SETTINGS_UPDATEDMessage();
+			settings.IsControllerCommandsPathChanged = true;
+			settings.ControllerCommandsPath = @"Data\Controller Security Command Parameters.xlsx";
+			SettingsUpdatedEvent?.Invoke(settings);
+		}
 
 
 		#endregion Methods
@@ -127,6 +195,13 @@ namespace Evva.ViewModels
 		public RelayCommand BrowseMCUB2BJsonCommand { get; set; }
 		public RelayCommand BrowseDynoJsonCommand { get; set; }
 		public RelayCommand BrowseNI600JsonCommand { get; set; }
+
+		public RelayCommand BrowseMotorCommandsCommand { get; set; }
+		public RelayCommand BrowseControllerCommandsCommand { get; set; }
+
+
+		public RelayCommand RestoreMotorsDefaultCommand { get; set; }
+		public RelayCommand RestoreControllerDefaultCommand { get; set; }
 
 
 		public RelayCommand UpdateCommand { get; set; }

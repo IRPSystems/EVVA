@@ -525,6 +525,16 @@ namespace Evva.ViewModels
 				devicesList[0].Name = deviceData.Device.Name;
 				deviceData.Device = devicesList[0] as DeviceData;
 			}
+			
+			if(e.IsMotorCommandsPathChanged)
+			{
+				Run.RunScript.SelectMotor.UpdateMotorList(e.MotorCommandsPath);
+			}
+
+			if (e.IsControllerCommandsPathChanged)
+			{
+				Run.RunScript.SelectMotor.UpdateControllerList(e.ControllerCommandsPath);
+			}
 
 			Docking.CloseSettings();
 

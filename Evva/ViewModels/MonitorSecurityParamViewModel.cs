@@ -27,7 +27,7 @@ namespace Evva.ViewModels
 		{
 			_scriptService = scriptService;
 
-			GetMonitorParamsList();
+			//GetMonitorParamsList();
 
 			WeakReferenceMessenger.Default.Register<SETTINGS_UPDATEDMessage>(
 				this, new MessageHandler<object, SETTINGS_UPDATEDMessage>(SETTINGS_UPDATEDMessageHandler));
