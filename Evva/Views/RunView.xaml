@@ -256,8 +256,8 @@
             <TextBlock Text="Select a Motor" 
                        VerticalAlignment="Center" 
                        Margin="0,0,5,0"/>
-            <ComboBox ItemsSource="{Binding MotorTypesList}" 
-                      SelectedItem="{Binding SelectedMotor}"   
+            <ComboBox ItemsSource="{Binding SelectMotor.MotorTypesList}" 
+                      SelectedItem="{Binding SelectMotor.SelectedMotor}"   
                       Width="150"
                       Margin="0,1,15,1">
 
@@ -277,8 +277,8 @@
                        VerticalAlignment="Center"                        
                        Margin="0,0,5,0"/>
             <ComboBox Grid.Row="2" Grid.Column="2"
-                      ItemsSource="{Binding ControllerTypesList}" 
-                      SelectedItem="{Binding SelectedController}"
+                      ItemsSource="{Binding SelectMotor.ControllerTypesList}" 
+                      SelectedItem="{Binding SelectMotor.SelectedController}"
                       Width="150"
                       Margin="0,1,10,1">
 

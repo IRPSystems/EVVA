@@ -3,9 +3,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using DeviceCommunicators.MCU;
 using DeviceHandler.Models;
 using Entities.Models;
-using Evva.Models;
 using ScriptHandler.Models;
-using System.Collections.Generic;
+using ScriptRunner.Services;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -15,8 +14,7 @@ namespace Evva.ViewModels
 	{
 		#region Fields
 
-		private List<MotorSettingsData> _motorSettingsList;
-		private List<ControllerSettingsData> _controllerSettingsList;
+		private RunScriptService _scriptService;
 
 		#endregion Fields
 
@@ -24,16 +22,12 @@ namespace Evva.ViewModels
 
 		public MonitorSecurityParamViewModel(
 			DevicesContainer devicesContainer,
-			List<MotorSettingsData> motorSettingsList,
-			List<ControllerSettingsData> controllerSettingsList) :
+			RunScriptService scriptService) :
 			base(devicesContainer)
 		{
-			_motorSettingsList = motorSettingsList;
-			_controllerSettingsList = controllerSettingsList;
+			_scriptService = scriptService;
 
-			GetMonitorParamsList(
-				motorSettingsList,
-				controllerSettingsList);
+			GetMonitorParamsList();
 
 			WeakReferenceMessenger.Default.Register<SETTINGS_UPDATEDMessage>(
 				this, new MessageHandler<object, SETTINGS_UPDATEDMessage>(SETTINGS_UPDATEDMessageHandler));
@@ -44,9 +38,7 @@ namespace Evva.ViewModels
 
 		#region Method
 
-		private void GetMonitorParamsList(
-			List<MotorSettingsData> motorSettingsList,
-			List<ControllerSettingsData> controllerSettingsList)
+		private void GetMonitorParamsList()
 		{
 			if (_devicesContainer.TypeToDevicesFullData.ContainsKey(Entities.Enums.DeviceTypesEnum.MCU) == false)
 			{
@@ -65,9 +57,9 @@ namespace Evva.ViewModels
 
 			MonitorParamsList = new ObservableCollection<DeviceParameterData>();
 
-			if (motorSettingsList != null)
+			if (_scriptService.SelectMotor.MotorTypesList != null)
 			{
-				MotorSettingsData firstMotor = motorSettingsList[0];
+				MotorSettingsData firstMotor = _scriptService.SelectMotor.MotorTypesList[0];
 				foreach (ParameterValueData paramValue in firstMotor.StatusParameterValueList)
 				{
 					string parameterName = paramValue.ParameterName.Trim();
@@ -79,7 +71,7 @@ namespace Evva.ViewModels
 				}
 			}
 
-			ControllerSettingsData firstController = controllerSettingsList[0];
+			ControllerSettingsData firstController = _scriptService.SelectMotor.ControllerTypesList[0];
 			foreach (ParameterValueData paramValue in firstController.StatusParameterValueList)
 			{
 				string parameterName = paramValue.ParameterName.Trim();
@@ -94,9 +86,7 @@ namespace Evva.ViewModels
 		{
 			if (e.IsMCUJsonPathChanged)
 			{				
-				GetMonitorParamsList(
-					_motorSettingsList,
-					_controllerSettingsList);				
+				GetMonitorParamsList();				
 			}
 
 			Loaded();

@@ -20,10 +20,6 @@ namespace Evva.ViewModels
 	{
 		#region Fields	
 
-		public ObservableCollection<MotorSettingsData> MotorSettingsList;
-		public ObservableCollection<ControllerSettingsData> ControllerSettingsList;
-
-
 		private DocingViewModel _docking;
 		private TestParamsLimitViewModel _testParamsLimitViewModel;
 
@@ -40,18 +36,13 @@ namespace Evva.ViewModels
 		#region Constructor
 
 		public TestsViewModel(
-			DevicesContainer devicesContainer,
-			ObservableCollection<MotorSettingsData> motorSettingsList,
-			ObservableCollection<ControllerSettingsData> controllerSettingsList)
+			DevicesContainer devicesContainer)
 		{
 			DevicesContainer = devicesContainer;
-			MotorSettingsList = motorSettingsList;
-			ControllerSettingsList = controllerSettingsList;
 
 			SetCommand = new RelayCommand<DeviceParameterData>(Set);
 			GetCommand = new RelayCommand<DeviceParameterData>(Get);
 			TestParamsLimitCommand = new RelayCommand(TestParamsLimit);
-
 
 		}
 

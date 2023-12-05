@@ -174,17 +174,6 @@ namespace Evva.ViewModels
 
 				CommunicationSettings = new CommunicationViewModel(DevicesContainter);
 
-				ReadingMotorSettingsService readingMotorSettings = new ReadingMotorSettingsService();
-				List<MotorSettingsData> motorSettingsList = readingMotorSettings.GetMotorSettings(
-					@"Data\Motor Security Command Parameters.xlsx",
-					@"Data\Motor Security Status Parameters.xlsx");
-
-				ReadingControllerSettingsService readingControllerSettings = new ReadingControllerSettingsService();
-				List<ControllerSettingsData> controllerSettingsList = 
-					readingControllerSettings.GetMotorSettings(
-						@"Data\Controller Security Command Parameters.xlsx",
-						@"Data\Controller Security Status Parameters.xlsx");
-
 #if DEBUG
 				TestsVisibility = Visibility.Visible;
 				SilentRunVisibility = Visibility.Visible;
@@ -205,8 +194,6 @@ namespace Evva.ViewModels
 				Run = new RunViewModel(
 					RecordParam.RecordParamList.ParametersList,
 					DevicesContainter,
-					motorSettingsList,
-					controllerSettingsList,
 					EvvaUserData,
 					_canMessagesService);
 
@@ -215,23 +202,12 @@ namespace Evva.ViewModels
 					RecordParam.RecordParamList.ParametersList);
 				MonitorSecurityParam = new MonitorSecurityParamViewModel(
 					DevicesContainter,
-					motorSettingsList,
-					controllerSettingsList);
+					Run.RunScript);
 
 
 
-				ObservableCollection<MotorSettingsData> motor = null;
-				if(motorSettingsList != null)
-					motor = new ObservableCollection<MotorSettingsData>(motorSettingsList);
-
-				ObservableCollection<ControllerSettingsData> controller = null;
-				if(controllerSettingsList != null)
-					controller = new ObservableCollection<ControllerSettingsData>(controllerSettingsList);
-
-				Tests = new TestsViewModel(
-					DevicesContainter,
-					motor,
-					controller);
+				
+				Tests = new TestsViewModel(DevicesContainter);
 
 				Design = new DesignViewModel(
 					DevicesContainter, 

@@ -97,8 +97,6 @@ namespace Evva.ViewModels
 		public RunViewModel(
 			ObservableCollection<DeviceParameterData> logParametersList,
 			DevicesContainer devicesContainer,
-			List<MotorSettingsData> motorSettingsList,
-			List<ControllerSettingsData> controllerSettingsList,
 			EvvaUserData EvvaUserData,
 			CANMessagesService canMessagesService)
 		{
@@ -161,8 +159,6 @@ namespace Evva.ViewModels
 				RunScript = new RunScriptService(
 					logParametersList,
 					devicesContainer,
-					motorSettingsList,
-					controllerSettingsList,
 					stopScriptStep,
 					canMessagesService);
 				RunScript.ScriptEndedEvent += ScriptEndedEventHandler;
