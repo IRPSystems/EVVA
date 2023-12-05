@@ -5,6 +5,7 @@ using DeviceHandler.Models;
 using Evva.Models;
 using Microsoft.Win32;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Evva.ViewModels
@@ -24,6 +25,8 @@ namespace Evva.ViewModels
 
 		private EvvaUserData _EvvaUserData;
 
+		private bool _isUpdated;
+
 		#endregion Fields
 
 		#region Constructor
@@ -36,6 +39,8 @@ namespace Evva.ViewModels
 			Param_defaultsB2BPath = _EvvaUserData.MCUB2BJsonPath;
 			DynoCommunicationPath = _EvvaUserData.DynoCommunicationPath;
 			NI6002CommunicationPath = _EvvaUserData.NI6002CommunicationPath;
+
+			_isUpdated = false;
 
 			BrowseMCUJsonCommand = new RelayCommand(BrowseMCUJson);
 			BrowseMCUB2BJsonCommand = new RelayCommand(BrowseMCUB2BJson);
@@ -94,6 +99,7 @@ namespace Evva.ViewModels
 
 		private void Update()
 		{
+			_isUpdated = true;
 			SETTINGS_UPDATEDMessage settings = new SETTINGS_UPDATEDMessage();
 
 			if (_EvvaUserData.MCUJsonPath != Param_defaultsPath)
@@ -116,7 +122,26 @@ namespace Evva.ViewModels
 			SettingsUpdatedEvent?.Invoke(settings);
 		}
 
+		public void Unloaded()
+		{
 
+
+			if (_isUpdated)
+			{
+				_isUpdated = false;
+				return;
+			}
+
+			MessageBoxResult result = MessageBox.Show(
+				"You did not click the \"Update\" button. \r\nDo you wish to update the changes you've made?",
+				"Settings Update Warning",
+				MessageBoxButton.YesNo);
+			if(result == MessageBoxResult.Yes) 
+			{
+				Update();
+				_isUpdated = false;
+			}
+		}
 
 
 		#endregion Methods

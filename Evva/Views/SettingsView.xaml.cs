@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Evva.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,13 @@ namespace Evva.Views
 		{
 			InitializeComponent();
 		}
+
+		private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+		{
+			if (!(DataContext is SettingsViewModel vm))
+				return;
+
+			vm.Unloaded();
+        }
     }
 }

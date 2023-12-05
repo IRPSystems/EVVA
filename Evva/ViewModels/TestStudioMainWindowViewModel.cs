@@ -485,6 +485,7 @@ namespace Evva.ViewModels
 
 		private void SettingsUpdated(SETTINGS_UPDATEDMessage e)
 		{
+			LoggerService.Inforamtion(this, "Updating the settings");
 			if (e.IsMCUJsonPathChanged)
 			{
 				if (DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.MCU))
