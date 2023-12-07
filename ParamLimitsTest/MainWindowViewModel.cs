@@ -8,6 +8,7 @@ using DeviceHandler.Models;
 using Entities.Enums;
 using Entities.Models;
 using Microsoft.Win32;
+using Services.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -27,6 +28,9 @@ namespace ParamLimitsTest
 
 		public MainWindowViewModel() 
         {
+			LoggerService.Init("ParamLimitsTest.log", Serilog.Events.LogEventLevel.Information);
+			LoggerService.Inforamtion(this, "-------------------------------------- ParamLimitsTest ---------------------");
+
 
 			ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
 			LoadJsonCommand = new RelayCommand(LoadJson);
