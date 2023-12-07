@@ -13,4 +13,8 @@ Source: "*.*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
 
 [Icons]
 Name: "{group}\ParamLimitsTest"; Filename: "{app}\ParamLimitsTest.exe"
-Name: "{commondesktop}\ParamLimitsTest" ; Filename: "{app}\ParamLimitsTest.exe"
+Name: "{commondesktop}\ParamLimitsTest" ; Filename: "{app}\ParamLimitsTest.exe"        
+
+[Tasks]
+Name: "desktopicon"; Description: "Create a desktop icon"; GroupDescription: "Additional icons:"; Flags: unchecked
+Name: "taskbaricon"; Description: "Add a Taskbar shortcut"; GroupDescription: "Additional options:"; Flags: unchecked
