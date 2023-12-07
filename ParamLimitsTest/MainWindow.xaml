@@ -39,6 +39,8 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="5,5,5,0">
@@ -129,6 +131,26 @@
         <Line Grid.Row="3" X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}"/>
 
         <local:TestParamsLimitView Grid.Row="4" DataContext="{Binding TestParamsLimit}"/>
+
+        <Border Grid.Row="6" Background="{DynamicResource MahApps.Brushes.Accent}">
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Version: " 
+                           FontSize="16"
+                           FontWeight="DemiBold" 
+                           Foreground="White" 
+                           VerticalAlignment="Center"
+                           Margin="5,0,5,0"/>
+
+                <TextBlock Text="{Binding Version}" 
+                           FontSize="16"
+                           FontWeight="DemiBold" 
+                           Foreground="White" 
+                           VerticalAlignment="Center"
+                           Margin="5,0,0,0"/>
+
+            </StackPanel>
+        </Border>
 
     </Grid>
 

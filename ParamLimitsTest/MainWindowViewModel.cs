@@ -12,6 +12,7 @@ using Services.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace ParamLimitsTest
@@ -24,12 +25,16 @@ namespace ParamLimitsTest
 
 		public DevicesContainer DevicesContainter { get; set; }
 
+		public string Version { get; set; }
+
 		private DeviceFullData _mcuDevice;
 
 		public MainWindowViewModel() 
         {
 			LoggerService.Init("ParamLimitsTest.log", Serilog.Events.LogEventLevel.Information);
 			LoggerService.Inforamtion(this, "-------------------------------------- ParamLimitsTest ---------------------");
+
+			Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
 
 			ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
