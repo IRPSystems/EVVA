@@ -149,10 +149,12 @@ namespace ParamLimitsTest
 						}
 
 
-						ErrorText = ErrorText.Replace("\r\n", " - ");
+						
 
-						if (ErrorText.EndsWith("Communication timeout."))
+						if (scriptStepSetParameter.IsPass == false)
 						{
+							ErrorText += scriptStepSetParameter.ErrorMessage;
+							ErrorText = ErrorText.Replace("\r\n", " - ");
 							Application.Current.Dispatcher.Invoke(() =>
 							{
 								Cancel();
@@ -170,7 +172,7 @@ namespace ParamLimitsTest
 
 					}
 
-					if (!ErrorText.EndsWith("Communication timeout."))
+					if (scriptStepSetParameter.IsPass == true)
 					{
 						Application.Current.Dispatcher.Invoke(() =>
 						{
@@ -213,7 +215,8 @@ namespace ParamLimitsTest
 			}
 			if (scriptStepSetParameter.IsPass == false)
 			{
-				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
+				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout.") ||
+					scriptStepSetParameter.ErrorMessage.EndsWith("No response was received from the device."))
 				{
 					SetTestReprotItem(
 						mcuParam.Name,
@@ -221,7 +224,7 @@ namespace ParamLimitsTest
 						scriptStepSetParameter.Value,
 						false,
 						scriptStepSetParameter.ErrorMessage);
-					ErrorText = scriptStepSetParameter.ErrorMessage;
+					//ErrorText = scriptStepSetParameter.ErrorMessage;
 					return;
 				}				
 			}
@@ -250,7 +253,8 @@ namespace ParamLimitsTest
 			}
 			if (scriptStepSetParameter.IsPass == false)
 			{
-				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
+				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout.") ||
+					scriptStepSetParameter.ErrorMessage.EndsWith("No response was received from the device."))
 				{
 					SetTestReprotItem(
 						mcuParam.Name,
@@ -258,7 +262,7 @@ namespace ParamLimitsTest
 						scriptStepSetParameter.Value,
 						false,
 						scriptStepSetParameter.ErrorMessage);
-					ErrorText = scriptStepSetParameter.ErrorMessage;
+					//ErrorText = scriptStepSetParameter.ErrorMessage;
 					return;
 				}
 			}
@@ -288,9 +292,10 @@ namespace ParamLimitsTest
 					false,
 					scriptStepSetParameter.ErrorMessage);
 
-				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
+				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout.") ||
+					scriptStepSetParameter.ErrorMessage.EndsWith("No response was received from the device."))
 				{
-					ErrorText = scriptStepSetParameter.ErrorMessage;
+					//ErrorText = scriptStepSetParameter.ErrorMessage;
 					return;
 				}
 
@@ -339,7 +344,8 @@ namespace ParamLimitsTest
 			scriptStepSetParameter.Execute();
 			if (scriptStepSetParameter.IsPass == false)
 			{
-				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
+				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout.") ||
+					scriptStepSetParameter.ErrorMessage.EndsWith("No response was received from the device."))
 				{
 					SetTestReprotItem(
 						mcuParam.Name,
@@ -347,7 +353,7 @@ namespace ParamLimitsTest
 						value,
 						false,
 						scriptStepSetParameter.ErrorMessage); 
-					ErrorText = scriptStepSetParameter.ErrorMessage;
+					//ErrorText = scriptStepSetParameter.ErrorMessage;
 					return;
 				}
 
@@ -381,7 +387,8 @@ namespace ParamLimitsTest
 			scriptStepSetParameter.Execute();
 			if (scriptStepSetParameter.IsPass == false)
 			{
-				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout."))
+				if (scriptStepSetParameter.ErrorMessage.EndsWith("Communication timeout.") ||
+					scriptStepSetParameter.ErrorMessage.EndsWith("No response was received from the device."))
 				{
 					SetTestReprotItem(
 						mcuParam.Name,
@@ -389,7 +396,7 @@ namespace ParamLimitsTest
 						value,
 						false,
 						scriptStepSetParameter.ErrorMessage);
-					ErrorText = scriptStepSetParameter.ErrorMessage;
+					//ErrorText = scriptStepSetParameter.ErrorMessage;
 					return;
 				}
 
