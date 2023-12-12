@@ -9,6 +9,7 @@ using Entities.Enums;
 using Entities.Models;
 using Microsoft.Win32;
 using Services.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -31,42 +32,49 @@ namespace ParamLimitsTest
 
 		public MainWindowViewModel() 
         {
-			LoggerService.Init("ParamLimitsTest.log", Serilog.Events.LogEventLevel.Information);
-			LoggerService.Inforamtion(this, "-------------------------------------- ParamLimitsTest ---------------------");
+			try
+			{
+				LoggerService.Init("ParamLimitsTest.log", Serilog.Events.LogEventLevel.Information);
+				LoggerService.Inforamtion(this, "-------------------------------------- ParamLimitsTest ---------------------");
 
-			Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
-
-			ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
-			LoadJsonCommand = new RelayCommand(LoadJson);
-
-			ReadDevicesFileService reader = new ReadDevicesFileService();
-			ObservableCollection<DeviceBase> devicesList = new ObservableCollection<DeviceBase>();
-			reader.ReadFromMCUJson(
-				"param_defaults.json",
-				devicesList,
-				"MCU",
-				DeviceTypesEnum.MCU);
-
-			_mcuDevice = new DeviceFullData(devicesList[0] as DeviceData);
-
-			_mcuDevice.Init();
-			(_mcuDevice.DeviceCommunicator as MCU_Communicator).InitMessageDict(_mcuDevice.Device);
-			_mcuDevice.Connect();
-			_mcuDevice.InitCheckConnection();
-			CanConnect = _mcuDevice.ConnectionViewModel;
-
-			DevicesContainter = new DevicesContainer();
-			DevicesContainter.DevicesFullDataList = new ObservableCollection<DeviceFullData>();
-			DevicesContainter.DevicesList = new ObservableCollection<DeviceData>();
-			DevicesContainter.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
-
-			DevicesContainter.DevicesFullDataList.Add(_mcuDevice);
-			DevicesContainter.DevicesList.Add(_mcuDevice.Device);
-			DevicesContainter.TypeToDevicesFullData.Add(_mcuDevice.Device.DeviceType, _mcuDevice);
+				Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
 
-			TestParamsLimit = new TestParamsLimitViewModel(DevicesContainter);
+				ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
+				LoadJsonCommand = new RelayCommand(LoadJson);
+
+				ReadDevicesFileService reader = new ReadDevicesFileService();
+				ObservableCollection<DeviceBase> devicesList = new ObservableCollection<DeviceBase>();
+				reader.ReadFromMCUJson(
+					"param_defaults.json",
+					devicesList,
+					"MCU",
+					DeviceTypesEnum.MCU);
+
+				_mcuDevice = new DeviceFullData(devicesList[0] as DeviceData);
+
+				_mcuDevice.Init();
+				(_mcuDevice.DeviceCommunicator as MCU_Communicator).InitMessageDict(_mcuDevice.Device);
+				_mcuDevice.Connect();
+				_mcuDevice.InitCheckConnection();
+				CanConnect = _mcuDevice.ConnectionViewModel;
+
+				DevicesContainter = new DevicesContainer();
+				DevicesContainter.DevicesFullDataList = new ObservableCollection<DeviceFullData>();
+				DevicesContainter.DevicesList = new ObservableCollection<DeviceData>();
+				DevicesContainter.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
+
+				DevicesContainter.DevicesFullDataList.Add(_mcuDevice);
+				DevicesContainter.DevicesList.Add(_mcuDevice.Device);
+				DevicesContainter.TypeToDevicesFullData.Add(_mcuDevice.Device.DeviceType, _mcuDevice);
+
+
+				TestParamsLimit = new TestParamsLimitViewModel(DevicesContainter);
+			}
+			catch(Exception ex)
+			{
+				LoggerService.Error(this, "Constructor failed", "Constructor Error", ex);
+			}
         }
 
 		private void Closing(CancelEventArgs e)
