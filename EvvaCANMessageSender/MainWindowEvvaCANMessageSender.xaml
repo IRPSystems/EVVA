@@ -163,6 +163,11 @@
 
             <DataGrid.Columns>
 
+                <DataGridTextColumn Header="Name" 
+                                    Binding="{Binding Message.MessageName}" 
+                                    Width="150" 
+                                    IsReadOnly="True"/>
+
                 <DataGridTextColumn Header="ID" 
                                     Binding="{Binding Message.NodeId, Converter={StaticResource HexUintConverter}, StringFormat=0x{0}}" 
                                     Width="150" 
