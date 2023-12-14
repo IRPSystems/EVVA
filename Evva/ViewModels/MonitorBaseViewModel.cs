@@ -63,10 +63,13 @@ namespace Evva.ViewModels
 
 			foreach (DeviceParameterData data in MonitorParamsList)
 			{
+				if (_devicesContainer.TypeToDevicesFullData.ContainsKey(data.DeviceType) == false)
+					continue;
+
 				DeviceFullData deviceFullData =
 					_devicesContainer.TypeToDevicesFullData[data.DeviceType];
 				if (deviceFullData == null)
-					return;
+					continue;
 
 				if(deviceFullData.ParametersRepository != null)
 					deviceFullData.ParametersRepository.Add(data, RepositoryPriorityEnum.Medium, null);
