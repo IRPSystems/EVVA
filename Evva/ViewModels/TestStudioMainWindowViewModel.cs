@@ -502,9 +502,6 @@ namespace Evva.ViewModels
 				deviceData.Device = devicesList[0] as DeviceData;
 
 
-
-				((Dyno_Communicator)(deviceData.DeviceCommunicator)).InitMessageDict(
-							deviceData.Device);
 			}
 
 			if (e.IsNI6002JsonPathChanged && DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002))
@@ -562,9 +559,6 @@ namespace Evva.ViewModels
 
 			devicesList[0].Name = deviceData.Device.Name;
 			deviceData.Device = devicesList[0] as DeviceData;
-
-			((MCU_Communicator)(deviceData.DeviceCommunicator)).InitMessageDict(
-						deviceData.Device);
 			
 		}
 
@@ -674,17 +668,6 @@ namespace Evva.ViewModels
 				DeviceFullData deviceFullData = new DeviceFullData(device as DeviceData);				
 
 				deviceFullData.Init();
-
-				if (device.DeviceType == DeviceTypesEnum.MCU)
-				{
-					((MCU_Communicator)(deviceFullData.DeviceCommunicator)).InitMessageDict(
-						device as DeviceData);
-				}
-				else if(device.DeviceType == DeviceTypesEnum.Dyno)
-				{
-					((Dyno_Communicator)(deviceFullData.DeviceCommunicator)).InitMessageDict(
-								deviceFullData.Device);
-				}
 
 				DevicesContainter.DevicesFullDataList.Add(deviceFullData);
 				DevicesContainter.DevicesList.Add(device as DeviceData);

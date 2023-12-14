@@ -54,7 +54,6 @@ namespace ParamLimitsTest
 				_mcuDevice = new DeviceFullData(devicesList[0] as DeviceData);
 
 				_mcuDevice.Init();
-				(_mcuDevice.DeviceCommunicator as MCU_Communicator).InitMessageDict(_mcuDevice.Device);
 				_mcuDevice.Connect();
 				_mcuDevice.InitCheckConnection();
 				CanConnect = _mcuDevice.ConnectionViewModel;
@@ -106,9 +105,6 @@ namespace ParamLimitsTest
 
 			devicesList[0].Name = _mcuDevice.Device.Name;
 			_mcuDevice.Device = devicesList[0] as DeviceData;
-
-			((MCU_Communicator)(_mcuDevice.DeviceCommunicator)).InitMessageDict(
-						_mcuDevice.Device);
 		}
 
 		public RelayCommand<CancelEventArgs> ClosingCommand { get; private set; }
