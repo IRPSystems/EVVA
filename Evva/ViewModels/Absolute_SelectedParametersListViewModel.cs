@@ -31,9 +31,20 @@ namespace Evva.ViewModels
 
 		private void ParametersList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			foreach (DeviceParameterData param in e.NewItems)
+			if (e.NewItems != null)
 			{
-				param.IsAbsolute = (e.Action == NotifyCollectionChangedAction.Add);
+				foreach (DeviceParameterData param in e.NewItems)
+				{
+					param.IsAbsolute = (e.Action == NotifyCollectionChangedAction.Add);
+				}
+			}
+			
+			if (e.OldItems != null)
+			{
+				foreach (DeviceParameterData param in e.OldItems)
+				{
+					param.IsAbsolute = (e.Action == NotifyCollectionChangedAction.Add);
+				}
 			}
 		}
 
