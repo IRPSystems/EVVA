@@ -413,7 +413,7 @@ namespace Evva.ViewModels
 			ParametersList.RemoveAt(sourceIndex);
 			ParametersList_WithIndex.RemoveAt(sourceIndex);
 
-			if (destIndex < 0 || destIndex == (ParametersList_WithIndex.Count - 1))
+			if (destIndex < 0)
 			{
 				ParametersList.Add(tempParam.Data);
 				ParametersList_WithIndex.Add(tempParam);
