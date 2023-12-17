@@ -36,6 +36,7 @@ namespace ParamLimitsTest
 		public class TestReprotData
 		{
 			public string ParamName { get; set; }
+			public string ParamCommand { get; set; }
 			public double Value { get; set; }
 			public TestTypeEnum TestType { get; set; }
 			public bool IsPass { get; set; }
@@ -207,6 +208,7 @@ namespace ParamLimitsTest
 			{
 				SetTestReprotItem(
 					mcuParam.Name,
+					mcuParam.Cmd,
 					TestTypeEnum.SmallerThanRange,
 					scriptStepSetParameter.Value,
 					false,
@@ -220,6 +222,7 @@ namespace ParamLimitsTest
 				{
 					SetTestReprotItem(
 						mcuParam.Name,
+						mcuParam.Cmd,
 						TestTypeEnum.SmallerThanRange,
 						scriptStepSetParameter.Value,
 						false,
@@ -231,6 +234,7 @@ namespace ParamLimitsTest
 
 			SetTestReprotItem(
 					mcuParam.Name,
+					mcuParam.Cmd,
 					TestTypeEnum.SmallerThanRange,
 					scriptStepSetParameter.Value,
 					true,
@@ -245,6 +249,7 @@ namespace ParamLimitsTest
 			{
 				SetTestReprotItem(
 					mcuParam.Name,
+					mcuParam.Cmd,
 					TestTypeEnum.LargerThanRange,
 					scriptStepSetParameter.Value,
 					false,
@@ -258,6 +263,7 @@ namespace ParamLimitsTest
 				{
 					SetTestReprotItem(
 						mcuParam.Name,
+						mcuParam.Cmd,
 						TestTypeEnum.LargerThanRange,
 						scriptStepSetParameter.Value,
 						false,
@@ -269,6 +275,7 @@ namespace ParamLimitsTest
 
 			SetTestReprotItem(
 					mcuParam.Name,
+					mcuParam.Cmd,
 					TestTypeEnum.LargerThanRange,
 					scriptStepSetParameter.Value,
 					true,
@@ -287,6 +294,7 @@ namespace ParamLimitsTest
 			{
 				SetTestReprotItem(
 					mcuParam.Name,
+					mcuParam.Cmd,
 					TestTypeEnum.ValueValid,
 					scriptStepSetParameter.Value,
 					false,
@@ -304,6 +312,7 @@ namespace ParamLimitsTest
 
 			SetTestReprotItem(
 					mcuParam.Name,
+					mcuParam.Cmd,
 					TestTypeEnum.ValueValid,
 					scriptStepSetParameter.Value,
 					true,
@@ -319,6 +328,7 @@ namespace ParamLimitsTest
 			{
 				SetTestReprotItem(
 					mcuParam.Name,
+					mcuParam.Cmd,
 					TestTypeEnum.DropDownValue,
 					0,
 					false,
@@ -332,6 +342,7 @@ namespace ParamLimitsTest
 			{
 				SetTestReprotItem(
 					mcuParam.Name,
+					mcuParam.Cmd,
 					TestTypeEnum.DropDownValue,
 					value,
 					false,
@@ -349,6 +360,7 @@ namespace ParamLimitsTest
 				{
 					SetTestReprotItem(
 						mcuParam.Name,
+						mcuParam.Cmd,
 						TestTypeEnum.DropDownValue,
 						value,
 						false,
@@ -359,6 +371,7 @@ namespace ParamLimitsTest
 
 				SetTestReprotItem(
 						mcuParam.Name,
+						mcuParam.Cmd,
 						TestTypeEnum.DropDownValue,
 						value,
 						false,
@@ -368,6 +381,7 @@ namespace ParamLimitsTest
 
 			SetTestReprotItem(
 				mcuParam.Name,
+					mcuParam.Cmd,
 				TestTypeEnum.DropDownValue,
 				value,
 				true,
@@ -392,6 +406,7 @@ namespace ParamLimitsTest
 				{
 					SetTestReprotItem(
 						mcuParam.Name,
+						mcuParam.Cmd,
 						TestTypeEnum.ValueValid,
 						value,
 						false,
@@ -402,6 +417,7 @@ namespace ParamLimitsTest
 
 				SetTestReprotItem(
 						mcuParam.Name,
+						mcuParam.Cmd,
 						TestTypeEnum.ValueValid,
 						value,
 						false,
@@ -411,6 +427,7 @@ namespace ParamLimitsTest
 
 			SetTestReprotItem(
 						mcuParam.Name,
+						mcuParam.Cmd,
 						TestTypeEnum.ValueValid,
 						value,
 						true,
@@ -420,6 +437,7 @@ namespace ParamLimitsTest
 
 		private void SetTestReprotItem(
 			string name,
+			string command,
 			TestTypeEnum testType,
 			double value,
 			bool isPass,
@@ -428,6 +446,7 @@ namespace ParamLimitsTest
 			TestReprotData testReprotData = new TestReprotData()
 			{
 				ParamName = name,
+				ParamCommand = command,
 				TestType = testType,
 				Value = value,
 				IsPass = isPass,

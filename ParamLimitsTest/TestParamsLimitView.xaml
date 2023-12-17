@@ -68,6 +68,7 @@
             <DataGrid.Columns>
 
                 <DataGridTextColumn Header="Param. Name" Binding="{Binding ParamName}" Width="200" IsReadOnly="True" />
+                <DataGridTextColumn Header="Param. Cmd" Binding="{Binding ParamCommand}" Width="120" IsReadOnly="True" />
                 <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="75" IsReadOnly="True" />
                 <DataGridTextColumn Header="Test Type" Binding="{Binding TestType}" Width="200" IsReadOnly="True" />
 
