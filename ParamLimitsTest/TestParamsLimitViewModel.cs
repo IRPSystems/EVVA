@@ -125,6 +125,7 @@ namespace ParamLimitsTest
 						if (!(test is MCU_ParamData mcuParam))
 							continue;
 
+
 						Application.Current.Dispatcher.Invoke(() =>
 						{
 							TestProgress = (((double)i + 1.0) / (double)_mcuDevice.Device.ParemetersList.Count) * 100.0;
@@ -307,6 +308,7 @@ namespace ParamLimitsTest
 					return;
 				}
 
+				scriptStepSetParameter.IsPass = true;
 				return;
 			}
 
@@ -376,6 +378,7 @@ namespace ParamLimitsTest
 						value,
 						false,
 						scriptStepSetParameter.ErrorMessage);
+				scriptStepSetParameter.IsPass = true;
 				return;
 			}
 
@@ -422,6 +425,7 @@ namespace ParamLimitsTest
 						value,
 						false,
 						scriptStepSetParameter.ErrorMessage);
+				scriptStepSetParameter.IsPass = true;
 				return;
 			}
 
