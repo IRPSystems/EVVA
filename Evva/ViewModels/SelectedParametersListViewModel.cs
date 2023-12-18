@@ -328,10 +328,7 @@ namespace Evva.ViewModels
 							return;
 					}
 
-					int destIndex = ParametersList_WithIndex.IndexOf(droppedOn);
-
-
-					MoveGroupOfParam(destIndex);
+					MoveGroupOfParam(droppedOn);
 
 
 				}
@@ -381,7 +378,7 @@ namespace Evva.ViewModels
 		#region Move UP/DOWN
 
 		private void MoveGroupOfParam(
-			int destIndex)
+			RecordData droppedOnParam)
 		{
 			List<RecordData> list = new List<RecordData>();
 			foreach (var item in _selectedItemsList)
@@ -391,9 +388,9 @@ namespace Evva.ViewModels
 			{
 				MoveParam(
 					item,
-					destIndex);
+					droppedOnParam);
 
-				destIndex = ParametersList_WithIndex.IndexOf(item);
+				droppedOnParam = item;
 			}
 
 			SetIndeces();
@@ -404,7 +401,7 @@ namespace Evva.ViewModels
 
 		private void MoveParam(
 			RecordData paramToMove,
-			int destIndex)
+			RecordData droppedOnParam)
 		{
 			RecordData tempParam = paramToMove;
 
@@ -413,7 +410,9 @@ namespace Evva.ViewModels
 			ParametersList.RemoveAt(sourceIndex);
 			ParametersList_WithIndex.RemoveAt(sourceIndex);
 
-			if (destIndex < 0 || destIndex == (ParametersList_WithIndex.Count - 1))
+			int destIndex = ParametersList_WithIndex.IndexOf(droppedOnParam);
+
+			if (destIndex < 0)
 			{
 				ParametersList.Add(tempParam.Data);
 				ParametersList_WithIndex.Add(tempParam);
@@ -429,22 +428,15 @@ namespace Evva.ViewModels
 		{
 			LoggerService.Inforamtion(this, "Moving parameter UP");
 
-			int index = ParametersList_WithIndex.IndexOf(param);
-			if (index <= 0 || index - 1 < 0)
-				return;
-
-			MoveGroupOfParam(index - 1);
+			MoveGroupOfParam(param);
 		}
 
 		private void MoveDown(RecordData param)
 		{
 			LoggerService.Inforamtion(this, "Moving node DOWN");
 
-			int index = ParametersList_WithIndex.IndexOf(param);
-			if (index >= ParametersList.Count || index + 1 >= ParametersList.Count)
-				return;
 
-			MoveGroupOfParam(index + _selectedItemsList.Count);
+			MoveGroupOfParam(param);
 		}
 
 		#endregion Move UP/DOWN
