@@ -14,8 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DevicesInfrastructures\DeviceCommunicators\DeviceCommunicators.csproj" />
     <ProjectReference Include="..\DevicesInfrastructures\DeviceHandler\DeviceHandler.csproj" />
+    <ProjectReference Include="..\Evva\Evva.csproj" />
     <ProjectReference Include="..\Infrastructure\Controls\Controls.csproj" />
+    <ProjectReference Include="..\Infrastructure\Entities\Entities.csproj" />
   </ItemGroup>
 
 </Project>

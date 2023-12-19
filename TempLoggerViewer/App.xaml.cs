@@ -13,5 +13,11 @@ namespace TempLoggerViewer
 	/// </summary>
 	public partial class App : Application
 	{
+		public App()
+		{
+			Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
+				"MTAwODQzOUAzMjMwMmUzNDJlMzBsQlRMeUl0THVueXVMcWhEMnlCeVJLTnZZdFhLRUh2aEZGKytIdUVIRTRBPQ==");
+
+		}
 	}
 }

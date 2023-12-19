@@ -21,6 +21,8 @@ namespace TempLoggerViewer
 		public TempLoggerView()
 		{
 			InitializeComponent();
+
+			DataContext = new TempLoggerViewModel();
 		}
 	}
 }
