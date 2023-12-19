@@ -17,6 +17,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json;
 using Entities.Enums;
 using System.IO;
+using DeviceCommunicators.Models;
 
 namespace Evva.ViewModels
 {

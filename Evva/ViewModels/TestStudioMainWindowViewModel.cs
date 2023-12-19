@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DeviceCommunicators.Dyno;
 using DeviceCommunicators.MCU;
+using DeviceCommunicators.Models;
 using DeviceCommunicators.Services;
 using DeviceHandler.Models;
 using DeviceSimulators.ViewModels;

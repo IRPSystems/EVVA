@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Entities.Models;
 using DeviceHandler.Models;
+using DeviceCommunicators.Models;
 
 namespace Evva.ViewModels
 {

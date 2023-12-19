@@ -1,5 +1,6 @@
 ﻿
 using CommunityToolkit.Mvvm.Messaging;
+using DeviceCommunicators.Models;
 using DeviceHandler.Models;
 using Entities.Models;
 using ScriptRunner.Models;

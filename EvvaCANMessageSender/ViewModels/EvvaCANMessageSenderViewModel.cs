@@ -21,6 +21,7 @@ using System.ComponentModel;
 using System.Threading;
 using DeviceSimulators.ViewModels;
 using DeviceHandler.ViewModels;
+using DeviceCommunicators.Models;
 
 namespace EvvaCANMessageSender.ViewModels
 {

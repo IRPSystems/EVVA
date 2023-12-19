@@ -3,6 +3,7 @@ using Entities.Models;
 using System.Collections.ObjectModel;
 using DeviceHandler.Models;
 using Newtonsoft.Json;
+using DeviceCommunicators.Models;
 
 namespace Evva.ViewModels
 {
