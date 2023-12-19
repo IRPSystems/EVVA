@@ -18,6 +18,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+            
 
             <Style x:Key="ProjectsListStyle" TargetType="ListView" >
                 <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />                
@@ -165,7 +166,8 @@
 
                                             <Setter Property="ToolTip">
                                                 <Setter.Value>
-                                                    <script_handler_views:ErrorsListView ErrorsList="{Binding ErrorsList}" />
+                                                    <script_handler_views:ErrorsListView ErrorsList="{Binding ErrorsList}" 
+                                                                                         ScriptName="{Binding Name}"/>
                                                 </Setter.Value>
                                             </Setter>
 
