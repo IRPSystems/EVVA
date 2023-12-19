@@ -428,15 +428,26 @@ namespace Evva.ViewModels
 		{
 			LoggerService.Inforamtion(this, "Moving parameter UP");
 
-			MoveGroupOfParam(param);
+			int index = ParametersList_WithIndex.IndexOf(param);
+			if(index == 0)
+				return;
+
+
+			RecordData replacedItem = ParametersList_WithIndex[index - 1];
+			MoveGroupOfParam(replacedItem);
 		}
 
 		private void MoveDown(RecordData param)
 		{
 			LoggerService.Inforamtion(this, "Moving node DOWN");
 
+			int index = ParametersList_WithIndex.IndexOf(param);
+			if (index == 0)
+				return;
 
-			MoveGroupOfParam(param);
+
+			RecordData replacedItem = ParametersList_WithIndex[index + 2];
+			MoveGroupOfParam(replacedItem);
 		}
 
 		#endregion Move UP/DOWN
