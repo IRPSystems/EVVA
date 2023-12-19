@@ -112,7 +112,7 @@ namespace EvvaCANMessageSender.ViewModels
 		private void InitMCUCommunication()
 		{
 			ReadDevicesFileService reader = new ReadDevicesFileService();
-			ObservableCollection<DeviceBase> devicesList = new ObservableCollection<DeviceBase>();
+			ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 			reader.ReadFromMCUJson(
 				"param_defaults.json",
 				devicesList,

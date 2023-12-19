@@ -24,11 +24,11 @@ namespace Evva.ViewModels
 	{
 		#region Properties
 
-		public ObservableCollection<DeviceBase> DevicesList { get; set; }
-		public ObservableCollection<DeviceBase> DevicesSourceList { get; set; }
+		public ObservableCollection<DeviceData> DevicesList { get; set; }
+		public ObservableCollection<DeviceData> DevicesSourceList { get; set; }
 
 
-		public DeviceBase SetupSelectedItem { get; set; }
+		public DeviceData SetupSelectedItem { get; set; }
 
 		#endregion Properties
 
@@ -39,7 +39,7 @@ namespace Evva.ViewModels
 
 		private EvvaUserData _EvvaUserData;
 
-		private ObservableCollection<DeviceBase> _devicesSourceList_Full;
+		private ObservableCollection<DeviceData> _devicesSourceList_Full;
 
 		#endregion Fields
 
@@ -66,13 +66,13 @@ namespace Evva.ViewModels
 				EvvaUserData.MCUB2BJsonPath,
 				EvvaUserData.DynoCommunicationPath,
 				EvvaUserData.NI6002CommunicationPath);
-			DevicesSourceList = new ObservableCollection<DeviceBase>();
-			foreach (DeviceBase device in _devicesSourceList_Full)
+			DevicesSourceList = new ObservableCollection<DeviceData>();
+			foreach (DeviceData device in _devicesSourceList_Full)
 			{
 				DevicesSourceList.Add(device);
 			}
 
-			DevicesList = new ObservableCollection<DeviceBase>();
+			DevicesList = new ObservableCollection<DeviceData>();
 			if (EvvaUserData.SetupDevicesList == null)
 				return;
 
@@ -81,7 +81,7 @@ namespace Evva.ViewModels
 
 			foreach(DeviceTypesEnum deviceType in EvvaUserData.SetupDevicesList)
 			{
-				DeviceBase deviceBase =
+				DeviceData deviceBase =
 					DevicesSourceList.ToList().Find((d) => d.DeviceType == deviceType);
 				if (deviceBase != null)
 				{
@@ -92,14 +92,14 @@ namespace Evva.ViewModels
 
 
 			string str = "Startup Setup list: \r\n";
-			foreach(DeviceBase deviceBase1 in DevicesList)
+			foreach(DeviceData deviceBase1 in DevicesList)
 			{
 				str += deviceBase1.DeviceType + "-" + deviceBase1.Name + "\r\n";
 			}
 			LoggerService.Inforamtion(this, str);
 
 			str = "Source Setup list: \r\n";
-			foreach (DeviceBase deviceBase1 in DevicesSourceList)
+			foreach (DeviceData deviceBase1 in DevicesSourceList)
 			{
 				str += deviceBase1.DeviceType + "-" + deviceBase1.Name + "\r\n";
 			}
@@ -115,7 +115,7 @@ namespace Evva.ViewModels
 		{
 			LoggerService.Inforamtion(this, "Remove device " + deviceType + " from the sources list");
 
-			DeviceBase device = DevicesSourceList.ToList().Find((d) => d.DeviceType == deviceType);
+			DeviceData device = DevicesSourceList.ToList().Find((d) => d.DeviceType == deviceType);
 			if (device == null)
 				return;
 
@@ -257,10 +257,10 @@ namespace Evva.ViewModels
 
 			if (e.Data.GetDataPresent("DeviceDrag"))
 			{
-				DeviceBase droppedDevice = e.Data.GetData("DeviceDrag") as DeviceBase;
-				DeviceBase deviceBase = droppedDevice.Clone() as DeviceBase;
+				DeviceData droppedDevice = e.Data.GetData("DeviceDrag") as DeviceData;
+				DeviceData deviceBase = droppedDevice.Clone() as DeviceData;
 
-				List<DeviceBase> sameTypeDevice = 
+				List<DeviceData> sameTypeDevice = 
 					DevicesList.ToList().Where((d) => d.DeviceType == deviceBase.DeviceType).ToList();
 				if (sameTypeDevice != null && sameTypeDevice.Count > 0)
 				{
@@ -274,7 +274,7 @@ namespace Evva.ViewModels
 			}
 
 			string str = "Source list:\r\n";
-			foreach(DeviceBase deviceBase1 in DevicesSourceList)
+			foreach(DeviceData deviceBase1 in DevicesSourceList)
 				str += deviceBase1.DeviceType + "\r\n";
 			LoggerService.Inforamtion(this, str);
 		}
@@ -305,7 +305,7 @@ namespace Evva.ViewModels
 			string path = saveFileDialog.FileName;
 
 			List<(string, DeviceTypesEnum)> devicesList = new List<(string, DeviceTypesEnum)>();
-			foreach(DeviceBase deviceBase in DevicesList) 
+			foreach(DeviceData deviceBase in DevicesList) 
 			{ 
 				devicesList.Add((deviceBase.Name, deviceBase.DeviceType));
 			}
@@ -342,11 +342,11 @@ namespace Evva.ViewModels
 
 			foreach ((string, DeviceTypesEnum) device in devicesList) 
 			{
-				DeviceBase deviceBase = _devicesSourceList_Full.ToList().Find((d) => d.DeviceType == device.Item2);
+				DeviceData deviceBase = _devicesSourceList_Full.ToList().Find((d) => d.DeviceType == device.Item2);
 				if(deviceBase == null) 
 					continue;
 
-				DeviceBase destDevice = deviceBase.Clone() as DeviceBase;
+				DeviceData destDevice = deviceBase.Clone() as DeviceData;
 				destDevice.Name = device.Item1;
 				DevicesList.Add(destDevice);
 				RemoveSetupDeviceFromSource(deviceBase.DeviceType);
@@ -356,7 +356,7 @@ namespace Evva.ViewModels
 		private void CloseOK()
 		{
 			_EvvaUserData.SetupDevicesList = new ObservableCollection<DeviceTypesEnum>();
-			foreach(DeviceBase deviceBase in DevicesList)
+			foreach(DeviceData deviceBase in DevicesList)
 				_EvvaUserData.SetupDevicesList.Add(deviceBase.DeviceType);
 
 			

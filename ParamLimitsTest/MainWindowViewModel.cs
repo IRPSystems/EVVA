@@ -44,7 +44,7 @@ namespace ParamLimitsTest
 				LoadJsonCommand = new RelayCommand(LoadJson);
 
 				ReadDevicesFileService reader = new ReadDevicesFileService();
-				ObservableCollection<DeviceBase> devicesList = new ObservableCollection<DeviceBase>();
+				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 				reader.ReadFromMCUJson(
 					"param_defaults.json",
 					devicesList,
@@ -90,7 +90,7 @@ namespace ParamLimitsTest
 				return;
 
 			ReadDevicesFileService reader = new ReadDevicesFileService();
-			ObservableCollection<DeviceBase> devicesList = new ObservableCollection<DeviceBase>();
+			ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 			reader.ReadFromMCUJson(
 				openFileDialog.FileName,
 				devicesList,

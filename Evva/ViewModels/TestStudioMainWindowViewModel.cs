@@ -486,7 +486,7 @@ namespace Evva.ViewModels
 			if (e.IsDynoJsonPathChanged && DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.Dyno))
 			{
 				string dynoPath = Path.Combine(EvvaUserData.DynoCommunicationPath, "Dyno Communication.json");
-				ObservableCollection<DeviceBase> devicesList = new ObservableCollection<DeviceBase>();
+				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 				_readDevicesFile.ReadFromJson(
 					dynoPath,
 					devicesList);
@@ -506,7 +506,7 @@ namespace Evva.ViewModels
 			if (e.IsNI6002JsonPathChanged && DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002))
 			{
 				string ni6002JPath = Path.Combine(EvvaUserData.NI6002CommunicationPath, "NI_6002.json");
-				ObservableCollection<DeviceBase> devicesList = new ObservableCollection<DeviceBase>();
+				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 				_readDevicesFile.ReadFromJson(
 					ni6002JPath,
 					devicesList);
@@ -542,7 +542,7 @@ namespace Evva.ViewModels
 			DeviceTypesEnum type,
 			string filePath)
 		{
-			ObservableCollection<DeviceBase> devicesList = new ObservableCollection<DeviceBase>();
+			ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 			_readDevicesFile.ReadFromMCUJson(
 				filePath,
 				devicesList,
@@ -650,7 +650,7 @@ namespace Evva.ViewModels
 
 		private void UpdateSetup()
 		{
-			ObservableCollection<DeviceBase> deviceList = _setupSelectionVM.DevicesList;
+			ObservableCollection<DeviceData> deviceList = _setupSelectionVM.DevicesList;
 
 			foreach (DeviceFullData device in DevicesContainter.DevicesFullDataList)
 			{
@@ -662,7 +662,7 @@ namespace Evva.ViewModels
 			DevicesContainter.TypeToDevicesFullData.Clear();
 
 
-			foreach (DeviceBase device in deviceList)
+			foreach (DeviceData device in deviceList)
 			{
 				DeviceFullData deviceFullData = new DeviceFullData(device as DeviceData);				
 

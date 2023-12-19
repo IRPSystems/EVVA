@@ -42,7 +42,7 @@ namespace TempLoggerViewer
 
 			string path = Directory.GetCurrentDirectory();
 			ReadDevicesFileService readDevicesFile = new ReadDevicesFileService();
-			ObservableCollection<DeviceBase> deviceList = readDevicesFile.ReadAllFiles(
+			ObservableCollection<DeviceData> deviceList = readDevicesFile.ReadAllFiles(
 				path,
 				null,
 				null,
@@ -59,7 +59,7 @@ namespace TempLoggerViewer
 			DevicesContainter.TypeToDevicesFullData.Clear();
 
 
-			foreach (DeviceBase device in deviceList)
+			foreach (DeviceData device in deviceList)
 			{
 				DeviceFullData deviceFullData = new DeviceFullData(device as DeviceData);
 
