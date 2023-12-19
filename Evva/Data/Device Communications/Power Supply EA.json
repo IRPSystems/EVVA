@@ -1,7 +1,7 @@
 {
-  "$type": "Entities.Models.DeviceData, Entities",
+  "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
   "ParemetersList": {
-    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[Entities.Models.DeviceParameterData, Entities]], System.ObjectModel",
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
     "$values": [
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
