@@ -7,13 +7,30 @@
                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
                 xmlns:local="clr-namespace:TempLoggerViewer"
                 mc:Ignorable="d"
-                Title="Temp Logger Viewer" Height="450" Width="800">
+                Title="Temp Logger Viewer" Height="460" Width="800"
+                 WindowStartupLocation="CenterScreen">
     
     <mah:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/ButtonWithIcon.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="DataLoggerStyle" TargetType="ListViewItem" >
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <local:TempLoggerView DataContext="{Binding}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                </Style.Resources>
+
+            </Style>
 
 
         </ResourceDictionary>
@@ -114,7 +131,18 @@
 
         <Line Grid.Row="1" X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}" />
 
-        <!--<ContentControl Grid.Row="2" Content="{Binding Docking}" Margin="5, 0"/>-->
+        <ListView Grid.Row="2" ItemsSource="{Binding DevicesContainter.DevicesList}"
+                  ItemContainerStyle="{StaticResource DataLoggerStyle}"
+                  VerticalAlignment="Top"
+                  Margin="5,0">
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+        </ListView>
 
         <Border Grid.Row="4" Background="{DynamicResource MahApps.Brushes.Accent}" >
             <StackPanel Orientation="Horizontal">
@@ -126,7 +154,7 @@
                            VerticalAlignment="Center"
                            Margin="5,0,5,0"/>
 
-                <TextBlock Text="{Binding Version, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" 
+                <TextBlock Text="{Binding Version}" 
                            FontSize="16"
                            FontWeight="DemiBold" 
                            Foreground="White" 

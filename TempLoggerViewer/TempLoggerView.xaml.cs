@@ -22,7 +22,7 @@ namespace TempLoggerViewer
 		{
 			InitializeComponent();
 
-			DataContext = new TempLoggerViewModel();
+			//DataContext = new TempLoggerViewModel();
 		}
 	}
 }
