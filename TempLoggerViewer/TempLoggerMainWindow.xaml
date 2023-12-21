@@ -5,6 +5,7 @@
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+                xmlns:device_handler_views="clr-namespace:DeviceHandler.Views;assembly=DeviceHandler"
                 xmlns:local="clr-namespace:TempLoggerViewer"
                 mc:Ignorable="d"
                 Title="Temp Logger Viewer" Height="460" Width="800"
@@ -64,68 +65,9 @@
                 <iconPacks:Material Kind="Connection" />
             </Button>
 
-            <ListView ItemsSource="{Binding DevicesContainter.DevicesFullDataList}" Grid.Column="3" >
 
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate>
-
-                                    <Border Name="bd"
-                                            BorderBrush="{DynamicResource MahApps.Brushes.Gray1}" 
-                                            BorderThickness="1"
-                                            Background="White"
-                                            Width="75"
-                                            Margin="2">
-
-                                        <TextBlock Name="tb"
-                                                  Text="{Binding Device.Name}" 
-                                                  Foreground="Black"
-                                                  HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                                  FontWeight="DemiBold"
-                                                  TextWrapping="Wrap"
-                                                  ToolTip="{Binding CommErrDescription}"/>
-
-                                    </Border>
-
-                                    <ControlTemplate.Triggers>
-
-                                        <DataTrigger Binding="{Binding CommState}" Value="None">
-                                            <Setter TargetName="bd" Property="Background" Value="Gray"/>
-                                            <Setter TargetName="tb" Property="Foreground" Value="White"/>
-                                        </DataTrigger>
-
-                                        <DataTrigger Binding="{Binding CommState}" Value="Initiated">
-                                            <Setter TargetName="bd" Property="Background" Value="Blue"/>
-                                            <Setter TargetName="tb" Property="Foreground" Value="White"/>
-                                        </DataTrigger>
-
-                                        <DataTrigger Binding="{Binding CommState}" Value="Connected">
-                                            <Setter TargetName="bd" Property="Background" Value="Green"/>
-                                            <Setter TargetName="tb" Property="Foreground" Value="White"/>
-                                        </DataTrigger>
-
-                                        <DataTrigger Binding="{Binding CommState}" Value="Disconnected">
-                                            <Setter TargetName="bd" Property="Background" Value="Red"/>
-                                            <Setter TargetName="tb" Property="Foreground" Value="White"/>
-                                        </DataTrigger>
-
-                                    </ControlTemplate.Triggers>
-
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-
-            </ListView>
+            <device_handler_views:CommunicationIndeicatorView DataContext="{Binding DevicesContainter}"
+                                                              Grid.Column="3"/>
 
         </Grid>
 

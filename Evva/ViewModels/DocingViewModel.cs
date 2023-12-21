@@ -1,4 +1,6 @@
 ﻿using Controls.ViewModels;
+using DeviceHandler.ViewModels;
+using DeviceHandler.Views;
 using Evva.Views;
 using ParamLimitsTest;
 using ScriptHandler.Services;
@@ -111,9 +113,9 @@ namespace Evva.ViewModels
 //#if DEBUG
 			TestsView testsView = new TestsView() { DataContext = tests };
 			CreateTabbedWindow(testsView, "Tests", "Design", out _tests);
-//#endif
+			//#endif
 
-			ParametersView paramView = new ParametersView() { DataContext = parameters };
+			Evva.Views.ParametersView paramView = new Evva.Views.ParametersView() { DataContext = parameters };
 			CreateTabbedWindow(paramView, "Parameters", "Design", out _recording);
 
 			RunView runView = new RunView() { DataContext = run };

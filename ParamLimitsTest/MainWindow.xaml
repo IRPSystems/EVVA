@@ -52,71 +52,11 @@
             
             <device_handler_views:CanConnectView Grid.Column="0" DataContext="{Binding CanConnect}"/>
 
-            <ListView ItemsSource="{Binding DevicesContainter.DevicesFullDataList}" 
+            
+            <device_handler_views:CommunicationIndeicatorView DataContext="{Binding DevicesContainter}" 
                       Grid.Column="4" 
                       VerticalAlignment="Top"
-                      Height="35">
-
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate>
-
-                                    <Border Name="bd"
-                                            BorderBrush="{DynamicResource MahApps.Brushes.Gray1}" 
-                                            BorderThickness="1"
-                                            Background="White"
-                                            Width="75"
-                                            Margin="2">
-
-                                        <TextBlock Name="tb"
-                                                  Text="{Binding Device.Name}" 
-                                                  Foreground="Black"
-                                                  HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                                  FontWeight="DemiBold"
-                                                  TextWrapping="Wrap"
-                                                  ToolTip="{Binding CommErrDescription}"/>
-
-                                    </Border>
-
-                                    <ControlTemplate.Triggers>
-
-                                        <DataTrigger Binding="{Binding CommState}" Value="None">
-                                            <Setter TargetName="bd" Property="Background" Value="Gray"/>
-                                            <Setter TargetName="tb" Property="Foreground" Value="White"/>
-                                        </DataTrigger>
-
-                                        <DataTrigger Binding="{Binding CommState}" Value="Initiated">
-                                            <Setter TargetName="bd" Property="Background" Value="Blue"/>
-                                            <Setter TargetName="tb" Property="Foreground" Value="White"/>
-                                        </DataTrigger>
-
-                                        <DataTrigger Binding="{Binding CommState}" Value="Connected">
-                                            <Setter TargetName="bd" Property="Background" Value="Green"/>
-                                            <Setter TargetName="tb" Property="Foreground" Value="White"/>
-                                        </DataTrigger>
-
-                                        <DataTrigger Binding="{Binding CommState}" Value="Disconnected">
-                                            <Setter TargetName="bd" Property="Background" Value="Red"/>
-                                            <Setter TargetName="tb" Property="Foreground" Value="White"/>
-                                        </DataTrigger>
-
-                                    </ControlTemplate.Triggers>
-
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-
-            </ListView>
+                      Height="35"/>
         </Grid>
 
         <Line Grid.Row="1" X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}"/>

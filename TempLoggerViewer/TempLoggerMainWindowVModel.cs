@@ -5,6 +5,7 @@ using DeviceCommunicators.Models;
 using DeviceCommunicators.Services;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
+using DeviceHandler.ViewModels;
 using Entities.Enums;
 using Entities.Models;
 using Evva.ViewModels;

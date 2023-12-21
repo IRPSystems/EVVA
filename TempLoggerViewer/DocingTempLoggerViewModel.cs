@@ -1,4 +1,6 @@
 ﻿using Controls.ViewModels;
+using DeviceHandler.ViewModels;
+using DeviceHandler.Views;
 using Evva.ViewModels;
 using Evva.Views;
 using ParamLimitsTest;

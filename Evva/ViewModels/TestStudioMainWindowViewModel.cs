@@ -8,6 +8,7 @@ using DeviceCommunicators.Models;
 using DeviceCommunicators.Services;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
+using DeviceHandler.ViewModels;
 using DeviceSimulators.ViewModels;
 using DeviceSimulators.Views;
 using Entities.Enums;
