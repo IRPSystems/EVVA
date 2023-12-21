@@ -1,6 +1,7 @@
 ﻿
 using DeviceCommunicators.General;
 using DeviceHandler.Models;
+using DeviceHandler.Models.DeviceFullDataModels;
 using Entities.Enums;
 using Entities.Models;
 using Evva.Models;

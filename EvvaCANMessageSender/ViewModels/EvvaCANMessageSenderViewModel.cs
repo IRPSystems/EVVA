@@ -22,6 +22,7 @@ using System.Threading;
 using DeviceSimulators.ViewModels;
 using DeviceHandler.ViewModels;
 using DeviceCommunicators.Models;
+using DeviceHandler.Models.DeviceFullDataModels;
 
 namespace EvvaCANMessageSender.ViewModels
 {
@@ -120,7 +121,7 @@ namespace EvvaCANMessageSender.ViewModels
 				"MCU",
 				DeviceTypesEnum.MCU);
 
-			MCUDevice = new DeviceFullData(devicesList[0] as DeviceData);
+			MCUDevice = DeviceFullData.Factory(devicesList[0]);
 			MCUDevice.Init();
 			MCUDevice.Connect();
 			CanConnect = MCUDevice.ConnectionViewModel;

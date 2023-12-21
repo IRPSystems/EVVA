@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Timers;
 using DeviceCommunicators.Models;
+using DeviceHandler.Models.DeviceFullDataModels;
 
 namespace Evva.ViewModels
 {

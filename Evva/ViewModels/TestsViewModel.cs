@@ -14,6 +14,7 @@ using Evva.Services;
 using Evva.Views;
 using ParamLimitsTest;
 using DeviceCommunicators.Models;
+using DeviceHandler.Models.DeviceFullDataModels;
 
 namespace Evva.ViewModels
 {

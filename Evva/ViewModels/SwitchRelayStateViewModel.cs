@@ -5,6 +5,7 @@ using DeviceCommunicators.MCU;
 using DeviceCommunicators.Models;
 using DeviceHandler.Enums;
 using DeviceHandler.Models;
+using DeviceHandler.Models.DeviceFullDataModels;
 using Entities.Models;
 using System;
 using System.Collections.ObjectModel;

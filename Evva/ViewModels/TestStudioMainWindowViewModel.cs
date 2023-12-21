@@ -7,6 +7,7 @@ using DeviceCommunicators.MCU;
 using DeviceCommunicators.Models;
 using DeviceCommunicators.Services;
 using DeviceHandler.Models;
+using DeviceHandler.Models.DeviceFullDataModels;
 using DeviceSimulators.ViewModels;
 using DeviceSimulators.Views;
 using Entities.Enums;
@@ -665,7 +666,7 @@ namespace Evva.ViewModels
 
 			foreach (DeviceData device in deviceList)
 			{
-				DeviceFullData deviceFullData = new DeviceFullData(device as DeviceData);				
+				DeviceFullData deviceFullData = DeviceFullData.Factory(device);				
 
 				deviceFullData.Init();
 

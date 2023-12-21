@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using DeviceCommunicators.Models;
 using DeviceCommunicators.Services;
 using DeviceHandler.Models;
+using DeviceHandler.Models.DeviceFullDataModels;
 using Entities.Enums;
 using Entities.Models;
 using Evva.ViewModels;
@@ -62,12 +63,12 @@ namespace TempLoggerViewer
 
 			foreach (DeviceData device in deviceList)
 			{
-				DeviceFullData deviceFullData = new DeviceFullData(device as DeviceData);
+				DeviceFullData deviceFullData = DeviceFullData.Factory(device);
 
 				deviceFullData.Init();
 
 				DevicesContainter.DevicesFullDataList.Add(deviceFullData);
-				DevicesContainter.DevicesList.Add(device as DeviceData);
+				DevicesContainter.DevicesList.Add(device);
 				if (DevicesContainter.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
 					DevicesContainter.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
 			}

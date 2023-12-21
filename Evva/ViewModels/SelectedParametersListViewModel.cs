@@ -17,6 +17,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System;
 using DeviceCommunicators.Models;
+using DeviceHandler.Models.DeviceFullDataModels;
 
 namespace Evva.ViewModels
 {

@@ -6,6 +6,7 @@ using DeviceCommunicators.Models;
 using DeviceCommunicators.Services;
 using DeviceHandler.Interfaces;
 using DeviceHandler.Models;
+using DeviceHandler.Models.DeviceFullDataModels;
 using Entities.Enums;
 using Entities.Models;
 using Microsoft.Win32;
@@ -52,7 +53,7 @@ namespace ParamLimitsTest
 					"MCU",
 					DeviceTypesEnum.MCU);
 
-				_mcuDevice = new DeviceFullData(devicesList[0] as DeviceData);
+				_mcuDevice = DeviceFullData.Factory(devicesList[0]);
 
 				_mcuDevice.Init();
 				_mcuDevice.Connect();

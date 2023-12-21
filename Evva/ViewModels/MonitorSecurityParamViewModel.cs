@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using DeviceCommunicators.MCU;
 using DeviceCommunicators.Models;
 using DeviceHandler.Models;
+using DeviceHandler.Models.DeviceFullDataModels;
 using Entities.Models;
 using ScriptHandler.Models;
 using ScriptRunner.Services;
