@@ -91,7 +91,7 @@ namespace Evva.ViewModels
 			if (result != true)
 				return;
 
-			DynoCommunicationPath = openFileDialog.FileName;
+			DynoCommunicationPath = Path.GetDirectoryName(openFileDialog.FileName);
 		}
 		private void BrowseNI600Json()
 		{
