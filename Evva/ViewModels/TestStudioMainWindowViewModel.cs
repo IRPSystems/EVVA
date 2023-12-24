@@ -491,6 +491,7 @@ namespace Evva.ViewModels
 				string dynoPath = Path.Combine(EvvaUserData.DynoCommunicationPath, "Dyno Communication.json");
 				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 				_readDevicesFile.ReadFromJson(
+					"Data\\Device Communications",
 					dynoPath,
 					devicesList);
 				DeviceFullData deviceData = DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.Dyno];
@@ -511,6 +512,7 @@ namespace Evva.ViewModels
 				string ni6002JPath = Path.Combine(EvvaUserData.NI6002CommunicationPath, "NI_6002.json");
 				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 				_readDevicesFile.ReadFromJson(
+					"Data\\Device Communications",
 					ni6002JPath,
 					devicesList);
 				DeviceFullData deviceData = DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.NI_6002];
