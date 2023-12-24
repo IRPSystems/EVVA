@@ -288,6 +288,8 @@ namespace Evva.ViewModels
 
 				var dragData = e.Data.GetData(DeviceHandler.ViewModel.ParametersViewModel.DragDropFormat);
 
+				
+
 				if (dragData is ObservableCollection<object> list)
 				{
 					foreach (object obj in list)
@@ -307,6 +309,7 @@ namespace Evva.ViewModels
 				}
 				else if (dragData is DeviceParameterData param)
 				{
+					LoggerService.Inforamtion(this, "Dropping parameter \"" + param.Name + "\"");
 					AddParamToLogList(param, droppedOnIndex);
 				}
 
