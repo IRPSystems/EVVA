@@ -31,7 +31,7 @@ using System.Windows;
 
 namespace Evva.ViewModels
 {
-	public class TestStudioMainWindowViewModel: ObservableObject
+	public class TestStudioMainWindowViewModel : ObservableObject
 	{
 
 		public class MonitorType
@@ -91,7 +91,7 @@ namespace Evva.ViewModels
 
 
 		public EvvaUserData EvvaUserData;
-		
+
 		private ReadDevicesFileService _readDevicesFile;
 
 		private SetupSelectionViewModel _setupSelectionVM;
@@ -105,275 +105,89 @@ namespace Evva.ViewModels
 
 		public TestStudioMainWindowViewModel()
 		{
-			LoggerService.Init("Evva.log", Serilog.Events.LogEventLevel.Information);
-			LoggerService.Inforamtion(this, "-------------------------------------- EVVA ---------------------");
 
-			SettingsCommand = new RelayCommand(Settings);
-			ChangeDarkLightCommand = new RelayCommand(ChangeDarkLight);
-			ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
-			CommunicationSettingsCommand = new RelayCommand(InitCommunicationSettings);
-			LoadedCommand = new RelayCommand(Loaded);
-
-			MonitorsDropDownMenuItemCommand = new RelayCommand<string>(MonitorsDropDownMenuItem);
-
-			OpenDesignCommand = new RelayCommand(OpenDesign);
-			OpenRunCommand = new RelayCommand(OpenRun);
-			OpenRecordingCommand = new RelayCommand(OpenRecording);
-			OpenTestCommand = new RelayCommand(OpenTest);
-
-			DeviceSimulatorCommand = new RelayCommand(DeviceSimulator);
-			ResetWindowsLayoutCommand = new RelayCommand(ResetWindowsLayout);
-
-			SetupSelectionCommand = new RelayCommand(SetupSelection);
-
-
-			BrowseCANMessagesScriptPathCommand = new RelayCommand(BrowseCANMessagesScriptPath);
-			CANMessageSenderCommand = new RelayCommand(CANMessageSender);
-			StartCANMessageSenderCommand = new RelayCommand(StartCANMessageSender);
-			StopCANMessageSenderCommand = new RelayCommand(StopCANMessageSender);
-
-			LoadEvvaUserData();
-
-			if (string.IsNullOrEmpty(EvvaUserData.MCUJsonPath))
-				EvvaUserData.MCUJsonPath = @"Data\Device Communications\param_defaults.json";
-			if (string.IsNullOrEmpty(EvvaUserData.MCUB2BJsonPath))
-				EvvaUserData.MCUB2BJsonPath = @"Data\Device Communications\param_defaults.json";
-			if (string.IsNullOrEmpty(EvvaUserData.DynoCommunicationPath))
-				EvvaUserData.DynoCommunicationPath = @"Data\Device Communications\Dyno Communication.json";
-			if (string.IsNullOrEmpty(EvvaUserData.NI6002CommunicationPath))
-				EvvaUserData.NI6002CommunicationPath = @"Data\Device Communications\NI_6002.json";
-
-
-
-
-
-			_readDevicesFile = new ReadDevicesFileService();
-			_setupSelectionVM =
-				new SetupSelectionViewModel(EvvaUserData, _readDevicesFile);
-			SetupSelectionWindowView setupSelectionView = new SetupSelectionWindowView();
-			setupSelectionView.SetDataContext(_setupSelectionVM);
-			bool? resutl = setupSelectionView.ShowDialog();
-			if (resutl != true)
-			{
-				Closing(null);
-				Application.Current.Shutdown();
-				return;
-			}
-
-
-			DevicesContainter = new DevicesContainer();
-			DevicesContainter.DevicesFullDataList = new ObservableCollection<DeviceFullData>();
-			DevicesContainter.DevicesList = new ObservableCollection<DeviceData>();
-			DevicesContainter.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
-			UpdateSetup();
-
-
-			CommunicationSettings = new CommunicationViewModel(DevicesContainter);
-
-#if DEBUG
-				TestsVisibility = Visibility.Visible;
-				SilentRunVisibility = Visibility.Visible;
-#else
-			TestsVisibility = Visibility.Collapsed;
-			SilentRunVisibility = Visibility.Collapsed;
-#endif
-
-			TestsVisibility = Visibility.Visible;
-
-			_canMessagesService = new CANMessagesService();
-		}
-
-		#endregion Constructor
-
-		#region Methods
-
-		private void AddMotorPowerOutputToTorqueKistler()
-		{
-			if(DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.TorqueKistler) == false)
-			{
-				return;
-			}
-
-			DeviceFullData deviceFullData =
-				DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.TorqueKistler];
-
-			CalculatedParam calculatedParam = new CalculatedParam();
-			calculatedParam.Formula = "(A / 9.55) * B";
-
-			calculatedParam.ParametersList = new ObservableCollection<DeviceParameterData>();
-			calculatedParam.ParametersList.Add(
-				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Speed"));
-			calculatedParam.ParametersList.Add(
-				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Torque"));
-
-			calculatedParam.Device = deviceFullData.Device;
-			calculatedParam.DeviceType = DeviceTypesEnum.TorqueKistler;
-
-			calculatedParam.Name = "Motor Power Output";
-			deviceFullData.Device.ParemetersList.Add(calculatedParam);
-
-			SETTINGS_UPDATEDMessage e = new SETTINGS_UPDATEDMessage();
-			WeakReferenceMessenger.Default.Send(e);
-		}
-
-		private void CopyUserFilesToEvvaDir()
-		{
-			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			string newPath = Path.Combine(appDataPath, "Evva");
-			string oldPath = Path.Combine(appDataPath, "IRPTestStudio");
-
-			if (Directory.Exists(newPath))
-				return;
-
-			if (!Directory.Exists(oldPath))
-				return;
-
-			Directory.CreateDirectory(newPath);
-
-			string[] filesList = Directory.GetFiles(oldPath);
-			foreach(string file in filesList)
-			{
-				string fileName = Path.GetFileName(file);
-				string newFilePath = Path.Combine(newPath, fileName);
-
-				File.Copy(file, newFilePath, false);
-			}
-		}
-
-		private void AddJson()
-		{
-			//DeviceData device = new DeviceData()
-			//{
-			//	Name = "Torque Kistler",
-			//	DeviceType = DeviceTypesEnum.TorqueKistler,
-			//};
-
-			//device.ParemetersList = new ObservableCollection<DeviceParameterData>()
-			//{
-			//	new TorqueKistler_ParamData() { Name = "Torque", Command = "MEAS:TORQ", Units = "Nm", DeviceType = DeviceTypesEnum.TorqueKistler },
-			//	new TorqueKistler_ParamData() { Name = "Speed", Command = "MEAS:SPE", Units = "RPM", DeviceType = DeviceTypesEnum.TorqueKistler },
-			//	new TorqueKistler_ParamData() { Name = "All", Command = "MEAS:ALL", Units = "", DeviceType = DeviceTypesEnum.TorqueKistler },
-			//	new TorqueKistler_ParamData() { Name = "Torque filter Freq", Command = "OUTP:TORQ:FILT:FREQ", Units = "Hz", DeviceType = DeviceTypesEnum.TorqueKistler },
-			//	new TorqueKistler_ParamData() { Name = "Speed filter Freq", Command = "OUTP:SPE:FILT:FREQ", Units = "Hz", DeviceType = DeviceTypesEnum.TorqueKistler },
-			//	new TorqueKistler_ParamData() { Name = "Calibrate Zero offset", Command = "OUTP:TARE:AUTO", Units = "", DeviceType = DeviceTypesEnum.TorqueKistler },
-			//};
-
-
-			//JsonSerializerSettings settings = new JsonSerializerSettings();
-			//settings.Formatting = Formatting.Indented;
-			//settings.TypeNameHandling = TypeNameHandling.All;
-			//var sz = JsonConvert.SerializeObject(device, settings);
-			//File.WriteAllText(@"C:\Projects\Infrastructure\Evva\Data\Device Communications\Torque Kistler.json", sz);
-		}
-
-		private void Settings()
-		{
-			Docking.OpenSettings();
-		}
-
-		private void ChangeDarkLight()
-		{
-
-			EvvaUserData.IsLightTheme = !EvvaUserData.IsLightTheme;
-			App.ChangeDarkLight(EvvaUserData.IsLightTheme);
-
-			if (Design != null)
-			{
-				Design.RefreshTheme(EvvaUserData.IsLightTheme);
-				Design.RefreshDiagram();
-			}
-
-			if (Docking != null)
-				Docking.Refresh();
-
-			if(Run != null)
-				Run.ChangeDiagramBackground();
-		}
-
-		private void LoadEvvaUserData()
-		{
-			EvvaUserData = EvvaUserData.LoadEvvaUserData("Evva");
-
-			if (EvvaUserData == null)
-			{
-				EvvaUserData = new EvvaUserData();
-				EvvaUserData.IsLightTheme = false;
-				ChangeDarkLight();
-				return;
-			}
-			else
-				EvvaUserData.IsLightTheme = !EvvaUserData.IsLightTheme;
-
-
-			ChangeDarkLight();
-		}
-
-		private void SaveEvvaUserData()
-		{
-			EvvaUserData.SaveEvvaUserData(
-				"Evva", 
-				EvvaUserData);
-		}
-
-		private void Closing(CancelEventArgs e)
-		{
-			SaveEvvaUserData();
-
-			if (Design != null) 
-			{
-				bool isCancel = Design.SaveIfNeeded();
-				if(isCancel) 
-				{
-					e.Cancel = true;
-					return;
-				}
-			}
-
-			if (MonitorRecParam != null)
-				MonitorRecParam.Dispose();
-
-
-			if(DevicesContainter != null)
-			{
-				foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
-				{
-					deviceFullData.Disconnect();
-
-					if (deviceFullData.CheckCommunication == null)
-						continue;
-
-					deviceFullData.CheckCommunication.Dispose();
-				}
-			}
-
-			if(Docking != null)
-				Docking.Close();
-
-			if(Faults != null)
-				Faults.Dispose();
-
-			if (_canMessagesService != null)
-				_canMessagesService.CloseCANMessageSender();
-		}
-
-		private void InitCommunicationSettings()
-		{
-			Docking.OpenCommSettings();
-		}
-
-		private void Loaded()
-		{
 			CopyUserFilesToEvvaDir();
 			AddJson();
 
 			try
 			{
-				
+				LoggerService.Init("Evva.log", Serilog.Events.LogEventLevel.Information);
+				LoggerService.Inforamtion(this, "-------------------------------------- EVVA ---------------------");
 
 
 				LoggerService.Inforamtion(this, "Starting C'tor of TestStudioMainWindowViewModel");
 
-				
+				LoadEvvaUserData();
+
+				if (string.IsNullOrEmpty(EvvaUserData.MCUJsonPath))
+					EvvaUserData.MCUJsonPath = @"Data\Device Communications\param_defaults.json";
+				if (string.IsNullOrEmpty(EvvaUserData.MCUB2BJsonPath))
+					EvvaUserData.MCUB2BJsonPath = @"Data\Device Communications\param_defaults.json";
+				if (string.IsNullOrEmpty(EvvaUserData.DynoCommunicationPath))
+					EvvaUserData.DynoCommunicationPath = @"Data\Device Communications\Dyno Communication.json";
+				if (string.IsNullOrEmpty(EvvaUserData.NI6002CommunicationPath))
+					EvvaUserData.NI6002CommunicationPath = @"Data\Device Communications\NI_6002.json";
+
+				SettingsCommand = new RelayCommand(Settings);
+				ChangeDarkLightCommand = new RelayCommand(ChangeDarkLight);
+				ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
+				CommunicationSettingsCommand = new RelayCommand(InitCommunicationSettings);
+				LoadedCommand = new RelayCommand(Loaded);
+
+				MonitorsDropDownMenuItemCommand = new RelayCommand<string>(MonitorsDropDownMenuItem);
+
+				OpenDesignCommand = new RelayCommand(OpenDesign);
+				OpenRunCommand = new RelayCommand(OpenRun);
+				OpenRecordingCommand = new RelayCommand(OpenRecording);
+				OpenTestCommand = new RelayCommand(OpenTest);
+
+				DeviceSimulatorCommand = new RelayCommand(DeviceSimulator);
+				ResetWindowsLayoutCommand = new RelayCommand(ResetWindowsLayout);
+
+				SetupSelectionCommand = new RelayCommand(SetupSelection);
+
+
+				BrowseCANMessagesScriptPathCommand = new RelayCommand(BrowseCANMessagesScriptPath);
+				CANMessageSenderCommand = new RelayCommand(CANMessageSender);
+				StartCANMessageSenderCommand = new RelayCommand(StartCANMessageSender);
+				StopCANMessageSenderCommand = new RelayCommand(StopCANMessageSender);
+
+
+
+				_readDevicesFile = new ReadDevicesFileService();
+				_setupSelectionVM =
+					new SetupSelectionViewModel(EvvaUserData, _readDevicesFile);
+				SetupSelectionWindowView setupSelectionView = new SetupSelectionWindowView();
+				setupSelectionView.SetDataContext(_setupSelectionVM);
+				bool? resutl = setupSelectionView.ShowDialog();
+				if (resutl != true)
+				{
+					Closing(null);
+					Application.Current.Shutdown();
+					return;
+				}
+
+
+				DevicesContainter = new DevicesContainer();
+				DevicesContainter.DevicesFullDataList = new ObservableCollection<DeviceFullData>();
+				DevicesContainter.DevicesList = new ObservableCollection<DeviceData>();
+				DevicesContainter.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
+				UpdateSetup();
+
+
+				CommunicationSettings = new CommunicationViewModel(DevicesContainter);
+
+#if DEBUG
+				TestsVisibility = Visibility.Visible;
+				SilentRunVisibility = Visibility.Visible;
+#else
+				TestsVisibility = Visibility.Collapsed;
+				SilentRunVisibility = Visibility.Collapsed;
+#endif
+
+				TestsVisibility = Visibility.Visible;
+
+				_canMessagesService = new CANMessagesService();
 
 
 
@@ -464,6 +278,190 @@ namespace Evva.ViewModels
 			}
 		}
 
+		#endregion Constructor
+
+		#region Methods
+
+		private void AddMotorPowerOutputToTorqueKistler()
+		{
+			if (DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.TorqueKistler) == false)
+			{
+				return;
+			}
+
+			DeviceFullData deviceFullData =
+				DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.TorqueKistler];
+
+			CalculatedParam calculatedParam = new CalculatedParam();
+			calculatedParam.Formula = "(A / 9.55) * B";
+
+			calculatedParam.ParametersList = new ObservableCollection<DeviceParameterData>();
+			calculatedParam.ParametersList.Add(
+				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Speed"));
+			calculatedParam.ParametersList.Add(
+				deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == "Torque"));
+
+			calculatedParam.Device = deviceFullData.Device;
+			calculatedParam.DeviceType = DeviceTypesEnum.TorqueKistler;
+
+			calculatedParam.Name = "Motor Power Output";
+			deviceFullData.Device.ParemetersList.Add(calculatedParam);
+
+			SETTINGS_UPDATEDMessage e = new SETTINGS_UPDATEDMessage();
+			WeakReferenceMessenger.Default.Send(e);
+		}
+
+		private void CopyUserFilesToEvvaDir()
+		{
+			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+			string newPath = Path.Combine(appDataPath, "Evva");
+			string oldPath = Path.Combine(appDataPath, "IRPTestStudio");
+
+			if (Directory.Exists(newPath))
+				return;
+
+			if (!Directory.Exists(oldPath))
+				return;
+
+			Directory.CreateDirectory(newPath);
+
+			string[] filesList = Directory.GetFiles(oldPath);
+			foreach (string file in filesList)
+			{
+				string fileName = Path.GetFileName(file);
+				string newFilePath = Path.Combine(newPath, fileName);
+
+				File.Copy(file, newFilePath, false);
+			}
+		}
+
+		private void AddJson()
+		{
+			//DeviceData device = new DeviceData()
+			//{
+			//	Name = "Torque Kistler",
+			//	DeviceType = DeviceTypesEnum.TorqueKistler,
+			//};
+
+			//device.ParemetersList = new ObservableCollection<DeviceParameterData>()
+			//{
+			//	new TorqueKistler_ParamData() { Name = "Torque", Command = "MEAS:TORQ", Units = "Nm", DeviceType = DeviceTypesEnum.TorqueKistler },
+			//	new TorqueKistler_ParamData() { Name = "Speed", Command = "MEAS:SPE", Units = "RPM", DeviceType = DeviceTypesEnum.TorqueKistler },
+			//	new TorqueKistler_ParamData() { Name = "All", Command = "MEAS:ALL", Units = "", DeviceType = DeviceTypesEnum.TorqueKistler },
+			//	new TorqueKistler_ParamData() { Name = "Torque filter Freq", Command = "OUTP:TORQ:FILT:FREQ", Units = "Hz", DeviceType = DeviceTypesEnum.TorqueKistler },
+			//	new TorqueKistler_ParamData() { Name = "Speed filter Freq", Command = "OUTP:SPE:FILT:FREQ", Units = "Hz", DeviceType = DeviceTypesEnum.TorqueKistler },
+			//	new TorqueKistler_ParamData() { Name = "Calibrate Zero offset", Command = "OUTP:TARE:AUTO", Units = "", DeviceType = DeviceTypesEnum.TorqueKistler },
+			//};
+
+
+			//JsonSerializerSettings settings = new JsonSerializerSettings();
+			//settings.Formatting = Formatting.Indented;
+			//settings.TypeNameHandling = TypeNameHandling.All;
+			//var sz = JsonConvert.SerializeObject(device, settings);
+			//File.WriteAllText(@"C:\Projects\Infrastructure\Evva\Data\Device Communications\Torque Kistler.json", sz);
+		}
+
+		private void Settings()
+		{
+			Docking.OpenSettings();
+		}
+
+		private void ChangeDarkLight()
+		{
+
+			EvvaUserData.IsLightTheme = !EvvaUserData.IsLightTheme;
+			App.ChangeDarkLight(EvvaUserData.IsLightTheme);
+
+			if (Design != null)
+			{
+				Design.RefreshTheme(EvvaUserData.IsLightTheme);
+				Design.RefreshDiagram();
+			}
+
+			if (Docking != null)
+				Docking.Refresh();
+
+			if (Run != null)
+				Run.ChangeDiagramBackground();
+		}
+
+		private void LoadEvvaUserData()
+		{
+			EvvaUserData = EvvaUserData.LoadEvvaUserData("Evva");
+
+			if (EvvaUserData == null)
+			{
+				EvvaUserData = new EvvaUserData();
+				EvvaUserData.IsLightTheme = false;
+				ChangeDarkLight();
+				return;
+			}
+			else
+				EvvaUserData.IsLightTheme = !EvvaUserData.IsLightTheme;
+
+
+			ChangeDarkLight();
+		}
+
+		private void SaveEvvaUserData()
+		{
+			EvvaUserData.SaveEvvaUserData(
+				"Evva",
+				EvvaUserData);
+		}
+
+		private void Closing(CancelEventArgs e)
+		{
+			SaveEvvaUserData();
+
+			if (Design != null)
+			{
+				bool isCancel = Design.SaveIfNeeded();
+				if (isCancel)
+				{
+					e.Cancel = true;
+					return;
+				}
+			}
+
+			if (MonitorRecParam != null)
+				MonitorRecParam.Dispose();
+
+
+			if (DevicesContainter != null)
+			{
+				foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
+				{
+					deviceFullData.Disconnect();
+
+					if (deviceFullData.CheckCommunication == null)
+						continue;
+
+					deviceFullData.CheckCommunication.Dispose();
+				}
+			}
+
+			if (Docking != null)
+				Docking.Close();
+
+			if (Faults != null)
+				Faults.Dispose();
+
+			if (_canMessagesService != null)
+				_canMessagesService.CloseCANMessageSender();
+		}
+
+		private void InitCommunicationSettings()
+		{
+			Docking.OpenCommSettings();
+		}
+
+		private void Loaded()
+		{
+			//if(Docking != null)
+			//	Docking.Load();
+		}
+
 		private void SettingsUpdated(SETTINGS_UPDATEDMessage e)
 		{
 			if (e.IsMCUJsonPathChanged)
@@ -526,8 +524,8 @@ namespace Evva.ViewModels
 				devicesList[0].Name = deviceData.Device.Name;
 				deviceData.Device = devicesList[0] as DeviceData;
 			}
-			
-			if(e.IsMotorCommandsPathChanged)
+
+			if (e.IsMotorCommandsPathChanged)
 			{
 				Run.RunScript.SelectMotor.UpdateMotorList(e.MotorCommandsPath);
 			}
@@ -563,11 +561,11 @@ namespace Evva.ViewModels
 
 			devicesList[0].Name = deviceData.Device.Name;
 			deviceData.Device = devicesList[0] as DeviceData;
-			
+
 		}
 
 
-		private void OpenDesign() 
+		private void OpenDesign()
 		{
 			Docking.OpenDesign();
 		}
@@ -669,25 +667,25 @@ namespace Evva.ViewModels
 
 			foreach (DeviceData device in deviceList)
 			{
-				DeviceFullData deviceFullData = DeviceFullData.Factory(device);				
+				DeviceFullData deviceFullData = DeviceFullData.Factory(device);
 
 				deviceFullData.Init();
 
 				DevicesContainter.DevicesFullDataList.Add(deviceFullData);
 				DevicesContainter.DevicesList.Add(device as DeviceData);
-				if(DevicesContainter.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
+				if (DevicesContainter.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
 					DevicesContainter.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
 			}
 
 			foreach (DeviceFullData device in DevicesContainter.DevicesFullDataList)
 				device.Connect();
 
-			if(Faults != null && Faults.IsLoaded) 
+			if (Faults != null && Faults.IsLoaded)
 			{
 				Faults.Loaded();
 			}
 
-			if(MonitorRecParam != null && MonitorRecParam.IsLoaded)
+			if (MonitorRecParam != null && MonitorRecParam.IsLoaded)
 			{
 				MonitorRecParam.Loaded();
 			}
