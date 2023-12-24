@@ -27,6 +27,7 @@ namespace Evva
 			//System.Windows.Forms.Application.DoEvents();
 			//Initialize();
 			SplashView splash = new SplashView();
+			splash.AppName = "EVVA";
 			splash.Show();
 			//	System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
 			// Right now I'm showing main window right after splash screen but I will eventually wait until splash screen closes.
