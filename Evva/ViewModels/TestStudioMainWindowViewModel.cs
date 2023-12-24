@@ -105,176 +105,82 @@ namespace Evva.ViewModels
 
 		public TestStudioMainWindowViewModel()
 		{
-			CopyUserFilesToEvvaDir();
-			AddJson();
+			LoggerService.Init("Evva.log", Serilog.Events.LogEventLevel.Information);
+			LoggerService.Inforamtion(this, "-------------------------------------- EVVA ---------------------");
 
-			try
+			SettingsCommand = new RelayCommand(Settings);
+			ChangeDarkLightCommand = new RelayCommand(ChangeDarkLight);
+			ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
+			CommunicationSettingsCommand = new RelayCommand(InitCommunicationSettings);
+			LoadedCommand = new RelayCommand(Loaded);
+
+			MonitorsDropDownMenuItemCommand = new RelayCommand<string>(MonitorsDropDownMenuItem);
+
+			OpenDesignCommand = new RelayCommand(OpenDesign);
+			OpenRunCommand = new RelayCommand(OpenRun);
+			OpenRecordingCommand = new RelayCommand(OpenRecording);
+			OpenTestCommand = new RelayCommand(OpenTest);
+
+			DeviceSimulatorCommand = new RelayCommand(DeviceSimulator);
+			ResetWindowsLayoutCommand = new RelayCommand(ResetWindowsLayout);
+
+			SetupSelectionCommand = new RelayCommand(SetupSelection);
+
+
+			BrowseCANMessagesScriptPathCommand = new RelayCommand(BrowseCANMessagesScriptPath);
+			CANMessageSenderCommand = new RelayCommand(CANMessageSender);
+			StartCANMessageSenderCommand = new RelayCommand(StartCANMessageSender);
+			StopCANMessageSenderCommand = new RelayCommand(StopCANMessageSender);
+
+			LoadEvvaUserData();
+
+			if (string.IsNullOrEmpty(EvvaUserData.MCUJsonPath))
+				EvvaUserData.MCUJsonPath = @"Data\Device Communications\param_defaults.json";
+			if (string.IsNullOrEmpty(EvvaUserData.MCUB2BJsonPath))
+				EvvaUserData.MCUB2BJsonPath = @"Data\Device Communications\param_defaults.json";
+			if (string.IsNullOrEmpty(EvvaUserData.DynoCommunicationPath))
+				EvvaUserData.DynoCommunicationPath = @"Data\Device Communications\Dyno Communication.json";
+			if (string.IsNullOrEmpty(EvvaUserData.NI6002CommunicationPath))
+				EvvaUserData.NI6002CommunicationPath = @"Data\Device Communications\NI_6002.json";
+
+
+
+
+
+			_readDevicesFile = new ReadDevicesFileService();
+			_setupSelectionVM =
+				new SetupSelectionViewModel(EvvaUserData, _readDevicesFile);
+			SetupSelectionWindowView setupSelectionView = new SetupSelectionWindowView();
+			setupSelectionView.SetDataContext(_setupSelectionVM);
+			bool? resutl = setupSelectionView.ShowDialog();
+			if (resutl != true)
 			{
-				LoggerService.Init("Evva.log", Serilog.Events.LogEventLevel.Information);
-				LoggerService.Inforamtion(this, "-------------------------------------- EVVA ---------------------");
+				Closing(null);
+				Application.Current.Shutdown();
+				return;
+			}
 
 
-				LoggerService.Inforamtion(this, "Starting C'tor of TestStudioMainWindowViewModel");
-
-				LoadEvvaUserData();
-
-				if (string.IsNullOrEmpty(EvvaUserData.MCUJsonPath))
-					EvvaUserData.MCUJsonPath = @"Data\Device Communications\param_defaults.json";
-				if (string.IsNullOrEmpty(EvvaUserData.MCUB2BJsonPath))
-					EvvaUserData.MCUB2BJsonPath = @"Data\Device Communications\param_defaults.json";
-				if (string.IsNullOrEmpty(EvvaUserData.DynoCommunicationPath))
-					EvvaUserData.DynoCommunicationPath = @"Data\Device Communications\Dyno Communication.json";
-				if (string.IsNullOrEmpty(EvvaUserData.NI6002CommunicationPath))
-					EvvaUserData.NI6002CommunicationPath = @"Data\Device Communications\NI_6002.json";
-
-				SettingsCommand = new RelayCommand(Settings);
-				ChangeDarkLightCommand = new RelayCommand(ChangeDarkLight);
-				ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
-				CommunicationSettingsCommand = new RelayCommand(InitCommunicationSettings);
-				LoadedCommand = new RelayCommand(Loaded);
-
-				MonitorsDropDownMenuItemCommand = new RelayCommand<string>(MonitorsDropDownMenuItem);
-
-				OpenDesignCommand = new RelayCommand(OpenDesign);
-				OpenRunCommand = new RelayCommand(OpenRun);
-				OpenRecordingCommand = new RelayCommand(OpenRecording);
-				OpenTestCommand = new RelayCommand(OpenTest);
-
-				DeviceSimulatorCommand = new RelayCommand(DeviceSimulator);
-				ResetWindowsLayoutCommand = new RelayCommand(ResetWindowsLayout);
-
-				SetupSelectionCommand = new RelayCommand(SetupSelection);
+			DevicesContainter = new DevicesContainer();
+			DevicesContainter.DevicesFullDataList = new ObservableCollection<DeviceFullData>();
+			DevicesContainter.DevicesList = new ObservableCollection<DeviceData>();
+			DevicesContainter.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
+			UpdateSetup();
 
 
-				BrowseCANMessagesScriptPathCommand = new RelayCommand(BrowseCANMessagesScriptPath);
-				CANMessageSenderCommand = new RelayCommand(CANMessageSender);
-				StartCANMessageSenderCommand = new RelayCommand(StartCANMessageSender);
-				StopCANMessageSenderCommand = new RelayCommand(StopCANMessageSender);
-
-
-
-				_readDevicesFile = new ReadDevicesFileService();
-				_setupSelectionVM = 
-					new SetupSelectionViewModel(EvvaUserData, _readDevicesFile);
-				SetupSelectionWindowView setupSelectionView = new SetupSelectionWindowView();
-				setupSelectionView.SetDataContext(_setupSelectionVM);
-				bool? resutl = setupSelectionView.ShowDialog();
-				if (resutl != true)
-				{
-					Closing(null);
-					Application.Current.Shutdown();
-					return;
-				}
-
-
-				DevicesContainter = new DevicesContainer();
-				DevicesContainter.DevicesFullDataList = new ObservableCollection<DeviceFullData>();
-				DevicesContainter.DevicesList = new ObservableCollection<DeviceData>();
-				DevicesContainter.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
-				UpdateSetup();
-
-
-				CommunicationSettings = new CommunicationViewModel(DevicesContainter);
+			CommunicationSettings = new CommunicationViewModel(DevicesContainter);
 
 #if DEBUG
 				TestsVisibility = Visibility.Visible;
 				SilentRunVisibility = Visibility.Visible;
 #else
-				TestsVisibility = Visibility.Collapsed;
-				SilentRunVisibility = Visibility.Collapsed;
+			TestsVisibility = Visibility.Collapsed;
+			SilentRunVisibility = Visibility.Collapsed;
 #endif
 
-				TestsVisibility = Visibility.Visible;
+			TestsVisibility = Visibility.Visible;
 
-				_canMessagesService = new CANMessagesService();
-
-
-
-				RecordParam = new ParametersViewModel(
-					DevicesContainter);
-
-				Run = new RunViewModel(
-					RecordParam.RecordParamList.ParametersList,
-					DevicesContainter,
-					EvvaUserData,
-					_canMessagesService);
-
-				MonitorRecParam = new MonitorRecParamViewModel(
-					DevicesContainter,
-					RecordParam.RecordParamList.ParametersList);
-				MonitorSecurityParam = new MonitorSecurityParamViewModel(
-					DevicesContainter,
-					Run.RunScript);
-
-
-
-				
-				Tests = new TestsViewModel(DevicesContainter);
-
-				Design = new DesignViewModel(
-					DevicesContainter, 
-					EvvaUserData.ScriptUserData);
-
-				
-
-				Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
-				try
-				{
-					foreach(DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
-					{
-						deviceFullData.InitCheckConnection();
-					}
-				}
-				catch (Exception ex)
-				{
-					LoggerService.Error(this, "Failed to init the communication check", ex);
-
-				}
-
-
-				AppSettings = new SettingsViewModel(EvvaUserData);
-				AppSettings.SettingsUpdatedEvent += SettingsUpdated;
-
-				Faults = new FaultsMCUViewModel(
-					DevicesContainter,
-					EvvaUserData);
-				SwitchRelayState = new SwitchRelayStateViewModel(DevicesContainter);
-				Docking = new DocingViewModel(
-					AppSettings,
-					Tests,
-					Run,
-					Design,
-					RecordParam,
-					MonitorRecParam,
-					MonitorSecurityParam,
-					Faults,
-					SwitchRelayState,
-					CommunicationSettings,
-					_setupSelectionVM);
-
-				Run.CreateScriptLoggerWindow(Docking);
-				Tests.CreateTestParamsLimitWindow(Docking);
-
-
-				MonitorTypesList = new List<MonitorType>
-				{
-					new MonitorType() { Name = "Recording parameters" },
-					new MonitorType() { Name = "Scurity parameters" },
-					new MonitorType() { Name = "Faults" },
-					new MonitorType() { Name = "Switch Relay State" },
-				};
-
-				IsMCUError = new MCUError() { IsErrorExit = null };
-				Faults.ErrorEvent += MCUErrorEventHandler;
-
-				AddMotorPowerOutputToTorqueKistler();
-
-			}
-			catch(Exception ex)
-			{
-				LoggerService.Error(this, "Failed to init the main window", "Startup Error", ex);
-			}
+			_canMessagesService = new CANMessagesService();
 		}
 
 		#endregion Constructor
@@ -457,8 +363,105 @@ namespace Evva.ViewModels
 
 		private void Loaded()
 		{
-			//if(Docking != null)
-			//	Docking.Load();
+			CopyUserFilesToEvvaDir();
+			AddJson();
+
+			try
+			{
+				
+
+
+				LoggerService.Inforamtion(this, "Starting C'tor of TestStudioMainWindowViewModel");
+
+				
+
+
+
+				RecordParam = new ParametersViewModel(
+					DevicesContainter);
+
+				Run = new RunViewModel(
+					RecordParam.RecordParamList.ParametersList,
+					DevicesContainter,
+					EvvaUserData,
+					_canMessagesService);
+
+				MonitorRecParam = new MonitorRecParamViewModel(
+					DevicesContainter,
+					RecordParam.RecordParamList.ParametersList);
+				MonitorSecurityParam = new MonitorSecurityParamViewModel(
+					DevicesContainter,
+					Run.RunScript);
+
+
+
+
+				Tests = new TestsViewModel(DevicesContainter);
+
+				Design = new DesignViewModel(
+					DevicesContainter,
+					EvvaUserData.ScriptUserData);
+
+
+
+				Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+				try
+				{
+					foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
+					{
+						deviceFullData.InitCheckConnection();
+					}
+				}
+				catch (Exception ex)
+				{
+					LoggerService.Error(this, "Failed to init the communication check", ex);
+
+				}
+
+
+				AppSettings = new SettingsViewModel(EvvaUserData);
+				AppSettings.SettingsUpdatedEvent += SettingsUpdated;
+
+				Faults = new FaultsMCUViewModel(
+					DevicesContainter,
+					EvvaUserData);
+				SwitchRelayState = new SwitchRelayStateViewModel(DevicesContainter);
+				Docking = new DocingViewModel(
+					AppSettings,
+					Tests,
+					Run,
+					Design,
+					RecordParam,
+					MonitorRecParam,
+					MonitorSecurityParam,
+					Faults,
+					SwitchRelayState,
+					CommunicationSettings,
+					_setupSelectionVM);
+
+				Run.CreateScriptLoggerWindow(Docking);
+				Tests.CreateTestParamsLimitWindow(Docking);
+
+
+				MonitorTypesList = new List<MonitorType>
+				{
+					new MonitorType() { Name = "Recording parameters" },
+					new MonitorType() { Name = "Scurity parameters" },
+					new MonitorType() { Name = "Faults" },
+					new MonitorType() { Name = "Switch Relay State" },
+				};
+
+				IsMCUError = new MCUError() { IsErrorExit = null };
+				Faults.ErrorEvent += MCUErrorEventHandler;
+
+				AddMotorPowerOutputToTorqueKistler();
+
+			}
+			catch (Exception ex)
+			{
+				LoggerService.Error(this, "Failed to init the main window", "Startup Error", ex);
+			}
 		}
 
 		private void SettingsUpdated(SETTINGS_UPDATEDMessage e)
