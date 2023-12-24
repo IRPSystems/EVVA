@@ -655,17 +655,42 @@ namespace Evva.ViewModels
 		{
 			ObservableCollection<DeviceData> deviceList = _setupSelectionVM.DevicesList;
 
-			foreach (DeviceFullData device in DevicesContainter.DevicesFullDataList)
+
+			List<DeviceData> newDevices = new List<DeviceData>();
+			foreach (DeviceData deviceData in deviceList)
 			{
-				device.Disconnect();
+				DeviceData existingDevice =
+					DevicesContainter.DevicesList.ToList().Find((d) => d.DeviceType == deviceData.DeviceType);
+				if (existingDevice == null)
+					newDevices.Add(deviceData);
 			}
 
-			DevicesContainter.DevicesFullDataList.Clear();
-			DevicesContainter.DevicesList.Clear();
-			DevicesContainter.TypeToDevicesFullData.Clear();
+			List<DeviceData> removedDevices = new List<DeviceData>();
+			foreach (DeviceData deviceData in DevicesContainter.DevicesList)
+			{
+				DeviceData existingDevice =
+					deviceList.ToList().Find((d) => d.DeviceType == deviceData.DeviceType);
+				if (existingDevice == null)
+					removedDevices.Add(deviceData);
+			}
 
 
-			foreach (DeviceData device in deviceList)
+
+
+			foreach (DeviceData device in removedDevices)
+			{
+				DeviceFullData deviceFullData =
+					DevicesContainter.DevicesFullDataList.ToList().Find((d) => d.Device.DeviceType == device.DeviceType);
+				deviceFullData.Disconnect();
+
+				DevicesContainter.DevicesFullDataList.Remove(deviceFullData);
+				DevicesContainter.DevicesList.Remove(deviceFullData.Device);
+				DevicesContainter.TypeToDevicesFullData.Remove(deviceFullData.Device.DeviceType);
+			}
+
+
+
+			foreach (DeviceData device in newDevices)
 			{
 				DeviceFullData deviceFullData = DeviceFullData.Factory(device);
 
@@ -675,10 +700,10 @@ namespace Evva.ViewModels
 				DevicesContainter.DevicesList.Add(device as DeviceData);
 				if (DevicesContainter.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
 					DevicesContainter.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
+
+				deviceFullData.Connect();
 			}
 
-			foreach (DeviceFullData device in DevicesContainter.DevicesFullDataList)
-				device.Connect();
 
 			if (Faults != null && Faults.IsLoaded)
 			{
