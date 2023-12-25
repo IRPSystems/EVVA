@@ -6,7 +6,7 @@
                 xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
                 xmlns:local="clr-namespace:Evva.Views"
                 mc:Ignorable="d"
-                Title="Setup Selection" Height="450" Width="800">
+                Title="Setup Selection" Height="450" Width="800" Loaded="MetroWindow_Loaded">
 
     <local:SetupSelectionView DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:MetroWindow}}"/>
     

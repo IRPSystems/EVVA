@@ -32,7 +32,7 @@ using System.Windows;
 
 namespace Evva.ViewModels
 {
-	public class TestStudioMainWindowViewModel: ObservableObject
+	public class TestStudioMainWindowViewModel : ObservableObject
 	{
 
 		public class MonitorType
@@ -92,7 +92,7 @@ namespace Evva.ViewModels
 
 
 		public EvvaUserData EvvaUserData;
-		
+
 		private ReadDevicesFileService _readDevicesFile;
 
 		private SetupSelectionViewModel _setupSelectionVM;
@@ -106,6 +106,7 @@ namespace Evva.ViewModels
 
 		public TestStudioMainWindowViewModel()
 		{
+
 			CopyUserFilesToEvvaDir();
 			AddJson();
 
@@ -155,7 +156,7 @@ namespace Evva.ViewModels
 
 
 				_readDevicesFile = new ReadDevicesFileService();
-				_setupSelectionVM = 
+				_setupSelectionVM =
 					new SetupSelectionViewModel(EvvaUserData, _readDevicesFile);
 				SetupSelectionWindowView setupSelectionView = new SetupSelectionWindowView();
 				setupSelectionView.SetDataContext(_setupSelectionVM);
@@ -209,20 +210,20 @@ namespace Evva.ViewModels
 
 
 
-				
+
 				Tests = new TestsViewModel(DevicesContainter);
 
 				Design = new DesignViewModel(
-					DevicesContainter, 
+					DevicesContainter,
 					EvvaUserData.ScriptUserData);
 
-				
+
 
 				Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
 				try
 				{
-					foreach(DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
+					foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
 					{
 						deviceFullData.InitCheckConnection();
 					}
@@ -272,7 +273,7 @@ namespace Evva.ViewModels
 				AddMotorPowerOutputToTorqueKistler();
 
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				LoggerService.Error(this, "Failed to init the main window", "Startup Error", ex);
 			}
@@ -284,7 +285,7 @@ namespace Evva.ViewModels
 
 		private void AddMotorPowerOutputToTorqueKistler()
 		{
-			if(DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.TorqueKistler) == false)
+			if (DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.TorqueKistler) == false)
 			{
 				return;
 			}
@@ -326,7 +327,7 @@ namespace Evva.ViewModels
 			Directory.CreateDirectory(newPath);
 
 			string[] filesList = Directory.GetFiles(oldPath);
-			foreach(string file in filesList)
+			foreach (string file in filesList)
 			{
 				string fileName = Path.GetFileName(file);
 				string newFilePath = Path.Combine(newPath, fileName);
@@ -381,7 +382,7 @@ namespace Evva.ViewModels
 			if (Docking != null)
 				Docking.Refresh();
 
-			if(Run != null)
+			if (Run != null)
 				Run.ChangeDiagramBackground();
 		}
 
@@ -406,7 +407,7 @@ namespace Evva.ViewModels
 		private void SaveEvvaUserData()
 		{
 			EvvaUserData.SaveEvvaUserData(
-				"Evva", 
+				"Evva",
 				EvvaUserData);
 		}
 
@@ -414,10 +415,10 @@ namespace Evva.ViewModels
 		{
 			SaveEvvaUserData();
 
-			if (Design != null) 
+			if (Design != null)
 			{
 				bool isCancel = Design.SaveIfNeeded();
-				if(isCancel) 
+				if (isCancel)
 				{
 					e.Cancel = true;
 					return;
@@ -428,7 +429,7 @@ namespace Evva.ViewModels
 				MonitorRecParam.Dispose();
 
 
-			if(DevicesContainter != null)
+			if (DevicesContainter != null)
 			{
 				foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
 				{
@@ -441,10 +442,10 @@ namespace Evva.ViewModels
 				}
 			}
 
-			if(Docking != null)
+			if (Docking != null)
 				Docking.Close();
 
-			if(Faults != null)
+			if (Faults != null)
 				Faults.Dispose();
 
 			if (_canMessagesService != null)
@@ -491,6 +492,7 @@ namespace Evva.ViewModels
 				string dynoPath = Path.Combine(EvvaUserData.DynoCommunicationPath, "Dyno Communication.json");
 				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 				_readDevicesFile.ReadFromJson(
+					"Data\\Device Communications",
 					dynoPath,
 					devicesList);
 				DeviceFullData deviceData = DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.Dyno];
@@ -511,6 +513,7 @@ namespace Evva.ViewModels
 				string ni6002JPath = Path.Combine(EvvaUserData.NI6002CommunicationPath, "NI_6002.json");
 				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 				_readDevicesFile.ReadFromJson(
+					"Data\\Device Communications",
 					ni6002JPath,
 					devicesList);
 				DeviceFullData deviceData = DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.NI_6002];
@@ -524,8 +527,8 @@ namespace Evva.ViewModels
 				devicesList[0].Name = deviceData.Device.Name;
 				deviceData.Device = devicesList[0] as DeviceData;
 			}
-			
-			if(e.IsMotorCommandsPathChanged)
+
+			if (e.IsMotorCommandsPathChanged)
 			{
 				Run.RunScript.SelectMotor.UpdateMotorList(e.MotorCommandsPath);
 			}
@@ -561,11 +564,11 @@ namespace Evva.ViewModels
 
 			devicesList[0].Name = deviceData.Device.Name;
 			deviceData.Device = devicesList[0] as DeviceData;
-			
+
 		}
 
 
-		private void OpenDesign() 
+		private void OpenDesign()
 		{
 			Docking.OpenDesign();
 		}
@@ -655,37 +658,62 @@ namespace Evva.ViewModels
 		{
 			ObservableCollection<DeviceData> deviceList = _setupSelectionVM.DevicesList;
 
-			foreach (DeviceFullData device in DevicesContainter.DevicesFullDataList)
+
+			List<DeviceData> newDevices = new List<DeviceData>();
+			foreach (DeviceData deviceData in deviceList)
 			{
-				device.Disconnect();
+				DeviceData existingDevice =
+					DevicesContainter.DevicesList.ToList().Find((d) => d.DeviceType == deviceData.DeviceType);
+				if (existingDevice == null)
+					newDevices.Add(deviceData);
 			}
 
-			DevicesContainter.DevicesFullDataList.Clear();
-			DevicesContainter.DevicesList.Clear();
-			DevicesContainter.TypeToDevicesFullData.Clear();
-
-
-			foreach (DeviceData device in deviceList)
+			List<DeviceData> removedDevices = new List<DeviceData>();
+			foreach (DeviceData deviceData in DevicesContainter.DevicesList)
 			{
-				DeviceFullData deviceFullData = DeviceFullData.Factory(device);				
+				DeviceData existingDevice =
+					deviceList.ToList().Find((d) => d.DeviceType == deviceData.DeviceType);
+				if (existingDevice == null)
+					removedDevices.Add(deviceData);
+			}
+
+
+
+
+			foreach (DeviceData device in removedDevices)
+			{
+				DeviceFullData deviceFullData =
+					DevicesContainter.DevicesFullDataList.ToList().Find((d) => d.Device.DeviceType == device.DeviceType);
+				deviceFullData.Disconnect();
+
+				DevicesContainter.DevicesFullDataList.Remove(deviceFullData);
+				DevicesContainter.DevicesList.Remove(deviceFullData.Device);
+				DevicesContainter.TypeToDevicesFullData.Remove(deviceFullData.Device.DeviceType);
+			}
+
+
+
+			foreach (DeviceData device in newDevices)
+			{
+				DeviceFullData deviceFullData = DeviceFullData.Factory(device);
 
 				deviceFullData.Init();
 
 				DevicesContainter.DevicesFullDataList.Add(deviceFullData);
 				DevicesContainter.DevicesList.Add(device as DeviceData);
-				if(DevicesContainter.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
+				if (DevicesContainter.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
 					DevicesContainter.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
+
+				deviceFullData.Connect();
 			}
 
-			foreach (DeviceFullData device in DevicesContainter.DevicesFullDataList)
-				device.Connect();
 
-			if(Faults != null && Faults.IsLoaded) 
+			if (Faults != null && Faults.IsLoaded)
 			{
 				Faults.Loaded();
 			}
 
-			if(MonitorRecParam != null && MonitorRecParam.IsLoaded)
+			if (MonitorRecParam != null && MonitorRecParam.IsLoaded)
 			{
 				MonitorRecParam.Loaded();
 			}

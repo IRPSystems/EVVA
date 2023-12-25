@@ -22,10 +22,7 @@ namespace Evva
             DataContext = new TestStudioMainWindowViewModel();
 		}
 
-		private void Border_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			DragMove();
-		}
+		
 
 		private void SwitchWindowState()
 		{

@@ -3,7 +3,6 @@ using DeviceHandler.ViewModels;
 using DeviceHandler.Views;
 using Evva.Views;
 using ParamLimitsTest;
-using ScriptHandler.Services;
 using ScriptHandler.ViewModels;
 using ScriptHandler.Views;
 using Syncfusion.Windows.Tools.Controls;

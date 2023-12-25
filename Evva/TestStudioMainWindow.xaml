@@ -6,7 +6,7 @@
                 xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                 xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                xmlns:device_handler_views="clr-namespace:DeviceHandler.Views;assembly=DeviceHandler"
+                 xmlns:device_handler_views="clr-namespace:DeviceHandler.Views;assembly=DeviceHandler"
                 xmlns:local="clr-namespace:Evva.Views"
                 mc:Ignorable="d"
                 Height="450" Width="1500" 

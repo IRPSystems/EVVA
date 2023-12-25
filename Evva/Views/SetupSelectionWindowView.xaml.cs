@@ -39,5 +39,10 @@ namespace Evva.Views
 			_vm.CloseOKEvent -= OK_Click;
 			_vm.CloseCancelEvent -= Cancel_Click;
 		}
+
+		private void MetroWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
+		{
+
+		}
 	}
 }
