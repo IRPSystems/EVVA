@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System;
 using DeviceCommunicators.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
+using System.IO;
 
 namespace Evva.ViewModels
 {
@@ -111,6 +112,8 @@ namespace Evva.ViewModels
 
 			string path = openFileDialog.FileName;
 
+			FixJson(path);
+
 
 			string jsonString = System.IO.File.ReadAllText(path);
 
@@ -186,6 +189,28 @@ namespace Evva.ViewModels
 
 			if(this is Record_SelectedParametersListViewModel)
 				WeakReferenceMessenger.Default.Send(new RECORD_LIST_CHANGEDMessage() { LogParametersList = ParametersList });
+		}
+
+		private void FixJson(string path)
+		{
+			string fileData = null;
+			using (StreamReader sr = new StreamReader(path))
+			{
+				fileData = sr.ReadToEnd();
+			}
+
+			fileData = fileData.Replace(
+				"Entities.Models.DeviceData, Entities",
+				"DeviceCommunicators.Models.DeviceData, DeviceCommunicators");
+
+			fileData = fileData.Replace(
+				"Entities.Models.DeviceParameterData, Entities",
+				"DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators");
+
+			using (StreamWriter sw = new StreamWriter(path))
+			{
+				sw.Write(fileData);
+			}
 		}
 
 		#region Drag
