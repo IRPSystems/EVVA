@@ -221,18 +221,18 @@ namespace Evva.ViewModels
 
 				Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-				try
-				{
-					foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
-					{
-						deviceFullData.InitCheckConnection();
-					}
-				}
-				catch (Exception ex)
-				{
-					LoggerService.Error(this, "Failed to init the communication check", ex);
+				//try
+				//{
+				//	foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
+				//	{
+				//		deviceFullData.InitCheckConnection();
+				//	}
+				//}
+				//catch (Exception ex)
+				//{
+				//	LoggerService.Error(this, "Failed to init the communication check", ex);
 
-				}
+				//}
 
 
 				AppSettings = new SettingsViewModel(EvvaUserData);
@@ -630,18 +630,18 @@ namespace Evva.ViewModels
 
 			UpdateSetup();
 
-			try
-			{
-				foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
-				{
-					deviceFullData.InitCheckConnection();
-				}
-			}
-			catch (Exception ex)
-			{
-				LoggerService.Error(this, "Failed to init the communication check", ex);
+			//try
+			//{
+			//	foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
+			//	{
+			//		deviceFullData.InitCheckConnection();
+			//	}
+			//}
+			//catch (Exception ex)
+			//{
+			//	LoggerService.Error(this, "Failed to init the communication check", ex);
 
-			}
+			//}
 
 			Docking.CloseSetupSelection();
 		}
@@ -705,6 +705,7 @@ namespace Evva.ViewModels
 					DevicesContainter.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
 
 				deviceFullData.Connect();
+				deviceFullData.InitCheckConnection();
 			}
 
 
@@ -724,6 +725,8 @@ namespace Evva.ViewModels
 			}
 
 			WeakReferenceMessenger.Default.Send(new SETUP_UPDATEDMessage());
+
+
 		}
 
 		private void MCUErrorEventHandler(bool? isMCUError)
