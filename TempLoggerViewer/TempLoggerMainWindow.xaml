@@ -6,6 +6,7 @@
                 xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
                 xmlns:device_handler_views="clr-namespace:DeviceHandler.Views;assembly=DeviceHandler"
+                xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                 xmlns:local="clr-namespace:TempLoggerViewer"
                 mc:Ignorable="d"
                 Title="Temp Logger Viewer" Height="460" Width="800"
@@ -36,6 +37,17 @@
 
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
+
+    <i:Interaction.Triggers>
+
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding Path=DataContext.ClosingCommand, 
+                                                             Mode=OneWay, 
+                                                             RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" 
+                                   PassEventArgsToCommand="True"/>
+        </i:EventTrigger>
+
+    </i:Interaction.Triggers>
 
 
     <Grid>
