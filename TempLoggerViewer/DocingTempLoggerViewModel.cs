@@ -18,23 +18,7 @@ namespace TempLoggerViewer.ViewModels
 	{
 		#region Fields
 
-		private ContentControl _appSettings;
 		private ContentControl _communicationSettings;
-		private ContentControl _mainScriptLogger;
-		private ContentControl _testParamsLimit;
-
-		private ContentControl _monitorRecParam;
-		private ContentControl _monitorSecurityParam;
-		private ContentControl _faultsMCU;
-		private ContentControl _switchRelayState;
-
-		private ContentControl _setupSelection;
-
-
-		private ContentControl _design;
-		private ContentControl _run;
-		private ContentControl _recording;
-		private ContentControl _tests;
 
 		#endregion Fields
 
@@ -90,7 +74,7 @@ namespace TempLoggerViewer.ViewModels
 		public void RestorWindowsLayout()
 		{
 			string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			path = Path.Combine(path, "Evva");
+			path = Path.Combine(path, "TempLoggerViewer");
 			path = Path.Combine(path, "Default.txt");
 			if (System.IO.File.Exists(path))
 				LoadDockState(path);

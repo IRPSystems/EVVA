@@ -1,6 +1,8 @@
 ﻿using Controls.ViewModels;
 using DeviceHandler.ViewModels;
 using DeviceHandler.Views;
+using DeviceSimulators.ViewModels;
+using DeviceSimulators.Views;
 using Evva.Views;
 using ParamLimitsTest;
 using ScriptHandler.ViewModels;
@@ -18,6 +20,7 @@ namespace Evva.ViewModels
 
 		private ContentControl _appSettings;
 		private ContentControl _communicationSettings;
+		private ContentControl _deviceSimulatorsViewModel;
 		private ContentControl _mainScriptLogger;
 		private ContentControl _testParamsLimit;
 
@@ -49,7 +52,8 @@ namespace Evva.ViewModels
 			FaultsMCUViewModel faults,
 			SwitchRelayStateViewModel switchRelayState,
 			CommunicationViewModel communicationSettings,
-			SetupSelectionViewModel setupSelectionVM) :
+			SetupSelectionViewModel setupSelectionVM,
+			DeviceSimulatorsViewModel deviceSimulatorsViewModel) :
 			base("DockingMain")
 		{
 
@@ -64,7 +68,8 @@ namespace Evva.ViewModels
 				faults,
 				switchRelayState,
 				communicationSettings,
-				setupSelectionVM);
+				setupSelectionVM,
+				deviceSimulatorsViewModel);
 		}
 
 		#endregion Constructor
@@ -82,7 +87,8 @@ namespace Evva.ViewModels
 			FaultsMCUViewModel faultsMCU,
 			SwitchRelayStateViewModel switchRelayState,
 			CommunicationViewModel communicationSettings,
-			SetupSelectionViewModel setupSelectionVM)
+			SetupSelectionViewModel setupSelectionVM,
+			DeviceSimulatorsViewModel deviceSimulatorsViewModel)
 		{
 			DockFill = true;
 
@@ -102,6 +108,12 @@ namespace Evva.ViewModels
 			SetFloatParams(_communicationSettings);
 			Children.Add(_communicationSettings);
 
+			_deviceSimulatorsViewModel = new ContentControl();
+			DeviceSimulatorsView deviceSimulators = new DeviceSimulatorsView() { DataContext = deviceSimulatorsViewModel };
+			_deviceSimulatorsViewModel.Content = deviceSimulators;
+			SetHeader(_deviceSimulatorsViewModel, "Device Simulators");
+			SetFloatParams(_deviceSimulatorsViewModel);
+			Children.Add(_deviceSimulatorsViewModel);
 
 
 
@@ -231,6 +243,11 @@ namespace Evva.ViewModels
 		public void OpenCommSettings()
 		{
 			SetState(_communicationSettings, DockState.Float);
+		}
+
+		public void OpenDeviceSimulators()
+		{
+			SetState(_deviceSimulatorsViewModel, DockState.Float);
 		}
 
 		public void OpenLogScript()
