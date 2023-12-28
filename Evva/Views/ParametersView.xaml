@@ -45,11 +45,11 @@
 
         <Line Grid.Column="1" Y1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}" />
 
-        <local:SelectedParametersListView Grid.Column="2" DataContext="{Binding RecordParamList}" />        
+        <device_handler_view:SelectedParametersListView Grid.Column="2" DataContext="{Binding RecordParamList}" />        
 
         <Line Grid.Column="3" Y1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}" />
 
-        <local:SelectedParametersListView Grid.Column="4" DataContext="{Binding AbsoluteParamList}" />
+        <device_handler_view:SelectedParametersListView Grid.Column="4" DataContext="{Binding AbsoluteParamList}" />
 
     </Grid>
 

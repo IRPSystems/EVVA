@@ -1,6 +1,7 @@
 ﻿
 using DeviceCommunicators.Models;
 using DeviceHandler.Models;
+using DeviceHandler.ViewModels;
 using Entities.Models;
 using System.Collections.Specialized;
 

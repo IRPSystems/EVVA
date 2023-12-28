@@ -2,17 +2,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Entities.Models;
 using DeviceHandler.Models;
-using DeviceCommunicators.Models;
 
 namespace Evva.ViewModels
 {
 	public class ParametersViewModel : ObservableObject
 	{
-		public class RecordData: ObservableObject
-		{
-			public int Index { get; set; }
-			public DeviceParameterData Data { get; set; }
-		}
+		
 
 		#region Properties
 

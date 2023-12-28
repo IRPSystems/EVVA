@@ -1,9 +1,11 @@
 ﻿
-using Entities.Models;
 using System.Collections.ObjectModel;
 using DeviceHandler.Models;
 using Newtonsoft.Json;
 using DeviceCommunicators.Models;
+using DeviceHandler.ViewModels;
+using CommunityToolkit.Mvvm.Messaging;
+using ScriptRunner.Models;
 
 namespace Evva.ViewModels
 {
@@ -33,6 +35,11 @@ namespace Evva.ViewModels
 
 		#region Methods
 
+		protected override void SendRECORD_LIST_CHANGEDMessage()
+		{
+			if (this is Record_SelectedParametersListViewModel)
+				WeakReferenceMessenger.Default.Send(new RECORD_LIST_CHANGEDMessage() { LogParametersList = ParametersList });
+		}
 
 		private void GetLogParamListFromFile()
 		{
