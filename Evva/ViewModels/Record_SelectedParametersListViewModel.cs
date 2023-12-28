@@ -26,7 +26,7 @@ namespace Evva.ViewModels
 			string title) :
 			base(devicesContainer, title) 
 		{
-			_limitOfParametersList = _maxLoggingParams;
+			LimitOfParametersList = _maxLoggingParams;
 			IsLimitParametersList = true;
 			GetLogParamListFromFile();
 		}
