@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:device_handler_controls="clr-namespace:DeviceHandler.Controls;assembly=DeviceHandler"
              xmlns:local="clr-namespace:Evva.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1500">
@@ -101,7 +102,7 @@
 
         <Line Grid.Row="1" X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}" VerticalAlignment="Top"/>
 
-        <ListView Grid.Row="2"
+        <device_handler_controls:EmptyListView Grid.Row="2"
                   ItemsSource="{Binding DevicesContainer.DevicesList}"
                   ItemContainerStyle="{StaticResource DeviceParametersStyle}"
                   ScrollViewer.VerticalScrollBarVisibility="Hidden">
@@ -112,7 +113,7 @@
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
 
-        </ListView>
+        </device_handler_controls:EmptyListView>
         
     </Grid>
 </UserControl>

@@ -242,6 +242,9 @@ namespace Evva.ViewModels
 					DevicesContainter,
 					EvvaUserData);
 				SwitchRelayState = new SwitchRelayStateViewModel(DevicesContainter);
+
+				DeviceSimulatorsViewModel deviceSimulatorsViewModel =
+					new DeviceSimulatorsViewModel(DevicesContainter);
 				Docking = new DocingViewModel(
 					AppSettings,
 					Tests,
@@ -253,7 +256,8 @@ namespace Evva.ViewModels
 					Faults,
 					SwitchRelayState,
 					CommunicationSettings,
-					_setupSelectionVM);
+					_setupSelectionVM,
+					deviceSimulatorsViewModel);
 
 				Run.CreateScriptLoggerWindow(Docking);
 				Tests.CreateTestParamsLimitWindow(Docking);
@@ -609,9 +613,10 @@ namespace Evva.ViewModels
 
 		private void DeviceSimulator()
 		{
-			DeviceSimulatorsViewModel dsvm = new DeviceSimulatorsViewModel(DevicesContainter);
-			DeviceSimulatorsView dsv = new DeviceSimulatorsView() { DataContext = dsvm };
-			dsv.Show();
+			Docking.OpenDeviceSimulators();
+			//DeviceSimulatorsViewModel dsvm = new DeviceSimulatorsViewModel(DevicesContainter);
+			//DeviceSimulatorsView dsv = new DeviceSimulatorsView() { DataContext = dsvm };
+			//dsv.Show();
 		}
 
 		private void SetupSelection()
