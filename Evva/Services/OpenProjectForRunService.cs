@@ -420,19 +420,17 @@ namespace Evva.Services
 				{
 					foreach (DynamicControlColumnData columnData in dynamicControl.ColumnDatasList)
 					{
-						if (columnData.Parameter != null)
+						DeviceParameterData param = null;
+						foreach(DeviceFullData deviceData in devicesContainer.DevicesFullDataList)
 						{
-							if (devicesContainer.TypeToDevicesFullData.ContainsKey(columnData.Parameter.DeviceType))
+							param =
+								deviceData.Device.ParemetersList.ToList().Find((p) => p.Name == columnData.ColHeader);
+							if (param != null)
 							{
-								DeviceFullData device =
-									devicesContainer.TypeToDevicesFullData[columnData.Parameter.DeviceType];
-								if (device != null)
-								{
-									columnData.Parameter.Device = device.Device;
-									columnData.Communicator = device.DeviceCommunicator;
-								}
+								columnData.Parameter = param;
+								columnData.Communicator = deviceData.DeviceCommunicator;
 							}
-						}
+						}	
 					}
 				}
 
