@@ -1,5 +1,6 @@
 ﻿
 using DeviceCommunicators.General;
+using DeviceCommunicators.Models;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using Entities.Enums;
@@ -154,11 +155,69 @@ namespace Evva.Services
 				}
 			}
 
-			
+			GetRealRecordingParameters(
+				devicesContainer,
+				currentProject);
+
+
 
 			LoggerService.Inforamtion(this, "Loaded a list of scripts");
 
 			return currentProject;
+		}
+
+		private void GetRealRecordingParameters(
+			DevicesContainer devicesContainer,
+			GeneratedProjectData currentProject)
+		{
+			if (currentProject.RecordingParametersList == null || currentProject.RecordingParametersList.Count == 0)
+				return;
+
+			ObservableCollection<DeviceParameterData> newList = 
+				new ObservableCollection<DeviceParameterData>();
+
+			InvalidScriptData invalidScriptData = new InvalidScriptData()
+			{
+				ErrorsList = new ObservableCollection<InvalidScriptItemData>()
+			};
+			foreach (DeviceParameterData param in currentProject.RecordingParametersList)
+			{
+				if (devicesContainer.TypeToDevicesFullData.ContainsKey(param.DeviceType) == false)
+				{
+					InvalidScriptData error = new InvalidScriptData()
+					{
+						Name = "Project \"" + currentProject.Name + "\"",
+						ErrorString = "The device \"" + param.DeviceType + "\" was not found",
+					};
+					invalidScriptData.ErrorsList.Add(error);
+					continue;
+				}
+
+				DeviceFullData deviceFullData =
+					devicesContainer.TypeToDevicesFullData[param.DeviceType];
+
+				DeviceParameterData actualParam =
+					deviceFullData.Device.ParemetersList.ToList().Find((p) => p.Name == param.Name);
+				if (actualParam == null)
+				{
+					InvalidScriptData error = new InvalidScriptData()
+					{
+						Name = "Parameter \"" + param.Name + "\"",
+						ErrorString = "The parameter \"" + param.Name + "\" was not found in device \"" + param.DeviceType + "\"",
+					};
+					invalidScriptData.ErrorsList.Add(error);
+					continue;
+				}
+
+				newList.Add(actualParam);
+			}
+
+			currentProject.RecordingParametersList = newList;
+
+			if(invalidScriptData.ErrorsList.Count > 0) 
+				currentProject.ErrorsList = invalidScriptData.ErrorsList;
+
+			return;
 		}
 
 		private GeneratedScriptData GetSingleScript(
@@ -297,51 +356,6 @@ namespace Evva.Services
 			}
 		}
 
-		
-
-		//private void SetStepToCanMessageUpdateStop(IScript scriptData)
-		//{
-		//	if (scriptData == null)
-		//		return;
-
-		//	foreach (IScriptItem scriptItem in scriptData.ScriptItemsList)
-		//	{
-		//		if (scriptItem is ScriptStepCANMessageUpdate canMessageUpdate)
-		//		{
-		//			if (canMessageUpdate.ParentProject == null ||
-		//				canMessageUpdate.ParentProject.CanMessagesList == null ||
-		//				canMessageUpdate.ParentProject.CanMessagesList.Count == 0)
-		//			{
-		//				continue;
-		//			}
-
-		//			if (canMessageUpdate.StepToUpdateID <= 0)
-		//				continue;
-
-		//			canMessageUpdate.StepToUpdate =
-		//				canMessageUpdate.ParentProject.CanMessagesList.ToList().Find((cm) => cm.IDInProject == canMessageUpdate.StepToUpdateID);
-
-		//			canMessageUpdate.CANID = canMessageUpdate.StepToUpdate.NodeId;
-		//		}
-		//		else if (scriptItem is ScriptStepCANMessageStop stopContinuous)
-		//		{
-		//			if (stopContinuous.ParentProject == null ||
-		//				stopContinuous.ParentProject.CanMessagesList == null ||
-		//				stopContinuous.ParentProject.CanMessagesList.Count == 0)
-		//			{
-		//				continue;
-		//			}
-
-		//			if (stopContinuous.StepToStopID <= 0)
-		//				continue;
-
-		//			stopContinuous.StepToStop =
-		//				stopContinuous.ParentProject.CanMessagesList.ToList().Find((cm) => cm.IDInProject == stopContinuous.StepToStopID);
-
-		//			stopContinuous.CANID = (stopContinuous.StepToStop as ScriptStepCANMessage).NodeId;
-		//		}
-		//	}
-		//}
 
 		private void MatchPassFailNext(
 			IScript scriptData,
@@ -477,69 +491,5 @@ namespace Evva.Services
 				}
 			}
 		}
-
-		//private void CheckScriptValidity(
-		//	GeneratedScriptData script, 
-		//	DevicesContainer devicesContainer)
-		//{
-		//	foreach (IScriptItem item in script.ScriptItemsList)
-		//	{
-		//		if (!(item is ScriptStepBase step))
-		//			continue;
-
-		//		if (step is IScriptStepWithParameter withParameter &&
-		//			withParameter.Parameter != null)
-		//		{
-		//			if (devicesContainer.TypeToDevicesFullData.ContainsKey(withParameter.Parameter.DeviceType) == false)
-		//			{
-		//				script.Background = Brushes.Red;
-		//				script.ErrorDescription +=
-		//					"The device \"" + withParameter.Parameter.DeviceType + "\" of parameter \"" + withParameter.Parameter + "\" is not included in the setup\r\n";
-		//				continue;
-		//			}
-
-		//			DeviceData device =
-		//				devicesContainer.TypeToDevicesFullData[withParameter.Parameter.DeviceType].Device;
-		//			DeviceParameterData parameterData = device.ParemetersList.ToList().Find((p) => p.Name == withParameter.Parameter.Name);
-		//			if (parameterData == null)
-		//			{
-		//				script.Background = Brushes.Red;
-		//				script.ErrorDescription +=
-		//					"The Parameter \"" + withParameter.Parameter + "\" doesn't exist for device \"" + withParameter.Parameter.DeviceType + "\"\r\n";
-		//			}
-		//		}
-		//	}
-		//}
-
-
-		//private void GetSingleScript(
-		//	string scriptPath,
-		//	DevicesContainer devicesContainer)
-		//{
-		//	DesignScriptViewModel sdvm = new DesignScriptViewModel(null, devicesContainer, false);
-		//	sdvm.Open(path: scriptPath);
-
-		//	ScriptData scriptData = sdvm.CurrentScript;
-
-		//	GenerateProjectService generator = new GenerateProjectService();
-		//	List<DeviceCommunicator> usedCommunicatorsList = new List<DeviceCommunicator>();
-		//	bool isValidJson = true;
-		//	string errorString = "";
-		//	CurrentScript = generator.GenerateScript(
-		//		scriptPath,
-		//		scriptData,
-		//		devicesContainer,
-		//		ref usedCommunicatorsList,
-		//		ref errorString,
-		//		ref isValidJson);
-
-		//	if (CurrentScript != null)
-		//	{
-		//		CurrentProject = new GeneratedProjectData()
-		//		{
-		//			TestsList = new ObservableCollection<GeneratedScriptData>() { CurrentScript },
-		//		};
-		//	}
-		//}
 	}
 }
