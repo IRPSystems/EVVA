@@ -173,7 +173,7 @@ namespace Evva.ViewModels
 				//NoAbortingVisibility = Visibility.Collapsed;
 
 				_openProjectForRun = new OpenProjectForRunService();
-				_runProjectsList = new RunProjectsListService(RunScript, _devicesContainer);
+				_runProjectsList = new RunProjectsListService(logParametersList, RunScript, _devicesContainer);
 				_runProjectsList.RunEndedEvent += RunProjectsListEnded;
 
 				RunExplorer = new RunExplorerViewModel(_devicesContainer, RunScript, _EvvaUserData);
