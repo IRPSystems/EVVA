@@ -53,7 +53,8 @@ namespace Evva.ViewModels
 			SwitchRelayStateViewModel switchRelayState,
 			CommunicationViewModel communicationSettings,
 			SetupSelectionViewModel setupSelectionVM,
-			DeviceSimulatorsViewModel deviceSimulatorsViewModel) :
+			DeviceSimulatorsViewModel deviceSimulatorsViewModel,
+			ScriptDiagramViewModel mainScriptLogger) :
 			base("DockingMain")
 		{
 
@@ -69,7 +70,8 @@ namespace Evva.ViewModels
 				switchRelayState,
 				communicationSettings,
 				setupSelectionVM,
-				deviceSimulatorsViewModel);
+				deviceSimulatorsViewModel,
+				mainScriptLogger);
 		}
 
 		#endregion Constructor
@@ -88,7 +90,8 @@ namespace Evva.ViewModels
 			SwitchRelayStateViewModel switchRelayState,
 			CommunicationViewModel communicationSettings,
 			SetupSelectionViewModel setupSelectionVM,
-			DeviceSimulatorsViewModel deviceSimulatorsViewModel)
+			DeviceSimulatorsViewModel deviceSimulatorsViewModel,
+			ScriptDiagramViewModel mainScriptLogger)
 		{
 			DockFill = true;
 
@@ -170,6 +173,14 @@ namespace Evva.ViewModels
 			SetFloatParams(_setupSelection);
 			Children.Add(_setupSelection);
 
+			_mainScriptLogger = new ContentControl();
+			ScriptLogDiagramView scriptLog = new ScriptLogDiagramView() { DataContext = mainScriptLogger };
+			_mainScriptLogger.Content = scriptLog;
+			SetHeader(_mainScriptLogger, "Script Run Diagram");
+			SetState(_mainScriptLogger, DockState.Hidden);
+			SetSideInDockedMode(_mainScriptLogger, DockSide.Right);
+			Children.Add(_mainScriptLogger);
+
 			string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			path = Path.Combine(path, "Evva");
 			path = Path.Combine(path, "Default.txt");
@@ -197,17 +208,6 @@ namespace Evva.ViewModels
 		}
 
 
-		public void CreateScriptLogger(
-			ScriptDiagramViewModel mainScriptLogger)
-		{
-			_mainScriptLogger = new ContentControl();
-			ScriptLogDiagramView scriptLog = new ScriptLogDiagramView() { DataContext = mainScriptLogger };
-			_mainScriptLogger.Content = scriptLog;
-			SetHeader(_mainScriptLogger, "Script Run Diagram");
-			SetState(_mainScriptLogger, DockState.Hidden);
-			SetSideInDockedMode(_mainScriptLogger, DockSide.Right);
-			Children.Add(_mainScriptLogger);
-		}
 
 		public void CreateParamsLimitTester(
 			TestParamsLimitViewModel testParamsLimitViewModel)

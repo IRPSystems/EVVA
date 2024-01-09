@@ -200,6 +200,7 @@ namespace Evva.ViewModels
 					DevicesContainter,
 					EvvaUserData,
 					_canMessagesService);
+				Run.OpenScriptLogEvent += Run_OpenScriptLogEvent;
 
 				MonitorRecParam = new MonitorRecParamViewModel(
 					DevicesContainter,
@@ -257,9 +258,9 @@ namespace Evva.ViewModels
 					SwitchRelayState,
 					CommunicationSettings,
 					_setupSelectionVM,
-					deviceSimulatorsViewModel);
+					deviceSimulatorsViewModel,
+					Run.ScriptLogViewModel);
 
-				Run.CreateScriptLoggerWindow(Docking);
 				Tests.CreateTestParamsLimitWindow(Docking);
 
 
@@ -283,9 +284,16 @@ namespace Evva.ViewModels
 			}
 		}
 
+
+
 		#endregion Constructor
 
 		#region Methods
+
+		private void Run_OpenScriptLogEvent()
+		{
+			Docking.OpenLogScript();
+		}
 
 		private void AddMotorPowerOutputToTorqueKistler()
 		{

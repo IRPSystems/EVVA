@@ -80,14 +80,12 @@ namespace Evva.ViewModels
 
 		private EvvaUserData _EvvaUserData;
 
-		private DocingViewModel _docking;
-		private ScriptLogDiagramViewModel _scriptLogViewModel;
+		public ScriptLogDiagramViewModel ScriptLogViewModel;
 
 		private DevicesContainer _devicesContainer;
 
 		private DateTime _scriptStartTime;
 
-		private OpenProjectForRunService _openProjectForRun;
 		private RunProjectsListService _runProjectsList;
 
 		private GeneratedScriptData _stoppedScript;
@@ -106,6 +104,8 @@ namespace Evva.ViewModels
 			
 
 			_devicesContainer = devicesContainer;
+
+			
 
 			DeviceFullData deviceFullDataSource = null;
 			if (devicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.MCU) == true)
@@ -166,13 +166,15 @@ namespace Evva.ViewModels
 				RunScript.ScriptEndedEvent += ScriptEndedEventHandler;
 				RunScript.ScriptStartedEvent += ScriptStartedEventHandler;
 
+				ScriptLogViewModel =
+				new ScriptLogDiagramViewModel(RunScript);
+
 				_runTimeTimer = new System.Timers.Timer(200);
 				_runTimeTimer.Elapsed += RunTimeTimerElapsedEventHandler;
 
 				NoAbortingVisibility = Visibility.Visible;
 				//NoAbortingVisibility = Visibility.Collapsed;
 
-				_openProjectForRun = new OpenProjectForRunService();
 				_runProjectsList = new RunProjectsListService(logParametersList, RunScript, _devicesContainer);
 				_runProjectsList.RunEndedEvent += RunProjectsListEnded;
 
@@ -227,20 +229,10 @@ namespace Evva.ViewModels
 
 		public void ChangeDiagramBackground()
 		{
-			_scriptLogViewModel.ChangeBackground(
+			ScriptLogViewModel.ChangeBackground(
 				Application.Current.MainWindow.FindResource("MahApps.Brushes.Control.Background") as SolidColorBrush);
 		}
 
-		public void CreateScriptLoggerWindow(
-			DocingViewModel docking)
-		{
-			_docking = docking;
-
-			_scriptLogViewModel =
-				new ScriptLogDiagramViewModel(RunScript);
-			_docking.CreateScriptLogger(_scriptLogViewModel);
-
-		}
 
 		private void ConnectionEvent()
 		{
@@ -428,7 +420,7 @@ namespace Evva.ViewModels
 
 		private void ShowScriptOutput()
 		{
-			_docking.OpenLogScript();
+			OpenScriptLogEvent?.Invoke();
 		}
 
 		
@@ -472,7 +464,7 @@ namespace Evva.ViewModels
 
 		private void TestsDoubleClickEventHandler(GeneratedTestData testData)
 		{
-			_scriptLogViewModel.DrawScript(testData);
+			ScriptLogViewModel.DrawScript(testData);
 		}
 
 		private void ProjectAddedEventHandler()
@@ -508,5 +500,11 @@ namespace Evva.ViewModels
 
 
 		#endregion Commands
+
+		#region Events
+
+		public event Action OpenScriptLogEvent;
+
+		#endregion Events
 	}
 }
