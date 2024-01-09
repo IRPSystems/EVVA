@@ -514,11 +514,11 @@ namespace Evva.ViewModels
 
 			if (e.IsNI6002JsonPathChanged && DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002))
 			{
-				string ni6002JPath = Path.Combine(EvvaUserData.NI6002CommunicationPath, "NI_6002.json");
+				//string ni6002JPath = Path.Combine(EvvaUserData.NI6002CommunicationPath, "NI_6002.json");
 				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 				_readDevicesFile.ReadFromJson(
 					"Data\\Device Communications",
-					ni6002JPath,
+					EvvaUserData.NI6002CommunicationPath,
 					devicesList);
 				DeviceFullData deviceData = DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.NI_6002];
 
