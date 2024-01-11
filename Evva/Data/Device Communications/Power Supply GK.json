@@ -1,0 +1,27 @@
+{
+  "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.PowerSupplayGK.PowerSupplayGK_ParamData, DeviceCommunicators",
+        "Name": "Voltage",
+        "Units": "V",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ReadAddress": 8220,
+        "WriteAddress": 24581,
+        "WriteTriggerAddress": 24582
+      }
+    ]
+  },
+  "IsExpanded": false,
+  "IsSelected": false,
+  "Visibility": 0,
+  "Name": "Power Supply GK",
+  "DeviceType": 13
+}
