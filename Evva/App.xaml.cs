@@ -21,20 +21,18 @@ namespace Evva
         {
 			System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
-			//base.OnStartup(e);
-			////System.Windows.Forms.Application.UseWaitCursor = true;
-			////System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
-			////System.Windows.Forms.Application.DoEvents();
-			////Initialize();
-			//SplashView splash = new SplashView();
-			//splash.AppName = "EVVA";
-			//splash.Show();
-			////	System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-			//// Right now I'm showing main window right after splash screen but I will eventually wait until splash screen closes.
-			//TestStudioMainWindow main = new TestStudioMainWindow();
+			base.OnStartup(e);
 			
-			//main.Show();
-			//splash.Close();
+			SplashView splash = new SplashView();
+			splash.AppName = "EVVA";
+			splash.Show();
+			
+			// Right now I'm showing main window right after splash screen but I will eventually wait until splash screen closes.
+			TestStudioMainWindow main = new TestStudioMainWindow();
+
+			main.Show();
+			splash.Close();
+			main.Show();
 		}
 
         public static void ChangeDarkLight(bool isLightTheme)
