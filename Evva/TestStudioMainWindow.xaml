@@ -278,6 +278,9 @@
 
                 <TextBlock Text="Acquisition rate" VerticalAlignment="Center" Margin="0,0,5,0"/>
                 <TextBox Text="{Binding AcquisitionRate}" Width="75" VerticalContentAlignment="Center" />
+                <TextBlock Text="Hz"
+                           Margin="0,0,10,0"
+                           VerticalAlignment="Center"/>
 
             </StackPanel>
 

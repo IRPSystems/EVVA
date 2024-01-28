@@ -207,16 +207,25 @@
               StrokeThickness="2"
               Stroke="{DynamicResource MahApps.Brushes.Accent}" />
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5,0,0,0" 
-                    DataContext="{Binding RunScript}">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5,0,0,0" >
 
 
             <TextBlock Text="Record rate"
                            Margin="0,0,5,0"
                            VerticalAlignment="Center"/>
-            <ComboBox SelectedItem="{Binding RecordingRate}"
-                          ItemsSource="{Binding RecordingRateList}"
+            <ComboBox SelectedItem="{Binding RunScript.ParamRecording.RecordingRate}"
+                          ItemsSource="{Binding RunScript.RecordingRateList}"
                           Margin="0,1,5,1"/>
+            <TextBlock Text="Hz"
+                           Margin="0,0,20,0"
+                           VerticalAlignment="Center"/>
+
+            <TextBlock Text="Actual rate"
+                           Margin="0,0,5,0"
+                           VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding RunScript.ParamRecording.ActualRecordingRate}"
+                           Margin="0,0,5,0" Width="75"
+                           VerticalAlignment="Center"/>
             <TextBlock Text="Hz"
                            Margin="0,0,10,0"
                            VerticalAlignment="Center"/>
@@ -229,8 +238,8 @@
             <TextBlock Text="Record directory" 
                        VerticalAlignment="Center"
                        Margin="0,0,5,0"/>
-            <TextBox Text="{Binding RecordDirectory}" 
-                     ToolTip="{Binding RecordDirectory}"
+            <TextBox Text="{Binding RunScript.ParamRecording.RecordDirectory}" 
+                     ToolTip="{Binding RunScript.ParamRecording.RecordDirectory}"
                      HorizontalAlignment="Stretch"
                      VerticalContentAlignment="Center"
                      Width="250"

@@ -102,6 +102,7 @@ namespace Evva.ViewModels
 			EvvaUserData EvvaUserData,
 			CANMessagesService canMessagesService)
 		{
+			
 			IsRecord = true;
 			
 
@@ -184,7 +185,7 @@ namespace Evva.ViewModels
 				{
 					if (!string.IsNullOrEmpty(_EvvaUserData.ScriptUserData.LastRecordPath))
 					{
-						RunScript.RecordDirectory =
+						RunScript.ParamRecording.RecordDirectory =
 							_EvvaUserData.ScriptUserData.LastRecordPath;
 					}
 
@@ -206,7 +207,7 @@ namespace Evva.ViewModels
 
 					if (_EvvaUserData.ScriptUserData == null)
 						_EvvaUserData.ScriptUserData = new ScriptUserData();
-					RunScript.RecordDirectory =
+					RunScript.ParamRecording.RecordDirectory =
 						_EvvaUserData.ScriptUserData.LastRecordPath = path;
 				}
 
@@ -435,6 +436,7 @@ namespace Evva.ViewModels
 
 		private void BrowseRecordFile()
 		{
+			
 			string initDir = _EvvaUserData.ScriptUserData.LastRecordPath;
 			if (Directory.Exists(initDir) == false)
 				initDir = "";
@@ -447,7 +449,7 @@ namespace Evva.ViewModels
 
 			_EvvaUserData.ScriptUserData.LastRecordPath =
 				commonOpenFile.FileName;
-			RunScript.RecordDirectory = commonOpenFile.FileName;
+			RunScript.ParamRecording.RecordDirectory = commonOpenFile.FileName;
 		}
 
 		private void BrowseAbortScriptPath()
