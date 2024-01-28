@@ -88,7 +88,14 @@ namespace Evva.ViewModels
 
 			ReadFaults();
 
-			_setFaultsTimer = new Timer(1000 / ParametersRepositoryService.AcquisitionRate);
+			int acquisitionRate = 1;
+			if (_devicesContainer.TypeToDevicesFullData.ContainsKey(Entities.Enums.DeviceTypesEnum.MCU))
+			{
+				DeviceFullData device = _devicesContainer.TypeToDevicesFullData[Entities.Enums.DeviceTypesEnum.MCU];
+				acquisitionRate = device.ParametersRepository.AcquisitionRate;
+			}
+
+			_setFaultsTimer = new Timer(1000 / acquisitionRate);
 			_setFaultsTimer.Elapsed += SetFaultsTimerElapsedEventHandler;
 			_setFaultsTimer.Start();
 

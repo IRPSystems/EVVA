@@ -85,11 +85,28 @@ namespace Evva.ViewModels
 
 		public string CANMessagesScriptPath { get; set; }
 
+
+		public int AcquisitionRate 
+		{
+			get => _acquisitionRate;
+			set
+			{
+				_acquisitionRate = value;
+				if (DevicesContainter == null)
+					return;
+
+				foreach(DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList) 
+				{ 
+					deviceFullData.ParametersRepository.AcquisitionRate = AcquisitionRate;
+				}
+			}
+		}
+
 		#endregion Properties
 
 		#region Fields
 
-
+		private int _acquisitionRate;
 
 		public EvvaUserData EvvaUserData;
 
@@ -360,6 +377,7 @@ namespace Evva.ViewModels
 				DevicesContainter.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
 				UpdateSetup();
 
+				AcquisitionRate = 10;
 
 				CommunicationSettings = new CommunicationViewModel(DevicesContainter);
 
