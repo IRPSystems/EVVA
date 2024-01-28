@@ -26,13 +26,13 @@ namespace Evva
 			SplashView splash = new SplashView();
 			splash.AppName = "EVVA";
 			splash.Show();
-			
-			// Right now I'm showing main window right after splash screen but I will eventually wait until splash screen closes.
-			TestStudioMainWindow main = new TestStudioMainWindow();
 
-			main.Show();
+			// Right now I'm showing main window right after splash screen but I will eventually wait until splash screen closes.
+			MainWindow = new TestStudioMainWindow();
+			MainWindow.Show();
 			splash.Close();
-			main.Show();
+
+			
 		}
 
         public static void ChangeDarkLight(bool isLightTheme)
