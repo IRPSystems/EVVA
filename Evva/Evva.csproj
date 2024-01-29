@@ -6,9 +6,9 @@
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
 
-	  <Version>1.2.44.1</Version>
-	  <AssemblyVersion>1.2.44.1</AssemblyVersion>
-	  <FileVersion>1.2.44.1</FileVersion>
+	  <Version>1.2.44.2</Version>
+	  <AssemblyVersion>1.2.44.2</AssemblyVersion>
+	  <FileVersion>1.2.44.2</FileVersion>
 	  <ApplicationIcon>Resources\EVVA ICON.ico</ApplicationIcon>
   </PropertyGroup>
 
@@ -87,7 +87,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="mkdir &quot;$(OutDir)Data&quot;&#xD;&#xA;mkdir &quot;$(OutDir)Data\Device Communications&quot;&#xD;&#xA;mkdir &quot;$(OutDir)Data\Abort Scripts&quot;&#xD;&#xA;mkdir &quot;$(SolutionDir)TestCommunication\$(OutDir)Data\Device Communications&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\*.*&quot; &quot;$(OutDir)Data\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\Device Communications\*.*&quot; &quot;$(OutDir)Data\Device Communications\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\Abort Scripts\*.*&quot; &quot;$(OutDir)Data\Abort Scripts\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\Device Communications\*.*&quot; &quot;$(SolutionDir)TestCommunication\$(OutDir)Data\Device Communications\*.*&quot;&#xD;&#xA;copy &quot;$(SolutionDir)Lib\PCANBasic.dll&quot; &quot;$(OutDir)PCANBasic.dll&quot;&#xD;&#xA;copy &quot;$(SolutionDir)Infrastructure\Lib\tmctl64.dll&quot; &quot;$(OutDir)tmctl64.dll&quot;&#xD;&#xA;mkdir &quot;$(OutDir)EvvaCANMessageSender&quot;&#xD;&#xA;copy &quot;$(ProjectDir)..\EvvaCANMessageSender\bin\$(ConfigurationName)\net6.0-windows\*.*&quot; &quot;$(OutDir)EvvaCANMessageSender\*.*&quot;&#xD;&#xA;" />
+    <Exec Command="mkdir &quot;$(OutDir)Data&quot;&#xD;&#xA;mkdir &quot;$(OutDir)Data\Device Communications&quot;&#xD;&#xA;mkdir &quot;$(OutDir)Data\Abort Scripts&quot;&#xD;&#xA;mkdir &quot;$(SolutionDir)TestCommunication\$(OutDir)Data\Device Communications&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\*.*&quot; &quot;$(OutDir)Data\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\Device Communications\*.*&quot; &quot;$(OutDir)Data\Device Communications\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\Abort Scripts\*.*&quot; &quot;$(OutDir)Data\Abort Scripts\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDir)Data\Device Communications\*.*&quot; &quot;$(SolutionDir)TestCommunication\$(OutDir)Data\Device Communications\*.*&quot;&#xD;&#xA;copy &quot;$(SolutionDir)Infrastructure\Lib\PCANBasic.dll&quot; &quot;$(OutDir)PCANBasic.dll&quot;&#xD;&#xA;copy &quot;$(SolutionDir)Infrastructure\Lib\tmctl64.dll&quot; &quot;$(OutDir)tmctl64.dll&quot;&#xD;&#xA;mkdir &quot;$(OutDir)EvvaCANMessageSender&quot;&#xD;&#xA;copy &quot;$(ProjectDir)..\EvvaCANMessageSender\bin\$(ConfigurationName)\net6.0-windows\*.*&quot; &quot;$(OutDir)EvvaCANMessageSender\*.*&quot;&#xD;&#xA;" />
   </Target>
 
 </Project>
