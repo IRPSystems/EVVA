@@ -7,9 +7,7 @@ using DeviceCommunicators.Models;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using Entities.Enums;
-using Entities.Models;
 using Evva.Models;
-using Evva.Services;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using ScriptHandler.Enums;
@@ -18,9 +16,9 @@ using ScriptHandler.Services;
 using ScriptRunner.Enums;
 using ScriptRunner.Models;
 using ScriptRunner.Services;
+using ScriptRunner.ViewModels;
 using Services.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Timers;
@@ -177,7 +175,7 @@ namespace Evva.ViewModels
 				_runProjectsList = new RunProjectsListService(logParametersList, RunScript, _devicesContainer);
 				_runProjectsList.RunEndedEvent += RunProjectsListEnded;
 
-				RunExplorer = new RunExplorerViewModel(_devicesContainer, RunScript, _EvvaUserData);
+				RunExplorer = new RunExplorerViewModel(_devicesContainer, RunScript, _EvvaUserData.ScriptUserData);
 				RunExplorer.TestDoubleClickedEvent += TestsDoubleClickEventHandler;
 				RunExplorer.ProjectAddedEvent += ProjectAddedEventHandler;
 
