@@ -8,6 +8,7 @@
              xmlns:evva_converters="clr-namespace:Evva.Converter"
              xmlns:converters="clr-namespace:Converters;assembly=Converters"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:run_views="clr-namespace:ScriptRunner.Views;assembly=ScriptRunner"
              xmlns:local="clr-namespace:Evva.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1800" 
@@ -334,7 +335,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <local:RunExplorerView DataContext="{Binding RunExplorer}" MaxWidth="350"/>
+            <run_views:RunExplorerView DataContext="{Binding RunExplorer}" MaxWidth="350"/>
 
            
 
