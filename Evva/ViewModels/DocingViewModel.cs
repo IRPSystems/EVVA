@@ -176,25 +176,7 @@ namespace Evva.ViewModels
 			SaveDockState(path);
 		}
 
-		private void CreateTabbedWindow(
-			UserControl userControl,
-			string name,
-			string targetname,
-			out ContentControl window)
-		{
-			window = new ContentControl();
-			window.Name = name;
-			window.Content = userControl;
-
-			if (targetname != string.Empty)
-			{
-				SetTargetNameInDockedMode(window, targetname);
-				SetSideInDockedMode(window, DockSide.Tabbed);
-			}
-
-			SetHeader(window, name);
-			Children.Add(window);
-		}
+		
 
 
 		public void CreateScriptLogger(
