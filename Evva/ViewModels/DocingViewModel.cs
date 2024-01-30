@@ -205,12 +205,7 @@ namespace Evva.ViewModels
 			Children.Add(_testParamsLimit);
 		}
 
-		private void SetFloatParams(ContentControl control)
-		{
-			SetSizetoContentInDock(control, true);
-			SetSizetoContentInFloat(control, true);
-			SetState(control, DockState.Hidden);
-		}
+		
 
 
 
