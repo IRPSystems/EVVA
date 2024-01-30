@@ -457,7 +457,7 @@ namespace Evva.ViewModels
 					_setupSelectionVM,
 					deviceSimulatorsViewModel);
 
-				
+				Run.CreateScriptLoggerWindow();
 				Tests.CreateTestParamsLimitWindow(Docking);
 
 
