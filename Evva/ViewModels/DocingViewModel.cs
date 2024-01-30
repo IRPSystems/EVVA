@@ -7,6 +7,8 @@ using Evva.Views;
 using ParamLimitsTest;
 using ScriptHandler.ViewModels;
 using ScriptHandler.Views;
+using ScriptRunner.ViewModels;
+using ScriptRunner.Views;
 using Syncfusion.Windows.Tools.Controls;
 using System;
 using System.IO;
@@ -131,6 +133,9 @@ namespace Evva.ViewModels
 
 			RunView runView = new RunView() { DataContext = run };
 			CreateTabbedWindow(runView, "Run", "Design", out _run);
+			run.CreateScriptLogDiagramViewEvent += Run_CreateScriptLogDiagramViewEvent;
+			run.ShowScriptLogDiagramViewEvent += Run_ShowScriptLogDiagramViewEvent;
+
 
 
 
@@ -178,10 +183,8 @@ namespace Evva.ViewModels
 
 		
 
-
-		public void CreateScriptLogger(
-			ScriptDiagramViewModel mainScriptLogger)
-		{
+		private void Run_CreateScriptLogDiagramViewEvent(ScriptLogDiagramViewModel mainScriptLogger)
+		{			
 			_mainScriptLogger = new ContentControl();
 			ScriptLogDiagramView scriptLog = new ScriptLogDiagramView() { DataContext = mainScriptLogger };
 			_mainScriptLogger.Content = scriptLog;
@@ -230,6 +233,12 @@ namespace Evva.ViewModels
 		public void OpenDeviceSimulators()
 		{
 			SetState(_deviceSimulatorsViewModel, DockState.Float);
+		}
+
+
+		private void Run_ShowScriptLogDiagramViewEvent()
+		{
+			OpenLogScript();
 		}
 
 		public void OpenLogScript()
