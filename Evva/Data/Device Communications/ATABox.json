@@ -1,0 +1,194 @@
+{
+  "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
+  "Name": "ATEBox",
+  "DeviceType": 14,
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 4,
+        "Command": null,
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG1",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG2",
+              "Value": "2"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG3",
+              "Value": "3"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG4",
+              "Value": "4"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG5",
+              "Value": "5"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG6",
+              "Value": "6"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG7",
+              "Value": "7"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG8",
+              "Value": "8"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG9",
+              "Value": "9"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG10",
+              "Value": "10"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG11",
+              "Value": "11"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG12",
+              "Value": "12"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG13",
+              "Value": "13"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "DIG14",
+              "Value": "14"
+            }
+          ]
+        },
+        "Name": "Digital I/O",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 4,
+        "Command": null,
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG1",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG2",
+              "Value": "2"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG3",
+              "Value": "3"
+            }
+          ]
+        },
+        "Name": "Analog I/O",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 5,
+        "Command": "ATE_RS232_Start",
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": null,
+        "Name": "RS232 Start",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 5,
+        "Command": "ATE_RS422_Start",
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": null,
+        "Name": "RS422 Start",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 5,
+        "Command": "ATE_RS422_Start",
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": null,
+        "Name": "RS422 Start",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 5,
+        "Command": "ATE_CAN_Start",
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": null,
+        "Name": "CAN Start",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 5,
+        "Command": "ATE_RS422_Start",
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": null,
+        "Name": "CAN",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      }
+    ]
+  }
+}
