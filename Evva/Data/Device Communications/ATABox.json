@@ -119,7 +119,111 @@
             }
           ]
         },
-        "Name": "Analog I/O",
+        "Name": "Set Analog I/O",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 4,
+        "Command": null,
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG1",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG2",
+              "Value": "2"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG3",
+              "Value": "3"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG4",
+              "Value": "4"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG5",
+              "Value": "5"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG6",
+              "Value": "6"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG7",
+              "Value": "7"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG8",
+              "Value": "8"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG9",
+              "Value": "9"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ANLOG10",
+              "Value": "10"
+            }
+          ]
+        },
+        "Name": "Get Analog I/O",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 4,
+        "Command": null,
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "LED0",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "LED1",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "LED2",
+              "Value": "2"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "LED3",
+              "Value": "3"
+            }
+          ]
+        },
+        "Name": "Leds",
         "Units": null,
         "Value": null,
         "DeviceType": 0
@@ -153,12 +257,12 @@
       {
         "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
         "InterfaceType": 5,
-        "Command": "ATE_RS422_Start",
+        "Command": "ATE_RS485_Start",
         "MCUParameter": null,
         "Channel": 0,
         "CANID": 0,
         "DropDown": null,
-        "Name": "RS422 Start",
+        "Name": "RS485 Start",
         "Units": null,
         "Value": null,
         "DeviceType": 0
@@ -179,12 +283,77 @@
       {
         "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
         "InterfaceType": 5,
-        "Command": "ATE_RS422_Start",
+        "Command": "EN_LOAD_1A",
         "MCUParameter": null,
         "Channel": 0,
         "CANID": 0,
         "DropDown": null,
-        "Name": "CAN",
+        "Name": "LOAD 1A",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 5,
+        "Command": "EN_LOAD_2A",
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": null,
+        "Name": "LOAD 2A",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 5,
+        "Command": "HOT_SWAP_EN",
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": null,
+        "Name": "HOT SWAP EN",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 5,
+        "Command": "V_DIGITAL_EN",
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": null,
+        "Name": "V DIGITAL EN",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 5,
+        "Command": "Fan_Control",
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": null,
+        "Name": "Fan Control",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.ATEBox.ATEBox_ParamData, DeviceCommunicators",
+        "InterfaceType": 5,
+        "Command": null,
+        "MCUParameter": null,
+        "Channel": 0,
+        "CANID": 0,
+        "DropDown": null,
+        "Name": "MCU",
         "Units": null,
         "Value": null,
         "DeviceType": 0
