@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DeviceHandler.Models;
 using Evva.Models;
-using Evva.Services;
 using Newtonsoft.Json;
 using ScriptHandler.Models;
 using ScriptRunner.Services;
@@ -183,7 +182,7 @@ namespace Evva.ViewModels
 		private void OpenProject()
 		{
 			GeneratedProjectData projectData = _openProjectForRun.Open(
-				_EvvaUserData,
+				_EvvaUserData.ScriptUserData,
 				_devicesContainer,
 				_runScript);
 

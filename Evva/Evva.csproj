@@ -54,7 +54,7 @@
     <PackageReference Include="Syncfusion.Tools.WPF" Version="20.3.0.61" />
     <PackageReference Include="Syncfusion.XpsToPdfConverter.Net.Core" Version="20.4.0.44" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
-    <PackageReference Include="WindowsAPICodePack" Version="7.0.1" />
+    <PackageReference Include="WindowsAPICodePack" Version="7.0.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -84,6 +84,10 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

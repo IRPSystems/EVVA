@@ -10,7 +10,6 @@ using System.Windows;
 using DeviceCommunicators.Enums;
 using ScriptHandler.Models;
 using DeviceHandler.Models;
-using Evva.Services;
 using Evva.Views;
 using ParamLimitsTest;
 using DeviceCommunicators.Models;

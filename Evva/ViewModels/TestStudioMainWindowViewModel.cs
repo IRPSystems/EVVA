@@ -15,7 +15,6 @@ using DeviceSimulators.Views;
 using Entities.Enums;
 using Entities.Models;
 using Evva.Models;
-using Evva.Services;
 using Evva.Views;
 using Microsoft.Win32;
 using ScriptHandler.Models;

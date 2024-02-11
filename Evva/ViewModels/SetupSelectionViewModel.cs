@@ -60,6 +60,9 @@ namespace Evva.ViewModels
 
 			DeleteDeviceCommand = new RelayCommand(DeleteDevice);
 
+			MoveDeviceToDestCommand = new RelayCommand(MoveDeviceToDest);
+			MoveDeviceToSourceCommand = new RelayCommand(MoveDeviceToSource);
+
 
 			_devicesSourceList_Full = readDevicesFile.ReadAllFiles(
 				@"Data\Device Communications\",
@@ -259,19 +262,7 @@ namespace Evva.ViewModels
 			if (e.Data.GetDataPresent("DeviceDrag"))
 			{
 				DeviceData droppedDevice = e.Data.GetData("DeviceDrag") as DeviceData;
-				DeviceData deviceBase = droppedDevice.Clone() as DeviceData;
-
-				List<DeviceData> sameTypeDevice = 
-					DevicesList.ToList().Where((d) => d.DeviceType == deviceBase.DeviceType).ToList();
-				if (sameTypeDevice != null && sameTypeDevice.Count > 0)
-				{
-					deviceBase.Name = deviceBase.Name + (sameTypeDevice.Count + 1);
-				}
-
-				LoggerService.Inforamtion(this, "Add device " + deviceBase.DeviceType + "-"+ deviceBase.Name +" to the setup list");
-
-				DevicesList.Add(deviceBase);
-				RemoveSetupDeviceFromSource(deviceBase.DeviceType);
+				AddDeviceToDestList(droppedDevice);
 			}
 
 			string str = "Source list:\r\n";
@@ -279,6 +270,8 @@ namespace Evva.ViewModels
 				str += deviceBase1.DeviceType + "\r\n";
 			LoggerService.Inforamtion(this, str);
 		}
+
+		
 
 		private void ListScript_DragEnter(DragEventArgs e)
 		{
@@ -290,7 +283,7 @@ namespace Evva.ViewModels
 
 		#endregion Drop
 
-
+		#region Load/Save
 
 		private void SaveDeviceSetup()
 		{
@@ -354,6 +347,25 @@ namespace Evva.ViewModels
 			}
 		}
 
+		#endregion Load/Save
+
+		private void AddDeviceToDestList(DeviceData deviceData_Source)
+		{
+			DeviceData deviceData = deviceData_Source.Clone() as DeviceData;
+
+			List<DeviceData> sameTypeDevice =
+				DevicesList.ToList().Where((d) => d.DeviceType == deviceData.DeviceType).ToList();
+			if (sameTypeDevice != null && sameTypeDevice.Count > 0)
+			{
+				deviceData.Name = deviceData.Name + (sameTypeDevice.Count + 1);
+			}
+
+			LoggerService.Inforamtion(this, "Add device " + deviceData.DeviceType + "-" + deviceData.Name + " to the setup list");
+
+			DevicesList.Add(deviceData);
+			RemoveSetupDeviceFromSource(deviceData.DeviceType);
+		}
+
 		private void CloseOK()
 		{
 			_EvvaUserData.SetupDevicesList = new ObservableCollection<DeviceTypesEnum>();
@@ -368,6 +380,16 @@ namespace Evva.ViewModels
 		private void CloseCancel()
 		{
 			CloseCancelEvent?.Invoke();
+		}
+
+		private void MoveDeviceToDest()
+		{
+
+		}
+
+		private void MoveDeviceToSource()
+		{
+
 		}
 
 
@@ -461,6 +483,9 @@ namespace Evva.ViewModels
 		public RelayCommand CloseCancelCommand { get; private set; }
 
 		public RelayCommand DeleteDeviceCommand { get; private set; }
+
+		public RelayCommand MoveDeviceToDestCommand { get; private set; }
+		public RelayCommand MoveDeviceToSourceCommand { get; private set; }
 
 		#endregion Commands
 

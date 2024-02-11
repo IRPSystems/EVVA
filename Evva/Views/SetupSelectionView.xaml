@@ -107,13 +107,27 @@
         </ListView>
 
 
+        <StackPanel Grid.Column="1" Grid.Row="4"
+                    VerticalAlignment="Center" HorizontalAlignment="Center">
+            
+            <Button Style="{StaticResource ButtonWithIconStyle}"
+                    Width="25"
+                    Height="25"
+                    ToolTip="Move selected device to the destination list"
+                    Command="{Binding MoveDeviceToDestCommand}"
+                    Margin="0,0,0,5">
+                <iconPacks:PackIconOcticons Kind="ArrowRight" />
+            </Button>
 
+            <Button Style="{StaticResource ButtonWithIconStyle}"
+                    Width="25"
+                    Height="25"
+                    ToolTip="Move selected device to the source list"
+                    Command="{Binding MoveDeviceToSourceCommand}">
+                <iconPacks:PackIconOcticons Kind="ArrowLeft" />
+            </Button>
 
-        <iconPacks:PackIconOcticons Kind="ArrowRight" 
-                                    Grid.Column="1" Grid.Row="4"
-                                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                                    Width="25" Height="25"/>
-
+        </StackPanel>
 
         <TextBlock Grid.Row="2" Grid.Column="2" Text="Destination" FontSize="15" FontWeight="DemiBold" 
                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
