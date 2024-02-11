@@ -29,7 +29,8 @@ namespace Evva.ViewModels
 		public ObservableCollection<DeviceData> DevicesSourceList { get; set; }
 
 
-		public DeviceData SetupSelectedItem { get; set; }
+		public DeviceData DestListSelectedItem { get; set; }
+		public DeviceData SourceListSelectedItem { get; set; }
 
 		#endregion Properties
 
@@ -41,6 +42,8 @@ namespace Evva.ViewModels
 		private EvvaUserData _EvvaUserData;
 
 		private ObservableCollection<DeviceData> _devicesSourceList_Full;
+
+		private DeviceData _selectedDevice;
 
 		#endregion Fields
 
@@ -63,6 +66,7 @@ namespace Evva.ViewModels
 			MoveDeviceToDestCommand = new RelayCommand(MoveDeviceToDest);
 			MoveDeviceToSourceCommand = new RelayCommand(MoveDeviceToSource);
 
+			_selectedDevice = null;
 
 			_devicesSourceList_Full = readDevicesFile.ReadAllFiles(
 				@"Data\Device Communications\",
@@ -130,16 +134,16 @@ namespace Evva.ViewModels
 
 		private void DeleteDevice()
 		{
-			LoggerService.Inforamtion(this, "Remove device " + SetupSelectedItem.DeviceType + "-" + SetupSelectedItem.Name + " from the setup list");
+			LoggerService.Inforamtion(this, "Remove device " + DestListSelectedItem.DeviceType + "-" + DestListSelectedItem.Name + " from the setup list");
 
-			DevicesSourceList.Add(SetupSelectedItem);
-			DevicesList.Remove(SetupSelectedItem);
+			DevicesSourceList.Add(DestListSelectedItem);
+			DevicesList.Remove(DestListSelectedItem);
 		}
 
 
 		#region Drag
 
-		private void ListTools_MouseEnter(MouseEventArgs e)
+		private void SourceList_MouseEnter(MouseEventArgs e)
 		{
 			
 			if (e.MouseDevice.LeftButton == MouseButtonState.Pressed)
@@ -148,19 +152,19 @@ namespace Evva.ViewModels
 				_isMouseDown = false;
 		}
 
-		private void ListTools_PreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+		private void SourceList_PreviewMouseLeftButtonDown(MouseButtonEventArgs e)
 		{
 
 			_isMouseDown = true;
 			_startPoint = e.GetPosition(null);
 		}
 
-		private void ListTools_PreviewMouseLeftButtonUp(MouseButtonEventArgs e)
+		private void SourceList_PreviewMouseLeftButtonUp(MouseButtonEventArgs e)
 		{
 			_isMouseDown = false;
 		}
 
-		private void ListTools_MouseMove(MouseEventArgs e)
+		private void SourceList_MouseMove(MouseEventArgs e)
 		{
 			if (_isMouseDown == false)
 				return;
@@ -254,7 +258,7 @@ namespace Evva.ViewModels
 
 		#region Drop
 
-		private void ListScript_Drop(DragEventArgs e)
+		private void DestList_Drop(DragEventArgs e)
 		{
 			LoggerService.Inforamtion(this, "Object is dropped");
 
@@ -273,7 +277,7 @@ namespace Evva.ViewModels
 
 		
 
-		private void ListScript_DragEnter(DragEventArgs e)
+		private void DestList_DragEnter(DragEventArgs e)
 		{
 			if (!e.Data.GetDataPresent("DeviceDrag"))
 			{
@@ -353,12 +357,12 @@ namespace Evva.ViewModels
 		{
 			DeviceData deviceData = deviceData_Source.Clone() as DeviceData;
 
-			List<DeviceData> sameTypeDevice =
-				DevicesList.ToList().Where((d) => d.DeviceType == deviceData.DeviceType).ToList();
-			if (sameTypeDevice != null && sameTypeDevice.Count > 0)
-			{
-				deviceData.Name = deviceData.Name + (sameTypeDevice.Count + 1);
-			}
+			//List<DeviceData> sameTypeDevice =
+			//	DevicesList.ToList().Where((d) => d.DeviceType == deviceData.DeviceType).ToList();
+			//if (sameTypeDevice != null && sameTypeDevice.Count > 0)
+			//{
+			//	deviceData.Name = deviceData.Name + (sameTypeDevice.Count + 1);
+			//}
 
 			LoggerService.Inforamtion(this, "Add device " + deviceData.DeviceType + "-" + deviceData.Name + " to the setup list");
 
@@ -384,14 +388,13 @@ namespace Evva.ViewModels
 
 		private void MoveDeviceToDest()
 		{
-
+			AddDeviceToDestList(SourceListSelectedItem);
 		}
 
 		private void MoveDeviceToSource()
 		{
-
+			DeleteDevice();
 		}
-
 
 		#endregion Methods
 
@@ -399,43 +402,43 @@ namespace Evva.ViewModels
 
 		#region Drag
 
-		private RelayCommand<MouseEventArgs> _ListTools_MouseEnterCommand;
-		public RelayCommand<MouseEventArgs> ListTools_MouseEnterCommand
+		private RelayCommand<MouseEventArgs> _SourceList_MouseEnterCommand;
+		public RelayCommand<MouseEventArgs> SourceList_MouseEnterCommand
 		{
 			get
 			{
-				return _ListTools_MouseEnterCommand ?? (_ListTools_MouseEnterCommand =
-					new RelayCommand<MouseEventArgs>(ListTools_MouseEnter));
+				return _SourceList_MouseEnterCommand ?? (_SourceList_MouseEnterCommand =
+					new RelayCommand<MouseEventArgs>(SourceList_MouseEnter));
 			}
 		}
 
-		private RelayCommand<MouseButtonEventArgs> _ListTools_PreviewMouseLeftButtonDownCommant;
-		public RelayCommand<MouseButtonEventArgs> ListTools_PreviewMouseLeftButtonDownCommant
+		private RelayCommand<MouseButtonEventArgs> _SourceList_PreviewMouseLeftButtonDownCommant;
+		public RelayCommand<MouseButtonEventArgs> SourceList_PreviewMouseLeftButtonDownCommant
 		{
 			get
 			{
-				return _ListTools_PreviewMouseLeftButtonDownCommant ?? (_ListTools_PreviewMouseLeftButtonDownCommant =
-					new RelayCommand<MouseButtonEventArgs>(ListTools_PreviewMouseLeftButtonDown));
+				return _SourceList_PreviewMouseLeftButtonDownCommant ?? (_SourceList_PreviewMouseLeftButtonDownCommant =
+					new RelayCommand<MouseButtonEventArgs>(SourceList_PreviewMouseLeftButtonDown));
 			}
 		}
 
-		private RelayCommand<MouseButtonEventArgs> _ListTools_PreviewMouseLeftButtonUpCommant;
-		public RelayCommand<MouseButtonEventArgs> ListTools_PreviewMouseLeftButtonUpCommant
+		private RelayCommand<MouseButtonEventArgs> _SourceList_PreviewMouseLeftButtonUpCommant;
+		public RelayCommand<MouseButtonEventArgs> SourceList_PreviewMouseLeftButtonUpCommant
 		{
 			get
 			{
-				return _ListTools_PreviewMouseLeftButtonUpCommant ?? (_ListTools_PreviewMouseLeftButtonUpCommant =
-					new RelayCommand<MouseButtonEventArgs>(ListTools_PreviewMouseLeftButtonUp));
+				return _SourceList_PreviewMouseLeftButtonUpCommant ?? (_SourceList_PreviewMouseLeftButtonUpCommant =
+					new RelayCommand<MouseButtonEventArgs>(SourceList_PreviewMouseLeftButtonUp));
 			}
 		}
 
-		private RelayCommand<MouseEventArgs> _ListTools_MouseMoveCommand;
-		public RelayCommand<MouseEventArgs> ListTools_MouseMoveCommand
+		private RelayCommand<MouseEventArgs> _SourceList_MouseMoveCommand;
+		public RelayCommand<MouseEventArgs> SourceList_MouseMoveCommand
 		{
 			get
 			{
-				return _ListTools_MouseMoveCommand ?? (_ListTools_MouseMoveCommand =
-					new RelayCommand<MouseEventArgs>(ListTools_MouseMove));
+				return _SourceList_MouseMoveCommand ?? (_SourceList_MouseMoveCommand =
+					new RelayCommand<MouseEventArgs>(SourceList_MouseMove));
 			}
 		}
 
@@ -454,27 +457,31 @@ namespace Evva.ViewModels
 
 		#region Drop
 
-		private RelayCommand<DragEventArgs> _ListScript_DropCommand;
-		public RelayCommand<DragEventArgs> ListScript_DropCommand
+		private RelayCommand<DragEventArgs> _DestList_DropCommand;
+		public RelayCommand<DragEventArgs> DestList_DropCommand
 		{
 			get
 			{
-				return _ListScript_DropCommand ?? (_ListScript_DropCommand =
-					new RelayCommand<DragEventArgs>(ListScript_Drop));
+				return _DestList_DropCommand ?? (_DestList_DropCommand =
+					new RelayCommand<DragEventArgs>(DestList_Drop));
 			}
 		}
 
-		private RelayCommand<DragEventArgs> _ListScript_DragEnterCommand;
-		public RelayCommand<DragEventArgs> ListScript_DragEnterCommand
+		private RelayCommand<DragEventArgs> _DestList_DragEnterCommand;
+		public RelayCommand<DragEventArgs> DestList_DragEnterCommand
 		{
 			get
 			{
-				return _ListScript_DragEnterCommand ?? (_ListScript_DragEnterCommand =
-					new RelayCommand<DragEventArgs>(ListScript_DragEnter));
+				return _DestList_DragEnterCommand ?? (_DestList_DragEnterCommand =
+					new RelayCommand<DragEventArgs>(DestList_DragEnter));
 			}
 		}
 
 		#endregion Drop
+
+
+
+
 
 		public RelayCommand SaveDeviceSetupCommand { get; private set; }
 		public RelayCommand LoadDeviceSetupCommand { get; private set; }

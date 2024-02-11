@@ -63,34 +63,36 @@
                   ItemsSource="{Binding DevicesSourceList}"
                   BorderBrush="{DynamicResource MahApps.Brushes.Accent2}"
                   BorderThickness="1"
-                  FontSize="15">
+                  FontSize="15"
+                  SelectionMode="Single"
+                  SelectedItem="{Binding SourceListSelectedItem}">
 
             <i:Interaction.Triggers>
 
 
                 <i:EventTrigger EventName="MouseEnter">
-                    <i:InvokeCommandAction Command="{Binding Path=DataContext.ListTools_MouseEnterCommand, 
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.SourceList_MouseEnterCommand, 
                                                              Mode=OneWay, 
                                                              RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" 
                                            PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
 
                 <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding Path=DataContext.ListTools_PreviewMouseLeftButtonDownCommant, 
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.SourceList_PreviewMouseLeftButtonDownCommant, 
                                                              Mode=OneWay, 
                                                              RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" 
                                            PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
 
                 <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding Path=DataContext.ListTools_PreviewMouseLeftButtonUpCommant, 
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.SourceList_PreviewMouseLeftButtonUpCommant, 
                                                              Mode=OneWay, 
                                                              RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" 
                                            PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
 
                 <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding Path=DataContext.ListTools_MouseMoveCommand, 
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.SourceList_MouseMoveCommand, 
                                                              Mode=OneWay, 
                                                              RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" 
                                            PassEventArgsToCommand="True"/>
@@ -142,7 +144,7 @@
                   AllowDrop="True"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
-                  SelectedItem="{Binding SetupSelectedItem}">
+                  SelectedItem="{Binding DestListSelectedItem}">
 
             <DataGrid.InputBindings>
                 <KeyBinding Key="Delete" 
@@ -153,14 +155,14 @@
 
 
                 <i:EventTrigger EventName="Drop">
-                    <i:InvokeCommandAction Command="{Binding Path=DataContext.ListScript_DropCommand, 
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.DestList_DropCommand, 
                                                              Mode=OneWay, 
                                                              RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" 
                                            PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
 
                 <i:EventTrigger EventName="DragEnter">
-                    <i:InvokeCommandAction Command="{Binding Path=DataContext.ListScript_DragEnterCommand, 
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.DestList_DragEnterCommand, 
                                                              Mode=OneWay, 
                                                              RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" 
                                            PassEventArgsToCommand="True"/>
