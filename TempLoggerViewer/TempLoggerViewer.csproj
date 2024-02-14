@@ -23,6 +23,7 @@
     <ProjectReference Include="..\Evva\Evva.csproj" />
     <ProjectReference Include="..\Infrastructure\Controls\Controls.csproj" />
     <ProjectReference Include="..\Infrastructure\Entities\Entities.csproj" />
+    <ProjectReference Include="..\ScriptsInfrastructure\ScriptRunner\ScriptRunner.csproj" />
   </ItemGroup>
 
 </Project>

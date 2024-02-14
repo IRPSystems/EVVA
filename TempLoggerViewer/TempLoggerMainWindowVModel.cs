@@ -2,40 +2,60 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DeviceCommunicators.Enums;
-using DeviceCommunicators.Interfaces;
 using DeviceCommunicators.Models;
 using DeviceCommunicators.Services;
+using DeviceHandler.Enums;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using DeviceHandler.ViewModels;
 using Entities.Enums;
+using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using ScriptRunner.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
+using TempLoggerViewer.Models;
 using TempLoggerViewer.ViewModels;
 
 namespace TempLoggerViewer
 {
-	public class TempLoggerMainWindowVModel: ObservableObject
+	public class TempLoggerMainWindowVModel : ObservableObject
 	{
+
+		public class LoggerDevice : ObservableObject
+		{ 
+			public DeviceData Device { get; set; }
+
+			public bool IsThermocoupleK { get; set; }
+			public bool IsThermocoupleT { get; set; }
+
+			public bool IsRecord { get; set; }
+		}
+
+
 		#region Properties
 
 		public DevicesContainer DevicesContainter { get; set; }
 		public DocingTempLoggerViewModel Docking { get; set; }
 
+		public ObservableCollection<LoggerDevice> LoggerDevicesList { get; set; }
+
 		public string Version { get; set; }
+
+		public string RecordDirectory { get; set; }
+
+		public bool IsRecording { get; set; }
 
 		#endregion Properties
 
 		#region Fields
 
-		protected CancellationTokenSource _cancellationTokenSource;
-		protected CancellationToken _cancellationToken;
+		private ParamRecordingService _paramRecording;
+		private LoggerViewerUserData _loggerViewerUserData;
 
 		#endregion Fields
 
@@ -53,8 +73,18 @@ namespace TempLoggerViewer
 			CommunicationSettingsCommand = new RelayCommand(InitCommunicationSettings);
 			ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
 
-			_cancellationTokenSource = new CancellationTokenSource();
-			_cancellationToken = _cancellationTokenSource.Token;
+			SaveNamesCommand = new RelayCommand(SaveNames);
+			LoadNamesCommand = new RelayCommand(LoadNames);
+
+			BrowseRecordFileCommand = new RelayCommand(BrowseRecordFile);
+			StartRecordingCommand = new RelayCommand(StartRecording);
+			StopRecordingCommand = new RelayCommand(StopRecording);
+			ThermocoupleTypeCommand = new RelayCommand<LoggerDevice>(ThermocoupleType);
+
+			_paramRecording = new ParamRecordingService(DevicesContainter);
+
+			_loggerViewerUserData = LoggerViewerUserData.LoadLoggerViewerData("TempLoggerViewer");
+			RecordDirectory = _loggerViewerUserData.RecordingDirectory;
 		}
 
 		#endregion Constructor
@@ -63,8 +93,19 @@ namespace TempLoggerViewer
 
 		private void Closing(CancelEventArgs e)
 		{
-			if(_cancellationTokenSource != null)
-				_cancellationTokenSource.Cancel();
+
+			foreach (DeviceFullData device in DevicesContainter.DevicesFullDataList)
+			{
+				device.Disconnect();
+				foreach (DeviceParameterData param in device.Device.ParemetersList)
+				{
+					device.ParametersRepository.Remove(param, Callback);
+				}
+			}
+
+			LoggerViewerUserData.SaveLoggerViewerData(
+				"TempLoggerViewer",
+				_loggerViewerUserData);
 		}
 
 		private void InitDevicesContainter()
@@ -105,11 +146,23 @@ namespace TempLoggerViewer
 					DevicesContainter.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
 			}
 
+			LoggerDevicesList = new ObservableCollection<LoggerDevice>();
 			foreach (DeviceFullData device in DevicesContainter.DevicesFullDataList)
 			{
+				LoggerDevicesList.Add(new LoggerDevice() 
+				{ 
+					Device = device.Device, 
+					IsThermocoupleK = true,
+					IsRecord = true,
+				});
+
 				device.Connect();
 				device.InitCheckConnection();
-				ReadData(device);
+
+				foreach(DeviceParameterData param in device.Device.ParemetersList) 
+				{
+					device.ParametersRepository.Add(param, RepositoryPriorityEnum.High, Callback);
+				}
 			}
 		}
 
@@ -118,42 +171,151 @@ namespace TempLoggerViewer
 			Docking.OpenCommSettings();
 		}
 
-		protected void ReadData(DeviceFullData deviceFullData)
-		{
-			IDataLoggerCommunicator dataLoggerCommunicator =
-				deviceFullData.DeviceCommunicator as IDataLoggerCommunicator;
-			if (dataLoggerCommunicator == null)
-				return;
-
-			Task.Run(() =>
-			{
-				while (!_cancellationToken.IsCancellationRequested)
-				{
-					for(int i = 0; i < dataLoggerCommunicator.NumberOfChannels; i++)
-					{
-						deviceFullData.DeviceCommunicator.GetParamValue(
-							deviceFullData.Device.ParemetersList[i],
-							Callback);
-
-						System.Threading.Thread.Sleep(1);
-					}
-
-					System.Threading.Thread.Sleep(1);
-				}
-			}, _cancellationToken);
-		}
-
 		private void Callback(DeviceParameterData param, CommunicatorResultEnum result, string errorDescription)
 		{
+		}
+
+		private void BrowseRecordFile()
+		{
+			CommonOpenFileDialog commonOpenFile = new CommonOpenFileDialog();
+			commonOpenFile.IsFolderPicker = true;
+			commonOpenFile.InitialDirectory = _loggerViewerUserData.RecordingDirectory;
+			CommonFileDialogResult results = commonOpenFile.ShowDialog();
+			if (results != CommonFileDialogResult.Ok)
+				return;
+
+			RecordDirectory = commonOpenFile.FileName;
+			_loggerViewerUserData.RecordingDirectory = RecordDirectory;
+		}
+
+		private void StartRecording()
+		{
+			if (string.IsNullOrEmpty(RecordDirectory))
+				return;
+
+			ObservableCollection<DeviceParameterData> recordParamsList = 
+				new ObservableCollection<DeviceParameterData>();
+			foreach(LoggerDevice loggerDevice in LoggerDevicesList)
+			{
+				DeviceFullData deviceFullData =
+					DevicesContainter.TypeToDevicesFullData[loggerDevice.Device.DeviceType];
+				if (deviceFullData.DeviceCommunicator.IsInitialized == false)
+					continue;
+
+				if(loggerDevice.IsRecord == false) 
+					continue;
+
+				foreach(DeviceParameterData param in loggerDevice.Device.ParemetersList) 
+				{
+					recordParamsList.Add(param);
+				}
+			}
+
+			_paramRecording.StartRecording("Temp Logger", RecordDirectory, recordParamsList, true);
+			IsRecording = true;
+		}
+
+		private void StopRecording()
+		{
+			_paramRecording.StopRecording();
+			IsRecording = false;
+		}
+
+		private void ThermocoupleType(LoggerDevice loggerDevice)
+		{
 
 		}
+
+
+		#region Channels name
+
+		private void SaveNames()
+		{
+			SaveFileDialog saveFileDialog = new SaveFileDialog();
+			saveFileDialog.Filter = "Text Files | *.txt";
+			saveFileDialog.InitialDirectory = _loggerViewerUserData.ChannelsNameDirectory;
+			bool? result = saveFileDialog.ShowDialog();
+			if (result != true)
+				return;
+
+			_loggerViewerUserData.ChannelsNameDirectory = 
+				Path.GetDirectoryName(saveFileDialog.FileName);
+
+			using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
+			{
+				foreach(DeviceData device in DevicesContainter.DevicesList)
+				{
+					sw.WriteLine("Device Name:" + device.Name);
+
+					foreach (DeviceParameterData param in device.ParemetersList) 
+					{ 
+						sw.WriteLine(param.Name);
+					}
+
+					sw.WriteLine("");
+					sw.WriteLine("");
+				}
+				
+			}
+		}
+
+		private void LoadNames()
+		{
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = "Text Files | *.txt";
+			openFileDialog.InitialDirectory = _loggerViewerUserData.ChannelsNameDirectory;
+			bool? result = openFileDialog.ShowDialog();
+			if (result != true)
+				return;
+
+
+
+			_loggerViewerUserData.ChannelsNameDirectory =
+				Path.GetDirectoryName(openFileDialog.FileName);
+
+			string fileData = string.Empty;
+			using(StreamReader sr = new StreamReader(openFileDialog.FileName)) 
+			{ 
+				fileData = sr.ReadToEnd();
+			}
+
+			string[] fileLines = fileData.Split("\r\n");
+
+			DeviceData device = null;
+			int paramCounter = 0;
+			foreach(string line in fileLines) 
+			{ 
+				if(string.IsNullOrEmpty(line)) 
+					continue;
+
+				if(line.StartsWith("Device Name:"))
+				{
+					paramCounter = 0;
+					string name = line.Substring("Device Name:".Length);
+					device = DevicesContainter.DevicesList.ToList().Find((d) => d.Name == name);
+					continue;
+				}
+
+				device.ParemetersList[paramCounter++].Name = line;
+			}
+		}
+
+		#endregion Channels name
 
 		#endregion Methods
 
-				#region Commands
+		#region Commands
 
 		public RelayCommand CommunicationSettingsCommand { get; private set; }
 		public RelayCommand<CancelEventArgs> ClosingCommand { get; private set; }
+
+		public RelayCommand SaveNamesCommand { get; private set; }
+		public RelayCommand LoadNamesCommand { get; private set; }
+
+		public RelayCommand BrowseRecordFileCommand { get; private set; }
+		public RelayCommand StartRecordingCommand { get; private set; }
+		public RelayCommand StopRecordingCommand { get; private set; }
+		public RelayCommand<LoggerDevice> ThermocoupleTypeCommand { get; private set; }
 
 		#endregion Commands
 	}

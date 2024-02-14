@@ -7,9 +7,10 @@
                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
                 xmlns:device_handler_views="clr-namespace:DeviceHandler.Views;assembly=DeviceHandler"
                 xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                 xmlns:converters="clr-namespace:Converters;assembly=Converters"
                 xmlns:local="clr-namespace:TempLoggerViewer"
                 mc:Ignorable="d"
-                Title="Temp Logger Viewer" Height="460" Width="800"
+                Title="Temp Logger Viewer" Height="480" Width="1200"
                  WindowStartupLocation="CenterScreen">
     
     <mah:MetroWindow.Resources>
@@ -22,7 +23,78 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ListViewItem">
-                            <local:TempLoggerView DataContext="{Binding}"/>
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="{Binding Device.Name}" FontSize="14" FontWeight="DemiBold"/>
+
+                                <Grid Grid.Row="2" Margin="0,0,15,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+
+                                        <TextBlock Text="Thermocouple type:" VerticalAlignment="Center"
+                                                   Margin="0,0,10,0"/>
+
+                                        <RadioButton Content="K" 
+                                                     VerticalAlignment="Center" 
+                                                     GroupName="{Binding Device.Name}" 
+                                                     IsChecked="{Binding IsThermocoupleK}"
+                                                     Command="{Binding ThermocoupleTypeCommand}"
+                                                     CommandParameter="{Binding}"
+                                                     Margin="0,0,10,0"/>
+                                        <RadioButton Content="T"
+                                                     VerticalAlignment="Center" 
+                                                     GroupName="{Binding Device.Name}" 
+                                                     IsChecked="{Binding IsThermocoupleT}"
+                                                     Command="{Binding ThermocoupleTypeCommand}"
+                                                     CommandParameter="{Binding}"/>
+
+                                    </StackPanel>
+
+                                    <CheckBox Grid.Column="2" 
+                                              Content="Record" 
+                                              VerticalAlignment="Center" 
+                                              IsChecked="{Binding IsRecord}" />
+
+                                </Grid>
+
+                                <DataGrid Grid.Row="4"
+                                          AutoGenerateColumns="False"
+                                          ItemsSource="{Binding Device.ParemetersList}"
+                                          CanUserAddRows="False"
+                                          CanUserDeleteRows="False"
+                                          HeadersVisibility="None">
+
+                                    <DataGrid.Columns>
+
+                                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                                        <DataGridTextColumn Header="Value" Binding="{Binding Value}" IsReadOnly="True"/>
+                                        <DataGridTextColumn Header="Units" Binding="{Binding Units}" IsReadOnly="True"/>
+
+                                    </DataGrid.Columns>
+
+                                </DataGrid>
+
+                                <Line Grid.RowSpan="5"
+                                      Y1="1"
+                                      Stretch="Fill"
+                                      Stroke="{DynamicResource MahApps.Brushes.Accent2}"
+                                      HorizontalAlignment="Right"/>
+
+                            </Grid>
+
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -34,7 +106,8 @@
 
             </Style>
 
-
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+            
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
 
@@ -61,31 +134,114 @@
 
         <Grid Grid.Row="0" Margin="5, 0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="5" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource ButtonWithIconStyle}"
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+
+                <Button Style="{StaticResource ButtonWithIconStyle}"
                         Width="25"
                         Height="25"
-                        Margin="0,0,5,0"
                         ToolTip="Communication settings"
                         Command="{Binding CommunicationSettingsCommand}"
-                        VerticalAlignment="Center">
-                <iconPacks:Material Kind="Connection" />
-            </Button>
+                        Margin="0,0,10,0">
+                    <iconPacks:Material Kind="Connection" />
+                </Button>
 
+                <Line Y1="1"
+                      Stretch="Fill"
+                      Stroke="{DynamicResource MahApps.Brushes.Accent2}"
+                      HorizontalAlignment="Right"
+                      Margin="0,0,10,0"/>
+
+                <TextBlock Text="Channel names:" VerticalAlignment="Center" 
+                           Margin="0,0,5,0"/>
+
+                <Button Style="{StaticResource ButtonWithIconStyle}"
+                        Width="25"
+                        Height="25"
+                        ToolTip="Save channels names"
+                        Command="{Binding SaveNamesCommand}"
+                        Margin="0,0,5,0">
+                    <iconPacks:Material Kind="ContentSave" />
+                </Button>
+
+                <Button Style="{StaticResource ButtonWithIconStyle}"
+                        Width="25"
+                        Height="25"
+                        ToolTip="Load channels names"
+                        Command="{Binding LoadNamesCommand}"
+                        Margin="0,0,5,0">
+                    <iconPacks:Material Kind="FolderOpen" />
+                </Button>
+
+                <Line Y1="1"
+                      Stretch="Fill"
+                      Stroke="{DynamicResource MahApps.Brushes.Accent2}"
+                      HorizontalAlignment="Right"
+                      Margin="0,0,10,0"/>
+
+
+
+
+                <TextBlock Text="Recorindg:" VerticalAlignment="Center" 
+                           Margin="0,0,5,0"/>
+
+                <Button Style="{StaticResource ButtonWithIconStyle}"
+                        Width="25"
+                        Height="25"
+                        ToolTip="Start recording"
+                        IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBoolConverter}}"
+                        Command="{Binding StartRecordingCommand}"
+                        Margin="0,0,5,0">
+                    <iconPacks:Material Kind="Play" />
+                </Button>
+
+                <Button Style="{StaticResource ButtonWithIconStyle}"
+                        Width="25"
+                        Height="25"
+                        ToolTip="Stop recording"
+                        IsEnabled="{Binding IsRecording}"
+                        Command="{Binding StopRecordingCommand}"
+                        Margin="0,0,10,0">
+                    <iconPacks:Material Kind="Stop" />
+                </Button>
+
+                <TextBlock Text="Directory" 
+                           VerticalAlignment="Center"
+                           Margin="0,0,5,0"/>
+                <TextBox Text="{Binding RecordDirectory}" 
+                         ToolTip="{Binding RecordDirectory}"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         Width="250"
+                         Margin="0,0,5,0"/>
+                <Button Content="..."
+                        Command="{Binding BrowseRecordFileCommand}"
+                        FontSize="16"
+                        Height="30"
+                        Width="30"
+                        Margin="0,0,10,0"/>
+
+                <Line Y1="1"
+                      Stretch="Fill"
+                      Stroke="{DynamicResource MahApps.Brushes.Accent2}"
+                      HorizontalAlignment="Right"
+                      Margin="0,0,10,0"/>
+
+
+            </StackPanel>
 
             <device_handler_views:CommunicationIndeicatorView DataContext="{Binding DevicesContainter}"
-                                                              Grid.Column="3"/>
+                                                              Grid.Column="1"/>
 
         </Grid>
 
         <Line Grid.Row="1" X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}" />
 
-        <ListView Grid.Row="2" ItemsSource="{Binding DevicesContainter.DevicesList}"
+        <ListView Grid.Row="2" ItemsSource="{Binding LoggerDevicesList}"
                   ItemContainerStyle="{StaticResource DataLoggerStyle}"
                   VerticalAlignment="Top"
                   Margin="5,0">
