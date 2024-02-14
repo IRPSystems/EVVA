@@ -51,14 +51,14 @@
                                                      VerticalAlignment="Center" 
                                                      GroupName="{Binding Device.Name}" 
                                                      IsChecked="{Binding IsThermocoupleK}"
-                                                     Command="{Binding ThermocoupleTypeCommand}"
+                                                     Command="{Binding DataContext.ThermocoupleTypeCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
                                                      CommandParameter="{Binding}"
                                                      Margin="0,0,10,0"/>
                                         <RadioButton Content="T"
                                                      VerticalAlignment="Center" 
                                                      GroupName="{Binding Device.Name}" 
                                                      IsChecked="{Binding IsThermocoupleT}"
-                                                     Command="{Binding ThermocoupleTypeCommand}"
+                                                     Command="{Binding DataContext.ThermocoupleTypeCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
                                                      CommandParameter="{Binding}"/>
 
                                     </StackPanel>
