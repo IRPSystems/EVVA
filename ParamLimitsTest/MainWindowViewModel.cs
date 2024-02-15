@@ -55,7 +55,7 @@ namespace ParamLimitsTest
 
 				_mcuDevice = DeviceFullData.Factory(devicesList[0]);
 
-				_mcuDevice.Init();
+				_mcuDevice.Init("ParamLimitsTest");
 				_mcuDevice.Connect();
 				_mcuDevice.InitCheckConnection();
 				CanConnect = _mcuDevice.ConnectionViewModel;
