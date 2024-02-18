@@ -134,6 +134,9 @@ namespace Evva.ViewModels
 
 		private void DeleteDevice()
 		{
+			if (DestListSelectedItem == null)
+				return;
+
 			LoggerService.Inforamtion(this, "Remove device " + DestListSelectedItem.DeviceType + "-" + DestListSelectedItem.Name + " from the setup list");
 
 			DevicesSourceList.Add(DestListSelectedItem);
@@ -388,6 +391,9 @@ namespace Evva.ViewModels
 
 		private void MoveDeviceToDest()
 		{
+			if (SourceListSelectedItem == null)
+				return;
+
 			AddDeviceToDestList(SourceListSelectedItem);
 		}
 
