@@ -1,6 +1,7 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DeviceCommunicators.BrainChild;
 using DeviceCommunicators.Enums;
 using DeviceCommunicators.Models;
 using DeviceCommunicators.Services;
@@ -221,10 +222,31 @@ namespace TempLoggerViewer
 			IsRecording = false;
 		}
 
+		#region Set TC type
+
 		private void ThermocoupleType(LoggerDevice loggerDevice)
 		{
+			DeviceFullData deviceFullData = DevicesContainter.TypeToDevicesFullData[loggerDevice.Device.DeviceType];
 
+			if (loggerDevice.Device.DeviceType == DeviceTypesEnum.BrainChild)
+			{
+				ThermocoupleType_BrainChild(loggerDevice, deviceFullData);
+			}
 		}
+
+		private void ThermocoupleType_BrainChild(
+			LoggerDevice loggerDevice,
+			DeviceFullData deviceFullData)
+		{
+			char tcType = ' ';
+			if (loggerDevice.IsThermocoupleK)
+				tcType = 'K';
+			else if (loggerDevice.IsThermocoupleT)
+				tcType = 'T';
+			((BrainChild_Communicator)deviceFullData.DeviceCommunicator).SetTCType(tcType);
+		}
+
+		#endregion Set TC type
 
 
 		#region Channels name
