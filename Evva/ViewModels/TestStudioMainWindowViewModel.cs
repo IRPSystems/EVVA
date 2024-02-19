@@ -92,6 +92,8 @@ namespace Evva.ViewModels
 			set
 			{
 				_acquisitionRate = value;
+				EvvaUserData.AcquisitionRate = value;
+
 				if (DevicesContainter == null)
 					return;
 
@@ -261,6 +263,7 @@ namespace Evva.ViewModels
 		private void LoadEvvaUserData()
 		{
 			EvvaUserData = EvvaUserData.LoadEvvaUserData("Evva");
+			AcquisitionRate = EvvaUserData.AcquisitionRate;
 
 			if (EvvaUserData == null)
 			{
@@ -377,7 +380,7 @@ namespace Evva.ViewModels
 				DevicesContainter.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
 				UpdateSetup();
 
-				AcquisitionRate = 10;
+				
 
 				CommunicationSettings = new CommunicationViewModel(DevicesContainter);
 

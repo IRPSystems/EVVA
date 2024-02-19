@@ -22,12 +22,16 @@ namespace Evva.Models
 
 		public string LastSetupPath { get; set; }
 
-
+		public int AcquisitionRate { get; set; }
 
 		public ScriptUserData ScriptUserData { get; set; }
 
 		public ObservableCollection<FaultData> FaultsMCUList { get; set; }
 
+		public EvvaUserData()
+		{
+			AcquisitionRate = 5;
+		}
 
 
 		public static EvvaUserData LoadEvvaUserData(string dirName)
@@ -38,12 +42,12 @@ namespace Evva.Models
 			path = Path.Combine(path, dirName);
 			if (Directory.Exists(path) == false)
 			{
-				return EvvaUserData;
+				return new EvvaUserData();
 			}
 			path = Path.Combine(path, "EvvaUserData.json");
 			if (File.Exists(path) == false)
 			{
-				return EvvaUserData;
+				return new EvvaUserData();
 			}
 
 
