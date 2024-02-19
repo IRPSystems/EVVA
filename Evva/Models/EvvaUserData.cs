@@ -28,10 +28,6 @@ namespace Evva.Models
 
 		public ObservableCollection<FaultData> FaultsMCUList { get; set; }
 
-		public EvvaUserData()
-		{
-			AcquisitionRate = 5;
-		}
 
 
 		public static EvvaUserData LoadEvvaUserData(string dirName)
@@ -42,12 +38,12 @@ namespace Evva.Models
 			path = Path.Combine(path, dirName);
 			if (Directory.Exists(path) == false)
 			{
-				return new EvvaUserData();
+				return EvvaUserData;
 			}
 			path = Path.Combine(path, "EvvaUserData.json");
 			if (File.Exists(path) == false)
 			{
-				return new EvvaUserData();
+				return EvvaUserData;
 			}
 
 
@@ -82,7 +78,7 @@ namespace Evva.Models
 			string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			path = Path.Combine(path, dirName);
 			if (Directory.Exists(path) == false)
-				return;
+				Directory.CreateDirectory(path);
 			path = Path.Combine(path, "EvvaUserData.json");
 
 			JsonSerializerSettings settings = new JsonSerializerSettings();

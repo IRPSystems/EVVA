@@ -263,17 +263,21 @@ namespace Evva.ViewModels
 		private void LoadEvvaUserData()
 		{
 			EvvaUserData = EvvaUserData.LoadEvvaUserData("Evva");
-			AcquisitionRate = EvvaUserData.AcquisitionRate;
+
 
 			if (EvvaUserData == null)
 			{
 				EvvaUserData = new EvvaUserData();
 				EvvaUserData.IsLightTheme = false;
+				EvvaUserData.AcquisitionRate = 5;
 				ChangeDarkLight();
 				return;
 			}
 			else
+			{
 				EvvaUserData.IsLightTheme = !EvvaUserData.IsLightTheme;
+				AcquisitionRate = EvvaUserData.AcquisitionRate;
+			}
 
 
 			ChangeDarkLight();
