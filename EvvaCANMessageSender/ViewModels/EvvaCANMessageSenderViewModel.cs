@@ -122,7 +122,7 @@ namespace EvvaCANMessageSender.ViewModels
 				DeviceTypesEnum.MCU);
 
 			MCUDevice = DeviceFullData.Factory(devicesList[0]);
-			MCUDevice.Init();
+			MCUDevice.Init("EvvaCANMessageSender");
 			MCUDevice.Connect();
 			CanConnect = MCUDevice.ConnectionViewModel;
 
