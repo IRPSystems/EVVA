@@ -3,6 +3,8 @@
   "ParemetersList": {
     "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
     "$values": [
+
+      //Setpoint values
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Voltage Limit",
@@ -14,11 +16,12 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "GetSetVisibility": 0
+        "GetSetVisibility": 0,
+        "ParamType": 2
       },
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
-        "Name": "Current Limit",
+        "Name": "(PS) Current Limit",
         "Cmd": "SOUR:CURRENT",
         "Max": 300,
         "Units": "A",
@@ -27,8 +30,129 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "GetSetVisibility": 0
+        "GetSetVisibility": 0,
+        "ParamType": 2
       },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "(PS) Power Limit",
+        "Cmd": "SOUR:POW",
+        "Max": 300,
+        "Units": "W",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 2
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "(EL) Current Limit",
+        "Cmd": "SINK:CURRENT",
+        "Max": 300,
+        "Units": "A",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 2
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "(EL) Power Limit",
+        "Cmd": "SINK:POW",
+        "Max": 300,
+        "Units": "W",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 2
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Voltage Protection",
+        "Cmd": "SOUR:VOLTAGE:PROT",
+        "Max": 100,
+        "Units": "V",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 2
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "(PS) Current Protection",
+        "Cmd": "SOUR:CURRENT:PROT",
+        "Max": 300,
+        "Units": "A",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 2
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "(PS) Power Protection",
+        "Cmd": "SOUR:POW:PROT",
+        "Max": 300,
+        "Units": "W",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 2
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "(EL) Current Protection",
+        "Cmd": "SINK:CURRENT:PROT",
+        "Max": 300,
+        "Units": "A",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 2
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "(EL) Power Protection",
+        "Cmd": "SINK:POW:PROT",
+        "Max": 300,
+        "Units": "W",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 2
+      },
+
+
+
+
+
+
+      //Monitor
+
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Actual Voltage",
@@ -40,7 +164,22 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "GetSetVisibility": 0
+        "GetSetVisibility": 0,
+        "ParamType": 1
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Alarm",
+        "Cmd": "SYST:ERR",
+        "Max": 0,
+        "Units": "V",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 1
       },
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
@@ -53,8 +192,120 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "GetSetVisibility": 0
+        "GetSetVisibility": 0,
+        "ParamType": 1
       },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Actual Power",
+        "Cmd": "MEAS:POW",
+        "Max": 0,
+        "Units": "W",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 1
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Remote state",
+        "Cmd": "SYSTEM:LOCK:OWNER",
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 1
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Output state",
+        "Cmd": "OUTPut",
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 1
+      },
+
+
+
+
+      // Read once
+
+
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Identification",
+        "Cmd": "*IDN",
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "OP Mode",
+        "Cmd": "STAT:OPER:COND",
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "MS Mode",
+        "Cmd": "SYSTem:MS:LINK",
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Max Voltage",
+        "Cmd": "SYSTem:NOMinal:VOLTage",
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Max Current",
+        "Cmd": "SYSTem:NOMinal:CURRent",
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Max Power",
+        "Cmd": "SYSTem:NOMinal:POWer",
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 0
+      },
+
+
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Remote On/Off",
