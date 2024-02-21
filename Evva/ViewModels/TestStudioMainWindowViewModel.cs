@@ -92,6 +92,8 @@ namespace Evva.ViewModels
 			set
 			{
 				_acquisitionRate = value;
+				EvvaUserData.AcquisitionRate = value;
+
 				if (DevicesContainter == null)
 					return;
 
@@ -262,15 +264,20 @@ namespace Evva.ViewModels
 		{
 			EvvaUserData = EvvaUserData.LoadEvvaUserData("Evva");
 
+
 			if (EvvaUserData == null)
 			{
 				EvvaUserData = new EvvaUserData();
 				EvvaUserData.IsLightTheme = false;
+				EvvaUserData.AcquisitionRate = 5;
 				ChangeDarkLight();
 				return;
 			}
 			else
+			{
 				EvvaUserData.IsLightTheme = !EvvaUserData.IsLightTheme;
+				AcquisitionRate = EvvaUserData.AcquisitionRate;
+			}
 
 
 			ChangeDarkLight();
@@ -377,7 +384,7 @@ namespace Evva.ViewModels
 				DevicesContainter.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
 				UpdateSetup();
 
-				AcquisitionRate = 10;
+				
 
 				CommunicationSettings = new CommunicationViewModel(DevicesContainter);
 

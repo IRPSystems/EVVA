@@ -22,7 +22,7 @@ namespace Evva.Models
 
 		public string LastSetupPath { get; set; }
 
-
+		public int AcquisitionRate { get; set; }
 
 		public ScriptUserData ScriptUserData { get; set; }
 
@@ -78,7 +78,7 @@ namespace Evva.Models
 			string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			path = Path.Combine(path, dirName);
 			if (Directory.Exists(path) == false)
-				return;
+				Directory.CreateDirectory(path);
 			path = Path.Combine(path, "EvvaUserData.json");
 
 			JsonSerializerSettings settings = new JsonSerializerSettings();
