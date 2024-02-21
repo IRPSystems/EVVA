@@ -728,7 +728,7 @@ namespace Evva.ViewModels
 			{
 				DeviceFullData deviceFullData = DeviceFullData.Factory(device);
 
-				deviceFullData.Init();
+				deviceFullData.Init("EVVA");
 
 				DevicesContainter.DevicesFullDataList.Add(deviceFullData);
 				DevicesContainter.DevicesList.Add(device as DeviceData);
