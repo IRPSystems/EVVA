@@ -13,7 +13,7 @@ namespace Evva
         public App()
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
-				"MTAwODQzOUAzMjMwMmUzNDJlMzBsQlRMeUl0THVueXVMcWhEMnlCeVJLTnZZdFhLRUh2aEZGKytIdUVIRTRBPQ==");
+				"MzEyMTgxNUAzMjM0MmUzMDJlMzBQNU0vejdSQmVGc1psckxrbSt5UEU0NFNmRzlQajBYTVNnS2c4MkVzdjNzPQ==");
 
         }
 
