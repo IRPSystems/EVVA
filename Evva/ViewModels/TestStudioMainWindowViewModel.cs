@@ -6,6 +6,7 @@ using DeviceCommunicators.ATEBox;
 using DeviceCommunicators.Dyno;
 using DeviceCommunicators.MCU;
 using DeviceCommunicators.Models;
+using DeviceCommunicators.Scope_KeySight;
 using DeviceCommunicators.Services;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
@@ -214,26 +215,29 @@ namespace Evva.ViewModels
 		{
 			//DeviceData device = new DeviceData()
 			//{
-			//	Name = "Torque Kistler",
-			//	DeviceType = DeviceTypesEnum.TorqueKistler,
+			//	Name = "Scope KeySight",
+			//	DeviceType = DeviceTypesEnum.KeySight,
 			//};
 
 			//device.ParemetersList = new ObservableCollection<DeviceParameterData>()
 			//{
-			//	new TorqueKistler_ParamData() { Name = "Torque", Command = "MEAS:TORQ", Units = "Nm", DeviceType = DeviceTypesEnum.TorqueKistler },
-			//	new TorqueKistler_ParamData() { Name = "Speed", Command = "MEAS:SPE", Units = "RPM", DeviceType = DeviceTypesEnum.TorqueKistler },
-			//	new TorqueKistler_ParamData() { Name = "All", Command = "MEAS:ALL", Units = "", DeviceType = DeviceTypesEnum.TorqueKistler },
-			//	new TorqueKistler_ParamData() { Name = "Torque filter Freq", Command = "OUTP:TORQ:FILT:FREQ", Units = "Hz", DeviceType = DeviceTypesEnum.TorqueKistler },
-			//	new TorqueKistler_ParamData() { Name = "Speed filter Freq", Command = "OUTP:SPE:FILT:FREQ", Units = "Hz", DeviceType = DeviceTypesEnum.TorqueKistler },
-			//	new TorqueKistler_ParamData() { Name = "Calibrate Zero offset", Command = "OUTP:TARE:AUTO", Units = "", DeviceType = DeviceTypesEnum.TorqueKistler },
+			//	new Scope_KeySight_ParamData() { Name = "DC RMS N CYcle", Command = ":MEASure:VRMS CYCLe,DC,", DeviceType = DeviceTypesEnum.KeySight },
+			//	new Scope_KeySight_ParamData() { Name = "DC RMS Full Screen", Command = ":MEASure:VRMS DISPlay,DC,", DeviceType = DeviceTypesEnum.KeySight },
+			//	new Scope_KeySight_ParamData() { Name = "AC RMS N CYcle", Command = ":MEASure:VRMS CYCLe,AC,", DeviceType = DeviceTypesEnum.KeySight },
+			//	new Scope_KeySight_ParamData() { Name = "AC RMS N Full Screen", Command = ":MEASure:VRMS DISPlay,AC,", DeviceType = DeviceTypesEnum.KeySight },
+			//	new Scope_KeySight_ParamData() { Name = "Pk-pk", Command = ":MEASure:VPP ", DeviceType = DeviceTypesEnum.KeySight },
+			//	new Scope_KeySight_ParamData() { Name = "Amplitude", Command = ":MEASure:VAMPlitude ", DeviceType = DeviceTypesEnum.KeySight },
+			//	new Scope_KeySight_ParamData() { Name = "TOP", Command = ":MEASure:VTOP ", DeviceType = DeviceTypesEnum.KeySight },
+			//	new Scope_KeySight_ParamData() { Name = "Average N Cycle", Command = ":MEASure:VAVerage CYCLe,", DeviceType = DeviceTypesEnum.KeySight },
+			//	new Scope_KeySight_ParamData() { Name = "Average Full Screen", Command = ":MEASure:VAVerage DISPlay,", DeviceType = DeviceTypesEnum.KeySight },
 			//};
 
 
-			//JsonSerializerSettings settings = new JsonSerializerSettings();
-			//settings.Formatting = Formatting.Indented;
-			//settings.TypeNameHandling = TypeNameHandling.All;
-			//var sz = JsonConvert.SerializeObject(device, settings);
-			//File.WriteAllText(@"C:\Projects\Infrastructure\Evva\Data\Device Communications\Torque Kistler.json", sz);
+			//Newtonsoft.Json.JsonSerializerSettings settings = new Newtonsoft.Json.JsonSerializerSettings();
+			//settings.Formatting = Newtonsoft.Json.Formatting.Indented;
+			//settings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All;
+			//var sz = Newtonsoft.Json.JsonConvert.SerializeObject(device, settings);
+			//File.WriteAllText(@"C:\Projects\Evva\Evva\Data\Device Communications\Scope KeySight.json", sz);
 		}
 
 		private void Settings()
