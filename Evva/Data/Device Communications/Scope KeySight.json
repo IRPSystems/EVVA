@@ -4,21 +4,74 @@
   "DeviceType": 4,
   "ParemetersList": {
     "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
-    "$values": [
+    "$values": [      
       {
         "$type": "DeviceCommunicators.Scope_KeySight.Scope_KeySight_ParamData, DeviceCommunicators",
         "User_command": null,
-        "Command": "*IDN",
+        "Command": ":SINGle",
         "Status_paramter": null,
         "data": null,
         "Channel": 0,
         "DropDown": null,
-        "Name": "Identification",
+        "Name": "Single",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 4
+      },
+      {
+        "$type": "DeviceCommunicators.Scope_KeySight.Scope_KeySight_ParamData, DeviceCommunicators",
+        "User_command": null,
+        "Command": ":RUN",
+        "Status_paramter": null,
+        "data": null,
+        "Channel": 0,
+        "DropDown": null,
+        "Name": "Run",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 4
+      },
+      {
+        "$type": "DeviceCommunicators.Scope_KeySight.Scope_KeySight_ParamData, DeviceCommunicators",
+        "User_command": null,
+        "Command": ":STOP",
+        "Status_paramter": null,
+        "data": null,
+        "Channel": 0,
+        "DropDown": null,
+        "Name": "Stop",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 4
+      },
+      {
+        "$type": "DeviceCommunicators.Scope_KeySight.Scope_KeySight_ParamData, DeviceCommunicators",
+        "User_command": null,
+        "Command": null,
+        "Status_paramter": null,
+        "data": null,
+        "Channel": 0,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "PNG",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "CSV",
+              "Value": "1"
+            }
+          ]
+        },
+        "Name": "Save Data",
         "Units": null,
         "Value": null,
         "DeviceType": 4
       }
-     
+
     ]
   }
 }
