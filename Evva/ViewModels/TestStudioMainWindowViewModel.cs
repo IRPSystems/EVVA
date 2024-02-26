@@ -21,6 +21,7 @@ using Microsoft.Win32;
 using ScriptHandler.Models;
 using ScriptHandler.ViewModels;
 using ScriptRunner.Services;
+using ScriptRunner.ViewModels;
 using Services.Services;
 using System;
 using System.Collections.Generic;
@@ -412,7 +413,7 @@ namespace Evva.ViewModels
 				Run = new RunViewModel(
 					RecordParam.RecordParamList.ParametersList,
 					DevicesContainter,
-					EvvaUserData,
+					EvvaUserData.ScriptUserData,
 					_canMessagesService);
 
 				MonitorRecParam = new MonitorRecParamViewModel(
@@ -473,7 +474,7 @@ namespace Evva.ViewModels
 					_setupSelectionVM,
 					deviceSimulatorsViewModel);
 
-				Run.CreateScriptLoggerWindow(Docking);
+				Run.CreateScriptLoggerWindow();
 				Tests.CreateTestParamsLimitWindow(Docking);
 
 
