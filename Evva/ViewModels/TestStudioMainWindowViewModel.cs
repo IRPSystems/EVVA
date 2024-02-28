@@ -415,6 +415,8 @@ namespace Evva.ViewModels
 					DevicesContainter,
 					EvvaUserData.ScriptUserData,
 					_canMessagesService);
+				Run.CreateScriptLogDiagramViewEvent += Run_CreateScriptLogDiagramViewEvent;
+				Run.ShowScriptLogDiagramViewEvent += Run_ShowScriptLogDiagramViewEvent;
 
 				MonitorRecParam = new MonitorRecParamViewModel(
 					DevicesContainter,
@@ -496,6 +498,16 @@ namespace Evva.ViewModels
 			{
 				LoggerService.Error(this, "Failed to init the main window", "Startup Error", ex);
 			}
+		}
+
+		private void Run_ShowScriptLogDiagramViewEvent()
+		{
+			Docking.OpenLogScript();
+		}
+
+		private void Run_CreateScriptLogDiagramViewEvent(ScriptLogDiagramViewModel obj)
+		{
+			Docking.CreateScriptLogger(obj);
 		}
 
 		private void SettingsUpdated(SETTINGS_UPDATEDMessage e)
