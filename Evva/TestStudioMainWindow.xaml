@@ -337,7 +337,7 @@
 
             </Border>
 
-            <device_handler_views:CommunicationIndeicatorView DataContext="{Binding DevicesContainter}"
+            <device_handler_views:CommunicationIndeicatorView DataContext="{Binding DevicesContainer}"
                                                               Grid.Column="4"/>
 
         </Grid>
