@@ -101,13 +101,15 @@ namespace Evva.ViewModels
 			}
 		}
 
+		public EvvaUserData EvvaUserData { get; set; }
+
 		#endregion Properties
 
 		#region Fields
 
 		private int _acquisitionRate;
 
-		public EvvaUserData EvvaUserData;
+		
 
 		private ReadDevicesFileService _readDevicesFile;
 
@@ -491,8 +493,11 @@ namespace Evva.ViewModels
 
 				AddMotorPowerOutputToTorqueKistler();
 
-				if(DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.PowerSupplyEA))
+				if (DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.PowerSupplyEA))
+				{
 					EAPSRampupEnableVisibility = Visibility.Visible;
+					EAPSRampupEnable(EvvaUserData.IsEAPSRampupEnable);
+				}
 				else
 					EAPSRampupEnableVisibility = Visibility.Collapsed;
 

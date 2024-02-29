@@ -283,6 +283,7 @@
 
                 <CheckBox Content="EA PS Rampup Enable" 
                           Command="{Binding EAPSRampupEnableCommand}"
+                          IsChecked="{Binding EvvaUserData.IsEAPSRampupEnable}"
                           CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Mode=Self}}"
                           Visibility="{Binding EAPSRampupEnableVisibility}"/>
 
