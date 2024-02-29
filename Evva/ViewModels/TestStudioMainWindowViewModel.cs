@@ -2,23 +2,17 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using DeviceCommunicators.ATEBox;
-using DeviceCommunicators.Dyno;
-using DeviceCommunicators.MCU;
 using DeviceCommunicators.Models;
-using DeviceCommunicators.Scope_KeySight;
+using DeviceCommunicators.PowerSupplayEA;
 using DeviceCommunicators.Services;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using DeviceHandler.ViewModels;
 using DeviceSimulators.ViewModels;
-using DeviceSimulators.Views;
 using Entities.Enums;
-using Entities.Models;
 using Evva.Models;
 using Evva.Views;
 using Microsoft.Win32;
-using ScriptHandler.Models;
 using ScriptHandler.ViewModels;
 using ScriptRunner.Services;
 using ScriptRunner.ViewModels;
@@ -55,7 +49,7 @@ namespace Evva.ViewModels
 		#region Properties
 
 		//public ObservableCollection<DeviceFullData> DevicesList { get; set; }
-		public DevicesContainer DevicesContainter { get; set; }
+		public DevicesContainer DevicesContainer { get; set; }
 
 		public Visibility SilentRunVisibility { get; set; }
 
@@ -76,6 +70,7 @@ namespace Evva.ViewModels
 
 
 		public Visibility TestsVisibility { get; set; }
+		public Visibility EAPSRampupEnableVisibility { get; set; }
 
 		public string Version { get; set; }
 
@@ -96,10 +91,10 @@ namespace Evva.ViewModels
 				_acquisitionRate = value;
 				EvvaUserData.AcquisitionRate = value;
 
-				if (DevicesContainter == null)
+				if (DevicesContainer == null)
 					return;
 
-				foreach(DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList) 
+				foreach(DeviceFullData deviceFullData in DevicesContainer.DevicesFullDataList) 
 				{ 
 					deviceFullData.ParametersRepository.AcquisitionRate = AcquisitionRate;
 				}
@@ -152,7 +147,10 @@ namespace Evva.ViewModels
 			StartCANMessageSenderCommand = new RelayCommand(StartCANMessageSender);
 			StopCANMessageSenderCommand = new RelayCommand(StopCANMessageSender);
 
-			
+			EAPSRampupEnableCommand = new RelayCommand<bool>(EAPSRampupEnable);
+
+
+
 		}
 
 		#endregion Constructor
@@ -161,13 +159,13 @@ namespace Evva.ViewModels
 
 		private void AddMotorPowerOutputToTorqueKistler()
 		{
-			if (DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.TorqueKistler) == false)
+			if (DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.TorqueKistler) == false)
 			{
 				return;
 			}
 
 			DeviceFullData deviceFullData =
-				DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.TorqueKistler];
+				DevicesContainer.TypeToDevicesFullData[DeviceTypesEnum.TorqueKistler];
 
 			CalculatedParam calculatedParam = new CalculatedParam();
 			calculatedParam.Formula = "(A / 9.55) * B";
@@ -313,9 +311,9 @@ namespace Evva.ViewModels
 				MonitorRecParam.Dispose();
 
 
-			if (DevicesContainter != null)
+			if (DevicesContainer != null)
 			{
-				foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
+				foreach (DeviceFullData deviceFullData in DevicesContainer.DevicesFullDataList)
 				{
 					deviceFullData.Disconnect();
 
@@ -383,15 +381,15 @@ namespace Evva.ViewModels
 				}
 
 
-				DevicesContainter = new DevicesContainer();
-				DevicesContainter.DevicesFullDataList = new ObservableCollection<DeviceFullData>();
-				DevicesContainter.DevicesList = new ObservableCollection<DeviceData>();
-				DevicesContainter.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
+				DevicesContainer = new DevicesContainer();
+				DevicesContainer.DevicesFullDataList = new ObservableCollection<DeviceFullData>();
+				DevicesContainer.DevicesList = new ObservableCollection<DeviceData>();
+				DevicesContainer.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
 				UpdateSetup();
 
 				
 
-				CommunicationSettings = new CommunicationViewModel(DevicesContainter);
+				CommunicationSettings = new CommunicationViewModel(DevicesContainer);
 
 #if DEBUG
 				TestsVisibility = Visibility.Visible;
@@ -408,28 +406,28 @@ namespace Evva.ViewModels
 
 
 				RecordParam = new ParametersViewModel(
-					DevicesContainter);
+					DevicesContainer);
 
 				Run = new RunViewModel(
 					RecordParam.RecordParamList.ParametersList,
-					DevicesContainter,
+					DevicesContainer,
 					EvvaUserData.ScriptUserData,
 					_canMessagesService);
 
 				MonitorRecParam = new MonitorRecParamViewModel(
-					DevicesContainter,
+					DevicesContainer,
 					RecordParam.RecordParamList.ParametersList);
 				MonitorSecurityParam = new MonitorSecurityParamViewModel(
-					DevicesContainter,
+					DevicesContainer,
 					Run.RunScript);
 
 
 
 
-				Tests = new TestsViewModel(DevicesContainter);
+				Tests = new TestsViewModel(DevicesContainer);
 
 				Design = new DesignViewModel(
-					DevicesContainter,
+					DevicesContainer,
 					EvvaUserData.ScriptUserData);
 
 
@@ -438,7 +436,7 @@ namespace Evva.ViewModels
 
 				try
 				{
-					foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
+					foreach (DeviceFullData deviceFullData in DevicesContainer.DevicesFullDataList)
 					{
 						deviceFullData.InitCheckConnection();
 					}
@@ -454,12 +452,12 @@ namespace Evva.ViewModels
 				AppSettings.SettingsUpdatedEvent += SettingsUpdated;
 
 				Faults = new FaultsMCUViewModel(
-					DevicesContainter,
+					DevicesContainer,
 					EvvaUserData);
-				SwitchRelayState = new SwitchRelayStateViewModel(DevicesContainter);
+				SwitchRelayState = new SwitchRelayStateViewModel(DevicesContainer);
 
 				DeviceSimulatorsViewModel deviceSimulatorsViewModel =
-					new DeviceSimulatorsViewModel(DevicesContainter);
+					new DeviceSimulatorsViewModel(DevicesContainer);
 				Docking = new DocingViewModel(
 					AppSettings,
 					Tests,
@@ -491,6 +489,11 @@ namespace Evva.ViewModels
 
 				AddMotorPowerOutputToTorqueKistler();
 
+				if(DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.PowerSupplyEA))
+					EAPSRampupEnableVisibility = Visibility.Visible;
+				else
+					EAPSRampupEnableVisibility = Visibility.Collapsed;
+
 			}
 			catch (Exception ex)
 			{
@@ -502,7 +505,7 @@ namespace Evva.ViewModels
 		{
 			if (e.IsMCUJsonPathChanged)
 			{
-				if (DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.MCU))
+				if (DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.MCU))
 				{
 					UpdateMCUJson(
 						"MCU",
@@ -513,7 +516,7 @@ namespace Evva.ViewModels
 
 			if (e.IsMCUB2BJsonPathChanged)
 			{
-				if (DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.MCU_B2B))
+				if (DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.MCU_B2B))
 				{
 					UpdateMCUJson(
 						"MCU - B2B",
@@ -522,7 +525,7 @@ namespace Evva.ViewModels
 				}
 			}
 
-			if (e.IsDynoJsonPathChanged && DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.Dyno))
+			if (e.IsDynoJsonPathChanged && DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.Dyno))
 			{
 				string dynoPath = Path.Combine(EvvaUserData.DynoCommunicationPath, "Dyno Communication.json");
 				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
@@ -530,12 +533,12 @@ namespace Evva.ViewModels
 					"Data\\Device Communications",
 					dynoPath,
 					devicesList);
-				DeviceFullData deviceData = DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.Dyno];
+				DeviceFullData deviceData = DevicesContainer.TypeToDevicesFullData[DeviceTypesEnum.Dyno];
 
-				int index = DevicesContainter.DevicesList.IndexOf(deviceData.Device);
+				int index = DevicesContainer.DevicesList.IndexOf(deviceData.Device);
 				if (index >= 0 && devicesList.Count > 0)
 				{
-					DevicesContainter.DevicesList[index] = devicesList[0] as DeviceData;
+					DevicesContainer.DevicesList[index] = devicesList[0] as DeviceData;
 				}
 
 				devicesList[0].Name = deviceData.Device.Name;
@@ -543,7 +546,7 @@ namespace Evva.ViewModels
 
 			}
 
-			if (e.IsNI6002JsonPathChanged && DevicesContainter.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002))
+			if (e.IsNI6002JsonPathChanged && DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002))
 			{
 				//string ni6002JPath = Path.Combine(EvvaUserData.NI6002CommunicationPath, "NI_6002.json");
 				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
@@ -551,12 +554,12 @@ namespace Evva.ViewModels
 					"Data\\Device Communications",
 					EvvaUserData.NI6002CommunicationPath,
 					devicesList);
-				DeviceFullData deviceData = DevicesContainter.TypeToDevicesFullData[DeviceTypesEnum.NI_6002];
+				DeviceFullData deviceData = DevicesContainer.TypeToDevicesFullData[DeviceTypesEnum.NI_6002];
 
-				int index = DevicesContainter.DevicesList.IndexOf(deviceData.Device);
+				int index = DevicesContainer.DevicesList.IndexOf(deviceData.Device);
 				if (index >= 0 && devicesList.Count > 0)
 				{
-					DevicesContainter.DevicesList[index] = devicesList[0] as DeviceData;
+					DevicesContainer.DevicesList[index] = devicesList[0] as DeviceData;
 				}
 
 				devicesList[0].Name = deviceData.Device.Name;
@@ -590,11 +593,11 @@ namespace Evva.ViewModels
 				name,
 				type);
 
-			DeviceFullData deviceData = DevicesContainter.TypeToDevicesFullData[type];
-			int index = DevicesContainter.DevicesList.IndexOf(deviceData.Device);
+			DeviceFullData deviceData = DevicesContainer.TypeToDevicesFullData[type];
+			int index = DevicesContainer.DevicesList.IndexOf(deviceData.Device);
 			if (index >= 0)
 			{
-				DevicesContainter.DevicesList[index] = devicesList[0] as DeviceData;
+				DevicesContainer.DevicesList[index] = devicesList[0] as DeviceData;
 			}
 
 			devicesList[0].Name = deviceData.Device.Name;
@@ -668,7 +671,7 @@ namespace Evva.ViewModels
 
 			try
 			{
-				foreach (DeviceFullData deviceFullData in DevicesContainter.DevicesFullDataList)
+				foreach (DeviceFullData deviceFullData in DevicesContainer.DevicesFullDataList)
 				{
 					deviceFullData.InitCheckConnection();
 				}
@@ -699,13 +702,13 @@ namespace Evva.ViewModels
 			foreach (DeviceData deviceData in deviceList)
 			{
 				DeviceData existingDevice =
-					DevicesContainter.DevicesList.ToList().Find((d) => d.DeviceType == deviceData.DeviceType);
+					DevicesContainer.DevicesList.ToList().Find((d) => d.DeviceType == deviceData.DeviceType);
 				if (existingDevice == null)
 					newDevices.Add(deviceData);
 			}
 
 			List<DeviceData> removedDevices = new List<DeviceData>();
-			foreach (DeviceData deviceData in DevicesContainter.DevicesList)
+			foreach (DeviceData deviceData in DevicesContainer.DevicesList)
 			{
 				DeviceData existingDevice =
 					deviceList.ToList().Find((d) => d.DeviceType == deviceData.DeviceType);
@@ -719,12 +722,12 @@ namespace Evva.ViewModels
 			foreach (DeviceData device in removedDevices)
 			{
 				DeviceFullData deviceFullData =
-					DevicesContainter.DevicesFullDataList.ToList().Find((d) => d.Device.DeviceType == device.DeviceType);
+					DevicesContainer.DevicesFullDataList.ToList().Find((d) => d.Device.DeviceType == device.DeviceType);
 				deviceFullData.Disconnect();
 
-				DevicesContainter.DevicesFullDataList.Remove(deviceFullData);
-				DevicesContainter.DevicesList.Remove(deviceFullData.Device);
-				DevicesContainter.TypeToDevicesFullData.Remove(deviceFullData.Device.DeviceType);
+				DevicesContainer.DevicesFullDataList.Remove(deviceFullData);
+				DevicesContainer.DevicesList.Remove(deviceFullData.Device);
+				DevicesContainer.TypeToDevicesFullData.Remove(deviceFullData.Device.DeviceType);
 			}
 
 
@@ -735,10 +738,10 @@ namespace Evva.ViewModels
 
 				deviceFullData.Init("EVVA");
 
-				DevicesContainter.DevicesFullDataList.Add(deviceFullData);
-				DevicesContainter.DevicesList.Add(device as DeviceData);
-				if (DevicesContainter.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
-					DevicesContainter.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
+				DevicesContainer.DevicesFullDataList.Add(deviceFullData);
+				DevicesContainer.DevicesList.Add(device as DeviceData);
+				if (DevicesContainer.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
+					DevicesContainer.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
 
 				deviceFullData.Connect();
 			}
@@ -813,6 +816,14 @@ namespace Evva.ViewModels
 			_canMessagesService.StopSendCANMessageScript();
 		}
 
+		private void EAPSRampupEnable(bool isEAPSRampupEnable)
+		{
+			DeviceFullData deviceFullData = 
+				DevicesContainer.TypeToDevicesFullData[DeviceTypesEnum.PowerSupplyEA];
+
+			((PowerSupplayEA_Communicator)deviceFullData.DeviceCommunicator).SetIsUseRampForOnOff(isEAPSRampupEnable);
+		}
+
 		#endregion Methods
 
 		#region Commands
@@ -845,6 +856,10 @@ namespace Evva.ViewModels
 		public RelayCommand CANMessageSenderCommand { get; private set; }
 		public RelayCommand StartCANMessageSenderCommand { get; private set; }
 		public RelayCommand StopCANMessageSenderCommand { get; private set; }
+
+
+
+		public RelayCommand<bool> EAPSRampupEnableCommand { get; private set; }
 
 		#endregion Commands
 	}

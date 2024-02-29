@@ -28,6 +28,8 @@ namespace Evva.Models
 
 		public ObservableCollection<FaultData> FaultsMCUList { get; set; }
 
+		public bool IsEAPSRampupEnable { get; set; }
+
 
 
 		public static EvvaUserData LoadEvvaUserData(string dirName)
