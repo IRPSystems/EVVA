@@ -6,6 +6,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:device_handler_controls="clr-namespace:DeviceHandler.Controls;assembly=DeviceHandler"
+             xmlns:converters="clr-namespace:Evva.Converter"
              xmlns:local="clr-namespace:Evva.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1500">
@@ -16,6 +17,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/DeviceHandler;component/Resources/DeviceParamsListStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <converters:TestListHeightConverter x:Key="TestListHeightConverter" />
 
             <Style x:Key="MessagesListStyle" TargetType="ListViewItem">
                 <Setter Property="Template">
@@ -46,10 +49,15 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="5"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <TextBox HorizontalContentAlignment="Stretch"
+                                <TextBlock Text="{Binding DeviceType}" FontWeight="DemiBold" />
+
+                                <TextBox Grid.Row="2"
+                                         HorizontalContentAlignment="Stretch"
                                          mah:TextBoxHelper.ClearTextButton="True"
                                          mah:TextBoxHelper.UseFloatingWatermark="True"
                                          mah:TextBoxHelper.Watermark="Search..."
@@ -71,10 +79,11 @@
                                 </TextBox>
 
                                 <ListView ItemsSource="{Binding ParemetersList}"
-                                          Grid.Row="2"
+                                          Grid.Row="4"
                                           Name="lv"
                                           ItemContainerStyle="{StaticResource DeviceParamsListStyle}"
-                                          Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"/>
+                                          Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView},
+                                                           Converter={StaticResource TestListHeightConverter}}"/>
 
                             </Grid>
 
