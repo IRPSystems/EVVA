@@ -281,7 +281,6 @@ namespace Evva.ViewModels
 			else
 			{
 				EvvaUserData.IsLightTheme = !EvvaUserData.IsLightTheme;
-				AcquisitionRate = EvvaUserData.AcquisitionRate;
 			}
 
 
@@ -389,7 +388,9 @@ namespace Evva.ViewModels
 				DevicesContainer.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
 				UpdateSetup();
 
-				
+				int actualAcquisitionRate = EvvaUserData.AcquisitionRate;
+				AcquisitionRate = 5;
+				AcquisitionRate = actualAcquisitionRate;
 
 				CommunicationSettings = new CommunicationViewModel(DevicesContainer);
 
