@@ -90,6 +90,8 @@ namespace Evva.ViewModels
 			{
 				_acquisitionRate = value;
 				EvvaUserData.AcquisitionRate = value;
+				if (_acquisitionRate == 0)
+					return;
 
 				if (DevicesContainer == null)
 					return;
@@ -390,7 +392,8 @@ namespace Evva.ViewModels
 
 				int actualAcquisitionRate = EvvaUserData.AcquisitionRate;
 				AcquisitionRate = 5;
-				AcquisitionRate = actualAcquisitionRate;
+				if(actualAcquisitionRate != 0)
+					AcquisitionRate = actualAcquisitionRate;
 
 				CommunicationSettings = new CommunicationViewModel(DevicesContainer);
 
