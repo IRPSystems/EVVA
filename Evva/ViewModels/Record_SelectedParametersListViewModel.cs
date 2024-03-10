@@ -51,7 +51,7 @@ namespace Evva.ViewModels
 			ObservableCollection<DeviceParameterData> parametersList = JsonConvert.DeserializeObject(jsonString, settings) as
 				ObservableCollection<DeviceParameterData>;
 
-			GetActualParameters(parametersList);
+			GetActualParameters_Json(parametersList);
 		}
 
 		
