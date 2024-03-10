@@ -15,6 +15,13 @@
                 <ResourceDictionary Source="pack://application:,,,/ScriptRunner;component/Resources/ScriptStepTemplate.xaml" />
                 
             </ResourceDictionary.MergedDictionaries>
+
+            <FontFamily x:Key="TitilliumWeb">pack://application:,,,/Evva;component/Fonts/#Titillium Web</FontFamily>
+
+            <Style TargetType="{x:Type TextBlock}" x:Key="{x:Type TextBlock}" BasedOn="{StaticResource MahApps.Styles.TextBlock}">
+                <Setter Property="FontFamily" Value="{StaticResource TitilliumWeb}" />
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

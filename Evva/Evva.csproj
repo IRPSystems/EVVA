@@ -24,6 +24,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\TitilliumWeb-Black.ttf" />
+    <None Remove="Fonts\TitilliumWeb-Bold.ttf" />
+    <None Remove="Fonts\TitilliumWeb-BoldItalic.ttf" />
+    <None Remove="Fonts\TitilliumWeb-ExtraLight.ttf" />
+    <None Remove="Fonts\TitilliumWeb-ExtraLightItalic.ttf" />
+    <None Remove="Fonts\TitilliumWeb-Italic.ttf" />
+    <None Remove="Fonts\TitilliumWeb-Light.ttf" />
+    <None Remove="Fonts\TitilliumWeb-LightItalic.ttf" />
+    <None Remove="Fonts\TitilliumWeb-Regular.ttf" />
+    <None Remove="Fonts\TitilliumWeb-SemiBold.ttf" />
+    <None Remove="Fonts\TitilliumWeb-SemiBoldItalic.ttf" />
     <None Remove="Resources\EVVA_LOGO_No_BG_White.png" />
     <None Remove="Resources\ExportFooter.png" />
     <None Remove="Resources\ExportHeader.png" />
@@ -31,6 +42,39 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Fonts\TitilliumWeb-Black.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\TitilliumWeb-Bold.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\TitilliumWeb-BoldItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\TitilliumWeb-ExtraLight.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\TitilliumWeb-ExtraLightItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\TitilliumWeb-Italic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\TitilliumWeb-Light.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\TitilliumWeb-LightItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\TitilliumWeb-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\TitilliumWeb-SemiBold.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\TitilliumWeb-SemiBoldItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\EVVA ICON.ico" />
   </ItemGroup>
 
