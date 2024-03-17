@@ -37,12 +37,13 @@
                                 <Grid Grid.Row="2" Margin="0,0,15,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     
 
-                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal"
+                                                Visibility="{Binding ThermocoupleSetVisibility}"
+                                                Margin="0,0,50,0">
 
                                         <TextBlock Text="Thermocouple type:" VerticalAlignment="Center"
                                                    Margin="0,0,10,0"/>
@@ -63,7 +64,7 @@
 
                                     </StackPanel>
 
-                                    <CheckBox Grid.Column="2" 
+                                    <CheckBox Grid.Column="1" 
                                               Content="Record" 
                                               VerticalAlignment="Center" 
                                               IsChecked="{Binding IsRecord}" />

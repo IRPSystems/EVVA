@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 using TempLoggerViewer.Models;
 using TempLoggerViewer.ViewModels;
 
@@ -34,6 +35,7 @@ namespace TempLoggerViewer
 
 			public bool IsThermocoupleK { get; set; }
 			public bool IsThermocoupleT { get; set; }
+			public Visibility ThermocoupleSetVisibility { get; set; }
 
 			public bool IsRecord { get; set; }
 		}
@@ -151,12 +153,17 @@ namespace TempLoggerViewer
 			LoggerDevicesList = new ObservableCollection<LoggerDevice>();
 			foreach (DeviceFullData device in DevicesContainter.DevicesFullDataList)
 			{
-				LoggerDevicesList.Add(new LoggerDevice() 
+				LoggerDevice loggerDevice = new LoggerDevice() 
 				{ 
 					Device = device.Device, 
 					IsThermocoupleK = true,
 					IsRecord = true,
-				});
+					ThermocoupleSetVisibility = Visibility.Collapsed,
+				};
+				LoggerDevicesList.Add(loggerDevice);
+
+				if (loggerDevice.Device.DeviceType == DeviceTypesEnum.BrainChild)
+					loggerDevice.ThermocoupleSetVisibility = Visibility.Visible;
 
 				device.Connect();
 				device.InitCheckConnection();
