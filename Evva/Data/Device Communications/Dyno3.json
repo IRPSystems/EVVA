@@ -1,0 +1,94 @@
+{
+  "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
+  "Name": "Dyno3",
+  "DeviceType": 15,
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.Dyno3.Dyno3_ParamData, DeviceCommunicators",
+        "command_to_device": null,
+        "Status_paramter": "Rw",
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ON",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "OFF",
+              "Value": "0"
+            }
+          ]
+        },
+        "Name": "Enable",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 15
+      },
+      {
+        "$type": "DeviceCommunicators.Dyno3.Dyno3_ParamData, DeviceCommunicators",
+        "command_to_device": null,
+        "Status_paramter": "Rw",
+        "DropDown": null,
+        "Name": "Speed set point",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 15
+      },
+      {
+        "$type": "DeviceCommunicators.Dyno3.Dyno3_ParamData, DeviceCommunicators",
+        "command_to_device": null,
+        "Status_paramter": "Rw",
+        "DropDown": null,
+        "Name": "Acc\\Dec rate",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 15
+      },
+      {
+        "$type": "DeviceCommunicators.Dyno3.Dyno3_ParamData, DeviceCommunicators",
+        "command_to_device": null,
+        "Status_paramter": "Rw",
+        "DropDown": null,
+        "Name": "Torque load",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 15
+      },
+      {
+        "$type": "DeviceCommunicators.Dyno3.Dyno3_ParamData, DeviceCommunicators",
+        "command_to_device": null,
+        "Status_paramter": "Rw",
+        "DropDown": null,
+        "Name": "Spin directiont",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 15
+      },
+      {
+        "$type": "DeviceCommunicators.Dyno3.Dyno3_ParamData, DeviceCommunicators",
+        "command_to_device": null,
+        "Status_paramter": "R",
+        "DropDown": null,
+        "Name": "Speed",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 15
+      },
+      {
+        "$type": "DeviceCommunicators.Dyno3.Dyno3_ParamData, DeviceCommunicators",
+        "command_to_device": null,
+        "Status_paramter": "R",
+        "DropDown": null,
+        "Name": "Torque",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 15
+      }
+    ]
+  }
+}

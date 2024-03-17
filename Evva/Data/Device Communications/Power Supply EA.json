@@ -245,6 +245,7 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 171,
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 0
