@@ -15,6 +15,7 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 500,
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -29,6 +30,7 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 501,
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -43,10 +45,12 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 501,
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
       },
+
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "(EL) Current Limit",
@@ -57,6 +61,7 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 499,
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -71,10 +76,12 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 498,
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
       },
+
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Voltage Protection",
@@ -117,6 +124,7 @@
         "GetSetVisibility": 0,
         "ParamType": 2
       },
+
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "(EL) Current Protection",
@@ -317,6 +325,7 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 402,
         "Visibility": 0,
         "GetSetVisibility": 0,
         "DropDown": {
@@ -345,6 +354,7 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 405,
         "Visibility": 0,
         "GetSetVisibility": 0,
         "DropDown": {
