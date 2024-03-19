@@ -383,12 +383,12 @@
           "$values": [
             {
               "$type": "Entities.Models.DropDownParamData, Entities",
-              "Name": "ON",
+              "Name": "OFF",
               "Value": "0"
             },
             {
               "$type": "Entities.Models.DropDownParamData, Entities",
-              "Name": "OFF",
+              "Name": "ON",
               "Value": "1"
             }
           ]
