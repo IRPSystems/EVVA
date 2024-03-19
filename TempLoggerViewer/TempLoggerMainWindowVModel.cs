@@ -230,8 +230,6 @@ namespace TempLoggerViewer
 			IsRecording = false;
 		}
 
-		#region Set TC type
-
 		private void ThermocoupleType(LoggerDevice loggerDevice)
 		{
 			DeviceFullData deviceFullData = DevicesContainter.TypeToDevicesFullData[loggerDevice.Device.DeviceType];
@@ -269,8 +267,6 @@ namespace TempLoggerViewer
 				tcType = 'T';
 			((FieldLogger_Communicator)deviceFullData.DeviceCommunicator).SetTCType(tcType);
 		}
-
-		#endregion Set TC type
 
 
 		#region Channels name
