@@ -238,10 +238,6 @@ namespace TempLoggerViewer
 			{
 				ThermocoupleType_BrainChild(loggerDevice, deviceFullData);
 			}
-			else if (loggerDevice.Device.DeviceType == DeviceTypesEnum.FieldLogger)
-			{
-				ThermocoupleType_FieldLogger(loggerDevice, deviceFullData);
-			}
 		}
 
 		private void ThermocoupleType_BrainChild(
@@ -254,18 +250,6 @@ namespace TempLoggerViewer
 			else if (loggerDevice.IsThermocoupleT)
 				tcType = 'T';
 			((BrainChild_Communicator)deviceFullData.DeviceCommunicator).SetTCType(tcType);
-		}
-
-		private void ThermocoupleType_FieldLogger(
-			LoggerDevice loggerDevice,
-			DeviceFullData deviceFullData)
-		{
-			char tcType = ' ';
-			if (loggerDevice.IsThermocoupleK)
-				tcType = 'K';
-			else if (loggerDevice.IsThermocoupleT)
-				tcType = 'T';
-			((FieldLogger_Communicator)deviceFullData.DeviceCommunicator).SetTCType(tcType);
 		}
 
 

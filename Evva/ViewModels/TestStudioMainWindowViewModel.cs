@@ -839,7 +839,8 @@ namespace Evva.ViewModels
 			DeviceFullData deviceFullData = 
 				DevicesContainer.TypeToDevicesFullData[DeviceTypesEnum.PowerSupplyEA];
 
-			((PowerSupplayEA_Communicator)deviceFullData.DeviceCommunicator).SetIsUseRampForOnOff(isEAPSRampupEnable);
+			if(deviceFullData.DeviceCommunicator is PowerSupplayEA_Communicator communicator)
+				communicator.SetIsUseRampForOnOff(isEAPSRampupEnable);
 		}
 
 		#endregion Methods
