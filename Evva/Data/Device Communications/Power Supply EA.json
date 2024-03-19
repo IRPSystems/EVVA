@@ -16,6 +16,8 @@
         "IsExpanded": false,
         "IsSelected": false,
         "ModbusAddress": 500,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -31,6 +33,8 @@
         "IsExpanded": false,
         "IsSelected": false,
         "ModbusAddress": 501,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -45,8 +49,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
-        "ModbusAddress": 501,
-        "Visibility": 0,
+        "ModbusAddress": 502,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "GetSetVisibility": 0,
         "ParamType": 2
       },
@@ -62,6 +67,8 @@
         "IsExpanded": false,
         "IsSelected": false,
         "ModbusAddress": 499,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -77,6 +84,8 @@
         "IsExpanded": false,
         "IsSelected": false,
         "ModbusAddress": 498,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -92,6 +101,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 550,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -106,6 +118,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 553,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -120,6 +135,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 556,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -135,6 +153,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 569,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -149,6 +170,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 570,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 2
@@ -161,20 +185,7 @@
 
       //Monitor
 
-      {
-        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
-        "Name": "Actual Voltage",
-        "Cmd": "MEAS:VOLT",
-        "Max": 0,
-        "Units": "V",
-        "Value": null,
-        "DeviceType": 3,
-        "IsExpanded": false,
-        "IsSelected": false,
-        "Visibility": 0,
-        "GetSetVisibility": 0,
-        "ParamType": 1
-      },
+
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Alarm",
@@ -189,6 +200,24 @@
         "GetSetVisibility": 0,
         "ParamType": 1
       },
+
+      {
+        "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
+        "Name": "Actual Voltage",
+        "Cmd": "MEAS:VOLT",
+        "Max": 0,
+        "Units": "V",
+        "Value": null,
+        "DeviceType": 3,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "ModbusAddress": 507,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "ParamType": 1
+      },
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Actual Current",
@@ -199,6 +228,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 508,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 1
@@ -213,6 +245,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 509,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 1
@@ -265,6 +300,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 409,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 0
@@ -280,6 +318,7 @@
         "GetSetVisibility": 0,
         "ParamType": 0
       },
+
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Max Voltage",
@@ -287,6 +326,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 121,
+        "NumOfRegisters": 2,
+        "ValueType": "float",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 0
@@ -298,6 +340,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 123,
+        "NumOfRegisters": 2,
+        "ValueType": "float",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 0
@@ -309,6 +354,9 @@
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,
+        "ModbusAddress": 125,
+        "NumOfRegisters": 2,
+        "ValueType": "float",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ParamType": 0
@@ -326,6 +374,8 @@
         "IsExpanded": false,
         "IsSelected": false,
         "ModbusAddress": 402,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "DropDown": {
@@ -355,6 +405,8 @@
         "IsExpanded": false,
         "IsSelected": false,
         "ModbusAddress": 405,
+        "NumOfRegisters": 1,
+        "ValueType": "ushort",
         "Visibility": 0,
         "GetSetVisibility": 0,
         "DropDown": {
