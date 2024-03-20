@@ -95,6 +95,9 @@ namespace Evva.ViewModels
 				acquisitionRate = device.ParametersRepository.AcquisitionRate;
 			}
 
+			if (acquisitionRate == 0)
+				acquisitionRate = 1;
+
 			_setFaultsTimer = new Timer(1000 / acquisitionRate);
 			_setFaultsTimer.Elapsed += SetFaultsTimerElapsedEventHandler;
 			_setFaultsTimer.Start();
