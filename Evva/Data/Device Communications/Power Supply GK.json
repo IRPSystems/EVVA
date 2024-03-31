@@ -14,7 +14,7 @@
         "Visibility": 0,
         "GetSetVisibility": 0,
         "ReadAddress": 8220,
-        "Scale":  0.1
+        "Scale": 0.1
       },
       {
         "$type": "DeviceCommunicators.PowerSupplayGK.PowerSupplayGK_ParamData, DeviceCommunicators",
@@ -58,7 +58,7 @@
       },
       {
         "$type": "DeviceCommunicators.PowerSupplayGK.PowerSupplayGK_ParamData, DeviceCommunicators",
-        "Name": "Source current",
+        "Name": "PS current limit",
         "Units": "A",
         "Value": null,
         "DeviceType": 13,
@@ -116,6 +116,34 @@
             }
           ]
         }
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayGK.PowerSupplayGK_ParamData, DeviceCommunicators",
+        "Name": "EL current limit",
+        "Units": "A",
+        "Value": null,
+        "DeviceType": 13,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "WriteAddress": 24585,
+        "WriteTriggerAddress": 24586,
+        "Scale": 0.1
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayGK.PowerSupplayGK_ParamData, DeviceCommunicators",
+        "Name": "EL power limit",
+        "Units": "kW",
+        "Value": null,
+        "DeviceType": 13,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "GetSetVisibility": 0,
+        "WriteAddress": 24589,
+        "WriteTriggerAddress": 24590,
+        "Scale": 0.1
       }
     ]
   },

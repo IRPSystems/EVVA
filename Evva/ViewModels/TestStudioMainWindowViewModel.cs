@@ -713,74 +713,83 @@ namespace Evva.ViewModels
 
 		private void UpdateSetup()
 		{
-			ObservableCollection<DeviceData> deviceList = _setupSelectionVM.DevicesList;
-
-
-			List<DeviceData> newDevices = new List<DeviceData>();
-			foreach (DeviceData deviceData in deviceList)
+			try
 			{
-				DeviceData existingDevice =
-					DevicesContainer.DevicesList.ToList().Find((d) => d.DeviceType == deviceData.DeviceType);
-				if (existingDevice == null)
-					newDevices.Add(deviceData);
-			}
+				ObservableCollection<DeviceData> deviceList = _setupSelectionVM.DevicesList;
 
-			List<DeviceData> removedDevices = new List<DeviceData>();
-			foreach (DeviceData deviceData in DevicesContainer.DevicesList)
+
+				List<DeviceData> newDevices = new List<DeviceData>();
+				foreach (DeviceData deviceData in deviceList)
+				{
+					DeviceData existingDevice =
+						DevicesContainer.DevicesList.ToList().Find((d) => d.DeviceType == deviceData.DeviceType);
+					if (existingDevice == null)
+						newDevices.Add(deviceData);
+				}
+
+				List<DeviceData> removedDevices = new List<DeviceData>();
+				foreach (DeviceData deviceData in DevicesContainer.DevicesList)
+				{
+					DeviceData existingDevice =
+						deviceList.ToList().Find((d) => d.DeviceType == deviceData.DeviceType);
+					if (existingDevice == null)
+						removedDevices.Add(deviceData);
+				}
+
+
+
+
+				foreach (DeviceData device in removedDevices)
+				{
+					DeviceFullData deviceFullData =
+						DevicesContainer.DevicesFullDataList.ToList().Find((d) => d.Device.DeviceType == device.DeviceType);
+					deviceFullData.Disconnect();
+
+					DevicesContainer.DevicesFullDataList.Remove(deviceFullData);
+					DevicesContainer.DevicesList.Remove(deviceFullData.Device);
+					DevicesContainer.TypeToDevicesFullData.Remove(deviceFullData.Device.DeviceType);
+				}
+
+
+
+				foreach (DeviceData device in newDevices)
+				{
+					DeviceFullData deviceFullData = DeviceFullData.Factory(device);
+					if (deviceFullData == null)
+						continue;
+
+					deviceFullData.Init("EVVA");
+
+					DevicesContainer.DevicesFullDataList.Add(deviceFullData);
+					DevicesContainer.DevicesList.Add(device as DeviceData);
+					if (DevicesContainer.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
+						DevicesContainer.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
+
+					deviceFullData.Connect();
+				}
+
+
+				if (Faults != null && Faults.IsLoaded)
+				{
+					Faults.Loaded();
+				}
+
+				if (MonitorRecParam != null && MonitorRecParam.IsLoaded)
+				{
+					MonitorRecParam.Loaded();
+				}
+
+				if (MonitorSecurityParam != null && MonitorSecurityParam.IsLoaded)
+				{
+					MonitorSecurityParam.Loaded();
+				}
+
+				WeakReferenceMessenger.Default.Send(new SETUP_UPDATEDMessage());
+			}
+			catch(Exception ex) 
 			{
-				DeviceData existingDevice =
-					deviceList.ToList().Find((d) => d.DeviceType == deviceData.DeviceType);
-				if (existingDevice == null)
-					removedDevices.Add(deviceData);
+				LoggerService.Error(this, "Failed to init the devices", "Error", ex);
 			}
-
-
-
-
-			foreach (DeviceData device in removedDevices)
-			{
-				DeviceFullData deviceFullData =
-					DevicesContainer.DevicesFullDataList.ToList().Find((d) => d.Device.DeviceType == device.DeviceType);
-				deviceFullData.Disconnect();
-
-				DevicesContainer.DevicesFullDataList.Remove(deviceFullData);
-				DevicesContainer.DevicesList.Remove(deviceFullData.Device);
-				DevicesContainer.TypeToDevicesFullData.Remove(deviceFullData.Device.DeviceType);
-			}
-
-
-
-			foreach (DeviceData device in newDevices)
-			{
-				DeviceFullData deviceFullData = DeviceFullData.Factory(device);
-
-				deviceFullData.Init("EVVA");
-
-				DevicesContainer.DevicesFullDataList.Add(deviceFullData);
-				DevicesContainer.DevicesList.Add(device as DeviceData);
-				if (DevicesContainer.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
-					DevicesContainer.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
-
-				deviceFullData.Connect();
-			}
-
-
-			if (Faults != null && Faults.IsLoaded)
-			{
-				Faults.Loaded();
-			}
-
-			if (MonitorRecParam != null && MonitorRecParam.IsLoaded)
-			{
-				MonitorRecParam.Loaded();
-			}
-
-			if (MonitorSecurityParam != null && MonitorSecurityParam.IsLoaded)
-			{
-				MonitorSecurityParam.Loaded();
-			}
-
-			WeakReferenceMessenger.Default.Send(new SETUP_UPDATEDMessage());
 		}
 
 		private void MCUErrorEventHandler(bool? isMCUError)
@@ -791,7 +800,14 @@ namespace Evva.ViewModels
 
 		private void ResetWindowsLayout()
 		{
-			Docking.RestorWindowsLayout();
+			try
+			{
+				Docking.RestorWindowsLayout();
+			}
+			catch (Exception ex) 
+			{
+				LoggerService.Error(this, "Failed to reload the windows layout", "Error", ex);
+			}
 		}
 
 
