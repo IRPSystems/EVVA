@@ -418,6 +418,7 @@ namespace Evva.ViewModels
 					_canMessagesService);
 				Run.CreateScriptLogDiagramViewEvent += Run_CreateScriptLogDiagramViewEvent;
 				Run.ShowScriptLogDiagramViewEvent += Run_ShowScriptLogDiagramViewEvent;
+				Run.RateAdjustmentNeededEvent += Run_RateAdjustmentNeededEvent;
 
 				MonitorRecParam = new MonitorRecParamViewModel(
 					DevicesContainer,
@@ -517,6 +518,12 @@ namespace Evva.ViewModels
 		private void Run_CreateScriptLogDiagramViewEvent(ScriptLogDiagramViewModel obj)
 		{
 			Docking.CreateScriptLogger(obj);
+		}
+
+		private void Run_RateAdjustmentNeededEvent(int rate)
+		{
+			if(AcquisitionRate < rate)
+				AcquisitionRate = rate;
 		}
 
 		private void SettingsUpdated(SETTINGS_UPDATEDMessage e)
