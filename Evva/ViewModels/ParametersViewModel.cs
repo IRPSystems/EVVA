@@ -14,6 +14,8 @@ using System.Collections.ObjectModel;
 using DeviceCommunicators.Models;
 using System;
 using Services.Services;
+using DeviceHandler.Models.DeviceFullDataModels;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Evva.ViewModels
 {
@@ -35,6 +37,7 @@ namespace Evva.ViewModels
 		#region Fields
 
 		private EvvaUserData _evvaUserData;
+		private DevicesContainer _devicesContainer;
 
 		#endregion Fields
 
@@ -44,6 +47,7 @@ namespace Evva.ViewModels
 			DevicesContainer devicesContainer,
 			EvvaUserData evvaUserData)
 		{
+			_devicesContainer = devicesContainer;
 			_evvaUserData = evvaUserData;
 
 			LoadDBCFileCommand = new RelayCommand(LoadDBCFile);
@@ -63,34 +67,40 @@ namespace Evva.ViewModels
 
 		private void LoadDBCFile()
 		{
+			string initDir = Path.GetDirectoryName(_evvaUserData.LastParamsDBCPath);
+			if (string.IsNullOrEmpty(initDir))
+				initDir = "";
+			if (Directory.Exists(initDir) == false)
+				initDir = "";
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = "DBC Files | *.dbc";
+			openFileDialog.InitialDirectory = initDir;
+			bool? result = openFileDialog.ShowDialog();
+			if (result != true)
+				return;
+
+			DBCFilePath = openFileDialog.FileName;
+			_evvaUserData.LastParamsDBCPath = openFileDialog.FileName;
+
+			LoadDBCFile(DBCFilePath);
+		}
+
+		private void LoadDBCFile(string dbcFilePath)
+		{ 
 			try
-			{
-				string initDir = _evvaUserData.LastParamsDBCPath;
-				if (string.IsNullOrEmpty(initDir))
-					initDir = "";
-				if (Directory.Exists(initDir) == false)
-					initDir = "";
-				OpenFileDialog openFileDialog = new OpenFileDialog();
-				openFileDialog.Filter = "DBC Files | *.dbc";
-				openFileDialog.InitialDirectory = initDir;
-				bool? result = openFileDialog.ShowDialog();
-				if (result != true)
-					return;
+			{ 
 
-				DBCFilePath = openFileDialog.FileName;
-				_evvaUserData.LastParamsDBCPath =
-					Path.GetDirectoryName(openFileDialog.FileName);
-
-				var dbc = Parser.ParseFromPath(DBCFilePath);
+				var dbc = Parser.ParseFromPath(dbcFilePath);
 				if (dbc == null)
 					return;
 
 
-				DeviceData dbcDevice = new DeviceData()
+				DeviceData dbcDevice = new DBC_DeviceData()
 				{
 					DeviceType = Entities.Enums.DeviceTypesEnum.DBC,
-					Name = "DBC",
-					ParemetersList = new ObservableCollection<DeviceParameterData>()
+					Name = "DBC", // - " + Path.GetFileName(dbcFilePath),
+					ParemetersList = new ObservableCollection<DeviceParameterData>(),
+					DBCFilePath = dbcFilePath,
 				};
 
 				foreach (Message message in dbc.Messages)
@@ -121,7 +131,19 @@ namespace Evva.ViewModels
 					}
 				}
 
-				FullParametersList.DevicesList.Add(dbcDevice);
+				DeviceFullData mcuFullData = null;
+				if (_devicesContainer.TypeToDevicesFullData.ContainsKey(Entities.Enums.DeviceTypesEnum.MCU))
+					mcuFullData = _devicesContainer.TypeToDevicesFullData[Entities.Enums.DeviceTypesEnum.MCU];
+
+
+				DeviceFullData deviceFullData = new DeviceFullData_DBC(dbcDevice, mcuFullData);
+				_devicesContainer.DevicesFullDataList.Add(deviceFullData);
+				_devicesContainer.DevicesList.Add(dbcDevice);
+				_devicesContainer.TypeToDevicesFullData.Add(Entities.Enums.DeviceTypesEnum.DBC, deviceFullData);
+
+				WeakReferenceMessenger.Default.Send(new SETUP_UPDATEDMessage());
+
+				//FullParametersList.DevicesList.Add(dbcDevice);
 			}
 			catch(Exception ex)
 			{

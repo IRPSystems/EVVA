@@ -43,7 +43,9 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="Source Parameters List" FontSize="16" FontWeight="DemiBold" VerticalAlignment="Center"/>
-                <Button Grid.Column="2" Content="Load DBC File" Command="{Binding LoadDBCFileCommand}"/>
+                <Button Grid.Column="2" 
+                        Content="Load DBC File"
+                        Command="{Binding LoadDBCFileCommand}"/>
                 
             </Grid>
             
