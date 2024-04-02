@@ -409,7 +409,8 @@ namespace Evva.ViewModels
 
 
 				RecordParam = new ParametersViewModel(
-					DevicesContainer);
+					DevicesContainer,
+					EvvaUserData);
 
 				Run = new RunViewModel(
 					RecordParam.RecordParamList.ParametersList,

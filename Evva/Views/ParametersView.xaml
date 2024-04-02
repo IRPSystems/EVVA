@@ -35,9 +35,19 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Source Parameters List" FontSize="16" FontWeight="DemiBold" VerticalAlignment="Center"/>
-            <Line Grid.Row="1" X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="80" />
+                </Grid.ColumnDefinitions>
 
+                <TextBlock Grid.Column="0" Text="Source Parameters List" FontSize="16" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                <Button Grid.Column="2" Content="Load DBC File" Command="{Binding LoadDBCFileCommand}"/>
+                
+            </Grid>
+            
+            <Line Grid.Row="1" X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent2}" />
 
             <device_handler_view:ParametersView Grid.Row="2" DataContext="{Binding FullParametersList}"/>
 

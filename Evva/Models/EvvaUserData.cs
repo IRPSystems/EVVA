@@ -21,6 +21,7 @@ namespace Evva.Models
 		public ObservableCollection<DeviceTypesEnum> SetupDevicesList { get; set; }
 
 		public string LastSetupPath { get; set; }
+		public string LastParamsDBCPath { get; set; }
 
 		public int AcquisitionRate { get; set; }
 
