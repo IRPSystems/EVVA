@@ -95,11 +95,12 @@ namespace Evva.ViewModels
 					return;
 
 
-				DeviceData dbcDevice = new DBC_DeviceData()
+				DBC_DeviceData dbcDevice = new DBC_DeviceData()
 				{
 					DeviceType = Entities.Enums.DeviceTypesEnum.DBC,
 					Name = "DBC", // - " + Path.GetFileName(dbcFilePath),
 					ParemetersList = new ObservableCollection<DeviceParameterData>(),
+					DBC_GroupList = new ObservableCollection<DBC_ParamGroup>(),
 					DBCFilePath = dbcFilePath,
 				};
 
@@ -109,9 +110,10 @@ namespace Evva.ViewModels
 					{
 						Name = message.Name,
 						ID = message.ID,
+						DeviceType = Entities.Enums.DeviceTypesEnum.DBC,
 						ParamsList = new ObservableCollection<DBC_ParamData>()
 					};
-					dbcDevice.ParemetersList.Add(dbcGroup);
+					dbcDevice.DBC_GroupList.Add(dbcGroup);
 
 					foreach (Signal signal in message.Signals)
 					{
@@ -125,9 +127,13 @@ namespace Evva.ViewModels
 						{
 							Name = signal.Name,
 							Units = signal.Unit,
+							Signal = signal,
+							ParentMessage = message,
+							DeviceType = Entities.Enums.DeviceTypesEnum.DBC,
 						};
 
 						dbcGroup.ParamsList.Add(dbcParam);
+						dbcDevice.ParemetersList.Add(dbcParam);
 					}
 				}
 
