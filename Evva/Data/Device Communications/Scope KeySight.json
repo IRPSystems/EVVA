@@ -1,10 +1,10 @@
 {
   "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
-  "Name": "Scope KeySight",
+  "Name": "Keysight Scope",
   "DeviceType": 4,
   "ParemetersList": {
     "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
-    "$values": [      
+    "$values": [
       {
         "$type": "DeviceCommunicators.Scope_KeySight.Scope_KeySight_ParamData, DeviceCommunicators",
         "User_command": null,

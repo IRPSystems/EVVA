@@ -1,6 +1,6 @@
 {
   "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
-  "Name": "Dyno",
+  "Name": "Dyno Lenze",
   "ParemetersList": {
     "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
     "$values": [
