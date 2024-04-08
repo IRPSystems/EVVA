@@ -552,6 +552,13 @@ namespace Evva.ViewModels
 					"Data\\Device Communications",
 					dynoPath,
 					devicesList);
+
+				if (devicesList.Count == 0)
+				{
+					LoggerService.Error(this, "Dyno *.json was not found", "Error");
+					return;
+				}
+
 				DeviceFullData deviceData = DevicesContainer.TypeToDevicesFullData[DeviceTypesEnum.Dyno];
 
 				int index = DevicesContainer.DevicesList.IndexOf(deviceData.Device);
@@ -573,6 +580,13 @@ namespace Evva.ViewModels
 					"Data\\Device Communications",
 					EvvaUserData.NI6002CommunicationPath,
 					devicesList);
+
+				if(devicesList.Count == 0)
+				{
+					LoggerService.Error(this, "NI DAQ *.json was not found", "Error");
+					return;
+				}
+
 				DeviceFullData deviceData = DevicesContainer.TypeToDevicesFullData[DeviceTypesEnum.NI_6002];
 
 				int index = DevicesContainer.DevicesList.IndexOf(deviceData.Device);
@@ -611,6 +625,12 @@ namespace Evva.ViewModels
 				devicesList,
 				name,
 				type);
+
+			if (devicesList[0].ParemetersList == null || devicesList[0].ParemetersList.Count == 0)
+			{
+				LoggerService.Error(this, "MCU *.json was not found", "Error");
+				return;
+			}
 
 			DeviceFullData deviceData = DevicesContainer.TypeToDevicesFullData[type];
 			int index = DevicesContainer.DevicesList.IndexOf(deviceData.Device);
