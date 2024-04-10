@@ -384,12 +384,12 @@
             {
               "$type": "Entities.Models.DropDownParamData, Entities",
               "Name": "OFF",
-              "Value": "1"
+              "Value": "0"
             },
             {
               "$type": "Entities.Models.DropDownParamData, Entities",
               "Name": "ON",
-              "Value": "0"
+              "Value": "1"
             }
           ]
         }
@@ -415,12 +415,12 @@
             {
               "$type": "Entities.Models.DropDownParamData, Entities",
               "Name": "OFF",
-              "Value": "1"
+              "Value": "0"
             },
             {
               "$type": "Entities.Models.DropDownParamData, Entities",
               "Name": "ON",
-              "Value": "0"
+              "Value": "1"
             }
           ]
         }
