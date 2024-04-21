@@ -18,6 +18,8 @@ namespace Evva.Models
 		public string DynoCommunicationPath { get; set; }
 		public string NI6002CommunicationPath { get; set; }
 
+		public string YokoConfigFilePath { get; set; }
+
 		public ObservableCollection<DeviceTypesEnum> SetupDevicesList { get; set; }
 
 		public string LastSetupPath { get; set; }

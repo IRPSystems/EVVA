@@ -14,6 +14,8 @@
             <RowDefinition Height="5" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
             <RowDefinition Height="*" />
             <RowDefinition Height="5" />
             <RowDefinition Height="Auto" />
@@ -178,12 +180,59 @@
             </Button>
 
         </Grid>
+        
         <Line Grid.Row="3" Grid.ColumnSpan="20"
               X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent}" />
 
+        <TextBlock Grid.Row="4" Grid.Column="0"
+                   Text="Yokogawa&#x0a;Configuration&#x0a;File"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   TextAlignment="Center"
+                   Margin="5,0,0,0"/>
+        <Grid Name="grdYokoConfig" 
+              Grid.Row="4" Grid.Column="2"
+              Height="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="35" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="Configuration" 
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0" Grid.Column="2" 
+                     Text="{Binding YokoConfigFilePath}" 
+                     HorizontalAlignment="Stretch"
+                     VerticalContentAlignment="Center"
+                     Height="30"/>
+            <Button Grid.Row="0" Grid.Column="4" 
+                    Content="..."
+                    Command="{Binding BrowseYokoConfigFileCommand}"
+                    FontSize="16" />
+            <Button Grid.Row="2" Grid.Column="6" 
+                    Style="{StaticResource ButtonWithIconStyle}"
+                    Width="25"
+                    Height="25"
+                    Margin="0,0,20,0"
+                    ToolTip="Restore controllers default"
+                    Command="{Binding DownloadYokoConfigCommand}"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding TestsVisibility}">
+                <iconPacks:PackIconMaterial Kind="Download" />
+            </Button>
+            
+        </Grid>
 
-        <Button Grid.Row="6" Grid.Column="0" 
+        <Line Grid.Row="5" Grid.ColumnSpan="20"
+              X1="1" Stretch="Fill" Stroke="{DynamicResource MahApps.Brushes.Accent}" />
+
+        <Button Grid.Row="8" Grid.Column="0" 
                 Content="Update" 
                 Command="{Binding UpdateCommand}" 
                 Margin="5"/>

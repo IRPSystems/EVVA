@@ -6,6 +6,7 @@ using Evva.Models;
 using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Evva.ViewModels
@@ -22,6 +23,8 @@ namespace Evva.ViewModels
 
 		public string MotorCommandsPath { get; set; }
 		public string ControllerCommandsPath { get; set; }
+
+		public string YokoConfigFilePath { get; set; }
 
 		#endregion Properties
 
@@ -42,6 +45,8 @@ namespace Evva.ViewModels
 			DynoCommunicationPath = _EvvaUserData.DynoCommunicationPath;
 			NI6002CommunicationPath = _EvvaUserData.NI6002CommunicationPath;
 
+			YokoConfigFilePath = _EvvaUserData.YokoConfigFilePath;
+
 			BrowseMCUJsonCommand = new RelayCommand(BrowseMCUJson);
 			BrowseMCUB2BJsonCommand = new RelayCommand(BrowseMCUB2BJson);
 			BrowseDynoJsonCommand = new RelayCommand(BrowseDynoJson);
@@ -52,6 +57,9 @@ namespace Evva.ViewModels
 
 			RestoreMotorsDefaultCommand = new RelayCommand(RestoreMotorsDefault);
 			RestoreControllerDefaultCommand = new RelayCommand(RestoreControllerDefault);
+
+			BrowseYokoConfigFileCommand = new RelayCommand(BrowseYokoConfigFile);
+			DownloadYokoConfigCommand = new RelayCommand(DownloadYokoConfig);
 
 			UpdateCommand = new RelayCommand(Update);
 
@@ -128,6 +136,22 @@ namespace Evva.ViewModels
 			ControllerCommandsPath = openFileDialog.FileName;
 		}
 
+		private void BrowseYokoConfigFile()
+		{
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			//openFileDialog.Filter = "???";
+			bool? result = openFileDialog.ShowDialog();
+			if (result != true)
+				return;
+
+			YokoConfigFilePath = openFileDialog.FileName;
+		}
+
+		private void DownloadYokoConfig()
+		{
+			MessageBox.Show("N/A");
+		}
+
 		private void Update()
 		{
 			SETTINGS_UPDATEDMessage settings = new SETTINGS_UPDATEDMessage();
@@ -202,6 +226,9 @@ namespace Evva.ViewModels
 
 		public RelayCommand RestoreMotorsDefaultCommand { get; set; }
 		public RelayCommand RestoreControllerDefaultCommand { get; set; }
+
+		public RelayCommand BrowseYokoConfigFileCommand { get; set; }
+		public RelayCommand DownloadYokoConfigCommand { get; set; }
 
 
 		public RelayCommand UpdateCommand { get; set; }
