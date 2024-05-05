@@ -1,6 +1,6 @@
 {
   "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
-  "Name": "Dyno KEB",
+  "Name": "Dyno3",
   "DeviceType": 15,
   "ParemetersList": {
     "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
@@ -34,7 +34,7 @@
         "command_to_device": null,
         "Status_paramter": "Rw",
         "DropDown": null,
-        "Name": "Speed set point",
+        "Name": "speed set point",
         "Units": null,
         "Value": null,
         "DeviceType": 15
@@ -63,8 +63,22 @@
         "$type": "DeviceCommunicators.Dyno3.Dyno3_ParamData, DeviceCommunicators",
         "command_to_device": null,
         "Status_paramter": "Rw",
-        "DropDown": null,
-        "Name": "Spin directiont",
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "FW",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "REV",
+              "Value": "0"
+            }
+          ]
+        },
+        "Name": "spin direction",
         "Units": null,
         "Value": null,
         "DeviceType": 15
