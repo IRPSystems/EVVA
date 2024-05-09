@@ -22,11 +22,11 @@ namespace Evva
 		}
 
 		protected override void OnStartup(StartupEventArgs e)
-        {
+		{
 			System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
 			base.OnStartup(e);
-			
+
 			SplashView splash = new SplashView();
 			splash.AppName = "EVVA";
 			splash.Show();
@@ -36,10 +36,10 @@ namespace Evva
 			MainWindow.Show();
 			splash.Close();
 
-			
+
 		}
 
-        public static void ChangeDarkLight(bool isLightTheme)
+		public static void ChangeDarkLight(bool isLightTheme)
         {
             if (isLightTheme)
 			    ThemeManager.Current.ChangeTheme(Current, "Light.Cobalt");
