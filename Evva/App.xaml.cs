@@ -2,6 +2,7 @@
 using ControlzEx.Theming;
 using ParamLimitsTest;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Evva
 {
@@ -15,7 +16,10 @@ namespace Evva
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
 				"MzEyMTgxNUAzMjM0MmUzMDJlMzBQNU0vejdSQmVGc1psckxrbSt5UEU0NFNmRzlQajBYTVNnS2c4MkVzdjNzPQ==");
 
-        }
+			this.DispatcherUnhandledException += App_DispatcherUnhandledException;
+
+
+		}
 
 		protected override void OnStartup(StartupEventArgs e)
         {
@@ -42,5 +46,13 @@ namespace Evva
             else
 				ThemeManager.Current.ChangeTheme(Current, "Dark.Cobalt");
 		}
-    }
+
+		
+
+		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+		{
+			MessageBox.Show(e.Exception.ToString(), "Error");
+			e.Handled = true;
+		}
+	}
 }
