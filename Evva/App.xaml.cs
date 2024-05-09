@@ -1,6 +1,7 @@
 ﻿using Controls.Views;
 using ControlzEx.Theming;
 using ParamLimitsTest;
+using Services.Services;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -51,7 +52,7 @@ namespace Evva
 
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
 		{
-			MessageBox.Show(e.Exception.ToString(), "Error");
+			LoggerService.Error(this, "Un-handled exception caught", "Error", e.Exception);
 			e.Handled = true;
 		}
 	}
