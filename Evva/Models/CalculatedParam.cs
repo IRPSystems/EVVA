@@ -80,6 +80,7 @@ namespace Evva.Models
 					Value = double.NaN;
 
 				double d = Convert.ToDouble(valResult);
+				d = Math.Abs(d);
 				Value = d;
 
 			}
