@@ -6,6 +6,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:device_handler_controls="clr-namespace:DeviceHandler.Controls;assembly=DeviceHandler"
+             xmlns:device_handler_param_list="clr-namespace:DeviceHandler.ParamGetSetList;assembly=DeviceHandler"
              xmlns:converters="clr-namespace:Evva.Converter"
              xmlns:local="clr-namespace:Evva.Views"
              mc:Ignorable="d" 
@@ -39,6 +40,38 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+
+            <Style x:Key="SingleParamStyle" TargetType="ListViewItem">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+
+                            <device_handler_param_list:SingleParameterView ParamData="{Binding}" 
+                                        HelpToolVisibility="{Binding DataContext.HelpToolVisibility,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"                                               
+                                        ButtonsVisibility="{Binding DataContext.ButtonsVisibility,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"                                             
+                                        SaveVisibility="{Binding DataContext.SaveVisibility,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                        TextBoxKeyUpEvent="{Binding DataContext.TextBox_KeyUpEvent,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                        ComboBox_DropDownClosedEvent="{Binding DataContext.ComboBox_DropDownClosedEvent,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                        HexTextBox_EnterEvent="{Binding DataContext.HexTextBox_EnterEvent,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                        HexTextBox_KeyDownEvent="{Binding DataContext.HexTextBox_HexKeyDownEvent,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                        HexTextBox_KeyUpEvent="{Binding DataContext.HexTextBox_HexKeyUpEvent,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                        ButtonGet_ClickEvent="{Binding DataContext.ButtonGet_ClickEvent,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                        ButtonSet_ClickEvent="{Binding DataContext.ButtonSet_ClickEvent,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                        ButtonSave_ClickEvent="{Binding DataContext.ButtonSave_ClickEvent,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                                                           Margin="0,1"/>
+
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                </Style.Resources>
+            </Style>
+
 
             <Style x:Key="DeviceParametersStyle" TargetType="ListViewItem">
                 <Setter Property="Template">
@@ -81,10 +114,9 @@
                                 <ListView ItemsSource="{Binding ParemetersList}"
                                           Grid.Row="4"
                                           Name="lv"
-                                          ItemContainerStyle="{StaticResource DeviceParamsListStyle}"
+                                          ItemContainerStyle="{StaticResource SingleParamStyle}"
                                           Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView},
                                                            Converter={StaticResource TestListHeightConverter}}"/>
-
                             </Grid>
 
                         </ControlTemplate>
