@@ -14,17 +14,10 @@ using Evva.Views;
 using ParamLimitsTest;
 using DeviceCommunicators.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
-using System.Windows.Input;
-using DeviceHandler.ParamGetSetList;
-using System.Windows.Media;
-using DeviceCommunicators.MCU;
-using System.Security.Cryptography;
-using System.Text;
-using Services.Services;
 
 namespace Evva.ViewModels
 {
-	public class TestsViewModel: ObservableObject
+	public class TestsViewModel : ObservableObject
 	{
 		#region Fields	
 
@@ -39,25 +32,6 @@ namespace Evva.ViewModels
 
 		public bool IsDoSaftyOfficerAbort { get; set; }
 
-
-
-
-
-		public Visibility HelpToolVisibility { get; set; }
-		public Visibility SaveVisibility { get; set; }
-		public Visibility ButtonsVisibility { get; set; }
-
-		public Action<KeyEventArgs> TextBox_KeyUpEvent { get; set; }
-		public Action<ComboBox> ComboBox_DropDownClosedEvent { get; set; }
-		public Action<DeviceParameterData> HexTextBox_EnterEvent { get; set; }
-		public Action<KeyEventArgs> HexTextBox_HexKeyDownEvent { get; set; }
-		public Action<KeyEventArgs> HexTextBox_HexKeyUpEvent { get; set; }
-
-		public Action<DeviceParameterData> ButtonGet_ClickEvent { get; set; }
-		public Action<DeviceParameterData> ButtonSet_ClickEvent { get; set; }
-		public Action<DeviceParameterData> ButtonSave_ClickEvent { get; set; }
-
-
 		#endregion Properties
 
 		#region Constructor
@@ -69,30 +43,8 @@ namespace Evva.ViewModels
 
 			SetCommand = new RelayCommand<DeviceParameterData>(Set);
 			GetCommand = new RelayCommand<DeviceParameterData>(Get);
+			EditCommand = new RelayCommand<DeviceParameterData>(Edit);
 			TestParamsLimitCommand = new RelayCommand(TestParamsLimit);
-
-
-
-			HelpToolVisibility = Visibility.Visible;
-			SaveVisibility = Visibility.Visible;
-			ButtonsVisibility = Visibility.Visible;
-
-
-			TextBox_KeyUpEvent = TextBox_KeyUp;
-			ComboBox_DropDownClosedEvent = ComboBox_DropDownClosed;
-			HexTextBox_EnterEvent = HexTextBox_Enter;
-			HexTextBox_HexKeyDownEvent = HexTextBox_HexKeyDown;
-			HexTextBox_HexKeyUpEvent = TextBox_KeyUp;
-
-			ButtonGet_ClickEvent = Get;
-			ButtonSet_ClickEvent = Set;
-			ButtonSave_ClickEvent = Save;
-
-			foreach(DeviceData deviceData in DevicesContainer.DevicesList) 
-			{
-				foreach (DeviceParameterData param in deviceData.ParemetersList)
-					param.IsEnabled = true;
-			}
 
 		}
 
@@ -117,8 +69,18 @@ namespace Evva.ViewModels
 
 		private void Set(DeviceParameterData deviceParam)
 		{
+			if ((deviceParam.IsEditing == false && deviceParam.Value == null) ||
+				(deviceParam.IsEditing == true && deviceParam.EditValue == null))
+				return;
+
 			DeviceFullData deviceFullData = DevicesContainer.TypeToDevicesFullData[deviceParam.DeviceType];
-			deviceFullData.DeviceCommunicator.SetParamValue(deviceParam, Convert.ToDouble(deviceParam.Value), MessageCallback);
+
+			if(deviceParam.IsEditing == false) 
+				deviceFullData.DeviceCommunicator.SetParamValue(deviceParam, Convert.ToDouble(deviceParam.Value), MessageCallback);
+			else
+				deviceFullData.DeviceCommunicator.SetParamValue(deviceParam, Convert.ToDouble(deviceParam.EditValue), MessageCallback);
+
+			deviceParam.IsEditing = false;
 		}
 
 		private void Get(DeviceParameterData deviceParam)
@@ -127,178 +89,31 @@ namespace Evva.ViewModels
 			deviceFullData.DeviceCommunicator.GetParamValue(deviceParam, MessageCallback);
 		}
 
-		private void Save(DeviceParameterData param)
+		private void Edit(DeviceParameterData deviceParam)
 		{
-			if (!(param is MCU_ParamData mcuParam))
-				return;
-
-			if (mcuParam.Cmd == null)
-				return;
-
-
-			Set(param);
-
-			byte[] id = new byte[3];
-
-			using (var md5 = MD5.Create())
-			{
-				Array.Copy(md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(mcuParam.Cmd)), 0, id, 0, 3);
-
-			}
-
-			var hex_id = BitConverter.ToString(id).Replace("-", "").ToLower();
-
-			var msg = Convert.ToInt32(hex_id, 16);
-
-			DeviceFullData deviceFullData = DevicesContainer.TypeToDevicesFullData[param.DeviceType];
-			deviceFullData.DeviceCommunicator.SetParamValue(new MCU_ParamData() { Cmd = "save_param" }, msg, MessageCallback);
+			if(deviceParam.IsEditing == true)
+				deviceParam.EditValue = deviceParam.Value;
 		}
 
-		public void ComboBox_DropDownClosed(ComboBox comboBox)
+		private void MessageCallback(DeviceParameterData param, CommunicatorResultEnum result, string resultDescription)
 		{
-			if (ButtonsVisibility == Visibility.Collapsed)
-				return;
-
-			if (!(comboBox.DataContext is DeviceParameterData param))
-				return;
-
-			if (param is IParamWithDropDown dropDown &&
-				(dropDown.DropDown == null || dropDown.DropDown.Count == 0))
+			if (result != CommunicatorResultEnum.OK)
 			{
-				return;
-			}
-
-			ParamGetSetListViewModel.SetBackForeGround(
-						Application.Current.FindResource("MahApps.Brushes.Accent2") as SolidColorBrush,
-						Brushes.White,
-						param);
-		}
-
-		private void TextBox_KeyUp(KeyEventArgs e)
-		{
-			if (ButtonsVisibility == Visibility.Collapsed)
-				return;
-
-			DeviceParameterData param = null;
-			if (e.Source is TextBox textBox)
-				param = textBox.DataContext as DeviceParameterData;
-			else if (e.Source is ComboBox comboBox)
-				param = comboBox.DataContext as DeviceParameterData;
-
-
-
-			if (e.Key == Key.Enter)
-			{
-				Set(param);
-
-				e.Handled = true;
-
-				ParamGetSetListViewModel.SetBackForeGround(
-						Brushes.Transparent,
-						Application.Current.FindResource("MahApps.Brushes.ThemeForeground") as SolidColorBrush,
-						param);
-				return;
-			}
-
-			ParamGetSetListViewModel.SetBackForeGround(
-						Application.Current.FindResource("MahApps.Brushes.Accent2") as SolidColorBrush,
-						Brushes.White,
-						param);
-		}
-
-		private void HexTextBox_Enter(DeviceParameterData param)
-		{
-			Set(param);
-			ParamGetSetListViewModel.SetBackForeGround(
-						Brushes.Transparent,
-						Application.Current.FindResource("MahApps.Brushes.ThemeForeground") as SolidColorBrush,
-						param);
-		}
-
-		private void HexTextBox_HexKeyDown(KeyEventArgs e)
-		{
-			if (!(e.Source is TextBox textBox))
-				return;
-
-			if (!(textBox.DataContext is DeviceParameterData param))
-				return;
-
-			ParamGetSetListViewModel.SetBackForeGround(
-						Application.Current.FindResource("MahApps.Brushes.Accent2") as SolidColorBrush,
-						Brushes.White,
-						param);
-		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		private void MessageCallback(DeviceParameterData param, CommunicatorResultEnum result, string errDescription)
-		{
-			if (Application.Current == null)
-				return;
-
-
-			try
-			{
-				if (result == CommunicatorResultEnum.OK)
-				{
-					ParamGetSetListViewModel.SetBackForeGround(
-						Brushes.Transparent,
-						Application.Current.FindResource("MahApps.Brushes.ThemeForeground") as SolidColorBrush,
-						param);
-					param.ErrorDescription = null;
-
-
-
-					if (param is MCU_ParamData mcuParam)
-					{
-						param.Value = GetFormatedValuesService.GetString(mcuParam.Format, mcuParam.Value);
-					}
-				}
-				else
-				{
-					ParamGetSetListViewModel.SetBackForeGround(
-						Brushes.Red,
-						Brushes.White,
-						param);
-
-
-					if (result == CommunicatorResultEnum.NoResponse && string.IsNullOrEmpty(errDescription))
-						errDescription = "No connection";
-
-					param.ErrorDescription = errDescription;
-
-					
-
-				}
-			}
-			catch (Exception ex)
-			{
-				LoggerService.Error(this, "Error at callback", ex);
+				MessageBox.Show("Failed to get response\r\n" + resultDescription);
 			}
 		}
 
 		private void SearchText_TextChanged(TextChangedEventArgs e)
 		{
-			if(!(e.Source is TextBox textBox))
+			if (!(e.Source is TextBox textBox))
 				return;
 
-			if(!(textBox.DataContext is DeviceData deviceData)) 
+			if (!(textBox.DataContext is DeviceData deviceData))
 				return;
 
-			foreach(DeviceParameterData param in deviceData.ParemetersList) 
-			{ 
-				if(param.Name.ToLower().Contains(textBox.Text.ToLower()))
+			foreach (DeviceParameterData param in deviceData.ParemetersList)
+			{
+				if (param.Name.ToLower().Contains(textBox.Text.ToLower()))
 					param.Visibility = Visibility.Visible;
 				else
 					param.Visibility = Visibility.Collapsed;
@@ -310,7 +125,6 @@ namespace Evva.ViewModels
 			_docking.OpenTestParamsLimit();
 		}
 
-
 		#endregion Methods
 
 		#region Commands
@@ -320,6 +134,7 @@ namespace Evva.ViewModels
 
 		public RelayCommand<DeviceParameterData> SetCommand { get; private set; }
 		public RelayCommand<DeviceParameterData> GetCommand { get; private set; }
+		public RelayCommand<DeviceParameterData> EditCommand { get; private set; }
 
 
 
