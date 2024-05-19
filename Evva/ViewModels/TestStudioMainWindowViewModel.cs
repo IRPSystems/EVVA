@@ -184,6 +184,8 @@ namespace Evva.ViewModels
 			calculatedParam.Name = "Motor Power Output";
 			deviceFullData.Device.ParemetersList.Add(calculatedParam);
 
+			calculatedParam.DevicesList = DevicesContainer.DevicesFullDataList;
+
 			SETTINGS_UPDATEDMessage e = new SETTINGS_UPDATEDMessage();
 			WeakReferenceMessenger.Default.Send(e);
 		}

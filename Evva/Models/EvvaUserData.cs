@@ -59,6 +59,8 @@ namespace Evva.Models
 			settings.Formatting = Formatting.Indented;
 			settings.TypeNameHandling = TypeNameHandling.All;
 			EvvaUserData = JsonConvert.DeserializeObject(jsonString, settings) as EvvaUserData;
+			if (EvvaUserData == null)
+				return EvvaUserData;
 			
 			if(EvvaUserData.ScriptUserData == null)
 				EvvaUserData.ScriptUserData = new ScriptHandler.Models.ScriptUserData();
