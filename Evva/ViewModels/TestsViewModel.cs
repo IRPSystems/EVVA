@@ -69,16 +69,21 @@ namespace Evva.ViewModels
 
 		private void Set(DeviceParameterData deviceParam)
 		{
-			if ((deviceParam.IsEditing == false && deviceParam.Value == null) ||
-				(deviceParam.IsEditing == true && deviceParam.EditValue == null))
+			object value = null;
+			if (deviceParam.IsEditing == false && deviceParam.Value == null)
+				value = deviceParam.Value;
+			else if (deviceParam.IsEditing == true && deviceParam.EditValue == null)
+				value = deviceParam.EditValue;
+
+			if (value == null)
+				return;
+
+			if (value is string str && string.IsNullOrEmpty(str))
 				return;
 
 			DeviceFullData deviceFullData = DevicesContainer.TypeToDevicesFullData[deviceParam.DeviceType];
 
-			if(deviceParam.IsEditing == false) 
-				deviceFullData.DeviceCommunicator.SetParamValue(deviceParam, Convert.ToDouble(deviceParam.Value), MessageCallback);
-			else
-				deviceFullData.DeviceCommunicator.SetParamValue(deviceParam, Convert.ToDouble(deviceParam.EditValue), MessageCallback);
+			deviceFullData.DeviceCommunicator.SetParamValue(deviceParam, Convert.ToDouble(value), MessageCallback);
 
 			deviceParam.IsEditing = false;
 		}
