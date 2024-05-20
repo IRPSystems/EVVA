@@ -1,8 +1,10 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
+using ControlzEx.Theming;
 using Entities.Enums;
 using Newtonsoft.Json;
 using ScriptHandler.Models;
+using Services.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -57,18 +59,39 @@ namespace Evva.Models
 			settings.Formatting = Formatting.Indented;
 			settings.TypeNameHandling = TypeNameHandling.All;
 			EvvaUserData = JsonConvert.DeserializeObject(jsonString, settings) as EvvaUserData;
+			if (EvvaUserData == null)
+				return EvvaUserData;
 			
 			if(EvvaUserData.ScriptUserData == null)
 				EvvaUserData.ScriptUserData = new ScriptHandler.Models.ScriptUserData();
 
+			string errorDesc = string.Empty;
 			if (File.Exists(EvvaUserData.DynoCommunicationPath) == false)
+			{
+				errorDesc += "The path \"" + EvvaUserData.DynoCommunicationPath + "\" was not found.\r\n\r\n";
 				EvvaUserData.DynoCommunicationPath = "Data\\Device Communications\\Dyno Communication.json";
+			}
 			if (File.Exists(EvvaUserData.MCUJsonPath) == false)
+			{
+				errorDesc += "The path \"" + EvvaUserData.MCUJsonPath + "\" was not found.\r\n\r\n";
 				EvvaUserData.MCUJsonPath = "Data\\Device Communications\\param_defaults.json";
+			}
 			if (File.Exists(EvvaUserData.MCUB2BJsonPath) == false)
+			{
+				errorDesc += "The path \"" + EvvaUserData.MCUB2BJsonPath + "\" was not found.\r\n\r\n";
 				EvvaUserData.MCUB2BJsonPath = "Data\\Device Communications\\param_defaults.json";
+			}
 			if (File.Exists(EvvaUserData.NI6002CommunicationPath) == false)
+			{
+				errorDesc += "The path \"" + EvvaUserData.NI6002CommunicationPath + "\" was not found.\r\n\r\n";
 				EvvaUserData.NI6002CommunicationPath = "Data\\Device Communications\\NI_6002.json";
+			}
+
+			if (string.IsNullOrEmpty(errorDesc) == false)
+			{
+				errorDesc += "The default paths will be used";
+				LoggerService.Error(EvvaUserData, errorDesc, "Error");
+			}
 
 
 			return EvvaUserData;
