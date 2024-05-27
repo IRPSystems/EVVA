@@ -25,6 +25,7 @@
 	  <ProjectReference Include="..\DevicesInfrastructures\DeviceSimulators\DeviceSimulators.csproj" />
 	  <ProjectReference Include="..\Infrastructure\Communication\Communication.csproj" />
 	  <ProjectReference Include="..\Infrastructure\Entities\Entities.csproj" />
+	  <ProjectReference Include="..\Infrastructure\J2534DotNet\J2534DotNet.csproj" />
 	  <ProjectReference Include="..\ScriptsInfrastructure\ScriptHandler\ScriptHandler.csproj" />
 	  <ProjectReference Include="..\ScriptsInfrastructure\ScriptRunner\ScriptRunner.csproj" />
 	</ItemGroup>

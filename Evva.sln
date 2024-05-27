@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScriptHandler", "ScriptsInf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParamLimitsTest", "ParamLimitsTest\ParamLimitsTest.csproj", "{EBEE9788-08E2-4753-80A1-343C68026D57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J2534DotNet", "..\Infrastructure\J2534DotNet\J2534DotNet.csproj", "{D99E0DE7-2F06-41E3-B33E-687E1B425A7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J2534DotNet", "Infrastructure\J2534DotNet\J2534DotNet.csproj", "{D99E0DE7-2F06-41E3-B33E-687E1B425A7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
