@@ -6,9 +6,9 @@
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
 
-	  <Version>1.2.56.6</Version>
-	  <AssemblyVersion>1.2.56.6</AssemblyVersion>
-	  <FileVersion>1.2.56.6</FileVersion>
+	  <Version>1.2.56.7</Version>
+	  <AssemblyVersion>1.2.56.7</AssemblyVersion>
+	  <FileVersion>1.2.56.7</FileVersion>
 	  <ApplicationIcon>Resources\EVVA ICON.ico</ApplicationIcon>
 	  <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
