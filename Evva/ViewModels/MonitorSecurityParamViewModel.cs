@@ -66,7 +66,7 @@ namespace Evva.ViewModels
 				{
 					string parameterName = paramValue.ParameterName.Trim();
 					DeviceParameterData data =
-						mcu_Device.MCU_FullList.ToList().Find((p) => p.Name == parameterName);
+						mcu_Device.MCU_FullList.ToList().Find((p) => ((MCU_ParamData)p).Cmd == parameterName);
 
 					if (data != null)
 						MonitorParamsList.Add(data);
@@ -78,7 +78,7 @@ namespace Evva.ViewModels
 			{
 				string parameterName = paramValue.ParameterName.Trim();
 				DeviceParameterData data =
-					mcu_Device.MCU_FullList.ToList().Find((p) => p.Name == paramValue.ParameterName);
+					mcu_Device.MCU_FullList.ToList().Find((p) => ((MCU_ParamData)p).Cmd == paramValue.ParameterName);
 				if(data != null)
 					MonitorParamsList.Add(data);
 			}
