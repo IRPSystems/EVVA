@@ -47,6 +47,9 @@ namespace Evva.ViewModels
 		private object _lsbValue; 
 		private object _msbValue;
 
+		private MCU_ParamData _lsbParam;
+		private MCU_ParamData _msbParam;
+
 		private Timer _setFaultsTimer;
 
 		private bool _isAllSelected;
@@ -140,18 +143,18 @@ namespace Evva.ViewModels
 			if (!(mcu_deviceFullData.Device is MCU_DeviceData mcu_Device))
 				return;
 
-			DeviceParameterData data =
-				mcu_Device.MCU_FullList.ToList().Find((p) => p.Name == "Faults Vector LSB");
-			if (data != null)
+			_lsbParam =
+				mcu_Device.MCU_FullList.ToList().Find((p) => p.Name == "Faults Vector LSB") as MCU_ParamData;
+			if (_lsbParam != null)
 			{
-				mcu_deviceFullData.ParametersRepository.Add(data, RepositoryPriorityEnum.High, FaultReceived);
+				mcu_deviceFullData.ParametersRepository.Add(_lsbParam, RepositoryPriorityEnum.High, FaultReceived);
 			}
 
-			data =
-				mcu_Device.MCU_FullList.ToList().Find((p) => p.Name == "Faults Vector MSB");
-			if (data != null)
+			_msbParam =
+				mcu_Device.MCU_FullList.ToList().Find((p) => p.Name == "Faults Vector MSB") as MCU_ParamData;
+			if (_msbParam != null)
 			{
-				mcu_deviceFullData.ParametersRepository.Add(data, RepositoryPriorityEnum.High, FaultReceived);
+				mcu_deviceFullData.ParametersRepository.Add(_msbParam, RepositoryPriorityEnum.High, FaultReceived);
 			}
 
 			IsLoaded = true;
@@ -293,6 +296,18 @@ namespace Evva.ViewModels
 			}
 			else
 			{
+				
+				if (_lsbValue is string str)
+				{
+					foreach(DropDownParamData ddp in _lsbParam.DropDown)
+					{
+						if (ddp.Name == str)
+						{
+							_lsbValue = ddp.Value;
+						}
+					}
+				}
+
 				int lsbValue = Convert.ToInt32(_lsbValue);
 
 				for (int i = 0; i < _numOfBitsInFaultParam && i < FaultsList.Count; i++)
@@ -311,6 +326,18 @@ namespace Evva.ViewModels
 			}
 			else
 			{
+				if (_msbValue is string str)
+				{
+					foreach (DropDownParamData ddp in _msbParam.DropDown)
+					{
+						if (ddp.Name == str)
+						{
+							_msbValue = ddp.Value;
+						}
+					}
+				}
+				
+
 				int msbValue = Convert.ToInt32(_msbValue);
 
 				for (int i = _numOfBitsInFaultParam; i < FaultsList.Count; i++)
