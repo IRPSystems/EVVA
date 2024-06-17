@@ -299,12 +299,22 @@ namespace Evva.ViewModels
 				
 				if (_lsbValue is string str)
 				{
-					foreach(DropDownParamData ddp in _lsbParam.DropDown)
+					bool isFound = false;
+					foreach (DropDownParamData ddp in _lsbParam.DropDown)
 					{
 						if (ddp.Name == str)
 						{
 							_lsbValue = ddp.Value;
+							isFound = true;
+							break;
 						}
+					}
+
+					if (!isFound)
+					{
+						double d;
+						double.TryParse(str, out d);
+						_msbValue = d;
 					}
 				}
 
@@ -328,13 +338,24 @@ namespace Evva.ViewModels
 			{
 				if (_msbValue is string str)
 				{
+					bool isFound = false;
 					foreach (DropDownParamData ddp in _msbParam.DropDown)
 					{
 						if (ddp.Name == str)
 						{
 							_msbValue = ddp.Value;
+							isFound = true;
+							break;
 						}
 					}
+
+					if(!isFound)
+					{
+						double d;
+						double.TryParse(str, out d);
+						_msbValue = d;
+					}
+
 				}
 				
 
