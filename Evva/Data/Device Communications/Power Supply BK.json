@@ -142,7 +142,7 @@
       },
       {
         "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
-        "Command": "VAPPLY:VOLTage:LEVel?",
+        "Command": "APPLY:VOLTage:LEVel?",
         "TypeCommand": 3,
         "DropDown": null,
         "DeviceType": 2,
