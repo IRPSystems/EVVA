@@ -107,7 +107,7 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "Voltage",
+        "Name": "Channel voltage On/Off",
         "DeviceTypes": 0
       },
       {
@@ -137,7 +137,7 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "MEASure voltage in supply",
+        "Name": "Set voltage in supply",
         "DeviceTypes": 0
       },
       {
