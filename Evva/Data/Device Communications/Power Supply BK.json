@@ -107,7 +107,7 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "Voltage",
+        "Name": "Channel voltage On/Off",
         "DeviceTypes": 0
       },
       {
@@ -127,7 +127,7 @@
       },
       {
         "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
-        "Command": "MEASure:SCALar:VOLTage:ALL:DC?",
+        "Command": "MEASure:SCALar:VOLTage:ALL:DC",
         "TypeCommand": 3,
         "DropDown": null,
         "DeviceType": 2,
@@ -137,12 +137,12 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "MEASure voltage in supply",
+        "Name": "Set voltage in supply",
         "DeviceTypes": 0
       },
       {
         "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
-        "Command": "VAPPLY:VOLTage:LEVel?",
+        "Command": "APPLY:VOLTage:LEVel",
         "TypeCommand": 3,
         "DropDown": null,
         "DeviceType": 2,
@@ -157,7 +157,7 @@
       },
       {
         "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
-        "Command": "APPLY:CURRent:LEVel?",
+        "Command": "APPLY:CURRent:LEVel",
         "TypeCommand": 3,
         "DropDown": null,
         "DeviceType": 2,
@@ -172,7 +172,7 @@
       },
       {
         "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
-        "Command": "APPLY:OUTput?",
+        "Command": "APPLY:OUTput",
         "TypeCommand": 3,
         "DropDown": null,
         "DeviceType": 2,

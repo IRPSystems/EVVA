@@ -16,6 +16,7 @@ using System;
 using Services.Services;
 using DeviceHandler.Models.DeviceFullDataModels;
 using CommunityToolkit.Mvvm.Messaging;
+using Entities.Enums;
 
 namespace Evva.ViewModels
 {
@@ -30,7 +31,7 @@ namespace Evva.ViewModels
 		public Record_SelectedParametersListViewModel RecordParamList { get; set; }
 		public Absolute_SelectedParametersListViewModel AbsoluteParamList { get; set; }
 
-		public string DBCFilePath { get; set; }
+		
 
 		#endregion Properties
 
@@ -59,6 +60,8 @@ namespace Evva.ViewModels
 			DragDropData dragDropData = new DragDropData();
 			FullParametersList = new DeviceHandler.ViewModel.ParametersViewModel(dragDropData, devicesContainer, true);
 
+			FullParametersList.DBCRemoveEvent += DBCList_DBCRemoveEvent;
+
 		}
 
 		#endregion Constructor
@@ -79,82 +82,49 @@ namespace Evva.ViewModels
 			if (result != true)
 				return;
 
-			DBCFilePath = openFileDialog.FileName;
 			_evvaUserData.LastParamsDBCPath = openFileDialog.FileName;
 
-			LoadDBCFile(DBCFilePath);
-		}
-
-		private void LoadDBCFile(string dbcFilePath)
-		{ 
-			try
-			{ 
-
-				var dbc = Parser.ParseFromPath(dbcFilePath);
-				if (dbc == null)
-					return;
-
-
-				DBC_DeviceData dbcDevice = new DBC_DeviceData()
+			DBC_DeviceData dbcDevice = null;
+			if (_devicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.DBC) == false)
+			{
+				dbcDevice = new DBC_DeviceData()
 				{
-					DeviceType = Entities.Enums.DeviceTypesEnum.DBC,
-					Name = "DBC", // - " + Path.GetFileName(dbcFilePath),
+					DeviceType = DeviceTypesEnum.DBC,
+					Name = "DBC",
 					ParemetersList = new ObservableCollection<DeviceParameterData>(),
-					DBC_GroupList = new ObservableCollection<DBC_ParamGroup>(),
-					DBCFilePath = dbcFilePath,
+					DBCFilePath = openFileDialog.FileName,
+					DBC_FilesList = new ObservableCollection<DBC_File>(),
 				};
 
-				foreach (Message message in dbc.Messages)
-				{
-					DBC_ParamGroup dbcGroup = new DBC_ParamGroup()
-					{
-						Name = message.Name,
-						ID = message.ID,
-						DeviceType = Entities.Enums.DeviceTypesEnum.DBC,
-						ParamsList = new ObservableCollection<DBC_ParamData>()
-					};
-					dbcDevice.DBC_GroupList.Add(dbcGroup);
+				DeviceFullData mcuDevice = _devicesContainer.TypeToDevicesFullData[DeviceTypesEnum.MCU];
 
-					foreach (Signal signal in message.Signals)
-					{
-
-						if (signal.Unit == "�C")
-							signal.Unit = "˚C";
-						else if (signal.Unit == "�")
-							signal.Unit = "˚";
-
-						DBC_ParamData dbcParam = new DBC_ParamData()
-						{
-							Name = signal.Name,
-							Units = signal.Unit,
-							Signal = signal,
-							ParentMessage = message,
-							DeviceType = Entities.Enums.DeviceTypesEnum.DBC,
-						};
-
-						dbcGroup.ParamsList.Add(dbcParam);
-						dbcDevice.ParemetersList.Add(dbcParam);
-					}
-				}
-
-				DeviceFullData mcuFullData = null;
-				if (_devicesContainer.TypeToDevicesFullData.ContainsKey(Entities.Enums.DeviceTypesEnum.MCU))
-					mcuFullData = _devicesContainer.TypeToDevicesFullData[Entities.Enums.DeviceTypesEnum.MCU];
-
-
-				DeviceFullData deviceFullData = new DeviceFullData_DBC(dbcDevice, mcuFullData);
+				DeviceFullData deviceFullData = new DeviceFullData_DBC(dbcDevice, mcuDevice);
 				_devicesContainer.DevicesFullDataList.Add(deviceFullData);
 				_devicesContainer.DevicesList.Add(dbcDevice);
-				_devicesContainer.TypeToDevicesFullData.Add(Entities.Enums.DeviceTypesEnum.DBC, deviceFullData);
+				_devicesContainer.TypeToDevicesFullData.Add(DeviceTypesEnum.DBC, deviceFullData);
 
-				WeakReferenceMessenger.Default.Send(new SETUP_UPDATEDMessage());
 
-				//FullParametersList.DevicesList.Add(dbcDevice);
 			}
-			catch(Exception ex)
+			else 
 			{
-				LoggerService.Error(this, "Failed to load DBC file", "Error", ex);
+				DeviceFullData dfd = _devicesContainer.TypeToDevicesFullData[DeviceTypesEnum.DBC];
+				dbcDevice = dfd.Device as DBC_DeviceData;
 			}
+
+			dbcDevice.DBCLoad(openFileDialog.FileName);
+
+			WeakReferenceMessenger.Default.Send(new SETUP_UPDATEDMessage());
+		}
+
+		private void DBCList_DBCRemoveEvent(DeviceParameterData param)
+		{
+			if (!(param is DBC_File dbc_File))
+				return;
+
+			DeviceFullData dfd = _devicesContainer.TypeToDevicesFullData[DeviceTypesEnum.DBC];
+			DBC_DeviceData dbcDevice = dfd.Device as DBC_DeviceData;
+
+			dbcDevice.DBC_FilesList.Remove(dbc_File);
 		}
 
 		#endregion Methods
