@@ -10,7 +10,9 @@ using Entities.Enums;
 using Entities.Models;
 using Microsoft.Win32;
 using ScriptHandler.Models;
+using ScriptHandler.Models.ScriptNodes;
 using Services.Services;
+using Syncfusion.Windows.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -207,13 +209,15 @@ namespace ParamLimitsTest
 			scriptStepSetParameter.Parameter = mcuParam;
 			scriptStepSetParameter.Value = mcuParam.Range[0] - 1;
 			scriptStepSetParameter.Execute();
-			if(scriptStepSetParameter.IsPass == true) 
+
+			double d = Convert.ToDouble(scriptStepSetParameter.Value);
+			if (scriptStepSetParameter.IsPass == true) 
 			{
 				SetTestReprotItem(
 					mcuParam.Name,
 					mcuParam.Cmd,
 					TestTypeEnum.SmallerThanRange,
-					scriptStepSetParameter.Value,
+					d,
 					false,
 					scriptStepSetParameter.ErrorMessage);
 				return;
@@ -227,7 +231,7 @@ namespace ParamLimitsTest
 						mcuParam.Name,
 						mcuParam.Cmd,
 						TestTypeEnum.SmallerThanRange,
-						scriptStepSetParameter.Value,
+						d,
 						false,
 						scriptStepSetParameter.ErrorMessage);
 					//ErrorText = scriptStepSetParameter.ErrorMessage;
@@ -239,7 +243,7 @@ namespace ParamLimitsTest
 					mcuParam.Name,
 					mcuParam.Cmd,
 					TestTypeEnum.SmallerThanRange,
-					scriptStepSetParameter.Value,
+					d,
 					true,
 					null);
 			#endregion Test out of lower limit of range
@@ -254,7 +258,7 @@ namespace ParamLimitsTest
 					mcuParam.Name,
 					mcuParam.Cmd,
 					TestTypeEnum.LargerThanRange,
-					scriptStepSetParameter.Value,
+					d,
 					false,
 					scriptStepSetParameter.ErrorMessage);
 				return;
@@ -268,7 +272,7 @@ namespace ParamLimitsTest
 						mcuParam.Name,
 						mcuParam.Cmd,
 						TestTypeEnum.LargerThanRange,
-						scriptStepSetParameter.Value,
+						d,
 						false,
 						scriptStepSetParameter.ErrorMessage);
 					//ErrorText = scriptStepSetParameter.ErrorMessage;
@@ -280,7 +284,7 @@ namespace ParamLimitsTest
 					mcuParam.Name,
 					mcuParam.Cmd,
 					TestTypeEnum.LargerThanRange,
-					scriptStepSetParameter.Value,
+					d,
 					true,
 					null);
 			#endregion Test higher limit of range
@@ -299,7 +303,7 @@ namespace ParamLimitsTest
 					mcuParam.Name,
 					mcuParam.Cmd,
 					TestTypeEnum.ValueValid,
-					scriptStepSetParameter.Value,
+					d,
 					false,
 					scriptStepSetParameter.ErrorMessage);
 
@@ -318,7 +322,7 @@ namespace ParamLimitsTest
 					mcuParam.Name,
 					mcuParam.Cmd,
 					TestTypeEnum.ValueValid,
-					scriptStepSetParameter.Value,
+					d,
 					true,
 					null);
 			#endregion center limit of range
