@@ -7,6 +7,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>EVVA ICON.ico</ApplicationIcon>
     <Platforms>AnyCPU;x86</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,7 +26,6 @@
 	  <ProjectReference Include="..\DevicesInfrastructures\DeviceSimulators\DeviceSimulators.csproj" />
 	  <ProjectReference Include="..\Infrastructure\Communication\Communication.csproj" />
 	  <ProjectReference Include="..\Infrastructure\Entities\Entities.csproj" />
-	  <ProjectReference Include="..\Infrastructure\J2534DotNet\J2534DotNet.csproj" />
 	  <ProjectReference Include="..\ScriptsInfrastructure\ScriptHandler\ScriptHandler.csproj" />
 	  <ProjectReference Include="..\ScriptsInfrastructure\ScriptRunner\ScriptRunner.csproj" />
 	</ItemGroup>

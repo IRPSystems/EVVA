@@ -99,7 +99,7 @@ namespace Evva.ViewModels
 			SettingsView settings = new SettingsView() { DataContext = appSettings };
 			_appSettings.Content = settings;
 			SetHeader(_appSettings, "Settings");
-			SetFloatParams(_appSettings);
+			SetFloatWindow(_appSettings);
 			Children.Add(_appSettings);
 
 
@@ -107,14 +107,14 @@ namespace Evva.ViewModels
 			CommunicationView communication = new CommunicationView() { DataContext = communicationSettings };
 			_communicationSettings.Content = communication;
 			SetHeader(_communicationSettings, "Communication Settings");
-			SetFloatParams(_communicationSettings);
+			SetFloatWindow(_communicationSettings);
 			Children.Add(_communicationSettings);
 
 			_deviceSimulatorsViewModel = new ContentControl();
 			DeviceSimulatorsView deviceSimulators = new DeviceSimulatorsView() { DataContext = deviceSimulatorsViewModel };
 			_deviceSimulatorsViewModel.Content = deviceSimulators;
 			SetHeader(_deviceSimulatorsViewModel, "Device Simulators");
-			SetFloatParams(_deviceSimulatorsViewModel);
+			SetFloatWindow(_deviceSimulatorsViewModel);
 			Children.Add(_deviceSimulatorsViewModel);
 
 
@@ -169,7 +169,7 @@ namespace Evva.ViewModels
 			_setupSelection.Content = setupSelectionView;
 			SetHeader(_setupSelection, "Setup Selection");
 			SetState(_setupSelection, DockState.Hidden);
-			SetFloatParams(_setupSelection);
+			SetFloatWindow(_setupSelection);
 			Children.Add(_setupSelection);
 
 			string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -203,7 +203,7 @@ namespace Evva.ViewModels
 			Children.Add(_testParamsLimit);
 		}
 
-		private void SetFloatParams(ContentControl control)
+		private void SetFloatWindow(ContentControl control)
 		{
 			SetSizetoContentInDock(control, true);
 			SetSizetoContentInFloat(control, true);

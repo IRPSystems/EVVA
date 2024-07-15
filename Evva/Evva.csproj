@@ -12,6 +12,7 @@
 	  <FileVersion>1.2.58.3</FileVersion>
 	  <ApplicationIcon>Resources\EVVA ICON.ico</ApplicationIcon>
 	  <Platforms>AnyCPU;x86</Platforms>
+	  <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -112,7 +113,6 @@
     <ProjectReference Include="..\DevicesInfrastructures\DeviceHandler\DeviceHandler.csproj" />
     <ProjectReference Include="..\DevicesInfrastructures\DeviceSimulators\DeviceSimulators.csproj" />
     <ProjectReference Include="..\EvvaCANMessageSender\EvvaCANMessageSender.csproj" />
-	<ProjectReference Include="..\Infrastructure\J2534DotNet\J2534DotNet.csproj" />
     <ProjectReference Include="..\Infrastructure\Communication\Communication.csproj" />
     <ProjectReference Include="..\Infrastructure\Controls\Controls.csproj" />
     <ProjectReference Include="..\Infrastructure\Converters\Converters.csproj" />
