@@ -43,8 +43,6 @@ namespace Evva.ViewModels
 
 		private ObservableCollection<DeviceData> _devicesSourceList_Full;
 
-		private DeviceData _selectedDevice;
-
 		#endregion Fields
 
 		#region Constructor
@@ -66,7 +64,6 @@ namespace Evva.ViewModels
 			MoveDeviceToDestCommand = new RelayCommand(MoveDeviceToDest);
 			MoveDeviceToSourceCommand = new RelayCommand(MoveDeviceToSource);
 
-			_selectedDevice = null;
 
 			_devicesSourceList_Full = readDevicesFile.ReadAllFiles(
 				@"Data\Device Communications\",
