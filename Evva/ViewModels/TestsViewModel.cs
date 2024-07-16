@@ -102,6 +102,9 @@ namespace Evva.ViewModels
 
 		private void Get(DeviceParameterData deviceParam)
 		{
+			if (DevicesContainer.TypeToDevicesFullData.ContainsKey(deviceParam.DeviceType) == false)
+				return;
+
 			DeviceFullData deviceFullData = DevicesContainer.TypeToDevicesFullData[deviceParam.DeviceType];
 			deviceFullData.DeviceCommunicator.GetParamValue(deviceParam, MessageCallback);
 		}
