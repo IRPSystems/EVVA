@@ -39,18 +39,17 @@ namespace Evva.Models
 
 		public static EvvaUserData LoadEvvaUserData(string dirName)
 		{
-			EvvaUserData EvvaUserData = null;
 
 			string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			path = Path.Combine(path, dirName);
 			if (Directory.Exists(path) == false)
 			{
-				return EvvaUserData;
+				return new EvvaUserData();
 			}
 			path = Path.Combine(path, "EvvaUserData.json");
 			if (File.Exists(path) == false)
 			{
-				return EvvaUserData;
+				return new EvvaUserData();
 			}
 
 
@@ -58,43 +57,43 @@ namespace Evva.Models
 			JsonSerializerSettings settings = new JsonSerializerSettings();
 			settings.Formatting = Formatting.Indented;
 			settings.TypeNameHandling = TypeNameHandling.All;
-			EvvaUserData = JsonConvert.DeserializeObject(jsonString, settings) as EvvaUserData;
-			if (EvvaUserData == null)
-				return EvvaUserData;
+			EvvaUserData evvaUserData = JsonConvert.DeserializeObject(jsonString, settings) as EvvaUserData;
+			if (evvaUserData == null)
+				return evvaUserData;
 			
-			if(EvvaUserData.ScriptUserData == null)
-				EvvaUserData.ScriptUserData = new ScriptHandler.Models.ScriptUserData();
+			if(evvaUserData.ScriptUserData == null)
+				evvaUserData.ScriptUserData = new ScriptHandler.Models.ScriptUserData();
 
 			string errorDesc = string.Empty;
-			if (File.Exists(EvvaUserData.DynoCommunicationPath) == false)
+			if (File.Exists(evvaUserData.DynoCommunicationPath) == false)
 			{
-				errorDesc += "The path \"" + EvvaUserData.DynoCommunicationPath + "\" was not found.\r\n\r\n";
-				EvvaUserData.DynoCommunicationPath = "Data\\Device Communications\\Dyno Communication.json";
+				errorDesc += "The path \"" + evvaUserData.DynoCommunicationPath + "\" was not found.\r\n\r\n";
+				evvaUserData.DynoCommunicationPath = "Data\\Device Communications\\Dyno Communication.json";
 			}
-			if (File.Exists(EvvaUserData.MCUJsonPath) == false)
+			if (File.Exists(evvaUserData.MCUJsonPath) == false)
 			{
-				errorDesc += "The path \"" + EvvaUserData.MCUJsonPath + "\" was not found.\r\n\r\n";
-				EvvaUserData.MCUJsonPath = "Data\\Device Communications\\param_defaults.json";
+				errorDesc += "The path \"" + evvaUserData.MCUJsonPath + "\" was not found.\r\n\r\n";
+				evvaUserData.MCUJsonPath = "Data\\Device Communications\\param_defaults.json";
 			}
-			if (File.Exists(EvvaUserData.MCUB2BJsonPath) == false)
+			if (File.Exists(evvaUserData.MCUB2BJsonPath) == false)
 			{
-				errorDesc += "The path \"" + EvvaUserData.MCUB2BJsonPath + "\" was not found.\r\n\r\n";
-				EvvaUserData.MCUB2BJsonPath = "Data\\Device Communications\\param_defaults.json";
+				errorDesc += "The path \"" + evvaUserData.MCUB2BJsonPath + "\" was not found.\r\n\r\n";
+				evvaUserData.MCUB2BJsonPath = "Data\\Device Communications\\param_defaults.json";
 			}
-			if (File.Exists(EvvaUserData.NI6002CommunicationPath) == false)
+			if (File.Exists(evvaUserData.NI6002CommunicationPath) == false)
 			{
-				errorDesc += "The path \"" + EvvaUserData.NI6002CommunicationPath + "\" was not found.\r\n\r\n";
-				EvvaUserData.NI6002CommunicationPath = "Data\\Device Communications\\NI_6002.json";
+				errorDesc += "The path \"" + evvaUserData.NI6002CommunicationPath + "\" was not found.\r\n\r\n";
+				evvaUserData.NI6002CommunicationPath = "Data\\Device Communications\\NI_6002.json";
 			}
 
 			if (string.IsNullOrEmpty(errorDesc) == false)
 			{
 				errorDesc += "The default paths will be used";
-				LoggerService.Error(EvvaUserData, errorDesc, "Error");
+				LoggerService.Error(evvaUserData, errorDesc, "Error");
 			}
 
 
-			return EvvaUserData;
+			return evvaUserData;
 		}
 
 
