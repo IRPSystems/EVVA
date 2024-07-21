@@ -7,3 +7,6 @@
 [submodule "ScriptsInfrastructure"]
 	path = ScriptsInfrastructure
 	url = https://github.com/IRPSystems/ScriptsInfrastructure.git
+[submodule "FlashingToollib"]
+	path = FlashingToollib
+	url = https://github.com/IRPSystems/FlashingToollib.git
