@@ -13,6 +13,7 @@ using Entities.Enums;
 using Evva.Models;
 using Evva.Views;
 using Microsoft.Win32;
+using ScriptHandler.Services;
 using ScriptHandler.ViewModels;
 using ScriptRunner.Services;
 using ScriptRunner.ViewModels;
@@ -116,6 +117,8 @@ namespace Evva.ViewModels
 		private SetupSelectionViewModel _setupSelectionVM;
 
 		private CANMessagesService _canMessagesService;
+
+		private FlashingHandler _flashingHandler;
 
 		#endregion Fields
 
@@ -414,9 +417,14 @@ namespace Evva.ViewModels
 					DevicesContainer,
 					EvvaUserData);
 
+
+				_flashingHandler = new FlashingHandler(DevicesContainer);
+				
+
 				Run = new RunViewModel(
 					RecordParam.RecordParamList.ParametersList,
 					DevicesContainer,
+					_flashingHandler,
 					EvvaUserData.ScriptUserData,
 					_canMessagesService);
 				Run.CreateScriptLogDiagramViewEvent += Run_CreateScriptLogDiagramViewEvent;
@@ -436,6 +444,7 @@ namespace Evva.ViewModels
 
 				Design = new DesignViewModel(
 					DevicesContainer,
+					_flashingHandler,
 					EvvaUserData.ScriptUserData);
 
 
