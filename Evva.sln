@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScriptHandler", "ScriptsInf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParamLimitsTest", "ParamLimitsTest\ParamLimitsTest.csproj", "{EBEE9788-08E2-4753-80A1-343C68026D57}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashingToolLib", "FlashingToollib\FlashingToolLib\FlashingToolLib.csproj", "{E941237E-AF03-4D99-834A-25FBE9F2F053}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,14 @@ Global
 		{EBEE9788-08E2-4753-80A1-343C68026D57}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBEE9788-08E2-4753-80A1-343C68026D57}.Release|x86.ActiveCfg = Release|x86
 		{EBEE9788-08E2-4753-80A1-343C68026D57}.Release|x86.Build.0 = Release|x86
+		{E941237E-AF03-4D99-834A-25FBE9F2F053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E941237E-AF03-4D99-834A-25FBE9F2F053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E941237E-AF03-4D99-834A-25FBE9F2F053}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E941237E-AF03-4D99-834A-25FBE9F2F053}.Debug|x86.Build.0 = Debug|Any CPU
+		{E941237E-AF03-4D99-834A-25FBE9F2F053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E941237E-AF03-4D99-834A-25FBE9F2F053}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E941237E-AF03-4D99-834A-25FBE9F2F053}.Release|x86.ActiveCfg = Release|Any CPU
+		{E941237E-AF03-4D99-834A-25FBE9F2F053}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
