@@ -63,6 +63,8 @@ namespace Evva.ViewModels
 		public MonitorSecurityParamViewModel MonitorSecurityParam { get; set; }
 		public FaultsMCUViewModel Faults { get; set; }
 		public SwitchRelayStateViewModel SwitchRelayState { get; set; }
+		public CANMessageSenderViewModel CANMessageSender { get; set; }
+
 
 
 		public DocingViewModel Docking { get; set; }
@@ -148,7 +150,7 @@ namespace Evva.ViewModels
 
 
 			BrowseCANMessagesScriptPathCommand = new RelayCommand(BrowseCANMessagesScriptPath);
-			CANMessageSenderCommand = new RelayCommand(CANMessageSender);
+			CANMessageSenderCommand = new RelayCommand(RunCANMessageSender);
 			StartCANMessageSenderCommand = new RelayCommand(StartCANMessageSender);
 			StopCANMessageSenderCommand = new RelayCommand(StopCANMessageSender);
 
@@ -409,7 +411,8 @@ namespace Evva.ViewModels
 
 				TestsVisibility = Visibility.Visible;
 
-				_canMessagesService = new CANMessagesService();
+				CANMessageSender = new CANMessageSenderViewModel(DevicesContainer);
+				_canMessagesService = new CANMessagesService(CANMessageSender);
 
 
 
@@ -475,6 +478,9 @@ namespace Evva.ViewModels
 
 				DeviceSimulatorsViewModel deviceSimulatorsViewModel =
 					new DeviceSimulatorsViewModel(DevicesContainer);
+
+				
+
 				Docking = new DocingViewModel(
 					AppSettings,
 					Tests,
@@ -487,7 +493,8 @@ namespace Evva.ViewModels
 					SwitchRelayState,
 					CommunicationSettings,
 					_setupSelectionVM,
-					deviceSimulatorsViewModel);
+					deviceSimulatorsViewModel,
+					CANMessageSender);
 
 				Run.CreateScriptLoggerWindow();
 				Tests.CreateTestParamsLimitWindow(Docking);
@@ -867,9 +874,9 @@ namespace Evva.ViewModels
 			CANMessagesScriptPath = openFileDialog.FileName;
 		}
 
-		private void CANMessageSender()
+		private void RunCANMessageSender()
 		{
-			_canMessagesService.OpenCANMessageSender();
+			Docking.OpenCANMessageSender();
 		}
 
 		private void StartCANMessageSender()

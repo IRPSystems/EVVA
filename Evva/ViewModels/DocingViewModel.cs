@@ -13,6 +13,7 @@ using Syncfusion.Windows.Tools.Controls;
 using System;
 using System.IO;
 using System.Windows.Controls;
+using System.Windows.Forms;
 
 namespace Evva.ViewModels
 {
@@ -23,6 +24,7 @@ namespace Evva.ViewModels
 		private ContentControl _appSettings;
 		private ContentControl _communicationSettings;
 		private ContentControl _deviceSimulatorsViewModel;
+		private ContentControl _canMessageSenderViewModel;
 		private ContentControl _mainScriptLogger;
 		private ContentControl _testParamsLimit;
 
@@ -55,7 +57,8 @@ namespace Evva.ViewModels
 			SwitchRelayStateViewModel switchRelayState,
 			CommunicationViewModel communicationSettings,
 			SetupSelectionViewModel setupSelectionVM,
-			DeviceSimulatorsViewModel deviceSimulatorsViewModel) :
+			DeviceSimulatorsViewModel deviceSimulatorsViewModel,
+			CANMessageSenderViewModel canMessageSenderViewModel) :
 			base("DockingMain")
 		{
 
@@ -71,7 +74,8 @@ namespace Evva.ViewModels
 				switchRelayState,
 				communicationSettings,
 				setupSelectionVM,
-				deviceSimulatorsViewModel);
+				deviceSimulatorsViewModel,
+				canMessageSenderViewModel);
 		}
 
 		#endregion Constructor
@@ -90,7 +94,8 @@ namespace Evva.ViewModels
 			SwitchRelayStateViewModel switchRelayState,
 			CommunicationViewModel communicationSettings,
 			SetupSelectionViewModel setupSelectionVM,
-			DeviceSimulatorsViewModel deviceSimulatorsViewModel)
+			DeviceSimulatorsViewModel deviceSimulatorsViewModel,
+			CANMessageSenderViewModel canMessageSenderViewModel)
 		{
 			DockFill = true;
 
@@ -116,6 +121,15 @@ namespace Evva.ViewModels
 			SetHeader(_deviceSimulatorsViewModel, "Device Simulators");
 			SetFloatWindow(_deviceSimulatorsViewModel);
 			Children.Add(_deviceSimulatorsViewModel);
+
+			_canMessageSenderViewModel = new ContentControl();
+			CANMessageSenderView _canMessageSenderView = new CANMessageSenderView() { DataContext = canMessageSenderViewModel };
+			_canMessageSenderViewModel.Content = _canMessageSenderView;
+			SetHeader(_canMessageSenderViewModel, "CAN Message Sender");
+			SetFloatWindow(_canMessageSenderViewModel);
+			Children.Add(_canMessageSenderViewModel);
+			SetSizetoContentInFloat(_canMessageSenderViewModel, false);
+			SetFloatWindowSize(_canMessageSenderView, new System.Windows.Size(700, 500));
 
 
 
@@ -231,6 +245,11 @@ namespace Evva.ViewModels
 		public void OpenDeviceSimulators()
 		{
 			SetState(_deviceSimulatorsViewModel, DockState.Float);
+		}
+
+		public void OpenCANMessageSender()
+		{
+			SetState(_canMessageSenderViewModel, DockState.Float);
 		}
 
 		public void OpenLogScript()
