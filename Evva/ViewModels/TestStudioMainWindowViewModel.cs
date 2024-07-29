@@ -63,7 +63,7 @@ namespace Evva.ViewModels
 		public MonitorSecurityParamViewModel MonitorSecurityParam { get; set; }
 		public FaultsMCUViewModel Faults { get; set; }
 		public SwitchRelayStateViewModel SwitchRelayState { get; set; }
-		public CANMessageSenderViewModel CANMessageSender { get; set; }
+		
 
 
 
@@ -118,9 +118,11 @@ namespace Evva.ViewModels
 
 		private SetupSelectionViewModel _setupSelectionVM;
 
-		private CANMessagesService _canMessagesService;
+		
 
 		private FlashingHandler _flashingHandler;
+
+		public CANMessageSenderViewModel _canMessageSender { get; set; }
 
 		#endregion Fields
 
@@ -149,10 +151,7 @@ namespace Evva.ViewModels
 			SetupSelectionCommand = new RelayCommand(SetupSelection);
 
 
-			BrowseCANMessagesScriptPathCommand = new RelayCommand(BrowseCANMessagesScriptPath);
 			CANMessageSenderCommand = new RelayCommand(RunCANMessageSender);
-			StartCANMessageSenderCommand = new RelayCommand(StartCANMessageSender);
-			StopCANMessageSenderCommand = new RelayCommand(StopCANMessageSender);
 
 			EAPSRampupEnableCommand = new RelayCommand<bool>(EAPSRampupEnable);
 
@@ -338,8 +337,7 @@ namespace Evva.ViewModels
 			if (Faults != null)
 				Faults.Dispose();
 
-			if (_canMessagesService != null)
-				_canMessagesService.CloseCANMessageSender();
+			_canMessageSender.StopAllCANMessages();
 		}
 
 		private void InitCommunicationSettings()
@@ -411,8 +409,7 @@ namespace Evva.ViewModels
 
 				TestsVisibility = Visibility.Visible;
 
-				CANMessageSender = new CANMessageSenderViewModel(DevicesContainer);
-				_canMessagesService = new CANMessagesService(CANMessageSender);
+				_canMessageSender = new CANMessageSenderViewModel(DevicesContainer, EvvaUserData.ScriptUserData);
 
 
 
@@ -429,7 +426,7 @@ namespace Evva.ViewModels
 					DevicesContainer,
 					_flashingHandler,
 					EvvaUserData.ScriptUserData,
-					_canMessagesService);
+					_canMessageSender);
 				Run.CreateScriptLogDiagramViewEvent += Run_CreateScriptLogDiagramViewEvent;
 				Run.ShowScriptLogDiagramViewEvent += Run_ShowScriptLogDiagramViewEvent;
 
@@ -494,7 +491,7 @@ namespace Evva.ViewModels
 					CommunicationSettings,
 					_setupSelectionVM,
 					deviceSimulatorsViewModel,
-					CANMessageSender);
+					_canMessageSender);
 
 				Run.CreateScriptLoggerWindow();
 				Tests.CreateTestParamsLimitWindow(Docking);
@@ -528,6 +525,7 @@ namespace Evva.ViewModels
 			}
 		}
 
+		
 		private void Run_ShowScriptLogDiagramViewEvent()
 		{
 			Docking.OpenLogScript();
@@ -852,41 +850,11 @@ namespace Evva.ViewModels
 
 
 
-		private void BrowseCANMessagesScriptPath()
-		{
-			string initDir = EvvaUserData.ScriptUserData.LastCANMessageScriptPath;
-			if (string.IsNullOrEmpty(initDir))
-				initDir = "";
-			if (Directory.Exists(initDir) == false)
-				initDir = "";
-
-
-			OpenFileDialog openFileDialog = new OpenFileDialog();
-			openFileDialog.Filter = "Test and Scripts Files|*.tst;*.scr";
-			openFileDialog.InitialDirectory = initDir;
-			bool? result = openFileDialog.ShowDialog();
-			if (result != true)
-				return;
-
-			EvvaUserData.ScriptUserData.LastCANMessageScriptPath =
-					Path.GetDirectoryName(openFileDialog.FileName);
-
-			CANMessagesScriptPath = openFileDialog.FileName;
-		}
+		
 
 		private void RunCANMessageSender()
 		{
 			Docking.OpenCANMessageSender();
-		}
-
-		private void StartCANMessageSender()
-		{
-			_canMessagesService.SendCANMessageScript(CANMessagesScriptPath);
-		}
-
-		private void StopCANMessageSender()
-		{
-			_canMessagesService.StopSendCANMessageScript();
 		}
 
 		private void EAPSRampupEnable(bool isEAPSRampupEnable)
@@ -926,11 +894,8 @@ namespace Evva.ViewModels
 
 
 
-		public RelayCommand BrowseCANMessagesScriptPathCommand { get; private set; }
 		public RelayCommand CANMessageSenderCommand { get; private set; }
-		public RelayCommand StartCANMessageSenderCommand { get; private set; }
-		public RelayCommand StopCANMessageSenderCommand { get; private set; }
-
+		
 
 
 		public RelayCommand<bool> EAPSRampupEnableCommand { get; private set; }
