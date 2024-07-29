@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evva", "Evva\Evva.csproj", "{98B5E0D2-A042-4630-B14B-88330C805677}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EvvaCANMessageSender", "EvvaCANMessageSender\EvvaCANMessageSender.csproj", "{1A351FFE-ECA6-41AF-BE37-8524B230B559}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceCommunicators", "DevicesInfrastructures\DeviceCommunicators\DeviceCommunicators.csproj", "{705DB61D-6AF8-4D40-B1A9-87601CACF834}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceHandler", "DevicesInfrastructures\DeviceHandler\DeviceHandler.csproj", "{85E1B439-7DD1-4922-B8D1-7BD554FA85A1}"
@@ -49,14 +47,6 @@ Global
 		{98B5E0D2-A042-4630-B14B-88330C805677}.Release|Any CPU.Build.0 = Release|Any CPU
 		{98B5E0D2-A042-4630-B14B-88330C805677}.Release|x86.ActiveCfg = Release|x86
 		{98B5E0D2-A042-4630-B14B-88330C805677}.Release|x86.Build.0 = Release|x86
-		{1A351FFE-ECA6-41AF-BE37-8524B230B559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1A351FFE-ECA6-41AF-BE37-8524B230B559}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1A351FFE-ECA6-41AF-BE37-8524B230B559}.Debug|x86.ActiveCfg = Debug|x86
-		{1A351FFE-ECA6-41AF-BE37-8524B230B559}.Debug|x86.Build.0 = Debug|x86
-		{1A351FFE-ECA6-41AF-BE37-8524B230B559}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1A351FFE-ECA6-41AF-BE37-8524B230B559}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1A351FFE-ECA6-41AF-BE37-8524B230B559}.Release|x86.ActiveCfg = Release|x86
-		{1A351FFE-ECA6-41AF-BE37-8524B230B559}.Release|x86.Build.0 = Release|x86
 		{705DB61D-6AF8-4D40-B1A9-87601CACF834}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{705DB61D-6AF8-4D40-B1A9-87601CACF834}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{705DB61D-6AF8-4D40-B1A9-87601CACF834}.Debug|x86.ActiveCfg = Debug|x86
