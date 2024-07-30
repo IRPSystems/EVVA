@@ -7,7 +7,7 @@
     "$values": [
       {
         "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
-        "Command": ":READ:VOLTage:DC:",
+        "Command": ":READ:VOLTage:DC",
         "Channel": 0,
         "Name": "Voltage DC",
         "Units": null,
@@ -16,7 +16,7 @@
       },
       {
         "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
-        "Command": ":READ:CURRent:DC:",
+        "Command": ":READ:CURRent:DC",
         "Channel": 0,
         "Name": "Current DC",
         "Units": null,
@@ -26,7 +26,7 @@
 
       {
         "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
-        "Command": ":READ:VOLTage:AC:",
+        "Command": ":READ:VOLTage:AC",
         "Channel": 0,
         "Name": "Voltage AC",
         "Units": null,
@@ -35,7 +35,7 @@
       },
       {
         "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
-        "Command": ":READ:CURRent:AC:",
+        "Command": ":READ:CURRent:AC",
         "Channel": 0,
         "Name": "Current AC",
         "Units": null,
@@ -45,18 +45,18 @@
 
       {
         "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
-        "Command": ":READ:VOLTage:TRMS:",
+        "Command": ":READ:VOLTage:TRMS",
         "Channel": 0,
-        "Name": "Voltage AC",
+        "Name": "Voltage TRMS",
         "Units": null,
         "Value": null,
         "DeviceType": 18
       },
       {
         "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
-        "Command": ":READ:CURRent:TRMS:",
+        "Command": ":READ:CURRent:TRMS",
         "Channel": 0,
-        "Name": "Current AC",
+        "Name": "Current TRMS",
         "Units": null,
         "Value": null,
         "DeviceType": 18
