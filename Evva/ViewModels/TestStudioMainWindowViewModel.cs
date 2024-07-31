@@ -337,7 +337,8 @@ namespace Evva.ViewModels
 			if (Faults != null)
 				Faults.Dispose();
 
-			_canMessageSender.StopAllCANMessages();
+			if(_canMessageSender != null)
+				_canMessageSender.StopAllCANMessages();
 		}
 
 		private void InitCommunicationSettings()
