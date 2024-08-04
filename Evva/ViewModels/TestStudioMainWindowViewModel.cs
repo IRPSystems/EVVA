@@ -13,6 +13,7 @@ using Entities.Enums;
 using Evva.Models;
 using Evva.Views;
 using Microsoft.Win32;
+using ScriptHandler.Services;
 using ScriptHandler.ViewModels;
 using ScriptRunner.Services;
 using ScriptRunner.ViewModels;
@@ -62,6 +63,8 @@ namespace Evva.ViewModels
 		public MonitorSecurityParamViewModel MonitorSecurityParam { get; set; }
 		public FaultsMCUViewModel Faults { get; set; }
 		public SwitchRelayStateViewModel SwitchRelayState { get; set; }
+		
+
 
 
 		public DocingViewModel Docking { get; set; }
@@ -115,7 +118,11 @@ namespace Evva.ViewModels
 
 		private SetupSelectionViewModel _setupSelectionVM;
 
-		private CANMessagesService _canMessagesService;
+		
+
+		private FlashingHandler _flashingHandler;
+
+		public CANMessageSenderViewModel _canMessageSender { get; set; }
 
 		#endregion Fields
 
@@ -144,10 +151,7 @@ namespace Evva.ViewModels
 			SetupSelectionCommand = new RelayCommand(SetupSelection);
 
 
-			BrowseCANMessagesScriptPathCommand = new RelayCommand(BrowseCANMessagesScriptPath);
-			CANMessageSenderCommand = new RelayCommand(CANMessageSender);
-			StartCANMessageSenderCommand = new RelayCommand(StartCANMessageSender);
-			StopCANMessageSenderCommand = new RelayCommand(StopCANMessageSender);
+			CANMessageSenderCommand = new RelayCommand(RunCANMessageSender);
 
 			EAPSRampupEnableCommand = new RelayCommand<bool>(EAPSRampupEnable);
 
@@ -333,8 +337,8 @@ namespace Evva.ViewModels
 			if (Faults != null)
 				Faults.Dispose();
 
-			if (_canMessagesService != null)
-				_canMessagesService.CloseCANMessageSender();
+			if(_canMessageSender != null)
+				_canMessageSender.StopAllCANMessages();
 		}
 
 		private void InitCommunicationSettings()
@@ -406,7 +410,7 @@ namespace Evva.ViewModels
 
 				TestsVisibility = Visibility.Visible;
 
-				_canMessagesService = new CANMessagesService();
+				_canMessageSender = new CANMessageSenderViewModel(DevicesContainer, EvvaUserData.ScriptUserData);
 
 
 
@@ -414,11 +418,16 @@ namespace Evva.ViewModels
 					DevicesContainer,
 					EvvaUserData);
 
+
+				_flashingHandler = new FlashingHandler(DevicesContainer);
+				
+
 				Run = new RunViewModel(
 					RecordParam.RecordParamList.ParametersList,
 					DevicesContainer,
+					_flashingHandler,
 					EvvaUserData.ScriptUserData,
-					_canMessagesService);
+					_canMessageSender);
 				Run.CreateScriptLogDiagramViewEvent += Run_CreateScriptLogDiagramViewEvent;
 				Run.ShowScriptLogDiagramViewEvent += Run_ShowScriptLogDiagramViewEvent;
 
@@ -436,6 +445,7 @@ namespace Evva.ViewModels
 
 				Design = new DesignViewModel(
 					DevicesContainer,
+					_flashingHandler,
 					EvvaUserData.ScriptUserData);
 
 
@@ -466,6 +476,9 @@ namespace Evva.ViewModels
 
 				DeviceSimulatorsViewModel deviceSimulatorsViewModel =
 					new DeviceSimulatorsViewModel(DevicesContainer);
+
+				
+
 				Docking = new DocingViewModel(
 					AppSettings,
 					Tests,
@@ -478,7 +491,8 @@ namespace Evva.ViewModels
 					SwitchRelayState,
 					CommunicationSettings,
 					_setupSelectionVM,
-					deviceSimulatorsViewModel);
+					deviceSimulatorsViewModel,
+					_canMessageSender);
 
 				Run.CreateScriptLoggerWindow();
 				Tests.CreateTestParamsLimitWindow(Docking);
@@ -512,6 +526,7 @@ namespace Evva.ViewModels
 			}
 		}
 
+		
 		private void Run_ShowScriptLogDiagramViewEvent()
 		{
 			Docking.OpenLogScript();
@@ -836,41 +851,11 @@ namespace Evva.ViewModels
 
 
 
-		private void BrowseCANMessagesScriptPath()
+		
+
+		private void RunCANMessageSender()
 		{
-			string initDir = EvvaUserData.ScriptUserData.LastCANMessageScriptPath;
-			if (string.IsNullOrEmpty(initDir))
-				initDir = "";
-			if (Directory.Exists(initDir) == false)
-				initDir = "";
-
-
-			OpenFileDialog openFileDialog = new OpenFileDialog();
-			openFileDialog.Filter = "Test and Scripts Files|*.tst;*.scr";
-			openFileDialog.InitialDirectory = initDir;
-			bool? result = openFileDialog.ShowDialog();
-			if (result != true)
-				return;
-
-			EvvaUserData.ScriptUserData.LastCANMessageScriptPath =
-					Path.GetDirectoryName(openFileDialog.FileName);
-
-			CANMessagesScriptPath = openFileDialog.FileName;
-		}
-
-		private void CANMessageSender()
-		{
-			_canMessagesService.OpenCANMessageSender();
-		}
-
-		private void StartCANMessageSender()
-		{
-			_canMessagesService.SendCANMessageScript(CANMessagesScriptPath);
-		}
-
-		private void StopCANMessageSender()
-		{
-			_canMessagesService.StopSendCANMessageScript();
+			Docking.OpenCANMessageSender();
 		}
 
 		private void EAPSRampupEnable(bool isEAPSRampupEnable)
@@ -910,11 +895,8 @@ namespace Evva.ViewModels
 
 
 
-		public RelayCommand BrowseCANMessagesScriptPathCommand { get; private set; }
 		public RelayCommand CANMessageSenderCommand { get; private set; }
-		public RelayCommand StartCANMessageSenderCommand { get; private set; }
-		public RelayCommand StopCANMessageSenderCommand { get; private set; }
-
+		
 
 
 		public RelayCommand<bool> EAPSRampupEnableCommand { get; private set; }

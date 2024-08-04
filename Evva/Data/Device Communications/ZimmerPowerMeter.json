@@ -1,0 +1,66 @@
+{
+  "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
+  "Name": "Zimmer PowerMeter",
+  "DeviceType": 18,
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
+        "Command": ":READ:VOLTage:DC",
+        "Channel": 0,
+        "Name": "Voltage DC",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 18
+      },
+      {
+        "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
+        "Command": ":READ:CURRent:DC",
+        "Channel": 0,
+        "Name": "Current DC",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 18
+      },
+
+      {
+        "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
+        "Command": ":READ:VOLTage:AC",
+        "Channel": 0,
+        "Name": "Voltage AC",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 18
+      },
+      {
+        "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
+        "Command": ":READ:CURRent:AC",
+        "Channel": 0,
+        "Name": "Current AC",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 18
+      },
+
+      {
+        "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
+        "Command": ":READ:VOLTage:TRMS",
+        "Channel": 0,
+        "Name": "Voltage TRMS",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 18
+      },
+      {
+        "$type": "DeviceCommunicators.ZimmerPowerMeter.ZimmerPowerMeter_ParamData, DeviceCommunicators",
+        "Command": ":READ:CURRent:TRMS",
+        "Channel": 0,
+        "Name": "Current TRMS",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 18
+      }
+    ]
+  }
+}

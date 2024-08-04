@@ -1,0 +1,125 @@
+{
+  "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.PowerSupplayKeysight.PowerSupplayKeysight_ParamData, DeviceCommunicators",
+        "Command": "SYSTem:COMMunicate:RLSTate",
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "Remote",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "Local",
+              "Value": "0"
+            }
+          ]
+        },
+        "DeviceType": 17,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Remote command",
+        "DeviceTypes": 0
+      },      
+      {
+        "$type": "DeviceCommunicators.PowerSupplayKeysight.PowerSupplayKeysight_ParamData, DeviceCommunicators",
+        "Command": "OUTP:COUP:CHAN",
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "CH1",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "CH2",
+              "Value": "2"
+            }
+          ]
+        },
+        "DeviceType": 17,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Choose channel",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayKeysight.PowerSupplayKeysight_ParamData, DeviceCommunicators",
+        "Command": "OUTPut",
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "OFF",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ON",
+              "Value": "1"
+            }
+          ]
+        },
+        "DeviceType": 17,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Turn ON channel",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayKeysight.PowerSupplayKeysight_ParamData, DeviceCommunicators",
+        "Command": "VOLTage",
+        "DropDown": null,
+        "DeviceType": 17,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Voltage",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayKeysight.PowerSupplayKeysight_ParamData, DeviceCommunicators",
+        "Command": "CURRent",
+        "DropDown": null,
+        "DeviceType": 17,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "Current",
+        "DeviceTypes": 0
+      }      
+    ]
+  },
+  "IsExpanded": false,
+  "IsSelected": false,
+  "Visibility": 0,
+  "Name": "Keysight Power",
+  "DeviceType": 17
+}
