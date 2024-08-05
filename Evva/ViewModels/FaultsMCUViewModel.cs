@@ -17,6 +17,7 @@ using System.Timers;
 using DeviceCommunicators.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using ScriptHandler.Enums;
+using Entities.Enums;
 
 namespace Evva.ViewModels
 {
@@ -305,7 +306,7 @@ namespace Evva.ViewModels
 		{
 			if (Convert.ToInt32(_msbValue) == 0 && Convert.ToInt32(_lsbValue) == 0)
 			{
-				ErrorEvent?.Invoke(SafetyOfficerErrorLevelEnum.NoError);
+				ErrorEvent?.Invoke(ActiveErrorLevelEnum.NoError);
 				return;
 			}
 
@@ -316,7 +317,7 @@ namespace Evva.ViewModels
 			uint errorState = (uval >> 8) & 0xF;
 
 
-			ErrorEvent?.Invoke((SafetyOfficerErrorLevelEnum)errorState);
+			ErrorEvent?.Invoke((ActiveErrorLevelEnum)errorState);
 		}
 
 		private void SetFaultsTimerElapsedEventHandler(object sender, ElapsedEventArgs e)
@@ -424,7 +425,7 @@ namespace Evva.ViewModels
 
 		#region Events
 
-		public event Action<SafetyOfficerErrorLevelEnum> ErrorEvent;
+		public event Action<ActiveErrorLevelEnum> ErrorEvent;
 
 		#endregion Events
 	}

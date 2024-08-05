@@ -289,7 +289,9 @@
             </StackPanel>
 
             <ContentControl Grid.Column="2" Content="{Binding IsMCUError.SafetyOfficerErrorLevel}" 
-                            ContentTemplate="{StaticResource MCUFaultsIndicatorTemplate}"/>
+                            ContentTemplate="{StaticResource MCUFaultsIndicatorTemplate}"
+                            Width="75"
+                            Margin="2"/>
 
             <device_handler_views:CommunicationIndeicatorView DataContext="{Binding DevicesContainer}"
                                                               Grid.Column="4"/>

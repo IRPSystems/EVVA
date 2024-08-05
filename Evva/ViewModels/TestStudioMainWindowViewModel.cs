@@ -45,7 +45,7 @@ namespace Evva.ViewModels
 
 		public class MCUError
 		{
-			public SafetyOfficerErrorLevelEnum SafetyOfficerErrorLevel { get; set; }
+			public ActiveErrorLevelEnum SafetyOfficerErrorLevel { get; set; }
 		}
 
 		#region Properties
@@ -507,7 +507,7 @@ namespace Evva.ViewModels
 					new MonitorType() { Name = "Switch Relay State" },
 				};
 
-				IsMCUError = new MCUError() { SafetyOfficerErrorLevel = SafetyOfficerErrorLevelEnum.None };
+				IsMCUError = new MCUError() { SafetyOfficerErrorLevel = ActiveErrorLevelEnum.None };
 				Faults.ErrorEvent += MCUErrorEventHandler;
 
 				AddMotorPowerOutputToTorqueKistler();
@@ -831,7 +831,7 @@ namespace Evva.ViewModels
 			}
 		}
 
-		private void MCUErrorEventHandler(SafetyOfficerErrorLevelEnum safetyOfficerErrorLevel)
+		private void MCUErrorEventHandler(ActiveErrorLevelEnum safetyOfficerErrorLevel)
 		{
 			IsMCUError.SafetyOfficerErrorLevel = safetyOfficerErrorLevel;
 			OnPropertyChanged(nameof(IsMCUError));
