@@ -13,6 +13,7 @@ using Entities.Enums;
 using Evva.Models;
 using Evva.Views;
 using Microsoft.Win32;
+using ScriptHandler.Enums;
 using ScriptHandler.Services;
 using ScriptHandler.ViewModels;
 using ScriptRunner.Services;
@@ -44,7 +45,7 @@ namespace Evva.ViewModels
 
 		public class MCUError
 		{
-			public bool? IsErrorExit { get; set; }
+			public SafetyOfficerErrorLevelEnum SafetyOfficerErrorLevel { get; set; }
 		}
 
 		#region Properties
@@ -506,7 +507,7 @@ namespace Evva.ViewModels
 					new MonitorType() { Name = "Switch Relay State" },
 				};
 
-				IsMCUError = new MCUError() { IsErrorExit = null };
+				IsMCUError = new MCUError() { SafetyOfficerErrorLevel = SafetyOfficerErrorLevelEnum.None };
 				Faults.ErrorEvent += MCUErrorEventHandler;
 
 				AddMotorPowerOutputToTorqueKistler();
@@ -830,9 +831,9 @@ namespace Evva.ViewModels
 			}
 		}
 
-		private void MCUErrorEventHandler(bool? isMCUError)
+		private void MCUErrorEventHandler(SafetyOfficerErrorLevelEnum safetyOfficerErrorLevel)
 		{
-			IsMCUError.IsErrorExit = isMCUError;
+			IsMCUError.SafetyOfficerErrorLevel = safetyOfficerErrorLevel;
 			OnPropertyChanged(nameof(IsMCUError));
 		}
 

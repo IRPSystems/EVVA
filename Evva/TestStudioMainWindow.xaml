@@ -27,6 +27,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/ButtonWithIcon.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/MCUFaultsIndicatorTemplate.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Evva;component/Resources/NodeSimpleTemplate.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/ScriptHandler;component/Resources/ScriptLogDiagramTemplate.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/ScriptRunner;component/Resources/ScriptStepTemplate.xaml" />
@@ -287,54 +288,8 @@
 
             </StackPanel>
 
-            <Border Name="bd"
-                    Grid.Column="2"
-                    BorderBrush="{DynamicResource MahApps.Brushes.Gray1}" 
-                    BorderThickness="1"
-                    Width="75"
-                    Margin="2">
-
-                <Border.Style>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="Background" Value="Transparent"/>
-
-                        <Style.Triggers>
-
-                            <DataTrigger Binding="{Binding IsMCUError.IsErrorExit}" Value="True">
-                                <Setter Property="Background" Value="Red"/>
-                            </DataTrigger>
-
-                            <DataTrigger Binding="{Binding IsMCUError.IsErrorExit}" Value="False">
-                                <Setter Property="Background" Value="Green"/>
-                            </DataTrigger>
-
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
-
-                <TextBlock Name="tb"
-                           Text="MCU Fault" 
-                           HorizontalAlignment="Center" VerticalAlignment="Center" 
-                           FontWeight="DemiBold"
-                           TextWrapping="Wrap">
-
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Foreground" Value="White"/>
-
-                            <Style.Triggers>
-
-                                <DataTrigger Binding="{Binding IsMCUError.IsErrorExit}" Value="{x:Null}">
-                                    <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray1}"/>
-                                </DataTrigger>
-
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-
-                </TextBlock>
-
-            </Border>
+            <ContentControl Grid.Column="2" Content="{Binding IsMCUError.SafetyOfficerErrorLevel}" 
+                            ContentTemplate="{StaticResource MCUFaultsIndicatorTemplate}"/>
 
             <device_handler_views:CommunicationIndeicatorView DataContext="{Binding DevicesContainer}"
                                                               Grid.Column="4"/>

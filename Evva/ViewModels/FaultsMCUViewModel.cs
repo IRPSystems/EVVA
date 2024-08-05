@@ -16,6 +16,7 @@ using System.Linq;
 using System.Timers;
 using DeviceCommunicators.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
+using ScriptHandler.Enums;
 
 namespace Evva.ViewModels
 {
@@ -157,6 +158,13 @@ namespace Evva.ViewModels
 				mcu_deviceFullData.ParametersRepository.Add(_msbParam, RepositoryPriorityEnum.High, FaultReceived);
 			}
 
+			DeviceParameterData paramFlthi =
+					mcu_Device.MCU_FullList.ToList().Find((p) =>
+												((MCU_ParamData)p).Cmd != null &&
+												((MCU_ParamData)p).Cmd.ToLower() == "flthi");
+			if (paramFlthi != null)
+				mcu_deviceFullData.ParametersRepository.Add(paramFlthi, RepositoryPriorityEnum.High, HighestActiveFaultReceived);
+
 			IsLoaded = true;
 		}
 
@@ -189,6 +197,13 @@ namespace Evva.ViewModels
 			{
 				mcu_deviceFullData.ParametersRepository.Remove(data, FaultReceived);
 			}
+
+			DeviceParameterData paramFlthi =
+					mcu_Device.MCU_FullList.ToList().Find((p) =>
+												((MCU_ParamData)p).Cmd != null &&
+												((MCU_ParamData)p).Cmd.ToLower() == "flthi");
+			if (paramFlthi != null)
+				mcu_deviceFullData.ParametersRepository.Remove(paramFlthi, HighestActiveFaultReceived);
 
 			IsLoaded = false;
 		}
@@ -286,9 +301,26 @@ namespace Evva.ViewModels
 			}
 		}
 
+		private void HighestActiveFaultReceived(DeviceParameterData param, CommunicatorResultEnum result, string errDescription)
+		{
+			if (Convert.ToInt32(_msbValue) == 0 && Convert.ToInt32(_lsbValue) == 0)
+			{
+				ErrorEvent?.Invoke(SafetyOfficerErrorLevelEnum.NoError);
+				return;
+			}
+
+			if (!(param is MCU_ParamData mcuParam))
+				return;
+
+			uint uval = (uint)Convert.ToDouble(mcuParam.Value);
+			uint errorState = (uval >> 8) & 0xF;
+
+
+			ErrorEvent?.Invoke((SafetyOfficerErrorLevelEnum)errorState);
+		}
+
 		private void SetFaultsTimerElapsedEventHandler(object sender, ElapsedEventArgs e)
 		{
-			bool isError = false;
 			if (_lsbValue == null)
 			{
 				for (int i = 0; i < _numOfBitsInFaultParam && i < FaultsList.Count; i++)
@@ -324,8 +356,6 @@ namespace Evva.ViewModels
 				{
 					int bit = (lsbValue >> i) & 1;
 					FaultsList[i].State = (bit == 1);
-
-					isError |= (FaultsList[i].State == true);
 				}
 			}
 
@@ -365,15 +395,10 @@ namespace Evva.ViewModels
 				{
 					int bit = (msbValue >> (i - _numOfBitsInFaultParam)) & 1;
 					FaultsList[i].State = (bit == 1);
-
-					isError |= (FaultsList[i].State == true);
 				}
 			}
 
-			if (_lsbValue == null && _msbValue == null)
-				ErrorEvent?.Invoke(null);
-			else
-				ErrorEvent?.Invoke(isError);
+			
 			
 		}
 
@@ -399,7 +424,7 @@ namespace Evva.ViewModels
 
 		#region Events
 
-		public event Action<bool?> ErrorEvent;
+		public event Action<SafetyOfficerErrorLevelEnum> ErrorEvent;
 
 		#endregion Events
 	}
