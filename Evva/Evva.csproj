@@ -11,7 +11,7 @@
 	  <AssemblyVersion>1.2.58.14</AssemblyVersion>
 	  <FileVersion>1.2.58.14</FileVersion>
 	  <ApplicationIcon>Resources\EVVA ICON.ico</ApplicationIcon>
-	  <Platforms>AnyCPU;x86</Platforms>
+	  <Platforms>AnyCPU;x86;x64</Platforms>
 	  <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
