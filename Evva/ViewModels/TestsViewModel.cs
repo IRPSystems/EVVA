@@ -1,17 +1,11 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Evva.Models;
-using System.Collections.ObjectModel;
-using Entities.Models;
 using System.Windows.Controls;
 using System;
 using System.Windows;
 using DeviceCommunicators.Enums;
-using ScriptHandler.Models;
 using DeviceHandler.Models;
-using Evva.Views;
-using ParamLimitsTest;
 using DeviceCommunicators.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 
@@ -22,7 +16,6 @@ namespace Evva.ViewModels
 		#region Fields	
 
 		private DocingViewModel _docking;
-		private TestParamsLimitViewModel _testParamsLimitViewModel;
 
 		#endregion Fields
 
@@ -44,7 +37,6 @@ namespace Evva.ViewModels
 			SetCommand = new RelayCommand<DeviceParameterData>(Set);
 			GetCommand = new RelayCommand<DeviceParameterData>(Get);
 			EditCommand = new RelayCommand<DeviceParameterData>(Edit);
-			TestParamsLimitCommand = new RelayCommand(TestParamsLimit);
 
 		}
 
@@ -53,16 +45,6 @@ namespace Evva.ViewModels
 
 		#region Methods
 
-		public void CreateTestParamsLimitWindow(
-			DocingViewModel docking)
-		{
-			_docking = docking;
-
-			_testParamsLimitViewModel =
-				new TestParamsLimitViewModel(DevicesContainer);
-			_docking.CreateParamsLimitTester(_testParamsLimitViewModel);
-
-		}
 
 
 
@@ -140,18 +122,13 @@ namespace Evva.ViewModels
 			}
 		}
 
-		private void TestParamsLimit()
-		{
-			_docking.OpenTestParamsLimit();
-		}
 
 		#endregion Methods
 
 		#region Commands
 
 
-		public RelayCommand TestParamsLimitCommand { get; private set; }
-
+		
 		public RelayCommand<DeviceParameterData> SetCommand { get; private set; }
 		public RelayCommand<DeviceParameterData> GetCommand { get; private set; }
 		public RelayCommand<DeviceParameterData> EditCommand { get; private set; }

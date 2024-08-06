@@ -496,7 +496,6 @@ namespace Evva.ViewModels
 					_canMessageSender);
 
 				Run.CreateScriptLoggerWindow();
-				Tests.CreateTestParamsLimitWindow(Docking);
 
 
 				MonitorTypesList = new List<MonitorType>

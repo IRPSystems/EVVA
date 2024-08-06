@@ -4,7 +4,6 @@ using DeviceHandler.Views;
 using DeviceSimulators.ViewModels;
 using DeviceSimulators.Views;
 using Evva.Views;
-using ParamLimitsTest;
 using ScriptHandler.ViewModels;
 using ScriptHandler.Views;
 using ScriptRunner.ViewModels;
@@ -26,7 +25,6 @@ namespace Evva.ViewModels
 		private ContentControl _deviceSimulatorsViewModel;
 		private ContentControl _canMessageSenderViewModel;
 		private ContentControl _mainScriptLogger;
-		private ContentControl _testParamsLimit;
 
 		private ContentControl _monitorRecParam;
 		private ContentControl _monitorSecurityParam;
@@ -206,17 +204,6 @@ namespace Evva.ViewModels
 			Children.Add(_mainScriptLogger);
 		}
 
-		public void CreateParamsLimitTester(
-			TestParamsLimitViewModel testParamsLimitViewModel)
-		{
-			_testParamsLimit = new ContentControl();
-			TestParamsLimitView scriptLog = new TestParamsLimitView() { DataContext = testParamsLimitViewModel };
-			_testParamsLimit.Content = scriptLog;
-			SetHeader(_testParamsLimit, "Test Params Limit");
-			SetState(_testParamsLimit, DockState.Hidden);
-			Children.Add(_testParamsLimit);
-		}
-
 		private void SetFloatWindow(ContentControl control)
 		{
 			SetSizetoContentInDock(control, true);
@@ -257,13 +244,6 @@ namespace Evva.ViewModels
 			SetState(_mainScriptLogger, DockState.Dock);
 		}
 
-		public void OpenTestParamsLimit()
-		{
-			SetFloatingWindowRect(
-				_testParamsLimit, 
-				new System.Windows.Rect(new System.Windows.Size(1100, 1000)));
-			SetState(_testParamsLimit, DockState.Float);
-		}
 
 		public void OpenSetupSelection()
 		{

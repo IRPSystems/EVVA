@@ -1,6 +1,5 @@
 ﻿using Controls.Views;
 using ControlzEx.Theming;
-using ParamLimitsTest;
 using Services.Services;
 using System.Windows;
 using System.Windows.Threading;
