@@ -442,6 +442,17 @@
         "Units": null,
         "Value": null,
         "DeviceType": 9
+      },
+      {
+        "$type": "DeviceCommunicators.NI_6002.NI6002_ParamData, DeviceCommunicators",
+        "Io_port": 0,
+        "Status_paramter": "R",
+        "command_to_device": "Read Anolog input current",
+        "DropDown": null,
+        "Name": "Read Anolog input current",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 9
       }
     ]
   },
