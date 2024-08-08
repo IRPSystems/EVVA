@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DeviceCommunicators.Models;
+using DeviceCommunicators.NumatoGPIO;
 using DeviceCommunicators.PowerSupplayEA;
 using DeviceCommunicators.Services;
 using DeviceHandler.Models;

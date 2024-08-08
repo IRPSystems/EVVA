@@ -176,7 +176,7 @@ namespace Evva.ViewModels
 			SetState(_switchRelayState, DockState.Hidden);
 			Children.Add(_switchRelayState);
 
-			_setupSelection = new ContentControl();
+            _setupSelection = new ContentControl();
 			SetupSelectionView setupSelectionView = new SetupSelectionView() { DataContext = setupSelectionVM };
 			_setupSelection.Content = setupSelectionView;
 			SetHeader(_setupSelection, "Setup Selection");
