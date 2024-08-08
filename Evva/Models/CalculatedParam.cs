@@ -56,7 +56,8 @@ namespace Evva.Models
 
 					_scriptStepGetParamValue.Parameter = parameterData;
 					_scriptStepGetParamValue.Communicator = device.DeviceCommunicator;
-					_scriptStepGetParamValue.SendAndReceive();
+					EOLStepSummeryData eolStepSummeryData;
+					_scriptStepGetParamValue.SendAndReceive(out eolStepSummeryData);
 
 					if (_scriptStepGetParamValue.Parameter.Value == null)
 					{

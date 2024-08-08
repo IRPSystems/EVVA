@@ -9,31 +9,153 @@
         "$type": "DeviceCommunicators.NumatoGPIO.NumatoGPIO_ParamData, DeviceCommunicators",
         "Io_port": 0,
         "Cmd": ":gpio set",
-        "DropDown": null,
         "Name": "Set IO",
         "Units": null,
         "Value": null,
-        "DeviceType": 21
+        "DeviceType": 21,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO0",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO1",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO2",
+              "Value": "2"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO3",
+              "Value": "3"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO4",
+              "Value": "4"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO5",
+              "Value": "5"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO6",
+              "Value": "6"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO7",
+              "Value": "7"
+            }
+          ]
+        }
       },
       {
         "$type": "DeviceCommunicators.NumatoGPIO.NumatoGPIO_ParamData, DeviceCommunicators",
         "Io_port": 0,
         "Cmd": ":gpio read",
-        "DropDown": null,
         "Name": "Read IO",
         "Units": null,
         "Value": null,
-        "DeviceType": 21
+        "DeviceType": 21,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO0",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO1",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO2",
+              "Value": "2"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO3",
+              "Value": "3"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO4",
+              "Value": "4"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO5",
+              "Value": "5"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO6",
+              "Value": "6"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO7",
+              "Value": "7"
+            }
+          ]
+        }
       },
       {
         "$type": "DeviceCommunicators.NumatoGPIO.NumatoGPIO_ParamData, DeviceCommunicators",
         "Io_port": 0,
         "Cmd": ":adc read",
-        "DropDown": null,
         "Name": "Read ADC",
         "Units": null,
         "Value": null,
-        "DeviceType": 21
+        "DeviceType": 21,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO0",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO1",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO2",
+              "Value": "2"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO3",
+              "Value": "3"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO4 (P6)",
+              "Value": "4"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "IO5 (P7)",
+              "Value": "5"
+            }
+          ]
+        }
       }
     ]
   }
