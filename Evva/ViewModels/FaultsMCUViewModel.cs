@@ -18,6 +18,7 @@ using DeviceCommunicators.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using ScriptHandler.Enums;
 using Entities.Enums;
+using Services.Services;
 
 namespace Evva.ViewModels
 {
@@ -304,20 +305,27 @@ namespace Evva.ViewModels
 
 		private void HighestActiveFaultReceived(DeviceParameterData param, CommunicatorResultEnum result, string errDescription)
 		{
-			if (Convert.ToInt32(_msbValue) == 0 && Convert.ToInt32(_lsbValue) == 0)
+			try
 			{
-				ErrorEvent?.Invoke(ActiveErrorLevelEnum.NoError);
-				return;
+				if (Convert.ToInt32(_msbValue) == 0 && Convert.ToInt32(_lsbValue) == 0)
+				{
+					ErrorEvent?.Invoke(ActiveErrorLevelEnum.NoError);
+					return;
+				}
+
+				if (!(param is MCU_ParamData mcuParam))
+					return;
+
+				uint uval = (uint)Convert.ToDouble(mcuParam.Value);
+				uint errorState = (uval >> 8) & 0xF;
+
+
+				ErrorEvent?.Invoke((ActiveErrorLevelEnum)errorState);
 			}
-
-			if (!(param is MCU_ParamData mcuParam))
-				return;
-
-			uint uval = (uint)Convert.ToDouble(mcuParam.Value);
-			uint errorState = (uval >> 8) & 0xF;
-
-
-			ErrorEvent?.Invoke((ActiveErrorLevelEnum)errorState);
+			catch (Exception ex)
+			{
+				LoggerService.Error(this, "Failed to get Highest Active Fault", ex);
+			}
 		}
 
 		private void SetFaultsTimerElapsedEventHandler(object sender, ElapsedEventArgs e)
