@@ -40,12 +40,12 @@ namespace Evva.ViewModels
 			EvvaUserData EvvaUserData)
 		{
 			_EvvaUserData = EvvaUserData;
-			Param_defaultsPath = _EvvaUserData.MCUJsonPath;
-			Param_defaultsB2BPath = _EvvaUserData.MCUB2BJsonPath;
-			DynoCommunicationPath = _EvvaUserData.DynoCommunicationPath;
-			NI6002CommunicationPath = _EvvaUserData.NI6002CommunicationPath;
+			Param_defaultsPath = _EvvaUserData.DeviceSetupUserData.MCUJsonPath;
+			Param_defaultsB2BPath = _EvvaUserData.DeviceSetupUserData.MCUB2BJsonPath;
+			DynoCommunicationPath = _EvvaUserData.DeviceSetupUserData.DynoCommunicationPath;
+			NI6002CommunicationPath = _EvvaUserData.DeviceSetupUserData.NI6002CommunicationPath;
 
-			YokoConfigFilePath = _EvvaUserData.YokoConfigFilePath;
+			YokoConfigFilePath = _EvvaUserData.DeviceSetupUserData.YokoConfigFilePath;
 
 			BrowseMCUJsonCommand = new RelayCommand(BrowseMCUJson);
 			BrowseMCUB2BJsonCommand = new RelayCommand(BrowseMCUB2BJson);
@@ -156,22 +156,22 @@ namespace Evva.ViewModels
 		{
 			SETTINGS_UPDATEDMessage settings = new SETTINGS_UPDATEDMessage();
 
-			if (_EvvaUserData.MCUJsonPath != Param_defaultsPath)
+			if (_EvvaUserData.DeviceSetupUserData.MCUJsonPath != Param_defaultsPath)
 				settings.IsMCUJsonPathChanged = true;
 
-			if (_EvvaUserData.MCUB2BJsonPath != Param_defaultsB2BPath)
+			if (_EvvaUserData.DeviceSetupUserData.MCUB2BJsonPath != Param_defaultsB2BPath)
 				settings.IsMCUB2BJsonPathChanged = true;
 
-			if (_EvvaUserData.DynoCommunicationPath != DynoCommunicationPath)
+			if (_EvvaUserData.DeviceSetupUserData.DynoCommunicationPath != DynoCommunicationPath)
 				settings.IsDynoJsonPathChanged = true;
 
-			if (_EvvaUserData.NI6002CommunicationPath != NI6002CommunicationPath)
+			if (_EvvaUserData.DeviceSetupUserData.NI6002CommunicationPath != NI6002CommunicationPath)
 				settings.IsNI6002JsonPathChanged = true;
 
-			_EvvaUserData.MCUB2BJsonPath = Param_defaultsB2BPath;
-			_EvvaUserData.MCUJsonPath = Param_defaultsPath;
-			_EvvaUserData.DynoCommunicationPath = DynoCommunicationPath;
-			_EvvaUserData.NI6002CommunicationPath = NI6002CommunicationPath;
+			_EvvaUserData.DeviceSetupUserData.MCUB2BJsonPath = Param_defaultsB2BPath;
+			_EvvaUserData.DeviceSetupUserData.MCUJsonPath = Param_defaultsPath;
+			_EvvaUserData.DeviceSetupUserData.DynoCommunicationPath = DynoCommunicationPath;
+			_EvvaUserData.DeviceSetupUserData.NI6002CommunicationPath = NI6002CommunicationPath;
 
 
 			string currentPath = Directory.GetCurrentDirectory();

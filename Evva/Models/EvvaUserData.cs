@@ -1,7 +1,6 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
-using ControlzEx.Theming;
-using Entities.Enums;
+using DeviceHandler.Models;
 using Newtonsoft.Json;
 using ScriptHandler.Models;
 using Services.Services;
@@ -15,17 +14,7 @@ namespace Evva.Models
 	{
 		public bool IsLightTheme { get; set; }
 
-		public string MCUJsonPath { get; set; }
-		public string MCUB2BJsonPath { get; set; }
-		public string DynoCommunicationPath { get; set; }
-		public string NI6002CommunicationPath { get; set; }
-
-		public string YokoConfigFilePath { get; set; }
-
-		public ObservableCollection<DeviceTypesEnum> SetupDevicesList { get; set; }
-
-		public string LastSetupPath { get; set; }
-		public string LastParamsDBCPath { get; set; }
+		public DeviceSetupUserData DeviceSetupUserData { get; set; }
 
 		public int AcquisitionRate { get; set; }
 
@@ -64,26 +53,29 @@ namespace Evva.Models
 			if(evvaUserData.ScriptUserData == null)
 				evvaUserData.ScriptUserData = new ScriptHandler.Models.ScriptUserData();
 
+			if(evvaUserData.DeviceSetupUserData == null)
+				evvaUserData.DeviceSetupUserData = new DeviceSetupUserData();
+
 			string errorDesc = string.Empty;
-			if (File.Exists(evvaUserData.DynoCommunicationPath) == false)
+			if (File.Exists(evvaUserData.DeviceSetupUserData.DynoCommunicationPath) == false)
 			{
-				errorDesc += "The path \"" + evvaUserData.DynoCommunicationPath + "\" was not found.\r\n\r\n";
-				evvaUserData.DynoCommunicationPath = "Data\\Device Communications\\Dyno Communication.json";
+				errorDesc += "The path \"" + evvaUserData.DeviceSetupUserData.DynoCommunicationPath + "\" was not found.\r\n\r\n";
+				evvaUserData.DeviceSetupUserData.DynoCommunicationPath = "Data\\Device Communications\\Dyno Communication.json";
 			}
-			if (File.Exists(evvaUserData.MCUJsonPath) == false)
+			if (File.Exists(evvaUserData.DeviceSetupUserData.MCUJsonPath) == false)
 			{
-				errorDesc += "The path \"" + evvaUserData.MCUJsonPath + "\" was not found.\r\n\r\n";
-				evvaUserData.MCUJsonPath = "Data\\Device Communications\\param_defaults.json";
+				errorDesc += "The path \"" + evvaUserData.DeviceSetupUserData.MCUJsonPath + "\" was not found.\r\n\r\n";
+				evvaUserData.DeviceSetupUserData.MCUJsonPath = "Data\\Device Communications\\param_defaults.json";
 			}
-			if (File.Exists(evvaUserData.MCUB2BJsonPath) == false)
+			if (File.Exists(evvaUserData.DeviceSetupUserData.MCUB2BJsonPath) == false)
 			{
-				errorDesc += "The path \"" + evvaUserData.MCUB2BJsonPath + "\" was not found.\r\n\r\n";
-				evvaUserData.MCUB2BJsonPath = "Data\\Device Communications\\param_defaults.json";
+				errorDesc += "The path \"" + evvaUserData.DeviceSetupUserData.MCUB2BJsonPath + "\" was not found.\r\n\r\n";
+				evvaUserData.DeviceSetupUserData.MCUB2BJsonPath = "Data\\Device Communications\\param_defaults.json";
 			}
-			if (File.Exists(evvaUserData.NI6002CommunicationPath) == false)
+			if (File.Exists(evvaUserData.DeviceSetupUserData.NI6002CommunicationPath) == false)
 			{
-				errorDesc += "The path \"" + evvaUserData.NI6002CommunicationPath + "\" was not found.\r\n\r\n";
-				evvaUserData.NI6002CommunicationPath = "Data\\Device Communications\\NI_6002.json";
+				errorDesc += "The path \"" + evvaUserData.DeviceSetupUserData.NI6002CommunicationPath + "\" was not found.\r\n\r\n";
+				evvaUserData.DeviceSetupUserData.NI6002CommunicationPath = "Data\\Device Communications\\NI_6002.json";
 			}
 
 			if (string.IsNullOrEmpty(errorDesc) == false)

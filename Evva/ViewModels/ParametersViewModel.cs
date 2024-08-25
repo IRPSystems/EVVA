@@ -70,7 +70,7 @@ namespace Evva.ViewModels
 
 		private void LoadDBCFile()
 		{
-			string initDir = Path.GetDirectoryName(_evvaUserData.LastParamsDBCPath);
+			string initDir = Path.GetDirectoryName(_evvaUserData.DeviceSetupUserData.LastParamsDBCPath);
 			if (string.IsNullOrEmpty(initDir))
 				initDir = "";
 			if (Directory.Exists(initDir) == false)
@@ -82,7 +82,7 @@ namespace Evva.ViewModels
 			if (result != true)
 				return;
 
-			_evvaUserData.LastParamsDBCPath = openFileDialog.FileName;
+			_evvaUserData.DeviceSetupUserData.LastParamsDBCPath = openFileDialog.FileName;
 
 			DBC_DeviceData dbcDevice = null;
 			if (_devicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.DBC) == false)

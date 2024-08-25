@@ -3,18 +3,15 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DeviceCommunicators.Models;
-using DeviceCommunicators.NumatoGPIO;
 using DeviceCommunicators.PowerSupplayEA;
 using DeviceCommunicators.Services;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using DeviceHandler.ViewModels;
+using DeviceHandler.Views;
 using DeviceSimulators.ViewModels;
 using Entities.Enums;
 using Evva.Models;
-using Evva.Views;
-using Microsoft.Win32;
-using ScriptHandler.Enums;
 using ScriptHandler.Services;
 using ScriptHandler.ViewModels;
 using ScriptRunner.Services;
@@ -363,14 +360,14 @@ namespace Evva.ViewModels
 
 				LoadEvvaUserData();
 
-				if (string.IsNullOrEmpty(EvvaUserData.MCUJsonPath))
-					EvvaUserData.MCUJsonPath = @"Data\Device Communications\param_defaults.json";
-				if (string.IsNullOrEmpty(EvvaUserData.MCUB2BJsonPath))
-					EvvaUserData.MCUB2BJsonPath = @"Data\Device Communications\param_defaults.json";
-				if (string.IsNullOrEmpty(EvvaUserData.DynoCommunicationPath))
-					EvvaUserData.DynoCommunicationPath = @"Data\Device Communications\Dyno Communication.json";
-				if (string.IsNullOrEmpty(EvvaUserData.NI6002CommunicationPath))
-					EvvaUserData.NI6002CommunicationPath = @"Data\Device Communications\NI_6002.json";
+				if (string.IsNullOrEmpty(EvvaUserData.DeviceSetupUserData.MCUJsonPath))
+					EvvaUserData.DeviceSetupUserData.MCUJsonPath = @"Data\Device Communications\param_defaults.json";
+				if (string.IsNullOrEmpty(EvvaUserData.DeviceSetupUserData.MCUB2BJsonPath))
+					EvvaUserData.DeviceSetupUserData.MCUB2BJsonPath = @"Data\Device Communications\param_defaults.json";
+				if (string.IsNullOrEmpty(EvvaUserData.DeviceSetupUserData.DynoCommunicationPath))
+					EvvaUserData.DeviceSetupUserData.DynoCommunicationPath = @"Data\Device Communications\Dyno Communication.json";
+				if (string.IsNullOrEmpty(EvvaUserData.DeviceSetupUserData.NI6002CommunicationPath))
+					EvvaUserData.DeviceSetupUserData.NI6002CommunicationPath = @"Data\Device Communications\NI_6002.json";
 
 				
 
@@ -378,7 +375,7 @@ namespace Evva.ViewModels
 
 				_readDevicesFile = new ReadDevicesFileService();
 				_setupSelectionVM =
-					new SetupSelectionViewModel(EvvaUserData, _readDevicesFile);
+					new SetupSelectionViewModel(EvvaUserData.DeviceSetupUserData, _readDevicesFile);
 				SetupSelectionWindowView setupSelectionView = new SetupSelectionWindowView();
 				setupSelectionView.SetDataContext(_setupSelectionVM);
 				bool? resutl = setupSelectionView.ShowDialog();
@@ -547,7 +544,7 @@ namespace Evva.ViewModels
 					UpdateMCUJson(
 						"MCU",
 						DeviceTypesEnum.MCU,
-						EvvaUserData.MCUJsonPath);
+						EvvaUserData.DeviceSetupUserData.MCUJsonPath);
 				}
 			}
 
@@ -558,13 +555,13 @@ namespace Evva.ViewModels
 					UpdateMCUJson(
 						"MCU - B2B",
 						DeviceTypesEnum.MCU_B2B,
-						EvvaUserData.MCUB2BJsonPath);
+						EvvaUserData.DeviceSetupUserData.MCUB2BJsonPath);
 				}
 			}
 
 			if (e.IsDynoJsonPathChanged && DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.Dyno))
 			{
-				string dynoPath = Path.Combine(EvvaUserData.DynoCommunicationPath, "Dyno Communication.json");
+				string dynoPath = Path.Combine(EvvaUserData.DeviceSetupUserData.DynoCommunicationPath, "Dyno Communication.json");
 				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 				_readDevicesFile.ReadFromJson(
 					"Data\\Device Communications",
@@ -596,7 +593,7 @@ namespace Evva.ViewModels
 				ObservableCollection<DeviceData> devicesList = new ObservableCollection<DeviceData>();
 				_readDevicesFile.ReadFromJson(
 					"Data\\Device Communications",
-					EvvaUserData.NI6002CommunicationPath,
+					EvvaUserData.DeviceSetupUserData.NI6002CommunicationPath,
 					devicesList);
 
 				if(devicesList.Count == 0)
