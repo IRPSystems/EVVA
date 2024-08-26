@@ -76,7 +76,7 @@
         "Io_port": 0,
         "portLine": 2,
         "Status_paramter": "Rw",
-        "command_to_device": "Digital Port",
+        "command_to_device": "Digital output",
         "DropDown": null,
         "Name": "Digital Port 0 port output 2",
         "Units": null,
