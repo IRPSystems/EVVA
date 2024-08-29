@@ -89,7 +89,7 @@ namespace Evva.Models
 			if (string.IsNullOrEmpty(errorDesc) == false)
 			{
 				errorDesc += "The default paths will be used";
-				LoggerService.Error(evvaUserData, errorDesc, "Error");
+				LoggerService.Error(evvaUserData, errorDesc);
 			}
 
 
