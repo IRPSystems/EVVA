@@ -51,7 +51,7 @@ namespace Evva.ViewModels
 		//public ObservableCollection<DeviceFullData> DevicesList { get; set; }
 		public DevicesContainer DevicesContainer { get; set; }
 
-		public Visibility SilentRunVisibility { get; set; }
+		public Visibility DebugControlVisibility { get; set; }
 
 		public SettingsViewModel AppSettings { get; set; }
 		public TestsViewModel Tests { get; set; }
@@ -71,7 +71,6 @@ namespace Evva.ViewModels
 		public List<MonitorType> MonitorTypesList { get; set; }
 
 
-		public Visibility TestsVisibility { get; set; }
 		public Visibility EAPSRampupEnableVisibility { get; set; }
 
 		public string Version { get; set; }
@@ -400,15 +399,12 @@ namespace Evva.ViewModels
 				CommunicationSettings = new CommunicationViewModel(DevicesContainer);
 
 #if DEBUG
-				TestsVisibility = Visibility.Visible;
-				SilentRunVisibility = Visibility.Visible;
+				DebugControlVisibility = Visibility.Visible;
 #else
-				TestsVisibility = Visibility.Collapsed;
-				SilentRunVisibility = Visibility.Collapsed;
+				DebugControlVisibility = Visibility.Collapsed;
 #endif
 
-				TestsVisibility = Visibility.Visible;
-
+				
 				_canMessageSender = new CANMessageSenderViewModel(DevicesContainer, EvvaUserData.ScriptUserData);
 
 
