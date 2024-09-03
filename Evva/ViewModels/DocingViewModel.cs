@@ -126,10 +126,12 @@ namespace Evva.ViewModels
 			CANMessageSenderView _canMessageSenderView = new CANMessageSenderView() { DataContext = canMessageSenderViewModel };
 			_canMessageSenderViewModel.Content = _canMessageSenderView;
 			SetHeader(_canMessageSenderViewModel, "CAN Message Sender");
-			SetFloatWindow(_canMessageSenderViewModel);
+			//SetFloatWindow(_canMessageSenderViewModel);
 			Children.Add(_canMessageSenderViewModel);
+			SetState(_canMessageSenderViewModel, DockState.Hidden);
 			SetSizetoContentInFloat(_canMessageSenderViewModel, false);
-			SetFloatWindowSize(_canMessageSenderView, new System.Windows.Size(700, 500));
+			SetDesiredWidthInFloatingMode(_canMessageSenderViewModel, 900);
+			SetDesiredHeightInFloatingMode(_canMessageSenderViewModel, 500);
 
 
 
