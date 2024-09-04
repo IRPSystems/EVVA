@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DeviceCommunicators.MCU;
 using DeviceCommunicators.Models;
 using DeviceCommunicators.PowerSupplayEA;
 using DeviceCommunicators.Services;
@@ -11,6 +12,7 @@ using DeviceHandler.ViewModels;
 using DeviceHandler.Views;
 using DeviceSimulators.ViewModels;
 using Entities.Enums;
+using Entities.Models;
 using Evva.Models;
 using ScriptHandler.Services;
 using ScriptHandler.ViewModels;
@@ -218,31 +220,103 @@ namespace Evva.ViewModels
 
 		private void AddJson()
 		{
-			//DeviceData device = new DeviceData()
+			//MCU_DeviceData device = new MCU_DeviceData("ATE", DeviceTypesEnum.ATE);
+
+			//device.MCU_FullList = new ObservableCollection<DeviceParameterData>()
 			//{
-			//	Name = "Scope KeySight",
-			//	DeviceType = DeviceTypesEnum.KeySight,
+			//	new ATE_ParamData() { Name = "ATE Mode", Cmd = "ate_mode", DeviceType = DeviceTypesEnum.ATE, Save = true },
+			//	new ATE_ParamData() { Name = "ATE Done", Cmd = "ate_done", DeviceType = DeviceTypesEnum.ATE, Save = true },
+			//	new ATE_ParamData() 
+			//	{ 
+			//		Name = "ATE Set", Cmd = "ate_set", DeviceType = DeviceTypesEnum.ATE, Save = true,
+			//		ATECommand = new List<Entities.Models.DropDownParamData>()
+			//		{						
+			//			new DropDownParamData() { Name = "ATE_GET_Vbus", Value = "0" },
+			//			new DropDownParamData() { Name = "ATE_GET_Meas_5V",Value = "1"},
+			//			new DropDownParamData() {Name = "ATE_GET_Vsw",Value = "2"},
+			//			new DropDownParamData() {Name = "ATE_GET_BoardTemp1",Value = "3"},
+			//			new DropDownParamData()  {Name = "ATE_GET_BoardTemp2",Value = "4"},
+			//			new DropDownParamData() {Name = "ATE_GET_PhaseU",Value = "5"},
+			//			new DropDownParamData()  {Name = "ATE_GET_PhaseV",Value = "6"},
+			//			new DropDownParamData()  {Name = "ATE_GET_PhaseW",Value = "7"},
+			//			new DropDownParamData() {Name = "ATE_GET_AqbA",Value = "8"},
+			//			new DropDownParamData() {Name = "ATE_GET_AqbB",Value = "9"},
+			//			new DropDownParamData()  {Name = "ATE_GET_AqbI",Value = "10"},
+			//			new DropDownParamData()  {Name = "ATE_GET_Bus_Current",Value = "11"},
+			//			new DropDownParamData()  {Name = "ATE_GET_CoolingTemp",Value = "12"},
+			//			new DropDownParamData()   {Name = "ATE_GET_MotorTemp1",Value = "13"},
+			//			new DropDownParamData()  {Name = "ATE_GET_MotorTemp2",Value = "14"},
+			//			new DropDownParamData()  {Name = "ATE_GET_SerialNumber",Value = "15"},
+			//			new DropDownParamData()  {Name = "ATE_GET_GdGood",Value = "16"},
+			//			new DropDownParamData()   {Name = "ATE_GET_CurrentUmV",Value = "17"},
+			//			new DropDownParamData()   {Name = "ATE_GET_CurrentWmV",Value = "18"},
+			//			new DropDownParamData()  {Name = "ATE_GET_BusCurrentMv",Value = "19"},
+			//			new DropDownParamData()  {Name = "ATE_GET_DigIn1",Value = "20"},
+			//			new DropDownParamData()   {Name = "ATE_GET_DigIn2",Value = "21"},
+			//			new DropDownParamData()   {Name = "ATE_GET_DigIn3",Value = "22"},
+			//			new DropDownParamData()  {Name = "ATE_GET_DigIn4",Value = "23"},
+			//			new DropDownParamData()   {Name = "ATE_GET_SafeMeasure_IDAC1",Value = "24"},
+			//			new DropDownParamData()  {Name = "ATE_GET_WatchdogCounter",Value = "25"},
+			//			new DropDownParamData()   {Name = "ATE_GET_EolFlagPass",Value = "26"}
+			//		}
+			//	},
+
+			//	new ATE_ParamData() 
+			//	{ 
+			//		Name = "ATE Get", Cmd = "ate_get", DeviceType = DeviceTypesEnum.ATE, Save = true,
+			//		ATECommand = new List<Entities.Models.DropDownParamData>()
+			//		{
+			//			new DropDownParamData() { Name = "ATE_GET_Vbus", Value = "0" },
+			//			new DropDownParamData() { Name = "ATE_GET_Meas_5V",Value = "1"},
+			//			new DropDownParamData() {Name = "ATE_GET_Vsw",Value = "2"},
+			//			new DropDownParamData() {Name = "ATE_GET_BoardTemp1",Value = "3"},
+			//			new DropDownParamData()  {Name = "ATE_GET_BoardTemp2",Value = "4"},
+			//			new DropDownParamData() {Name = "ATE_GET_PhaseU",Value = "5"},
+			//			new DropDownParamData()  {Name = "ATE_GET_PhaseV",Value = "6"},
+			//			new DropDownParamData()  {Name = "ATE_GET_PhaseW",Value = "7"},
+			//			new DropDownParamData() {Name = "ATE_GET_AqbA",Value = "8"},
+			//			new DropDownParamData() {Name = "ATE_GET_AqbB",Value = "9"},
+			//			new DropDownParamData()  {Name = "ATE_GET_AqbI",Value = "10"},
+			//			new DropDownParamData()  {Name = "ATE_GET_Bus_Current",Value = "11"},
+			//			new DropDownParamData()  {Name = "ATE_GET_CoolingTemp",Value = "12"},
+			//			new DropDownParamData()   {Name = "ATE_GET_MotorTemp1",Value = "13"},
+			//			new DropDownParamData()  {Name = "ATE_GET_MotorTemp2",Value = "14"},
+			//			new DropDownParamData()  {Name = "ATE_GET_SerialNumber",Value = "15"},
+			//			new DropDownParamData()  {Name = "ATE_GET_GdGood",Value = "16"},
+			//			new DropDownParamData()   {Name = "ATE_GET_CurrentUmV",Value = "17"},
+			//			new DropDownParamData()   {Name = "ATE_GET_CurrentWmV",Value = "18"},
+			//			new DropDownParamData()  {Name = "ATE_GET_BusCurrentMv",Value = "19"},
+			//			new DropDownParamData()  {Name = "ATE_GET_DigIn1",Value = "20"},
+			//			new DropDownParamData()   {Name = "ATE_GET_DigIn2",Value = "21"},
+			//			new DropDownParamData()   {Name = "ATE_GET_DigIn3",Value = "22"},
+			//			new DropDownParamData()  {Name = "ATE_GET_DigIn4",Value = "23"},
+			//			new DropDownParamData()   {Name = "ATE_GET_SafeMeasure_IDAC1",Value = "24"},
+			//			new DropDownParamData()  {Name = "ATE_GET_WatchdogCounter",Value = "25"},
+			//			new DropDownParamData()   {Name = "ATE_GET_EolFlagPass",Value = "26"}
+			//		}
+			//	},
 			//};
 
-			//device.ParemetersList = new ObservableCollection<DeviceParameterData>()
+			//ParamGroup paramGroup = new ParamGroup()
 			//{
-			//	new Scope_KeySight_ParamData() { Name = "DC RMS N CYcle", Command = ":MEASure:VRMS CYCLe,DC,", DeviceType = DeviceTypesEnum.KeySight },
-			//	new Scope_KeySight_ParamData() { Name = "DC RMS Full Screen", Command = ":MEASure:VRMS DISPlay,DC,", DeviceType = DeviceTypesEnum.KeySight },
-			//	new Scope_KeySight_ParamData() { Name = "AC RMS N CYcle", Command = ":MEASure:VRMS CYCLe,AC,", DeviceType = DeviceTypesEnum.KeySight },
-			//	new Scope_KeySight_ParamData() { Name = "AC RMS N Full Screen", Command = ":MEASure:VRMS DISPlay,AC,", DeviceType = DeviceTypesEnum.KeySight },
-			//	new Scope_KeySight_ParamData() { Name = "Pk-pk", Command = ":MEASure:VPP ", DeviceType = DeviceTypesEnum.KeySight },
-			//	new Scope_KeySight_ParamData() { Name = "Amplitude", Command = ":MEASure:VAMPlitude ", DeviceType = DeviceTypesEnum.KeySight },
-			//	new Scope_KeySight_ParamData() { Name = "TOP", Command = ":MEASure:VTOP ", DeviceType = DeviceTypesEnum.KeySight },
-			//	new Scope_KeySight_ParamData() { Name = "Average N Cycle", Command = ":MEASure:VAVerage CYCLe,", DeviceType = DeviceTypesEnum.KeySight },
-			//	new Scope_KeySight_ParamData() { Name = "Average Full Screen", Command = ":MEASure:VAVerage DISPlay,", DeviceType = DeviceTypesEnum.KeySight },
+			//	GroupName = "ATE",
+			//	GroupDescription = "Group of the ATE parameters",
+			//	GroupType = GroupType.ATE,
+			//	ParamList = new ObservableCollection<MCU_ParamData>()
 			//};
 
+			//foreach (var param in device.MCU_FullList)
+			//{
+			//	paramGroup.ParamList.Add((MCU_ParamData)param);
+			//}
+
+			//device.MCU_GroupList = new ObservableCollection<ParamGroup> { paramGroup };
 
 			//Newtonsoft.Json.JsonSerializerSettings settings = new Newtonsoft.Json.JsonSerializerSettings();
 			//settings.Formatting = Newtonsoft.Json.Formatting.Indented;
 			//settings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All;
 			//var sz = Newtonsoft.Json.JsonConvert.SerializeObject(device, settings);
-			//File.WriteAllText(@"C:\Projects\Evva\Evva\Data\Device Communications\Scope KeySight.json", sz);
+			//File.WriteAllText(@"C:\Projects\Evva\Evva\Data\Device Communications\ATE.json", sz);
 		}
 
 		private void Settings()
