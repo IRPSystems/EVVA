@@ -27,6 +27,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace Evva.ViewModels
 {
@@ -123,6 +124,8 @@ namespace Evva.ViewModels
 		private FlashingHandler _flashingHandler;
 
 		public CANMessageSenderViewModel _canMessageSender { get; set; }
+
+		private MCU_DeviceData _deviceData_ATE;
 
 		#endregion Fields
 
@@ -717,15 +720,21 @@ namespace Evva.ViewModels
 				return;
 			}
 
+
+			MCU_DeviceData mcuDevice = devicesList[0] as MCU_DeviceData;
+			mcuDevice.MCU_GroupList.Add(_deviceData_ATE.MCU_GroupList[0]);
+			foreach (var param in _deviceData_ATE.MCU_FullList)
+				mcuDevice.MCU_FullList.Add(param);
+
 			DeviceFullData deviceData = DevicesContainer.TypeToDevicesFullData[type];
 			int index = DevicesContainer.DevicesList.IndexOf(deviceData.Device);
 			if (index >= 0)
 			{
-				DevicesContainer.DevicesList[index] = devicesList[0] as DeviceData;
+				DevicesContainer.DevicesList[index] = devicesList[0];
 			}
 
 			devicesList[0].Name = deviceData.Device.Name;
-			deviceData.Device = devicesList[0] as DeviceData;
+			deviceData.Device = devicesList[0];
 
 		}
 
@@ -823,6 +832,27 @@ namespace Evva.ViewModels
 			{
 				ObservableCollection<DeviceData> deviceList = _setupSelectionVM.DevicesList;
 
+				#region Get the ATE device
+				string path = Directory.GetCurrentDirectory();
+				path = Path.Combine(path, @"Data\Device Communications\ATE.json");
+
+				ObservableCollection<DeviceData> deviceList_ATE = new ObservableCollection<DeviceData>();
+				_readDevicesFile.ReadFromJson("Data\\Device Communications", path, deviceList_ATE);
+				if (deviceList_ATE != null && deviceList_ATE.Count > 0)
+					_deviceData_ATE = deviceList_ATE[0] as MCU_DeviceData;
+
+				foreach (DeviceData deviceData in deviceList)
+				{
+					if (deviceData is MCU_DeviceData mcuDevice && deviceData.DeviceType != DeviceTypesEnum.ATE)
+					{
+						mcuDevice.MCU_GroupList.Add(_deviceData_ATE.MCU_GroupList[0]);
+
+						foreach (var param in _deviceData_ATE.MCU_FullList)
+							mcuDevice.MCU_FullList.Add(param);
+					}
+				}
+
+				#endregion Get the ATE device
 
 				List<DeviceData> newDevices = new List<DeviceData>();
 				foreach (DeviceData deviceData in deviceList)
@@ -889,6 +919,8 @@ namespace Evva.ViewModels
 				{
 					MonitorSecurityParam.Loaded();
 				}
+
+				
 
 				WeakReferenceMessenger.Default.Send(new SETUP_UPDATEDMessage());
 			}
