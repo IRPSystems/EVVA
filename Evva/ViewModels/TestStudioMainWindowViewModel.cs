@@ -826,6 +826,8 @@ namespace Evva.ViewModels
 			Docking.CloseSetupSelection();
 		}
 
+		
+
 		private void UpdateSetup()
 		{
 			try
@@ -837,7 +839,7 @@ namespace Evva.ViewModels
 				path = Path.Combine(path, @"Data\Device Communications\ATE.json");
 
 				ObservableCollection<DeviceData> deviceList_ATE = new ObservableCollection<DeviceData>();
-				_readDevicesFile.ReadFromJson("Data\\Device Communications", path, deviceList_ATE);
+				_readDevicesFile.ReadFromATEJson(path, deviceList_ATE);
 				if (deviceList_ATE != null && deviceList_ATE.Count > 0)
 					_deviceData_ATE = deviceList_ATE[0] as MCU_DeviceData;
 
