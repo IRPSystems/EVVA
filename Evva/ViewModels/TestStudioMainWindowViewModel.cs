@@ -850,7 +850,10 @@ namespace Evva.ViewModels
 						mcuDevice.MCU_GroupList.Add(_deviceData_ATE.MCU_GroupList[0]);
 
 						foreach (var param in _deviceData_ATE.MCU_FullList)
+						{
+							param.Device = mcuDevice;
 							mcuDevice.MCU_FullList.Add(param);
+						}
 					}
 				}
 
