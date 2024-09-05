@@ -17,7 +17,7 @@
       {
         "$type": "DeviceCommunicators.NI_6002.NI6002_ParamData, DeviceCommunicators",
         "Io_port": 0,
-		"potLine": null,
+        "potLine": null,
         "Status_paramter": "Rw",
         "command_to_device": "digital output",
         "DropDown": null,
@@ -29,7 +29,7 @@
       {
         "$type": "DeviceCommunicators.NI_6002.NI6002_ParamData, DeviceCommunicators",
         "Io_port": 0,
-		"potLine": null,
+        "potLine": null,
         "Status_paramter": "Rw",
         "command_to_device": "analog input",
         "DropDown": null,
@@ -41,7 +41,7 @@
       {
         "$type": "DeviceCommunicators.NI_6002.NI6002_ParamData, DeviceCommunicators",
         "Io_port": 0,
-		"potLine": null,
+        "potLine": null,
         "Status_paramter": "Rw",
         "command_to_device": "analog output",
         "DropDown": null,
@@ -53,7 +53,7 @@
       {
         "$type": "DeviceCommunicators.NI_6002.NI6002_ParamData, DeviceCommunicators",
         "Io_port": 0,
-		"potLine": null,
+        "potLine": null,
         "Status_paramter": "Rw",
         "command_to_device": "analog input current",
         "DropDown": null,
@@ -65,7 +65,7 @@
       {
         "$type": "DeviceCommunicators.NI_6002.NI6002_ParamData, DeviceCommunicators",
         "Io_port": 0,
-		"potLine": null,
+        "potLine": null,
         "Status_paramter": "Rw",
         "command_to_device": "digital counter",
         "DropDown": null,
@@ -73,9 +73,10 @@
         "Units": null,
         "Value": null,
         "DeviceType": 9
-      },
+      }
     ]
   },
   "Name": "NI DUCK",
+  "AcquisitionRate": 10,
   "DeviceType": 9
 }

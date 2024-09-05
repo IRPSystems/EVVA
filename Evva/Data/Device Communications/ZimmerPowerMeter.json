@@ -2,6 +2,7 @@
   "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
   "Name": "Zimmer PowerMeter",
   "DeviceType": 18,
+  "AcquisitionRate": 10,
   "ParemetersList": {
     "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
     "$values": [
