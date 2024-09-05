@@ -95,8 +95,22 @@ namespace Evva.ViewModels
 				if (DevicesContainer == null)
 					return;
 
-				foreach(DeviceFullData deviceFullData in DevicesContainer.DevicesFullDataList) 
-				{ 
+
+				if (DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.MCU))
+				{
+					DeviceFullData deviceFullData = DevicesContainer.TypeToDevicesFullData[DeviceTypesEnum.MCU];
+					deviceFullData.ParametersRepository.AcquisitionRate = AcquisitionRate;
+				}
+
+				if (DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.MCU_2))
+				{
+					DeviceFullData deviceFullData = DevicesContainer.TypeToDevicesFullData[DeviceTypesEnum.MCU_2];
+					deviceFullData.ParametersRepository.AcquisitionRate = AcquisitionRate;
+				}
+
+				if (DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.MCU_B2B))
+				{
+					DeviceFullData deviceFullData = DevicesContainer.TypeToDevicesFullData[DeviceTypesEnum.MCU_B2B];
 					deviceFullData.ParametersRepository.AcquisitionRate = AcquisitionRate;
 				}
 			}
