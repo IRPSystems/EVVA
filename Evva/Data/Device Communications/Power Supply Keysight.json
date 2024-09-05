@@ -33,7 +33,7 @@
       },
       {
         "$type": "DeviceCommunicators.PowerSupplayKeysight.PowerSupplayKeysight_ParamData, DeviceCommunicators",
-        "Command": "OUTP:COUP:CHAN",
+        "Command": "INSTrument:NSELect",
         "DropDown": {
           "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
           "$values": [
