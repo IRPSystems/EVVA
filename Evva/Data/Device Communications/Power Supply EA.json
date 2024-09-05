@@ -427,9 +427,7 @@
       }
     ]
   },
-  "IsExpanded": false,
-  "IsSelected": false,
-  "Visibility": 0,
   "Name": "EA Power",
+  "AcquisitionRate": 10,
   "DeviceType": 3
 }

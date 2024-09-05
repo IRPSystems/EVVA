@@ -147,9 +147,7 @@
       }
     ]
   },
-  "IsExpanded": false,
-  "IsSelected": false,
-  "Visibility": 0,
   "Name": "GK Power",
+  "AcquisitionRate": 10,
   "DeviceType": 13
 }

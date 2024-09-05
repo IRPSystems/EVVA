@@ -30,7 +30,7 @@
         "Visibility": 0,
         "Name": "Remote command",
         "DeviceTypes": 0
-      },      
+      },
       {
         "$type": "DeviceCommunicators.PowerSupplayKeysight.PowerSupplayKeysight_ParamData, DeviceCommunicators",
         "Command": "OUTP:COUP:CHAN",
@@ -114,12 +114,10 @@
         "Visibility": 0,
         "Name": "Current",
         "DeviceTypes": 0
-      }      
+      }
     ]
   },
-  "IsExpanded": false,
-  "IsSelected": false,
-  "Visibility": 0,
   "Name": "Keysight Power",
+  "AcquisitionRate": 10,
   "DeviceType": 17
 }

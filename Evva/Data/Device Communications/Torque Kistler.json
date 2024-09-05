@@ -30,5 +30,6 @@
     ]
   },
   "Name": "Torque Kistler",
+  "AcquisitionRate": 10,
   "DeviceType": 5
 }

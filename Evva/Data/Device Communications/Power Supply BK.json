@@ -187,9 +187,7 @@
       }
     ]
   },
-  "IsExpanded": false,
-  "IsSelected": false,
-  "Visibility": 0,
   "Name": "BK Power",
+  "AcquisitionRate": 10,
   "DeviceType": 2
 }

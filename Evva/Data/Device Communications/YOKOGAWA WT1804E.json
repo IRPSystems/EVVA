@@ -286,5 +286,6 @@
     ]
   },
   "Name": "Yokogawa",
+  "AcquisitionRate": 10,
   "DeviceType": 10
 }
