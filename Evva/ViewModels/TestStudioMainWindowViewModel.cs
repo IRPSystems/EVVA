@@ -701,15 +701,16 @@ namespace Evva.ViewModels
 				deviceData.Device = devicesList[0] as DeviceData;
 			}
 
-			if (e.IsMotorCommandsPathChanged)
-			{
-				Run.RunScript.SelectMotor.UpdateMotorList(e.MotorCommandsPath);
-			}
+			// TODO: SafetyOfficer
+			//if (e.IsMotorCommandsPathChanged)
+			//{
+			//	Run.RunScript.SelectMotor.UpdateMotorList(e.MotorCommandsPath);
+			//}
 
-			if (e.IsControllerCommandsPathChanged)
-			{
-				Run.RunScript.SelectMotor.UpdateControllerList(e.ControllerCommandsPath);
-			}
+			//if (e.IsControllerCommandsPathChanged)
+			//{
+			//	Run.RunScript.SelectMotor.UpdateControllerList(e.ControllerCommandsPath);
+			//}
 
 			Docking.CloseSettings();
 

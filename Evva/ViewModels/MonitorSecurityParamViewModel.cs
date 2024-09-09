@@ -59,29 +59,30 @@ namespace Evva.ViewModels
 
 			MonitorParamsList = new ObservableCollection<DeviceParameterData>();
 
-			if (_scriptService.SelectMotor.MotorTypesList != null)
-			{
-				MotorSettingsData firstMotor = _scriptService.SelectMotor.MotorTypesList[0];
-				foreach (ParameterValueData paramValue in firstMotor.StatusParameterValueList)
-				{
-					string parameterName = paramValue.ParameterName.Trim();
-					DeviceParameterData data =
-						mcu_Device.MCU_FullList.ToList().Find((p) => ((MCU_ParamData)p).Cmd == parameterName);
+			// TODO: SafetyOfficer
+			//if (_scriptService.SelectMotor.MotorTypesList != null)
+			//{
+			//	MotorSettingsData firstMotor = _scriptService.SelectMotor.MotorTypesList[0];
+			//	foreach (ParameterValueData paramValue in firstMotor.StatusParameterValueList)
+			//	{
+			//		string parameterName = paramValue.ParameterName.Trim();
+			//		DeviceParameterData data =
+			//			mcu_Device.MCU_FullList.ToList().Find((p) => ((MCU_ParamData)p).Cmd == parameterName);
 
-					if (data != null)
-						MonitorParamsList.Add(data);
-				}
-			}
+			//		if (data != null)
+			//			MonitorParamsList.Add(data);
+			//	}
+			//}
 
-			ControllerSettingsData firstController = _scriptService.SelectMotor.ControllerTypesList[0];
-			foreach (ParameterValueData paramValue in firstController.StatusParameterValueList)
-			{
-				string parameterName = paramValue.ParameterName.Trim();
-				DeviceParameterData data =
-					mcu_Device.MCU_FullList.ToList().Find((p) => ((MCU_ParamData)p).Cmd == paramValue.ParameterName);
-				if(data != null)
-					MonitorParamsList.Add(data);
-			}
+			//ControllerSettingsData firstController = _scriptService.SelectMotor.ControllerTypesList[0];
+			//foreach (ParameterValueData paramValue in firstController.StatusParameterValueList)
+			//{
+			//	string parameterName = paramValue.ParameterName.Trim();
+			//	DeviceParameterData data =
+			//		mcu_Device.MCU_FullList.ToList().Find((p) => ((MCU_ParamData)p).Cmd == paramValue.ParameterName);
+			//	if(data != null)
+			//		MonitorParamsList.Add(data);
+			//}
 		}
 
 		private void SETTINGS_UPDATEDMessageHandler(object sender, SETTINGS_UPDATEDMessage e)
