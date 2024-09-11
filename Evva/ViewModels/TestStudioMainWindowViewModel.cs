@@ -735,11 +735,15 @@ namespace Evva.ViewModels
 				return;
 			}
 
-
+			MCU_DeviceData ateDevice = _deviceData_ATE.Clone() as MCU_DeviceData;
 			MCU_DeviceData mcuDevice = devicesList[0] as MCU_DeviceData;
-			mcuDevice.MCU_GroupList.Add(_deviceData_ATE.MCU_GroupList[0]);
-			foreach (var param in _deviceData_ATE.MCU_FullList)
+			mcuDevice.MCU_GroupList.Add(ateDevice.MCU_GroupList[0]);
+			foreach (var param in ateDevice.MCU_FullList)
+			{
+				param.DeviceType = mcuDevice.DeviceType;
+				param.Device = mcuDevice;
 				mcuDevice.MCU_FullList.Add(param);
+			}
 
 			DeviceFullData deviceData = DevicesContainer.TypeToDevicesFullData[type];
 			int index = DevicesContainer.DevicesList.IndexOf(deviceData.Device);
@@ -862,11 +866,14 @@ namespace Evva.ViewModels
 				{
 					if (deviceData is MCU_DeviceData mcuDevice && deviceData.DeviceType != DeviceTypesEnum.ATE)
 					{
-						mcuDevice.MCU_GroupList.Add(_deviceData_ATE.MCU_GroupList[0]);
+						MCU_DeviceData ateDevice = _deviceData_ATE.Clone() as MCU_DeviceData;
 
-						foreach (var param in _deviceData_ATE.MCU_FullList)
+						mcuDevice.MCU_GroupList.Add(ateDevice.MCU_GroupList[0]);
+
+						foreach (var param in ateDevice.MCU_FullList)
 						{
 							param.Device = mcuDevice;
+							param.DeviceType = mcuDevice.DeviceType;
 							mcuDevice.MCU_FullList.Add(param);
 						}
 					}
