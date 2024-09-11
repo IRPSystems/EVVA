@@ -1,0 +1,3 @@
+Dynamic 6
+Force 15
+
