@@ -6,6 +6,7 @@ using DeviceCommunicators.MCU;
 using DeviceCommunicators.Models;
 using DeviceCommunicators.PowerSupplayEA;
 using DeviceCommunicators.Services;
+using DeviceHandler.Faults;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using DeviceHandler.ViewModels;
@@ -121,6 +122,8 @@ namespace Evva.ViewModels
 
 		public EvvaUserData EvvaUserData { get; set; }
 
+		public ActiveErrorLevelEnum ActiveErrorLevel { get; set; }
+
 		#endregion Properties
 
 		#region Fields
@@ -154,6 +157,7 @@ namespace Evva.ViewModels
 			ClosingCommand = new RelayCommand<CancelEventArgs>(Closing);
 			CommunicationSettingsCommand = new RelayCommand(InitCommunicationSettings);
 			LoadedCommand = new RelayCommand(Loaded);
+			FaultCommand = new RelayCommand(Fault);
 
 			MonitorsDropDownMenuItemCommand = new RelayCommand<string>(MonitorsDropDownMenuItem);
 
@@ -173,7 +177,7 @@ namespace Evva.ViewModels
 			EAPSRampupEnableCommand = new RelayCommand<bool>(EAPSRampupEnable);
 
 
-
+			ActiveErrorLevel = ActiveErrorLevelEnum.None;
 		}
 
 		#endregion Constructor
@@ -542,6 +546,11 @@ namespace Evva.ViewModels
 				{
 					foreach (DeviceFullData deviceFullData in DevicesContainer.DevicesFullDataList)
 					{
+						if(deviceFullData.Device.DeviceType == DeviceTypesEnum.MCU)
+						{
+							deviceFullData.CheckCommunication.FaultEvent += CheckCommunication_FaultEvent;
+						}
+
 						deviceFullData.InitCheckConnection();
 					}
 				}
@@ -556,8 +565,7 @@ namespace Evva.ViewModels
 				AppSettings.SettingsUpdatedEvent += SettingsUpdated;
 
 				Faults = new FaultsMCUViewModel(
-					DevicesContainer,
-					EvvaUserData);
+					DevicesContainer);
 				SwitchRelayState = new SwitchRelayStateViewModel(DevicesContainer);
 
 				DeviceSimulatorsViewModel deviceSimulatorsViewModel =
@@ -592,7 +600,7 @@ namespace Evva.ViewModels
 				};
 
 				IsMCUError = new MCUError() { SafetyOfficerErrorLevel = ActiveErrorLevelEnum.None };
-				Faults.ErrorEvent += MCUErrorEventHandler;
+				//Faults.ErrorEvent += MCUErrorEventHandler;
 
 				AddMotorPowerOutputToTorqueKistler();
 
@@ -612,6 +620,7 @@ namespace Evva.ViewModels
 		}
 
 		
+
 		private void Run_ShowScriptLogDiagramViewEvent()
 		{
 			Docking.OpenLogScript();
@@ -932,10 +941,10 @@ namespace Evva.ViewModels
 				}
 
 
-				if (Faults != null && Faults.IsLoaded)
-				{
-					Faults.Loaded();
-				}
+				//if (Faults != null && Faults.IsLoaded)
+				//{
+				//	Faults.Loaded();
+				//}
 
 				if (MonitorRecParam != null && MonitorRecParam.IsLoaded)
 				{
@@ -994,6 +1003,16 @@ namespace Evva.ViewModels
 				communicator.SetIsUseRampForOnOff(isEAPSRampupEnable);
 		}
 
+		public void Fault()
+		{
+			Docking.OpenMonitorFaults();
+		}
+
+		private void CheckCommunication_FaultEvent(ActiveErrorLevelEnum activeErrorLevel)
+		{
+			ActiveErrorLevel = activeErrorLevel;
+		}
+
 		#endregion Methods
 
 		#region Commands
@@ -1004,6 +1023,8 @@ namespace Evva.ViewModels
 		public RelayCommand<CancelEventArgs> ClosingCommand { get; private set; }
 		public RelayCommand CommunicationSettingsCommand { get; private set; }
 		public RelayCommand LoadedCommand { get; private set; }
+
+		public RelayCommand FaultCommand { get; private set; }
 
 
 		public RelayCommand SetupSelectionCommand { get; private set; }

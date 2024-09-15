@@ -121,7 +121,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="75"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
@@ -289,10 +289,42 @@
 
             </StackPanel>
 
-            <ContentControl Grid.Column="2" Content="{Binding IsMCUError.SafetyOfficerErrorLevel}" 
-                            ContentTemplate="{StaticResource MCUFaultsIndicatorTemplate}"
-                            Width="75"
-                            Margin="2"/>
+            
+            <Button Name="btnFaults" 
+                    Grid.Column="2"
+                    Margin="2"
+                    Content="{Binding ActiveErrorLevel}"
+                    VerticalAlignment="Center"
+                    Height="40"
+                    Command="{Binding FaultCommand}">
+
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Name="brdr" BorderBrush="{DynamicResource MahApps.Brushes.Gray1}"
+                                            BorderThickness="0">
+                                        <ContentControl Content="{TemplateBinding Content}"
+                                                        ContentTemplate="{StaticResource MCUFaultsIndicatorTemplate}"/>
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="brdr" Property="BorderThickness" Value="1"/>
+                                        </Trigger>
+
+
+
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Resources>
+
+            </Button>
 
             <device_handler_views:CommunicationIndeicatorView DataContext="{Binding DevicesContainer}"
                                                               Grid.Column="4"/>
