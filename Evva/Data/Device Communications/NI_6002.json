@@ -38,6 +38,40 @@
         "Value": null,
         "DeviceType": 9
       },
+	  {
+        "$type": "DeviceCommunicators.NI_6002.NI6002_ParamData, DeviceCommunicators",
+        "Io_port": 0,
+        "potLine": null,
+		"ThermistorTypeList" :  
+		{       
+			"$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "None",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "PT1000",
+              "Value": "1"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "PT100",
+              "Value": "2"
+            }
+          ]
+        }, 
+        "DropDown": null,		
+		"Status_paramter": "Rw",
+        "command_to_device": "analog input thermistor",
+        "Name": "Analog Input Thermistor",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 9,
+		"IsThermistorUsed": true,
+      },
       {
         "$type": "DeviceCommunicators.NI_6002.NI6002_ParamData, DeviceCommunicators",
         "Io_port": 0,
