@@ -562,6 +562,7 @@ namespace Evva.ViewModels
 
 				Faults = new FaultsMCUViewModel(
 					DevicesContainer);
+				Faults.Loaded();
 				SwitchRelayState = new SwitchRelayStateViewModel(DevicesContainer);
 
 				DeviceSimulatorsViewModel deviceSimulatorsViewModel =
