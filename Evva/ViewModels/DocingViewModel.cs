@@ -1,4 +1,5 @@
 ﻿using Controls.ViewModels;
+using DeviceHandler.Faults;
 using DeviceHandler.ViewModels;
 using DeviceHandler.Views;
 using DeviceSimulators.ViewModels;
@@ -164,7 +165,7 @@ namespace Evva.ViewModels
 			Children.Add(_monitorSecurityParam);
 
 			_faultsMCU = new ContentControl();
-			FaultsMCUView faultsMCUView = new FaultsMCUView() { DataContext = faultsMCU };
+			FaultsMCUDataView faultsMCUView = new FaultsMCUDataView() { DataContext = faultsMCU };
 			_faultsMCU.Content = faultsMCUView;
 			SetHeader(_faultsMCU, "Faults");
 			SetState(_faultsMCU, DockState.Hidden);
