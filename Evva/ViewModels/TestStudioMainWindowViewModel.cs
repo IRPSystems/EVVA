@@ -13,11 +13,9 @@ using DeviceHandler.ViewModels;
 using DeviceHandler.Views;
 using DeviceSimulators.ViewModels;
 using Entities.Enums;
-using Entities.Models;
 using Evva.Models;
 using ScriptHandler.Services;
 using ScriptHandler.ViewModels;
-using ScriptRunner.Services;
 using ScriptRunner.ViewModels;
 using Services.Services;
 using System;
@@ -28,8 +26,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
-
 namespace Evva.ViewModels
 {
 	public class TestStudioMainWindowViewModel : ObservableObject
@@ -941,10 +937,10 @@ namespace Evva.ViewModels
 				}
 
 
-				//if (Faults != null && Faults.IsLoaded)
-				//{
-				//	Faults.Loaded();
-				//}
+				if (Faults != null && Faults.IsLoaded)
+				{
+					Faults.Loaded();
+				}
 
 				if (MonitorRecParam != null && MonitorRecParam.IsLoaded)
 				{
