@@ -1,0 +1,95 @@
+{
+  "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
+  "Name": "BTM Temp Logger",
+  "DeviceType": 7,
+  "AcquisitionRate": 10,
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 1",
+        "DeviceType": 7,
+        "Channel": 1,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 2",
+        "DeviceType": 7,
+        "Channel": 2,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 3",
+        "DeviceType": 7,
+        "Channel": 3,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 4",
+        "DeviceType": 7,
+        "Channel": 4,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 5",
+        "DeviceType": 7,
+        "Channel": 5,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 6",
+        "DeviceType": 7,
+        "Channel": 6,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 7",
+        "DeviceType": 7,
+        "Channel": 7,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 8",
+        "DeviceType": 7,
+        "Channel": 8,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 9",
+        "DeviceType": 7,
+        "Channel": 9,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 10",
+        "DeviceType": 7,
+        "Channel": 10,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 11",
+        "DeviceType": 7,
+        "Channel": 11,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.BTMTempLogger.BTMTempLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 12",
+        "DeviceType": 7,
+        "Channel": 12,
+        "Units": "°C"
+      }
+    ]
+  }
+}
