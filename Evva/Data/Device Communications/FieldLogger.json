@@ -1,0 +1,67 @@
+{
+  "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
+  "Name": "Field Logger",
+  "DeviceType": 12,
+  "AcquisitionRate": 10,
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.FieldLogger.FieldLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 1",
+        "DeviceType": 12,
+        "Channel": 1,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.FieldLogger.FieldLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 2",
+        "DeviceType": 12,
+        "Channel": 2,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.FieldLogger.FieldLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 3",
+        "DeviceType": 12,
+        "Channel": 3,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.FieldLogger.FieldLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 4",
+        "DeviceType": 12,
+        "Channel": 4,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.FieldLogger.FieldLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 5",
+        "DeviceType": 12,
+        "Channel": 5,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.FieldLogger.FieldLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 6",
+        "DeviceType": 12,
+        "Channel": 6,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.FieldLogger.FieldLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 7",
+        "DeviceType": 12,
+        "Channel": 7,
+        "Units": "°C"
+      },
+      {
+        "$type": "DeviceCommunicators.FieldLogger.FieldLogger_ParamData, DeviceCommunicators",
+        "Name": "Channel 8",
+        "DeviceType": 12,
+        "Channel": 8,
+        "Units": "°C"
+      }
+    ]
+  }
+}
