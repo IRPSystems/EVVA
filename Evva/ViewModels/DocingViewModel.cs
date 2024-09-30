@@ -38,6 +38,7 @@ namespace Evva.ViewModels
 		private ContentControl _run;
 		private ContentControl _recording;
 		private ContentControl _tests;
+		private ContentControl _logger;
 
 		#endregion Fields
 
@@ -148,6 +149,14 @@ namespace Evva.ViewModels
 			RunView runView = new RunView() { DataContext = run };
 			CreateTabbedWindow(runView, "Run", "Design", out _run);
 
+			_logger = new ContentControl();
+			LoggerView loggerView = new LoggerView() { DataContext = run.RunScript.MainScriptLogger };
+			_logger.Content = loggerView;
+			SetHeader(_logger, "Script Logger");
+			SetState(_logger, DockState.Hidden);
+			Children.Add(_logger);
+
+
 
 
 			_monitorRecParam = new ContentControl();
@@ -257,6 +266,10 @@ namespace Evva.ViewModels
 			SetState(_setupSelection, DockState.Hidden);
 		}
 
+		public void OpenScriptLoggerParam()
+		{
+			SetState(_logger, DockState.Dock);
+		}
 
 		public void OpenMonitorRecParam()
 		{

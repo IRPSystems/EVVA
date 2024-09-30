@@ -515,6 +515,7 @@ namespace Evva.ViewModels
 					EvvaUserData.ScriptUserData,
 					_canMessageSender);
 				Run.CreateScriptLogDiagramViewEvent += Run_CreateScriptLogDiagramViewEvent;
+				Run.ShowScriptLoggerViewEvent += Run_ShowScriptLoggerViewEvent;
 				Run.ShowScriptLogDiagramViewEvent += Run_ShowScriptLogDiagramViewEvent;
 
 				MonitorRecParam = new MonitorRecParamViewModel(
@@ -616,7 +617,10 @@ namespace Evva.ViewModels
 			}
 		}
 
-		
+		private void Run_ShowScriptLoggerViewEvent()
+		{
+			Docking.OpenScriptLoggerParam();
+		}
 
 		private void Run_ShowScriptLogDiagramViewEvent()
 		{
