@@ -36,8 +36,8 @@ namespace Evva.ViewModels
 		public void GetMonitorRecParamsList(
 			ObservableCollection<DeviceParameterData> logParametersList)
 		{
-			if (_isRcordingListChanged)
-				UnLoaded();
+			//if (_isRcordingListChanged)
+			//	UnLoaded();
 
 			MonitorParamsList = new ObservableCollection<DeviceParameterData>();
 
@@ -67,8 +67,8 @@ namespace Evva.ViewModels
 				MonitorParamsList.Add(param);
 			}
 
-			if (_isRcordingListChanged)
-				Loaded();
+			//if (_isRcordingListChanged)
+			//	Loaded();
 		}
 
 		
