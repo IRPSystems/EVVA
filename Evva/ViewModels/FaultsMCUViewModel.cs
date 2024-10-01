@@ -18,6 +18,7 @@ using DeviceCommunicators.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using ScriptHandler.Enums;
 using Entities.Enums;
+using Services.Services;
 
 namespace Evva.ViewModels
 {
@@ -313,7 +314,56 @@ namespace Evva.ViewModels
 			if (!(param is MCU_ParamData mcuParam))
 				return;
 
-			uint uval = (uint)Convert.ToDouble(mcuParam.Value);
+			double? dval = 0;
+			if (mcuParam.Value is string str)
+			{
+				if (param is IParamWithDropDown dropDown)
+				{
+					DropDownParamData dd = dropDown.DropDown.Find((i) => i.Name == str);
+					if (dd != null)
+					{
+						double d;
+						bool res1 = double.TryParse(dd.Value, out d);
+						if (res1 == false)
+						{
+							LoggerService.Error(this, $"Received invalid value {mcuParam.Value}");
+							return;
+						}
+
+						dval = d;
+					}
+				}
+
+				if (dval == null)
+				{
+					double d;
+					bool res = double.TryParse(str, out d);
+					if (res == false)
+					{
+						LoggerService.Error(this, $"Received invalid value {mcuParam.Value}");
+						return;
+					}
+
+					dval = d;
+				}
+			}
+			else
+			{
+				double d;
+				bool res = double.TryParse(mcuParam.Value.ToString(), out d);
+				if (res == false)
+				{
+					LoggerService.Error(this, $"Received invalid value {mcuParam.Value}");
+					return;
+				}
+
+				dval = d;
+			}
+
+			if (dval == null)
+				return;
+
+			uint uval = (uint)dval;
 			uint errorState = (uval >> 8) & 0xF;
 
 
