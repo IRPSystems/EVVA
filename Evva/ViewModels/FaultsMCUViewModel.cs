@@ -287,44 +287,70 @@ namespace Evva.ViewModels
 
 		private void FaultReceived(DeviceParameterData param, CommunicatorResultEnum result, string errDescription)
 		{
-			if(result != CommunicatorResultEnum.OK)
+			try
 			{
-				if (param.Name.EndsWith("LSB"))
-					_lsbValue = null;
-				else if (param.Name.EndsWith("MSB"))
-					_msbValue = null;
+				if (result != CommunicatorResultEnum.OK)
+				{
+					if (param.Name.EndsWith("LSB"))
+						_lsbValue = null;
+					else if (param.Name.EndsWith("MSB"))
+						_msbValue = null;
+				}
+				else
+				{
+					if (param.Name.EndsWith("LSB"))
+						_lsbValue = param.Value;
+					else if (param.Name.EndsWith("MSB"))
+						_msbValue = param.Value;
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				if (param.Name.EndsWith("LSB"))
-					_lsbValue = param.Value;
-				else if (param.Name.EndsWith("MSB"))
-					_msbValue = param.Value;
+				LoggerService.Error(this, "Exception on FaultReceived", "Error", ex);
 			}
 		}
 
 		private void HighestActiveFaultReceived(DeviceParameterData param, CommunicatorResultEnum result, string errDescription)
 		{
-			if (Convert.ToInt32(_msbValue) == 0 && Convert.ToInt32(_lsbValue) == 0)
+			try
 			{
-				ErrorEvent?.Invoke(ActiveErrorLevelEnum.NoError);
-				return;
-			}
-
-			if (!(param is MCU_ParamData mcuParam))
-				return;
-
-			double? dval = 0;
-			if (mcuParam.Value is string str)
-			{
-				if (param is IParamWithDropDown dropDown)
+				if (Convert.ToInt32(_msbValue) == 0 && Convert.ToInt32(_lsbValue) == 0)
 				{
-					DropDownParamData dd = dropDown.DropDown.Find((i) => i.Name == str);
-					if (dd != null)
+					ErrorEvent?.Invoke(ActiveErrorLevelEnum.NoError);
+					return;
+				}
+
+				if (!(param is MCU_ParamData mcuParam))
+					return;
+
+				if (mcuParam.Value == null)
+					return;
+
+				double? dval = 0;
+				if (mcuParam.Value is string str)
+				{
+					if (param is IParamWithDropDown dropDown)
+					{
+						DropDownParamData dd = dropDown.DropDown.Find((i) => i.Name == str);
+						if (dd != null)
+						{
+							double d;
+							bool res1 = double.TryParse(dd.Value, out d);
+							if (res1 == false)
+							{
+								LoggerService.Error(this, $"Received invalid value {mcuParam.Value}");
+								return;
+							}
+
+							dval = d;
+						}
+					}
+
+					if (dval == null)
 					{
 						double d;
-						bool res1 = double.TryParse(dd.Value, out d);
-						if (res1 == false)
+						bool res = double.TryParse(str, out d);
+						if (res == false)
 						{
 							LoggerService.Error(this, $"Received invalid value {mcuParam.Value}");
 							return;
@@ -333,11 +359,10 @@ namespace Evva.ViewModels
 						dval = d;
 					}
 				}
-
-				if (dval == null)
+				else
 				{
 					double d;
-					bool res = double.TryParse(str, out d);
+					bool res = double.TryParse(mcuParam.Value.ToString(), out d);
 					if (res == false)
 					{
 						LoggerService.Error(this, $"Received invalid value {mcuParam.Value}");
@@ -346,110 +371,108 @@ namespace Evva.ViewModels
 
 					dval = d;
 				}
-			}
-			else
-			{
-				double d;
-				bool res = double.TryParse(mcuParam.Value.ToString(), out d);
-				if (res == false)
-				{
-					LoggerService.Error(this, $"Received invalid value {mcuParam.Value}");
+
+				if (dval == null)
 					return;
-				}
 
-				dval = d;
+				uint uval = (uint)dval;
+				uint errorState = (uval >> 8) & 0xF;
+
+
+				ErrorEvent?.Invoke((ActiveErrorLevelEnum)errorState);
 			}
-
-			if (dval == null)
-				return;
-
-			uint uval = (uint)dval;
-			uint errorState = (uval >> 8) & 0xF;
-
-
-			ErrorEvent?.Invoke((ActiveErrorLevelEnum)errorState);
+			catch (Exception ex)
+			{
+				LoggerService.Error(this, "Exception at HighestActiveFaultReceived", "Error", ex);
+			}
 		}
 
 		private void SetFaultsTimerElapsedEventHandler(object sender, ElapsedEventArgs e)
 		{
-			if (_lsbValue == null)
+			try
 			{
-				for (int i = 0; i < _numOfBitsInFaultParam && i < FaultsList.Count; i++)
-					FaultsList[i].State = null;
-			}
-			else
-			{
-				
-				if (_lsbValue is string str)
+				if (_lsbValue == null)
 				{
-					bool isFound = false;
-					foreach (DropDownParamData ddp in _lsbParam.DropDown)
+					for (int i = 0; i < _numOfBitsInFaultParam && i < FaultsList.Count; i++)
+						FaultsList[i].State = null;
+				}
+				else
+				{
+
+					if (_lsbValue is string str)
 					{
-						if (ddp.Name == str)
+						bool isFound = false;
+						foreach (DropDownParamData ddp in _lsbParam.DropDown)
 						{
-							_lsbValue = ddp.Value;
-							isFound = true;
-							break;
+							if (ddp.Name == str)
+							{
+								_lsbValue = ddp.Value;
+								isFound = true;
+								break;
+							}
+						}
+
+						if (!isFound)
+						{
+							double d;
+							double.TryParse(str, out d);
+							_msbValue = d;
 						}
 					}
 
-					if (!isFound)
+					int lsbValue = Convert.ToInt32(_lsbValue);
+
+					for (int i = 0; i < _numOfBitsInFaultParam && i < FaultsList.Count; i++)
 					{
-						double d;
-						double.TryParse(str, out d);
-						_msbValue = d;
+						int bit = (lsbValue >> i) & 1;
+						FaultsList[i].State = (bit == 1);
 					}
 				}
 
-				int lsbValue = Convert.ToInt32(_lsbValue);
-
-				for (int i = 0; i < _numOfBitsInFaultParam && i < FaultsList.Count; i++)
+				if (_msbValue == null)
 				{
-					int bit = (lsbValue >> i) & 1;
-					FaultsList[i].State = (bit == 1);
+					for (int i = _numOfBitsInFaultParam; i < FaultsList.Count; i++)
+						FaultsList[i].State = null;
 				}
-			}
-
-			if (_msbValue == null)
-			{
-				for (int i = _numOfBitsInFaultParam; i < FaultsList.Count; i++)
-					FaultsList[i].State = null;
-			}
-			else
-			{
-				if (_msbValue is string str)
+				else
 				{
-					bool isFound = false;
-					foreach (DropDownParamData ddp in _msbParam.DropDown)
+					if (_msbValue is string str)
 					{
-						if (ddp.Name == str)
+						bool isFound = false;
+						foreach (DropDownParamData ddp in _msbParam.DropDown)
 						{
-							_msbValue = ddp.Value;
-							isFound = true;
-							break;
+							if (ddp.Name == str)
+							{
+								_msbValue = ddp.Value;
+								isFound = true;
+								break;
+							}
 						}
+
+						if (!isFound)
+						{
+							double d;
+							double.TryParse(str, out d);
+							_msbValue = d;
+						}
+
 					}
 
-					if(!isFound)
+
+					int msbValue = Convert.ToInt32(_msbValue);
+
+					for (int i = _numOfBitsInFaultParam; i < FaultsList.Count; i++)
 					{
-						double d;
-						double.TryParse(str, out d);
-						_msbValue = d;
+						int bit = (msbValue >> (i - _numOfBitsInFaultParam)) & 1;
+						FaultsList[i].State = (bit == 1);
 					}
-
 				}
-				
 
-				int msbValue = Convert.ToInt32(_msbValue);
-
-				for (int i = _numOfBitsInFaultParam; i < FaultsList.Count; i++)
-				{
-					int bit = (msbValue >> (i - _numOfBitsInFaultParam)) & 1;
-					FaultsList[i].State = (bit == 1);
-				}
 			}
-
-			
+			catch (Exception ex)
+			{
+				LoggerService.Error(this, "Exception at SetFaultsTimerElapsedEventHandler", "Error", ex);
+			}
 			
 		}
 
