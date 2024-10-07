@@ -8,6 +8,8 @@ using DeviceCommunicators.Enums;
 using DeviceHandler.Models;
 using DeviceCommunicators.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
+using DeviceCommunicators.MCU;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Evva.ViewModels
 {
@@ -113,6 +115,13 @@ namespace Evva.ViewModels
 			if (!(textBox.DataContext is DeviceData deviceData))
 				return;
 
+			if(deviceData is MCU_DeviceData mcuDevice)
+			{
+				SearchText_TextChanged_MCU(
+					mcuDevice,
+					textBox.Text);
+			}
+
 			foreach (DeviceParameterData param in deviceData.ParemetersList)
 			{
 				if (param.Name.ToLower().Contains(textBox.Text.ToLower()))
@@ -122,13 +131,48 @@ namespace Evva.ViewModels
 			}
 		}
 
+		private void SearchText_TextChanged_MCU(
+			MCU_DeviceData mcuDevice, 
+			string text)
+		{
+
+			foreach (DeviceParameterData groupParam in mcuDevice.MCU_GroupList)
+			{
+				if(!(groupParam is ParamGroup group))
+					continue;
+
+				bool isFound = false;
+				foreach (DeviceParameterData param in group.ParamList)
+				{
+					if (param.Name.ToLower().Contains(text.ToLower()))
+					{
+						isFound = true;
+						param.Visibility = Visibility.Visible;
+					}
+					else
+						param.Visibility = Visibility.Collapsed;
+				}
+
+				if (isFound)
+				{
+					group.IsExpanded = true;
+					group.Visibility = Visibility.Visible;
+				}
+				else
+				{
+					group.IsExpanded = false;
+					group.Visibility = Visibility.Collapsed; 
+				}
+			}
+		}
+
 
 		#endregion Methods
 
 		#region Commands
 
 
-		
+
 		public RelayCommand<DeviceParameterData> SetCommand { get; private set; }
 		public RelayCommand<DeviceParameterData> GetCommand { get; private set; }
 		public RelayCommand<DeviceParameterData> EditCommand { get; private set; }
