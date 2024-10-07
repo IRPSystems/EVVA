@@ -562,7 +562,8 @@ namespace Evva.ViewModels
 				AppSettings.SettingsUpdatedEvent += SettingsUpdated;
 
 				Faults = new FaultsMCUViewModel(
-					DevicesContainer);
+					DevicesContainer,
+					EvvaUserData);
 				Faults.Loaded();
 				SwitchRelayState = new SwitchRelayStateViewModel(DevicesContainer);
 
