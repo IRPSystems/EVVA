@@ -6,6 +6,9 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:device_handler_controls="clr-namespace:DeviceHandler.Controls;assembly=DeviceHandler"
+             xmlns:device_communicators_mcu="clr-namespace:DeviceCommunicators.MCU;assembly=DeviceCommunicators"
+             xmlns:controls_view="clr-namespace:Controls.Views;assembly=Controls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:Evva.Converter"
              xmlns:local="clr-namespace:Evva.Views"
              mc:Ignorable="d" 
@@ -16,6 +19,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/DeviceHandler;component/Resources/DeviceParamsListStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/ToggleButtonWithIcon.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <converters:TestListHeightConverter x:Key="TestListHeightConverter" />
@@ -81,16 +85,57 @@
                                 <ListView ItemsSource="{Binding ParemetersList}"
                                           Grid.Row="4"
                                           Name="lv"
-                                          ItemContainerStyle="{StaticResource DeviceParamsListStyle}"
+                                          ItemTemplate="{StaticResource DeviceParamsListTemplate}"
                                           Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView},
                                                            Converter={StaticResource TestListHeightConverter}}"/>
 
+                                <TreeView ItemsSource="{Binding MCU_GroupList}"
+                                          Grid.Row="4"
+                                          Name="tv"
+                                          Visibility="Collapsed"
+                                          MinWidth="300"
+                                          Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView},
+                                                           Converter={StaticResource TestListHeightConverter}}">
+                                    
+                                    <TreeView.Resources>
+
+                                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource MahApps.Styles.TreeViewItem}">
+                                            <Setter Property="Visibility" Value="{Binding Visibility}"/>
+                                            <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+                                        </Style>
+                                        
+                                        <HierarchicalDataTemplate DataType="{x:Type device_communicators_mcu:ParamGroup}" 
+                                                                  ItemsSource="{Binding ParamList}">
+                                            <TextBlock Text="{Binding GroupName}" />
+                                        </HierarchicalDataTemplate>
+                                        
+                                        <HierarchicalDataTemplate DataType="{x:Type device_communicators_mcu:MCU_ParamData}" >
+
+                                            <ContentControl ContentTemplate="{StaticResource DeviceParamsListTemplate}"
+                                                            Content="{Binding}" />
+
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.Resources>
+                                    
+                                </TreeView>
+
                             </Grid>
+
+                            <ControlTemplate.Triggers>
+
+                                <DataTrigger Binding="{Binding DeviceType}" Value="MCU">
+                                    <Setter TargetName="lv" Property="Visibility" Value="Collapsed" />
+                                    <Setter TargetName="tv" Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+
+                            </ControlTemplate.Triggers>
 
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            
 
         </ResourceDictionary>
 

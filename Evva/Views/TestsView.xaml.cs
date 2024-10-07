@@ -24,5 +24,13 @@ namespace Evva.Views
 		{
 			InitializeComponent();
 		}
+
+		private void DataGridKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Enter)
+			{
+				e.Handled = true;
+			}
+		}
     }
 }
