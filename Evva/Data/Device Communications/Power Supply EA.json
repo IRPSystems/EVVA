@@ -255,7 +255,7 @@
       {
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Remote state",
-        "Cmd": "SYSTEM:LOCK:OWNER",
+        "Cmd": "SYSTEM:LOCK:",
         "DeviceType": 3,
         "IsExpanded": false,
         "IsSelected": false,

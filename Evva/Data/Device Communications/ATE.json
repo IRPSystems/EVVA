@@ -102,6 +102,16 @@
             "Name": "ATE_SET_DigOut2_1",
             "Value": "11"
           },
+		  {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_DigOut3_0",
+            "Value": "12"
+          },
+          {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_DigOut3_1",
+            "Value": "13"
+          },
           {
 			"$type": "Entities.Models.DropDownParamData, Entities",
             "Name": "ATE_SET_WatchdogTest",
@@ -121,7 +131,27 @@
 			"$type": "Entities.Models.DropDownParamData, Entities",
             "Name": "ATE_SET_EolFlagPass_1",
             "Value": "17"
-          }
+          },
+		  {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_ExternalWDTReset",
+            "Value": "18"
+          },
+		  {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_ActiveDischargeON",
+            "Value": "19"
+          },
+		  {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_ActiveDischargeOFF",
+            "Value": "20"
+          },
+		  {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_ClearActiveDisTimoutFault",
+            "Value": "21"
+          },
           ]
         },
         "Value": null,
@@ -279,7 +309,17 @@
               "$type": "Entities.Models.DropDownParamData, Entities",
               "Name": "ATE_GET_EolFlagPass",
               "Value": "26"
-            }
+            },
+			{
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ATE_GET_RunTime",
+              "Value": "27"
+            },
+			{
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ATE_GET_ActiveDischargeFB",
+              "Value": "28"
+            },
           ]
         },
         "Value": null,

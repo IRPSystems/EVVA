@@ -2,8 +2,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DeviceCommunicators.General;
 using DeviceCommunicators.MCU;
 using DeviceCommunicators.Models;
+using DeviceCommunicators.NI_6002;
 using DeviceCommunicators.PowerSupplayEA;
 using DeviceCommunicators.Services;
 using DeviceHandler.Faults;
@@ -26,6 +28,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 namespace Evva.ViewModels
 {
 	public class TestStudioMainWindowViewModel : ObservableObject
@@ -62,6 +65,7 @@ namespace Evva.ViewModels
 		public MonitorSecurityParamViewModel MonitorSecurityParam { get; set; }
 		public FaultsMCUViewModel Faults { get; set; }
 		public SwitchRelayStateViewModel SwitchRelayState { get; set; }
+		
 		
 
 
@@ -132,7 +136,7 @@ namespace Evva.ViewModels
 
 		private SetupSelectionViewModel _setupSelectionVM;
 
-		
+		private NI6002_Init _initNI;
 
 		private FlashingHandler _flashingHandler;
 
@@ -172,6 +176,7 @@ namespace Evva.ViewModels
 
 			EAPSRampupEnableCommand = new RelayCommand<bool>(EAPSRampupEnable);
 
+			_initNI = new NI6002_Init();
 
 			ActiveErrorLevel = ActiveErrorLevelEnum.None;
 		}
@@ -432,7 +437,17 @@ namespace Evva.ViewModels
 
 		private void InitCommunicationSettings()
 		{
-			Docking.OpenCommSettings();
+            _initNI.BindDevices();
+
+            foreach (DeviceFullData device in DevicesContainer.DevicesFullDataList)
+            {
+                if (device.Device.DeviceType  == DeviceTypesEnum.NI_6002)
+                    (device.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_a;
+                else if (device.Device.DeviceType == DeviceTypesEnum.NI_6002_2)
+                    (device.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_b;
+            }
+
+            Docking.OpenCommSettings();
 		}
 
 		private void Loaded()
@@ -459,7 +474,7 @@ namespace Evva.ViewModels
 				if (string.IsNullOrEmpty(EvvaUserData.DeviceSetupUserData.NI6002CommunicationPath))
 					EvvaUserData.DeviceSetupUserData.NI6002CommunicationPath = @"Data\Device Communications\NI_6002.json";
 
-				
+
 
 
 
@@ -483,7 +498,9 @@ namespace Evva.ViewModels
 				DevicesContainer.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
 				UpdateSetup();
 
-				int actualAcquisitionRate = EvvaUserData.AcquisitionRate;
+
+
+                int actualAcquisitionRate = EvvaUserData.AcquisitionRate;
 				AcquisitionRate = 5;
 				AcquisitionRate = actualAcquisitionRate;
 
@@ -878,14 +895,16 @@ namespace Evva.ViewModels
 					if (deviceData is MCU_DeviceData mcuDevice && deviceData.DeviceType != DeviceTypesEnum.ATE)
 					{
 						MCU_DeviceData ateDevice = _deviceData_ATE.Clone() as MCU_DeviceData;
-
-						mcuDevice.MCU_GroupList.Add(ateDevice.MCU_GroupList[0]);
-
-						foreach (var param in ateDevice.MCU_FullList)
+						if (!(mcuDevice.MCU_GroupList.Contains(ateDevice.MCU_GroupList[0])))
 						{
-							param.Device = mcuDevice;
-							param.DeviceType = mcuDevice.DeviceType;
-							mcuDevice.MCU_FullList.Add(param);
+							mcuDevice.MCU_GroupList.Add(ateDevice.MCU_GroupList[0]);
+
+							foreach (var param in ateDevice.MCU_FullList)
+							{
+								param.Device = mcuDevice;
+								param.DeviceType = mcuDevice.DeviceType;
+								mcuDevice.MCU_FullList.Add(param);
+							}
 						}
 					}
 				}
@@ -925,6 +944,8 @@ namespace Evva.ViewModels
 				}
 
 
+				
+				_initNI.BindDevices();
 
 				foreach (DeviceData device in newDevices)
 				{
@@ -932,9 +953,19 @@ namespace Evva.ViewModels
 					if (deviceFullData == null)
 						continue;
 
-					deviceFullData.Init("EVVA");
+                    deviceFullData.Init("EVVA");
 
-					DevicesContainer.DevicesFullDataList.Add(deviceFullData);
+
+                    if (device.DeviceType == Entities.Enums.DeviceTypesEnum.NI_6002)
+                    {
+                        (deviceFullData.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_a;
+                    }
+                    else if (device.DeviceType == Entities.Enums.DeviceTypesEnum.NI_6002_2)
+                    {
+                        (deviceFullData.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_b;
+                    }
+
+                    DevicesContainer.DevicesFullDataList.Add(deviceFullData);
 					DevicesContainer.DevicesList.Add(device as DeviceData);
 					if (DevicesContainer.TypeToDevicesFullData.ContainsKey(device.DeviceType) == false)
 						DevicesContainer.TypeToDevicesFullData.Add(device.DeviceType, deviceFullData);
