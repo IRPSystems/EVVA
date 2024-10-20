@@ -2,13 +2,11 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using DeviceCommunicators.General;
 using DeviceCommunicators.MCU;
 using DeviceCommunicators.Models;
 using DeviceCommunicators.NI_6002;
 using DeviceCommunicators.PowerSupplayEA;
 using DeviceCommunicators.Services;
-using DeviceHandler.Faults;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using DeviceHandler.ViewModels;
@@ -28,7 +26,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 namespace Evva.ViewModels
 {
 	public class TestStudioMainWindowViewModel : ObservableObject
@@ -1046,7 +1043,7 @@ namespace Evva.ViewModels
 				communicator.SetIsUseRampForOnOff(isEAPSRampupEnable);
 		}
 
-		public void Fault()
+		private void Fault()
 		{
 			Docking.OpenMonitorFaults();
 		}
