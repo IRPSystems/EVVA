@@ -437,7 +437,14 @@ namespace Evva.ViewModels
 
 		private void InitCommunicationSettings()
 		{
+			if(!DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002) &&
+				!DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002_2))
+			{
+				return;
+			}
+
             _initNI.BindDevices();
+
 
             foreach (DeviceFullData device in DevicesContainer.DevicesFullDataList)
             {
@@ -944,8 +951,11 @@ namespace Evva.ViewModels
 				}
 
 
-				
-				_initNI.BindDevices();
+				if (DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002) ||
+					DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002_2))
+				{
+					_initNI.BindDevices();
+				}
 
 				foreach (DeviceData device in newDevices)
 				{
