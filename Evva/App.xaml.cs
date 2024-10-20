@@ -41,7 +41,10 @@ namespace Evva
 
 		public static void ChangeDarkLight(bool isLightTheme)
         {
-            if (isLightTheme)
+			if (Current == null)
+				return;
+			
+			if (isLightTheme)
 			    ThemeManager.Current.ChangeTheme(Current, "Light.Cobalt");
             else
 				ThemeManager.Current.ChangeTheme(Current, "Dark.Cobalt");
