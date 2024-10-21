@@ -11,7 +11,10 @@ namespace Evva.Converter
 	{
 		public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			if (!(values[0] is SciptStateEnum stepState))
+			if (Application.Current == null)
+				return Brushes.Black;
+
+				if (!(values[0] is SciptStateEnum stepState))
 				return Application.Current.MainWindow.FindResource("MahApps.Brushes.Gray1") as SolidColorBrush;
 
 			if (!(values[1] is bool isPass))

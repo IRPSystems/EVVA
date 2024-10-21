@@ -490,7 +490,8 @@ namespace Evva.ViewModels
 				if (resutl != true)
 				{
 					Closing(null);
-					Application.Current.Shutdown();
+					if (Application.Current != null)
+						Application.Current.Shutdown();
 					return;
 				}
 

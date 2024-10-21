@@ -19,6 +19,9 @@ namespace Evva.Converter
 				return Brushes.White;
 			}
 
+			if (Application.Current == null)
+				return Brushes.White;
+
 			return Application.Current.MainWindow.Foreground;
 
 		}
