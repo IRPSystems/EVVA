@@ -464,7 +464,7 @@ namespace Evva.ViewModels
 				LoggerService.Inforamtion(this, "-------------------------------------- EVVA ---------------------");
 
 
-				LoggerService.Inforamtion(this, "Starting C'tor of TestStudioMainWindowViewModel");
+				LoggerService.Inforamtion(this, "Starting Loaded");
 
 				LoadEvvaUserData();
 
@@ -482,17 +482,20 @@ namespace Evva.ViewModels
 
 
 				_readDevicesFile = new ReadDevicesFileService();
-				_setupSelectionVM =
-					new SetupSelectionViewModel(EvvaUserData.DeviceSetupUserData, _readDevicesFile);
-				SetupSelectionWindowView setupSelectionView = new SetupSelectionWindowView();
-				setupSelectionView.SetDataContext(_setupSelectionVM);
-				bool? resutl = setupSelectionView.ShowDialog();
-				if (resutl != true)
+				if (Application.Current != null)
 				{
-					Closing(null);
-					if (Application.Current != null)
-						Application.Current.Shutdown();
-					return;
+					_setupSelectionVM =
+						new SetupSelectionViewModel(EvvaUserData.DeviceSetupUserData, _readDevicesFile);
+					SetupSelectionWindowView setupSelectionView = new SetupSelectionWindowView();
+					setupSelectionView.SetDataContext(_setupSelectionVM);
+					bool? resutl = setupSelectionView.ShowDialog();
+					if (resutl != true)
+					{
+						Closing(null);
+						if (Application.Current != null)
+							Application.Current.Shutdown();
+						return;
+					}
 				}
 
 
@@ -500,11 +503,14 @@ namespace Evva.ViewModels
 				DevicesContainer.DevicesFullDataList = new ObservableCollection<DeviceFullData>();
 				DevicesContainer.DevicesList = new ObservableCollection<DeviceData>();
 				DevicesContainer.TypeToDevicesFullData = new Dictionary<DeviceTypesEnum, DeviceFullData>();
-				UpdateSetup();
+				
+				if(_setupSelectionVM != null)
+					UpdateSetup(_setupSelectionVM.DevicesList);
 
 
+				
 
-                int actualAcquisitionRate = EvvaUserData.AcquisitionRate;
+				int actualAcquisitionRate = EvvaUserData.AcquisitionRate;
 				AcquisitionRate = 5;
 				AcquisitionRate = actualAcquisitionRate;
 
@@ -551,12 +557,14 @@ namespace Evva.ViewModels
 
 				Tests = new TestsViewModel(DevicesContainer);
 
+				
+
 				Design = new DesignViewModel(
 					DevicesContainer,
 					_flashingHandler,
 					EvvaUserData.ScriptUserData);
 
-
+				
 
 				Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -591,25 +599,28 @@ namespace Evva.ViewModels
 				DeviceSimulatorsViewModel deviceSimulatorsViewModel =
 					new DeviceSimulatorsViewModel(DevicesContainer);
 
+
+				if (Application.Current != null)
+				{
+					Docking = new DocingViewModel(
+						AppSettings,
+						Tests,
+						Run,
+						Design,
+						RecordParam,
+						MonitorRecParam,
+						MonitorSecurityParam,
+						Faults,
+						SwitchRelayState,
+						CommunicationSettings,
+						_setupSelectionVM,
+						deviceSimulatorsViewModel,
+						_canMessageSender);
+
+					Run.CreateScriptLoggerWindow();
+				}
 				
-
-				Docking = new DocingViewModel(
-					AppSettings,
-					Tests,
-					Run,
-					Design,
-					RecordParam,
-					MonitorRecParam,
-					MonitorSecurityParam,
-					Faults,
-					SwitchRelayState,
-					CommunicationSettings,
-					_setupSelectionVM,
-					deviceSimulatorsViewModel,
-					_canMessageSender);
-
-				Run.CreateScriptLoggerWindow();
-
+				
 
 				MonitorTypesList = new List<MonitorType>
 				{
@@ -622,7 +633,9 @@ namespace Evva.ViewModels
 				IsMCUError = new MCUError() { SafetyOfficerErrorLevel = ActiveErrorLevelEnum.None };
 				//Faults.ErrorEvent += MCUErrorEventHandler;
 
+
 				AddMotorPowerOutputToTorqueKistler();
+
 
 				if (DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.PowerSupplyEA))
 				{
@@ -632,6 +645,7 @@ namespace Evva.ViewModels
 				else
 					EAPSRampupEnableVisibility = Visibility.Collapsed;
 
+				LoggerService.Inforamtion(this, "Ending Loaded");
 			}
 			catch (Exception ex)
 			{
@@ -851,7 +865,7 @@ namespace Evva.ViewModels
 			_setupSelectionVM.CloseOKEvent -= SetupSelectionCloseOK;
 			_setupSelectionVM.CloseCancelEvent -= SetupSelectionCloseCancel;
 
-			UpdateSetup();
+			UpdateSetup(_setupSelectionVM.DevicesList);
 
 			try
 			{
@@ -879,12 +893,11 @@ namespace Evva.ViewModels
 
 		
 
-		private void UpdateSetup()
+		private void UpdateSetup(ObservableCollection<DeviceData> deviceList)
 		{
 			try
 			{
-				ObservableCollection<DeviceData> deviceList = _setupSelectionVM.DevicesList;
-
+				
 				#region Get the ATE device
 				string path = Directory.GetCurrentDirectory();
 				path = Path.Combine(path, @"Data\Device Communications\ATE.json");
