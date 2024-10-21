@@ -434,22 +434,21 @@ namespace Evva.ViewModels
 
 		private void InitCommunicationSettings()
 		{
-			if(!DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002) &&
-				!DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002_2))
+			if (DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002) ||
+				DevicesContainer.TypeToDevicesFullData.ContainsKey(DeviceTypesEnum.NI_6002_2))
 			{
-				return;
+
+				_initNI.BindDevices();
+
+
+				foreach (DeviceFullData device in DevicesContainer.DevicesFullDataList)
+				{
+					if (device.Device.DeviceType == DeviceTypesEnum.NI_6002)
+						(device.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_a;
+					else if (device.Device.DeviceType == DeviceTypesEnum.NI_6002_2)
+						(device.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_b;
+				}
 			}
-
-            _initNI.BindDevices();
-
-
-            foreach (DeviceFullData device in DevicesContainer.DevicesFullDataList)
-            {
-                if (device.Device.DeviceType  == DeviceTypesEnum.NI_6002)
-                    (device.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_a;
-                else if (device.Device.DeviceType == DeviceTypesEnum.NI_6002_2)
-                    (device.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_b;
-            }
 
             Docking.OpenCommSettings();
 		}
