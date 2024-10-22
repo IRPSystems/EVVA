@@ -26,6 +26,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Xml.Linq;
 namespace Evva.ViewModels
 {
 	public class TestStudioMainWindowViewModel : ObservableObject
@@ -62,8 +63,9 @@ namespace Evva.ViewModels
 		public MonitorSecurityParamViewModel MonitorSecurityParam { get; set; }
 		public FaultsMCUViewModel Faults { get; set; }
 		public SwitchRelayStateViewModel SwitchRelayState { get; set; }
-		
-		
+		public CommunicationViewModel CommunicationSettings { get; set; }
+
+
 
 
 
@@ -76,9 +78,6 @@ namespace Evva.ViewModels
 
 		public string Version { get; set; }
 
-
-
-		public CommunicationViewModel CommunicationSettings { get; set; }
 
 		public MCUError IsMCUError { get; set; }
 
@@ -340,14 +339,17 @@ namespace Evva.ViewModels
 
 		private void Settings()
 		{
-			Docking.OpenSettings();
+			if(Docking != null) 
+				Docking.OpenSettings();
 		}
 
 		private void ChangeDarkLight()
 		{
 
 			EvvaUserData.IsLightTheme = !EvvaUserData.IsLightTheme;
-			App.ChangeDarkLight(EvvaUserData.IsLightTheme);
+
+			if(Application.Current != null) 
+				App.ChangeDarkLight(EvvaUserData.IsLightTheme);
 
 			if (Design != null)
 			{
@@ -557,14 +559,11 @@ namespace Evva.ViewModels
 
 				Tests = new TestsViewModel(DevicesContainer);
 
-				
 
 				Design = new DesignViewModel(
 					DevicesContainer,
 					_flashingHandler,
 					EvvaUserData.ScriptUserData);
-
-				
 
 				Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -791,15 +790,27 @@ namespace Evva.ViewModels
 				mcuDevice.MCU_FullList.Add(param);
 			}
 
-			DeviceFullData deviceData = DevicesContainer.TypeToDevicesFullData[type];
-			int index = DevicesContainer.DevicesList.IndexOf(deviceData.Device);
-			if (index >= 0)
+			if (DevicesContainer.TypeToDevicesFullData.ContainsKey(type))
 			{
-				DevicesContainer.DevicesList[index] = devicesList[0];
-			}
+				DeviceFullData deviceData = DevicesContainer.TypeToDevicesFullData[type];
+				int index = DevicesContainer.DevicesList.IndexOf(deviceData.Device);
+				if (index >= 0)
+				{
+					DevicesContainer.DevicesList[index] = devicesList[0];
+				}
 
-			devicesList[0].Name = deviceData.Device.Name;
-			deviceData.Device = devicesList[0];
+				devicesList[0].Name = deviceData.Device.Name;
+				deviceData.Device = devicesList[0];
+			}
+			else
+			{
+				DevicesContainer.DevicesList.Add(devicesList[0]);
+
+				DeviceFullData mcuFullData = new DeviceFullData_MCU(devicesList[0]);
+				DevicesContainer.DevicesFullDataList.Add(mcuFullData);
+				DevicesContainer.TypeToDevicesFullData.Add(type, mcuFullData);
+			}
+			
 
 		}
 
@@ -1064,6 +1075,29 @@ namespace Evva.ViewModels
 		private void CheckCommunication_FaultEvent(ActiveErrorLevelEnum activeErrorLevel)
 		{
 			ActiveErrorLevel = activeErrorLevel;
+		}
+
+		public void SetLoggerMessage_ForTests(string message)
+		{
+			LoggerService.Error(this, message);
+		}
+
+		public void AddMCUToTheDeviceContainer__ForTests(
+			string mcuPath,
+			string atePath)
+		{
+			ObservableCollection<DeviceData> deviceList_ATE = new ObservableCollection<DeviceData>();
+			_readDevicesFile.ReadFromATEJson(atePath, deviceList_ATE);
+			if (deviceList_ATE != null && deviceList_ATE.Count > 0)
+				_deviceData_ATE = deviceList_ATE[0] as MCU_DeviceData;
+
+
+			UpdateMCUJson(
+				"MCU",
+				DeviceTypesEnum.MCU,
+				mcuPath);
+
+
 		}
 
 		#endregion Methods
