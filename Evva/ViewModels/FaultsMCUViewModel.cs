@@ -312,6 +312,9 @@ namespace Evva.ViewModels
 
 		private void HighestActiveFaultReceived(DeviceParameterData param, CommunicatorResultEnum result, string errDescription)
 		{
+			if(_msbValue == null || _lsbValue == null)
+				return;
+
 			try
 			{
 				if (Convert.ToInt32(_msbValue) == 0 && Convert.ToInt32(_lsbValue) == 0)

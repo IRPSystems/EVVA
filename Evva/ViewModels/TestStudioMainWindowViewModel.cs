@@ -61,7 +61,7 @@ namespace Evva.ViewModels
 		public ParametersViewModel RecordParam { get; set; }
 		public MonitorRecParamViewModel MonitorRecParam { get; set; }
 		public MonitorSecurityParamViewModel MonitorSecurityParam { get; set; }
-		public FaultsMCUViewModel Faults { get; set; }
+		public DeviceHandler.Faults.FaultsMCUViewModel Faults { get; set; }
 		public SwitchRelayStateViewModel SwitchRelayState { get; set; }
 		public CommunicationViewModel CommunicationSettings { get; set; }
 
@@ -589,10 +589,9 @@ namespace Evva.ViewModels
 				AppSettings = new SettingsViewModel(EvvaUserData);
 				AppSettings.SettingsUpdatedEvent += SettingsUpdated;
 
-				Faults = new FaultsMCUViewModel(
-					DevicesContainer,
-					EvvaUserData);
-				Faults.Loaded();
+				Faults = new DeviceHandler.Faults.FaultsMCUViewModel(
+					DevicesContainer);
+				//Faults.Loaded();
 				SwitchRelayState = new SwitchRelayStateViewModel(DevicesContainer);
 
 				DeviceSimulatorsViewModel deviceSimulatorsViewModel =
@@ -1005,10 +1004,10 @@ namespace Evva.ViewModels
 				}
 
 
-				if (Faults != null && Faults.IsLoaded)
-				{
-					Faults.Loaded();
-				}
+				//if (Faults != null && Faults.IsLoaded)
+				//{
+				//	Faults.Loaded();
+				//}
 
 				if (MonitorRecParam != null && MonitorRecParam.IsLoaded)
 				{
