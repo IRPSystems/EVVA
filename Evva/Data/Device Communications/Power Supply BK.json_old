@@ -107,7 +107,7 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "Voltage",
+        "Name": "Channel voltage On/Off",
         "DeviceTypes": 0
       },
       {
@@ -137,22 +137,7 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "MEASure voltage in supply",
-        "DeviceTypes": 0
-      },
-      {
-        "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
-        "Command": "MEASure:SCALar:CURRent:ALL:DC",
-        "TypeCommand": 3,
-        "DropDown": null,
-        "DeviceType": 2,
-        "Units": null,
-        "Value": null,
-        "GetSetVisibility": 0,
-        "IsExpanded": false,
-        "IsSelected": false,
-        "Visibility": 0,
-        "Name": "MEASure current in supply",
+        "Name": "Set voltage in supply",
         "DeviceTypes": 0
       },
       {
@@ -182,7 +167,7 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "Current in supply",
+        "Name": "Current status",
         "DeviceTypes": 0
       },
       {
@@ -197,7 +182,7 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "Status channels",
+        "Name": "Current value",
         "DeviceTypes": 0
       }
     ]
