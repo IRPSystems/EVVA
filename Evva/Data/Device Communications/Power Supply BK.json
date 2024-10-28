@@ -34,7 +34,7 @@
       },
       {
         "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
-        "Command": "INST ",
+        "Command": "INST",
         "TypeCommand": 0,
         "DropDown": {
           "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
@@ -107,7 +107,7 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "Channel voltage On/Off",
+        "Name": "Voltage",
         "DeviceTypes": 0
       },
       {
@@ -137,7 +137,22 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "Set voltage in supply",
+        "Name": "MEASure voltage in supply",
+        "DeviceTypes": 0
+      },
+      {
+        "$type": "DeviceCommunicators.PowerSupplayBK.PowerSupplayBK_ParamData, DeviceCommunicators",
+        "Command": "MEASure:SCALar:CURRent:ALL:DC",
+        "TypeCommand": 3,
+        "DropDown": null,
+        "DeviceType": 2,
+        "Units": null,
+        "Value": null,
+        "GetSetVisibility": 0,
+        "IsExpanded": false,
+        "IsSelected": false,
+        "Visibility": 0,
+        "Name": "MEASure current in supply",
         "DeviceTypes": 0
       },
       {
@@ -167,7 +182,7 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "Current status",
+        "Name": "Current in supply",
         "DeviceTypes": 0
       },
       {
@@ -182,7 +197,7 @@
         "IsExpanded": false,
         "IsSelected": false,
         "Visibility": 0,
-        "Name": "Current value",
+        "Name": "Status channels",
         "DeviceTypes": 0
       }
     ]
