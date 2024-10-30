@@ -24,7 +24,11 @@ namespace Evva.Models
 
 		public bool IsEAPSRampupEnable { get; set; }
 
-
+		public EvvaUserData()
+		{
+			DeviceSetupUserData = new DeviceSetupUserData();
+			ScriptUserData = new ScriptUserData();
+		}
 
 		public static EvvaUserData LoadEvvaUserData(string dirName)
 		{
