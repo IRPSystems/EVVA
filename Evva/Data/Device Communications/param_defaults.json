@@ -359,6 +359,22 @@
         "Save": true,
         "DropDown": null
       },
+      {
+        "Name": "Manual Angle Value",
+        "Value": "",
+        "Description": "Manual Angle Value",
+        "Default": "0",
+        "Cmd": "focmanang",
+        "Range": [
+          0,
+          360
+        ],
+        "Units": "Deg",
+        "Scale": 182,
+        "Note": null,
+        "Save": false,
+        "DropDown": null
+      },
     ],
     "GroupName": "Operation",
     "GroupDescription": "MCU Operation Parameters",
@@ -1131,6 +1147,36 @@
         "Range": [
           0,
           10
+        ],
+        "Units": null,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Aqb Glitch Filter Length",
+        "Value": "",
+        "Description": "Aqb Glitch Filter Length",
+        "Default": "",
+        "Cmd": "aqbglitch",
+        "Range": [
+          0,
+          10
+        ],
+        "Units": null,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Aqb AB Fault Threshold",
+        "Value": "",
+        "Description": "Aqb AB Fault Threshold",
+        "Default": "",
+        "Cmd": "aqbfltcntthr",
+        "Range": [
+          0,
+          5000
         ],
         "Units": null,
         "Note": null,
@@ -3179,6 +3225,845 @@
     ],
     "GroupName": "Calibration",
     "GroupDescription": "Calibration Settings",
+    "GroupType": 1
+  },
+  {
+    "ParamList": [
+      {
+        "Name": "Critical Can Signal Invalid Time",
+        "Value": "",
+        "Description": "Critical Can Signal Invalid Time",
+        "Default": "0",
+        "Cmd": "cansgnlinvalid",
+        "Range": [
+          0,
+          2550
+        ],
+        "Units": "mSec",
+        "Scale": 0.1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Can Timeout Since PowerUp",
+        "Value": "",
+        "Description": "Critical Can Signal Invalid Time",
+        "Default": "0",
+        "Cmd": "cantimeout",
+        "Range": [
+          0,
+          5100
+        ],
+        "Units": "mSec",
+        "Scale": 0.05,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Can Monitor Off High Time Threshold",
+        "Value": "",
+        "Description": "Kl 30 Can Monitor Off High Time Threshold",
+        "Default": "0",
+        "Cmd": "offhightime",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": "mSec",
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Can Monitor Off High Volt Threshold",
+        "Value": "",
+        "Description": "Kl 30 Can Monitor Off High volt Threshold",
+        "Default": "0",
+        "Cmd": "offhighvolt",
+        "Range": [
+          0,
+          25
+        ],
+        "Units": "V",
+        "Scale": 10,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Can Monitor Off Low Time Threshold",
+        "Value": "",
+        "Description": "Kl 30 Can Monitor Off low Time Threshold",
+        "Default": "0",
+        "Cmd": "offlowtime",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": "mSec",
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Can Monitor Off Low Volt Threshold",
+        "Value": "",
+        "Description": "Kl 30 Can Monitor Off low volt Threshold",
+        "Default": "0",
+        "Cmd": "offlowvolt",
+        "Range": [
+          0,
+          25
+        ],
+        "Units": "V",
+        "Scale": 10,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Can Monitor On High Time Threshold",
+        "Value": "",
+        "Description": "Kl 30 Can Monitor On High Time Threshold",
+        "Default": "0",
+        "Cmd": "onhightime",
+        "Range": [
+          0,
+          2550
+        ],
+        "Units": "mSec",
+        "Scale": 0.1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Can Monitor On High Volt Threshold",
+        "Value": "",
+        "Description": "Kl 30 Can Monitor On High volt Threshold",
+        "Default": "0",
+        "Cmd": "onhighvolt",
+        "Range": [
+          0,
+          25
+        ],
+        "Units": "V",
+        "Scale": 10,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Can Monitor On Low Time Threshold",
+        "Value": "",
+        "Description": "Kl 30 Can Monitor On low Time Threshold",
+        "Default": "0",
+        "Cmd": "onlowtime",
+        "Range": [
+          0,
+          2550
+        ],
+        "Units": "mSec",
+        "Scale": 0.1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Can Monitor On Low Volt Threshold",
+        "Value": "",
+        "Description": "Kl 30 Can Monitor On low volt Threshold",
+        "Default": "0",
+        "Cmd": "onlowvolt",
+        "Range": [
+          0,
+          25
+        ],
+        "Units": null,
+        "Scale": 10,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Life Cnt Missmatch Threshold  (vcu3_100)  ",
+        "Value": "",
+        "Description": "Alive conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu3alv",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Life Cnt Missmatch Threshold  (vcu9_10)  ",
+        "Value": "",
+        "Description": "Alive conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu9alv",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Life Cnt Missmatch Threshold  (vcu17_500)  ",
+        "Value": "",
+        "Description": "Alive conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu17alv",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Life Cnt Missmatch Healing (vcu3_100)  ",
+        "Value": "",
+        "Description": "Alive conter counts for healing fault",
+        "Default": "0",
+        "Cmd": "vcu3alvheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Life Cnt Missmatch Healing (vcu9_10)  ",
+        "Value": "",
+        "Description": "Alive conter counts for healing fault",
+        "Default": "0",
+        "Cmd": "vcu9alvheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Life Cnt Missmatch Healing (vcu17_500)  ",
+        "Value": "",
+        "Description": "Alive conter counts for healing fault",
+        "Default": "0",
+        "Cmd": "vcu17alvheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "CRC Missmatch Threshold  (vcu3_100)  ",
+        "Value": "",
+        "Description": "CRC conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu3crc",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "CRC Cnt Missmatch Threshold  (vcu9_10)  ",
+        "Value": "",
+        "Description": "CRC conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu9crc",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "CRC Cnt Missmatch Threshold  (vcu17_500)  ",
+        "Value": "",
+        "Description": "CRC conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu17crc",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "CRC Cnt Missmatch Healing (vcu3_100)  ",
+        "Value": "",
+        "Description": "CRC conter counts for healing fault",
+        "Default": "0",
+        "Cmd": "vcu3crcheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "CRC Cnt Missmatch Healing (vcu9_10)  ",
+        "Value": "",
+        "Description": "CRC conter counts for healing fault",
+        "Default": "0",
+        "Cmd": "vcu9crcheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "CRC Cnt Missmatch Healing (vcu17_500)  ",
+        "Value": "",
+        "Description": "CRC conter counts for healing fault",
+        "Default": "0",
+        "Cmd": "vcu17crcheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Threshold  (vcu100)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcupar",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Threshold  (vcu3_100)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu3par",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Threshold  (vcu5_500)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu5par",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Threshold  (vcu8_10)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu8par",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Threshold  (vcu9_10)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu9par",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Threshold  (vcu14_20)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu14par",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Threshold  (vcu17_500)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu17par",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Threshold  (Global_DiagReq)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "globalpar",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Healing (vcu100)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcuparheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Healing  (vcu3_100)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu3parheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Healing  (vcu5_500)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu5parheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Healing  (vcu8_10)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu8parheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Healing  (vcu9_10)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu9parheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Healing (vcu14_20)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu14parheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Healing  (vcu17_500)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu17parheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Parity Missmatch Healing  (Global_DiagReq)  ",
+        "Value": "",
+        "Description": "Parity conter counts for fault",
+        "Default": "0",
+        "Cmd": "globalparheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Threshold  (vcu100)  ",
+        "Value": "",
+        "Description": "Dlc conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcudlc",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Threshold  (vcu3_100)  ",
+        "Value": "",
+        "Description": " Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu3dlc",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Threshold  (vcu5_500)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu5dlc",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Threshold  (vcu8_10)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu8dlc",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Threshold  (vcu9_10)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu9dlc",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Threshold  (vcu14_20)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu14dlc",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Threshold  (vcu17_500)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu17dlc",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Healing (vcu100)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcudlcheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Healing  (vcu3_100)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu3dlcheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Healing  (vcu5_500)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu5dlcheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Healing  (vcu8_10)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu8dlcheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Healing  (vcu9_10)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu9dlcheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Healing (vcu14_20)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu14dlcheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+      {
+        "Name": "Dlc Missmatch Healing  (vcu17_500)  ",
+        "Value": "",
+        "Description": "Dlc  conter counts for fault",
+        "Default": "0",
+        "Cmd": "vcu17dlcheal",
+        "Range": [
+          0,
+          255
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
+    ],
+    "GroupName": "NM",
+    "GroupDescription": "Network Management settings",
     "GroupType": 1
   },
   {
@@ -5904,20 +6789,28 @@
             "Value": "0"
           },
           {
-            "Name": "Thresholds",
+            "Name": "Threshold 1",
             "Value": "1"
           },
           {
-            "Name": "InProgress",
+            "Name": "Threshold 2",
             "Value": "2"
           },
           {
-            "Name": "Passed",
+            "Name": "In Progress",
             "Value": "3"
           },
           {
-            "Name": "Failed",
+            "Name": "Passed",
             "Value": "4"
+          },
+          {
+            "Name": "Failed",
+            "Value": "5"
+          },
+          {
+            "Name": "Skipped",
+            "Value": "6"
           }
         ]
       },
@@ -5963,6 +6856,48 @@
           {
             "Name": "Failed Step 7",
             "Value": "7"
+          }
+        ]
+      },
+      {
+        "Name": "CAN Kl 30 High Power",
+        "Value": "",
+        "Description": "CAN Kl 30 High Power",
+        "Default": "0",
+        "Cmd": "kl30high",
+        "Range": null,
+        "Units": null,
+        "Note": null,
+        "Save": false,
+        "DropDown": [
+          {
+            "Name": "INACTIVE",
+            "Value": "0"
+          },
+          {
+            "Name": "ACTIVE",
+            "Value": "1"
+          }
+        ]
+      },
+      {
+        "Name": "CAN Kl 30 Low Power",
+        "Value": "",
+        "Description": "CAN Kl 30 High Power",
+        "Default": "0",
+        "Cmd": "kl30low",
+        "Range": null,
+        "Units": null,
+        "Note": null,
+        "Save": false,
+        "DropDown": [
+          {
+            "Name": "INACTIVE",
+            "Value": "0"
+          },
+          {
+            "Name": "ACTIVE",
+            "Value": "1"
           }
         ]
       },
