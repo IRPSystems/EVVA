@@ -152,6 +152,11 @@
             "Name": "ATE_SET_ClearActiveDisTimoutFault",
             "Value": "21"
           },
+		  {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_PhasesUH",
+            "Value": "22"
+          },
           ]
         },
         "Value": null,
@@ -319,6 +324,11 @@
               "$type": "Entities.Models.DropDownParamData, Entities",
               "Name": "ATE_GET_ActiveDischargeFB",
               "Value": "28"
+            },
+			{
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ATE_GET_DutyCycleMaxFlag",
+              "Value": "29"
             },
           ]
         },
