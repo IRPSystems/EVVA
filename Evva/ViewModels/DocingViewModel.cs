@@ -39,6 +39,7 @@ namespace Evva.ViewModels
 		private ContentControl _recording;
 		private ContentControl _tests;
 		private ContentControl _logger;
+		private ContentControl _loggerService;
 
 		#endregion Fields
 
@@ -57,7 +58,8 @@ namespace Evva.ViewModels
 			CommunicationViewModel communicationSettings,
 			SetupSelectionViewModel setupSelectionVM,
 			DeviceSimulatorsViewModel deviceSimulatorsViewModel,
-			CANMessageSenderViewModel canMessageSenderViewModel) :
+			CANMessageSenderViewModel canMessageSenderViewModel,
+			LoggerServiceView loggerView) :
 			base("DockingMain")
 		{
 
@@ -74,7 +76,8 @@ namespace Evva.ViewModels
 				communicationSettings,
 				setupSelectionVM,
 				deviceSimulatorsViewModel,
-				canMessageSenderViewModel);
+				canMessageSenderViewModel,
+				loggerView);
 		}
 
 		#endregion Constructor
@@ -94,7 +97,8 @@ namespace Evva.ViewModels
 			CommunicationViewModel communicationSettings,
 			SetupSelectionViewModel setupSelectionVM,
 			DeviceSimulatorsViewModel deviceSimulatorsViewModel,
-			CANMessageSenderViewModel canMessageSenderViewModel)
+			CANMessageSenderViewModel canMessageSenderViewModel,
+			LoggerServiceView loggerServiceView)
 		{
 			DockFill = true;
 
@@ -148,6 +152,19 @@ namespace Evva.ViewModels
 
 			RunView runView = new RunView() { DataContext = run };
 			CreateTabbedWindow(runView, "Run", "Design", out _run);
+
+			//CreateTabbedWindow(loggerServiceView, "Logger", "Design", out _loggerService);
+
+
+			_loggerService = new ContentControl();
+			_loggerService.Content = loggerServiceView;
+			SetHeader(_loggerService, "Logger Service");
+			SetState(_loggerService, DockState.Hidden);
+			SetSizetoContentInFloat(_loggerService, false);
+			SetDesiredWidthInFloatingMode(_loggerService, 700);
+			SetDesiredHeightInFloatingMode(_loggerService, 900);
+			Children.Add(_loggerService);
+
 
 			_logger = new ContentControl();
 			LoggerView loggerView = new LoggerView() { DataContext = run.RunScript.MainScriptLogger };
@@ -269,6 +286,11 @@ namespace Evva.ViewModels
 		public void OpenScriptLoggerParam()
 		{
 			SetState(_logger, DockState.Dock);
+		}
+
+		public void OpenLoggerService()
+		{
+			SetState(_loggerService, DockState.Float);
 		}
 
 		public void OpenMonitorRecParam()

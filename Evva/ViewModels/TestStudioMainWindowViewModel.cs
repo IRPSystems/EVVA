@@ -14,6 +14,7 @@ using DeviceHandler.Views;
 using DeviceSimulators.ViewModels;
 using Entities.Enums;
 using Evva.Models;
+using Evva.Views;
 using ScriptHandler.Services;
 using ScriptHandler.ViewModels;
 using ScriptRunner.ViewModels;
@@ -161,6 +162,7 @@ namespace Evva.ViewModels
 			OpenRunCommand = new RelayCommand(OpenRun);
 			OpenRecordingCommand = new RelayCommand(OpenRecording);
 			OpenTestCommand = new RelayCommand(OpenTest);
+			OpenLoggerServiceCommand = new RelayCommand(OpenLoggerService);
 
 			DeviceSimulatorCommand = new RelayCommand(DeviceSimulator);
 			ResetWindowsLayoutCommand = new RelayCommand(ResetWindowsLayout);
@@ -462,7 +464,9 @@ namespace Evva.ViewModels
 
 			try
 			{
-				LoggerService.Init("Evva.log", Serilog.Events.LogEventLevel.Information);
+				LoggerServiceView loggerView = new LoggerServiceView();
+
+				LoggerService.Init("Evva.log", Serilog.Events.LogEventLevel.Information, loggerView.richTextBox);
 				LoggerService.Inforamtion(this, "-------------------------------------- EVVA ---------------------");
 
 
@@ -613,7 +617,8 @@ namespace Evva.ViewModels
 						CommunicationSettings,
 						_setupSelectionVM,
 						deviceSimulatorsViewModel,
-						_canMessageSender);
+						_canMessageSender,
+						loggerView);
 
 					Run.CreateScriptLoggerWindow();
 				}
@@ -832,6 +837,11 @@ namespace Evva.ViewModels
 		private void OpenTest()
 		{
 			Docking.OpenTest();
+		}
+
+		private void OpenLoggerService()
+		{
+			Docking.OpenLoggerService();
 		}
 
 		private void MonitorsDropDownMenuItem(string name)
@@ -1121,6 +1131,9 @@ namespace Evva.ViewModels
 		public RelayCommand OpenRunCommand { get; private set; }
 		public RelayCommand OpenRecordingCommand { get; private set; }
 		public RelayCommand OpenTestCommand { get; private set; }
+
+		public RelayCommand OpenLoggerServiceCommand { get; private set; }
+
 
 		public RelayCommand DeviceSimulatorCommand { get; private set; }
 

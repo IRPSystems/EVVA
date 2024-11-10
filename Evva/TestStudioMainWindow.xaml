@@ -227,6 +227,16 @@
                         Width="25"
                         Height="25"
                         Margin="0,0,20,0"
+                        ToolTip="Ope Logger Service window"
+                        Command="{Binding OpenLoggerServiceCommand}"
+                        VerticalAlignment="Center">
+                    <iconPacks:PackIconMaterial Kind="FormatListBulleted" />
+                </Button>
+
+                <Button Style="{StaticResource ButtonWithIconStyle}"
+                        Width="25"
+                        Height="25"
+                        Margin="0,0,20,0"
                         ToolTip="Activate CAN Message Sender"
                         Command="{Binding CANMessageSenderCommand}"
                         VerticalAlignment="Center">
