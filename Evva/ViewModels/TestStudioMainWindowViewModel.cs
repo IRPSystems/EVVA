@@ -447,10 +447,16 @@ namespace Evva.ViewModels
 
 				foreach (DeviceFullData device in DevicesContainer.DevicesFullDataList)
 				{
-					if (device.Device.DeviceType == DeviceTypesEnum.NI_6002)
+					if (device.Device.DeviceType == DeviceTypesEnum.NI_6002 &&
+						string.IsNullOrEmpty(_initNI.NI_a) == false)
+					{
 						(device.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_a;
-					else if (device.Device.DeviceType == DeviceTypesEnum.NI_6002_2)
+					}
+					else if (device.Device.DeviceType == DeviceTypesEnum.NI_6002_2 &&
+						string.IsNullOrEmpty(_initNI.NI_a) == false)
+					{
 						(device.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_b;
+					}
 				}
 			}
 
@@ -996,12 +1002,14 @@ namespace Evva.ViewModels
                     deviceFullData.Init("EVVA");
 
 
-                    if (device.DeviceType == Entities.Enums.DeviceTypesEnum.NI_6002)
+					if (device.DeviceType == Entities.Enums.DeviceTypesEnum.NI_6002 &&
+						string.IsNullOrEmpty(_initNI.NI_a) == false)
                     {
                         (deviceFullData.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_a;
                     }
-                    else if (device.DeviceType == Entities.Enums.DeviceTypesEnum.NI_6002_2)
-                    {
+                    else if (device.DeviceType == Entities.Enums.DeviceTypesEnum.NI_6002_2 &&
+						string.IsNullOrEmpty(_initNI.NI_b) == false)
+					{
                         (deviceFullData.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_b;
                     }
 
