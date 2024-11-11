@@ -472,7 +472,7 @@ namespace Evva.ViewModels
 			{
 				LoggerServiceView loggerView = new LoggerServiceView();
 
-				LoggerService.Init("Evva.log", Serilog.Events.LogEventLevel.Information, loggerView.richTextBox);
+				LoggerService.Init("Evva.log", Serilog.Events.LogEventLevel.Information,null);
 				LoggerService.Inforamtion(this, "-------------------------------------- EVVA ---------------------");
 
 
