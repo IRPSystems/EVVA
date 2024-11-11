@@ -470,8 +470,6 @@ namespace Evva.ViewModels
 
 			try
 			{
-				LoggerServiceView loggerView = new LoggerServiceView();
-
 				LoggerService.Init("Evva.log", Serilog.Events.LogEventLevel.Information,null);
 				LoggerService.Inforamtion(this, "-------------------------------------- EVVA ---------------------");
 
@@ -623,8 +621,7 @@ namespace Evva.ViewModels
 						CommunicationSettings,
 						_setupSelectionVM,
 						deviceSimulatorsViewModel,
-						_canMessageSender,
-						loggerView);
+						_canMessageSender);
 
 					Run.CreateScriptLoggerWindow();
 				}
@@ -847,7 +844,6 @@ namespace Evva.ViewModels
 
 		private void OpenLoggerService()
 		{
-			Docking.OpenLoggerService();
 		}
 
 		private void MonitorsDropDownMenuItem(string name)
