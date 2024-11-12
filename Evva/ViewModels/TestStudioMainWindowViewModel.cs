@@ -141,6 +141,8 @@ namespace Evva.ViewModels
 
 		private MCU_DeviceData _deviceData_ATE;
 
+		private LogLineListService _logLineList;
+
 		#endregion Fields
 
 
@@ -409,6 +411,9 @@ namespace Evva.ViewModels
 				}
 			}
 
+			if(_logLineList != null)
+				_logLineList.Dispose();
+
 			if (MonitorRecParam != null)
 				MonitorRecParam.Dispose();
 
@@ -475,6 +480,8 @@ namespace Evva.ViewModels
 
 
 				LoggerService.Inforamtion(this, "Starting Loaded");
+
+				_logLineList = new LogLineListService();
 
 				LoadEvvaUserData();
 
@@ -550,7 +557,8 @@ namespace Evva.ViewModels
 					DevicesContainer,
 					_flashingHandler,
 					EvvaUserData.ScriptUserData,
-					_canMessageSender);
+					_canMessageSender,
+					_logLineList);
 				Run.CreateScriptLogDiagramViewEvent += Run_CreateScriptLogDiagramViewEvent;
 				Run.ShowScriptLoggerViewEvent += Run_ShowScriptLoggerViewEvent;
 				Run.ShowScriptLogDiagramViewEvent += Run_ShowScriptLogDiagramViewEvent;
