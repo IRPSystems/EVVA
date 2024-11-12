@@ -176,7 +176,7 @@ namespace Evva.ViewModels
 
 			EAPSRampupEnableCommand = new RelayCommand<bool>(EAPSRampupEnable);
 
-			_initNI = new NI6002_Init();
+			
 
 			ActiveErrorLevel = ActiveErrorLevelEnum.None;
 		}
@@ -482,6 +482,7 @@ namespace Evva.ViewModels
 				LoggerService.Inforamtion(this, "Starting Loaded");
 
 				_logLineList = new LogLineListService();
+				_initNI = new NI6002_Init(_logLineList);
 
 				LoadEvvaUserData();
 
@@ -1003,7 +1004,7 @@ namespace Evva.ViewModels
 					if (deviceFullData == null)
 						continue;
 
-                    deviceFullData.Init("EVVA");
+                    deviceFullData.Init("EVVA", _logLineList);
 
 
 					if (device.DeviceType == Entities.Enums.DeviceTypesEnum.NI_6002 &&
