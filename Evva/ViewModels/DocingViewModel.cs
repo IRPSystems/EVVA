@@ -149,8 +149,9 @@ namespace Evva.ViewModels
 			RunView runView = new RunView() { DataContext = run };
 			CreateTabbedWindow(runView, "Run", "Design", out _run);
 
+
 			_logger = new ContentControl();
-			LoggerView loggerView = new LoggerView() { DataContext = run.RunScript.MainScriptLogger };
+			ScriptLoggerView loggerView = new ScriptLoggerView() { DataContext = run.RunScript.MainScriptLogger };
 			_logger.Content = loggerView;
 			SetHeader(_logger, "Script Logger");
 			SetState(_logger, DockState.Hidden);

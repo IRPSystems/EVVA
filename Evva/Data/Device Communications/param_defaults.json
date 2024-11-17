@@ -375,6 +375,22 @@
         "Save": false,
         "DropDown": null
       },
+	  {
+        "Name": "Manual Angle Speed Ramp",
+        "Value": "",
+        "Description": "Manual Angle Speed Ramp",
+        "Default": "0",
+        "Cmd": "manangrmp",
+        "Range": [
+          0,
+          20
+        ],
+        "Units": null,
+        "Scale": 1,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
     ],
     "GroupName": "Operation",
     "GroupDescription": "MCU Operation Parameters",
@@ -6226,7 +6242,33 @@
         "DropDown": null
       },
       {
-        "Name": "Electric Angle",
+        "Name": "Manual Electric Angle",
+        "Value": "",
+        "Description": "Electric Angle",
+        "Default": "0",
+        "Cmd": "focmanang",
+        "Range": null,
+        "Units": "Deg",
+        "Scale": 182,
+        "Note": null,
+        "Save": false,
+        "DropDown": null
+      },
+      {
+        "Name": " Sensor Electric Angle",
+        "Value": "",
+        "Description": "Electric Angle",
+        "Default": "0",
+        "Cmd": "focsensang",
+        "Range": null,
+        "Units": "Deg",
+        "Scale": 182,
+        "Note": null,
+        "Save": false,
+        "DropDown": null
+      },
+      {
+        "Name": " FOC Electric Angle",
         "Value": "",
         "Description": "Electric Angle",
         "Default": "0",

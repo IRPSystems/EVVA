@@ -14,6 +14,7 @@ using DeviceHandler.Views;
 using DeviceSimulators.ViewModels;
 using Entities.Enums;
 using Evva.Models;
+using Evva.Views;
 using ScriptHandler.Services;
 using ScriptHandler.ViewModels;
 using ScriptRunner.ViewModels;
@@ -140,6 +141,8 @@ namespace Evva.ViewModels
 
 		private MCU_DeviceData _deviceData_ATE;
 
+		private LogLineListService _logLineList;
+
 		#endregion Fields
 
 
@@ -161,6 +164,7 @@ namespace Evva.ViewModels
 			OpenRunCommand = new RelayCommand(OpenRun);
 			OpenRecordingCommand = new RelayCommand(OpenRecording);
 			OpenTestCommand = new RelayCommand(OpenTest);
+			OpenLoggerServiceCommand = new RelayCommand(OpenLoggerService);
 
 			DeviceSimulatorCommand = new RelayCommand(DeviceSimulator);
 			ResetWindowsLayoutCommand = new RelayCommand(ResetWindowsLayout);
@@ -172,7 +176,7 @@ namespace Evva.ViewModels
 
 			EAPSRampupEnableCommand = new RelayCommand<bool>(EAPSRampupEnable);
 
-			_initNI = new NI6002_Init();
+			
 
 			ActiveErrorLevel = ActiveErrorLevelEnum.None;
 		}
@@ -407,6 +411,9 @@ namespace Evva.ViewModels
 				}
 			}
 
+			if(_logLineList != null)
+				_logLineList.Dispose();
+
 			if (MonitorRecParam != null)
 				MonitorRecParam.Dispose();
 
@@ -445,10 +452,16 @@ namespace Evva.ViewModels
 
 				foreach (DeviceFullData device in DevicesContainer.DevicesFullDataList)
 				{
-					if (device.Device.DeviceType == DeviceTypesEnum.NI_6002)
+					if (device.Device.DeviceType == DeviceTypesEnum.NI_6002 &&
+						string.IsNullOrEmpty(_initNI.NI_a) == false)
+					{
 						(device.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_a;
-					else if (device.Device.DeviceType == DeviceTypesEnum.NI_6002_2)
+					}
+					else if (device.Device.DeviceType == DeviceTypesEnum.NI_6002_2 &&
+						string.IsNullOrEmpty(_initNI.NI_a) == false)
+					{
 						(device.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_b;
+					}
 				}
 			}
 
@@ -462,11 +475,14 @@ namespace Evva.ViewModels
 
 			try
 			{
-				LoggerService.Init("Evva.log", Serilog.Events.LogEventLevel.Information);
+				LoggerService.Init("Evva.log", Serilog.Events.LogEventLevel.Information,null);
 				LoggerService.Inforamtion(this, "-------------------------------------- EVVA ---------------------");
 
 
 				LoggerService.Inforamtion(this, "Starting Loaded");
+
+				_logLineList = new LogLineListService();
+				_initNI = new NI6002_Init(_logLineList);
 
 				LoadEvvaUserData();
 
@@ -542,7 +558,8 @@ namespace Evva.ViewModels
 					DevicesContainer,
 					_flashingHandler,
 					EvvaUserData.ScriptUserData,
-					_canMessageSender);
+					_canMessageSender,
+					_logLineList);
 				Run.CreateScriptLogDiagramViewEvent += Run_CreateScriptLogDiagramViewEvent;
 				Run.ShowScriptLoggerViewEvent += Run_ShowScriptLoggerViewEvent;
 				Run.ShowScriptLogDiagramViewEvent += Run_ShowScriptLogDiagramViewEvent;
@@ -834,6 +851,10 @@ namespace Evva.ViewModels
 			Docking.OpenTest();
 		}
 
+		private void OpenLoggerService()
+		{
+		}
+
 		private void MonitorsDropDownMenuItem(string name)
 		{
 			switch (name)
@@ -983,15 +1004,17 @@ namespace Evva.ViewModels
 					if (deviceFullData == null)
 						continue;
 
-                    deviceFullData.Init("EVVA");
+                    deviceFullData.Init("EVVA", _logLineList);
 
 
-                    if (device.DeviceType == Entities.Enums.DeviceTypesEnum.NI_6002)
+					if (device.DeviceType == Entities.Enums.DeviceTypesEnum.NI_6002 &&
+						string.IsNullOrEmpty(_initNI.NI_a) == false)
                     {
                         (deviceFullData.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_a;
                     }
-                    else if (device.DeviceType == Entities.Enums.DeviceTypesEnum.NI_6002_2)
-                    {
+                    else if (device.DeviceType == Entities.Enums.DeviceTypesEnum.NI_6002_2 &&
+						string.IsNullOrEmpty(_initNI.NI_b) == false)
+					{
                         (deviceFullData.ConnectionViewModel as NI6002ConncetViewModel).DeviceName = _initNI.NI_b;
                     }
 
@@ -1121,6 +1144,9 @@ namespace Evva.ViewModels
 		public RelayCommand OpenRunCommand { get; private set; }
 		public RelayCommand OpenRecordingCommand { get; private set; }
 		public RelayCommand OpenTestCommand { get; private set; }
+
+		public RelayCommand OpenLoggerServiceCommand { get; private set; }
+
 
 		public RelayCommand DeviceSimulatorCommand { get; private set; }
 

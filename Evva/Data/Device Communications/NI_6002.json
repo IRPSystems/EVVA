@@ -94,6 +94,7 @@
         "Name": "Analog Input Current",
         "Units": null,
         "Value": null,
+		"CommunicationTimeout": 4000,
         "DeviceType": 9
       },
       {
@@ -106,6 +107,7 @@
         "Name": "Digital Counter",
         "Units": null,
         "Value": null,
+		"CommunicationTimeout": 25000,
         "DeviceType": 9
       }
     ]
