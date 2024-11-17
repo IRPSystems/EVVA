@@ -3157,6 +3157,21 @@
         "Save": true,
         "DropDown": null
       },
+	  {
+        "Name": "ATE Duty Cycle Ramp",
+        "Value": "",
+        "Description": "ATE Duty Cycle Ramp",
+        "Default": "1",
+        "Cmd": "atepwmramp",
+        "Range": [
+          0,
+          10
+        ],
+        "Units": null,
+        "Note": null,
+        "Save": true,
+        "DropDown": null
+      },
     ],
     "GroupName": "Advanced",
     "GroupDescription": "Advanced Settings",
