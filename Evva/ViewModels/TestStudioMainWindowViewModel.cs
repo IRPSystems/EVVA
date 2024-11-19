@@ -942,16 +942,20 @@ namespace Evva.ViewModels
 				{
 					if (deviceData is MCU_DeviceData mcuDevice && deviceData.DeviceType != DeviceTypesEnum.ATE)
 					{
-						MCU_DeviceData ateDevice = _deviceData_ATE.Clone() as MCU_DeviceData;
-						if (!(mcuDevice.MCU_GroupList.Contains(ateDevice.MCU_GroupList[0])))
+						ParamGroup ateGroup = mcuDevice.MCU_GroupList.ToList().Find((g) => g.GroupName == "ATE");
+						if (ateGroup == null)
 						{
-							mcuDevice.MCU_GroupList.Add(ateDevice.MCU_GroupList[0]);
-
-							foreach (var param in ateDevice.MCU_FullList)
+							MCU_DeviceData ateDevice = _deviceData_ATE.Clone() as MCU_DeviceData;
+							if (!(mcuDevice.MCU_GroupList.Contains(ateDevice.MCU_GroupList[0])))
 							{
-								param.Device = mcuDevice;
-								param.DeviceType = mcuDevice.DeviceType;
-								mcuDevice.MCU_FullList.Add(param);
+								mcuDevice.MCU_GroupList.Add(ateDevice.MCU_GroupList[0]);
+
+								foreach (var param in ateDevice.MCU_FullList)
+								{
+									param.Device = mcuDevice;
+									param.DeviceType = mcuDevice.DeviceType;
+									mcuDevice.MCU_FullList.Add(param);
+								}
 							}
 						}
 					}
