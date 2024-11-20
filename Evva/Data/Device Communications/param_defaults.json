@@ -1374,7 +1374,7 @@
         "Cmd": "mdrtmpcpmxs",
         "Range": [
           20,
-          95
+          200
         ],
         "Units": "°C",
         "Scale": 100,
@@ -1390,7 +1390,7 @@
         "Cmd": "mdrtmpcpmxc",
         "Range": [
           20,
-          100
+          200
         ],
         "Units": "°C",
         "Scale": 100,
