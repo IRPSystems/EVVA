@@ -541,7 +541,10 @@ namespace Evva.ViewModels
 #endif
 
 				
-				_canMessageSender = new CANMessageSenderViewModel(DevicesContainer, EvvaUserData.ScriptUserData);
+				_canMessageSender = new CANMessageSenderViewModel(
+					DevicesContainer,
+					EvvaUserData.DeviceSetupUserData.MCUJsonPath, 
+					EvvaUserData.ScriptUserData);
 
 
 
