@@ -11,14 +11,6 @@
                  mc:Ignorable="d"
                  Title="EVVA CAN Message Sender" Height="700" Width="1050">
 
-    <mah:MetroWindow.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/ButtonWithIcon.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </mah:MetroWindow.Resources>
-
     <i:Interaction.Triggers>
 
         <i:EventTrigger EventName="Closing">
