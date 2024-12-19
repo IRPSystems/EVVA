@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EvvaCANMessageSender
+namespace EvvaCANMessageSender.Views
 {
 	/// <summary>
 	/// Interaction logic for MainWindowEvvaCANMessageSender.xaml
