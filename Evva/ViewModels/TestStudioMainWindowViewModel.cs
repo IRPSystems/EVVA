@@ -1039,15 +1039,15 @@ namespace Evva.ViewModels
 				//	Faults.Loaded();
 				//}
 
-				if (MonitorRecParam != null && MonitorRecParam.IsLoaded)
-				{
-					MonitorRecParam.Loaded();
-				}
+				//if (MonitorRecParam != null && MonitorRecParam.IsLoaded)
+				//{
+				//	MonitorRecParam.Loaded();
+				//}
 
-				if (MonitorSecurityParam != null && MonitorSecurityParam.IsLoaded)
-				{
-					MonitorSecurityParam.Loaded();
-				}
+				//if (MonitorSecurityParam != null && MonitorSecurityParam.IsLoaded)
+				//{
+				//	MonitorSecurityParam.Loaded();
+				//}
 
 				
 

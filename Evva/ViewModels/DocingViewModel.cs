@@ -12,6 +12,7 @@ using ScriptRunner.Views;
 using Syncfusion.Windows.Tools.Controls;
 using System;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Evva.ViewModels
@@ -323,6 +324,34 @@ namespace Evva.ViewModels
 				LoadDockState(path);
 		}
 
-#endregion Methods
+		protected override void LoadEventHandler_Specific()
+		{
+			SetRecMonitorIsOpened(_monitorRecParam);
+		}
+
+		protected override void DocingBaseViewModel_DockStateChanged_Specific(FrameworkElement sender, DockStateEventArgs e)
+		{
+			if (!(sender is ContentControl contentControl))
+				return;
+
+			SetRecMonitorIsOpened(contentControl);
+		}
+
+		protected void SetRecMonitorIsOpened(ContentControl contentControl)
+		{
+			if (!(contentControl.Content is MonitorView view))
+				return;
+
+			if (!(view.DataContext is MonitorRecParamViewModel viewModel))
+				return;
+
+			DockState state = GetState(_monitorRecParam);
+			if (state == DockState.Hidden)
+				viewModel.IsOpened = false;
+			else
+				viewModel.IsOpened = true;
+		}
+
+		#endregion Methods
 	}
 }

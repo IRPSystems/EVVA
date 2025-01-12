@@ -18,8 +18,12 @@ namespace Evva.ViewModels
 			DevicesContainer devicesContainer,
 			ObservableCollection<DeviceParameterData> logParametersList) :
 			base(devicesContainer)
-		{			
-			GetMonitorRecParamsList(logParametersList);
+		{
+			MonitorParamsList = new ObservableCollection<DeviceParameterData>();
+			foreach (DeviceParameterData param in logParametersList)
+			{
+				MonitorParamsList.Add(param);
+			}
 
 			WeakReferenceMessenger.Default.Register<RECORD_LIST_CHANGEDMessage>(
 				this, new MessageHandler<object, RECORD_LIST_CHANGEDMessage>(RECORD_LIST_CHANGEDHandler));
@@ -32,44 +36,49 @@ namespace Evva.ViewModels
 
 		#region Method
 
+		//public override void Loaded()
+		//{
+		//	if (MonitorParamsList == null)
+		//		return;
 
-		public void GetMonitorRecParamsList(
-			ObservableCollection<DeviceParameterData> logParametersList)
-		{
-			//if (_isRcordingListChanged)
-			//	UnLoaded();
+		//	ObservableCollection<DeviceParameterData> oldList = new ObservableCollection<DeviceParameterData>(MonitorParamsList);
+		//	GetMonitorRecParamsList(oldList);
+		//}
 
-			MonitorParamsList = new ObservableCollection<DeviceParameterData>();
+		//public void GetMonitorRecParamsList(
+		//	ObservableCollection<DeviceParameterData> logParametersList)
+		//{
+			
 
-			foreach (DeviceParameterData param in logParametersList)
-			{
-				
+		//	ObservableCollection<DeviceParameterData> oldList = MonitorParamsList;
+		//	MonitorParamsList = new ObservableCollection<DeviceParameterData>();
 
-				//if (param.Value == null)
-				//	return;
-
-				//double d = 0;
-				//if (param.Value is string str)
-				//	double.TryParse(str, out d);
-				//else
-				//{
-				//	d = Convert.ToDouble(param.Value);
-				//}
-
-				//if (param is MCU_ParamData mcuParam)
-				//	d *= mcuParam.Scale;
-				//else if (param is Dyno_ParamData dynoParam)
-				//	d *= dynoParam.Coefficient;
-
-				//param.Value = d;
+		//	foreach (DeviceParameterData param in logParametersList)
+		//	{
+		//		if (oldList != null)
+		//		{
+		//			if (oldList.Contains(param) == false)
+		//				AddSingleParamToRepository(param);
+		//			else
+		//			{
+		//				oldList.Remove(param);
+		//			}
+		//		}
+		//		else
+		//			AddSingleParamToRepository(param);
 
 
-				MonitorParamsList.Add(param);
-			}
+		//		MonitorParamsList.Add(param);
+		//	}
 
-			//if (_isRcordingListChanged)
-			//	Loaded();
-		}
+		//	if (oldList == null)
+		//		return;
+
+		//	foreach (DeviceParameterData param in oldList)
+		//	{
+		//		RemoveSingleParamToRepository(param);
+		//	}
+		//}
 
 		
 		private void RECORD_LIST_CHANGEDHandler(object sender, RECORD_LIST_CHANGEDMessage e)

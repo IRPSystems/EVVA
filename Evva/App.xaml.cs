@@ -1,8 +1,10 @@
-﻿using Controls.Views;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Controls.Views;
 using ControlzEx.Theming;
 using Services.Services;
 using System.Windows;
 using System.Windows.Threading;
+using Entities.Models;
 
 namespace Evva
 {
@@ -36,7 +38,7 @@ namespace Evva
 			MainWindow.Show();
 			splash.Close();
 
-
+			WeakReferenceMessenger.Default.Send(new STARTUP_ENDEDMessage() {});
 		}
 
 		public static void ChangeDarkLight(bool isLightTheme)
