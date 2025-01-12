@@ -61,7 +61,6 @@ namespace Evva.ViewModels
 		public DesignViewModel Design { get; set; }
 		public ParametersViewModel RecordParam { get; set; }
 		public MonitorRecParamViewModel MonitorRecParam { get; set; }
-		public MonitorSecurityParamViewModel MonitorSecurityParam { get; set; }
 		public DeviceHandler.Faults.FaultsMCUViewModel Faults { get; set; }
 		public SwitchRelayStateViewModel SwitchRelayState { get; set; }
 		public CommunicationViewModel CommunicationSettings { get; set; }
@@ -570,9 +569,6 @@ namespace Evva.ViewModels
 				MonitorRecParam = new MonitorRecParamViewModel(
 					DevicesContainer,
 					RecordParam.RecordParamList.ParametersList);
-				MonitorSecurityParam = new MonitorSecurityParamViewModel(
-					DevicesContainer,
-					Run.RunScript);
 
 
 
@@ -627,7 +623,6 @@ namespace Evva.ViewModels
 						Design,
 						RecordParam,
 						MonitorRecParam,
-						MonitorSecurityParam,
 						Faults,
 						SwitchRelayState,
 						CommunicationSettings,
