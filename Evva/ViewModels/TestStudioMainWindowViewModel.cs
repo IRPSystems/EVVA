@@ -638,8 +638,6 @@ namespace Evva.ViewModels
 				MonitorTypesList = new List<MonitorType>
 				{
 					new MonitorType() { Name = "Recording parameters" },
-					new MonitorType() { Name = "Scurity parameters" },
-					//new MonitorType() { Name = "Faults" },
 					new MonitorType() { Name = "Switch Relay State" },
 				};
 

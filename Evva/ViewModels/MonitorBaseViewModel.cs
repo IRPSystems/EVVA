@@ -101,35 +101,42 @@ namespace Evva.ViewModels
 			ObservableCollection<DeviceParameterData> logParametersList,
 			bool isAlwaysAdd = false)
 		{
-
-
-			ObservableCollection<DeviceParameterData> oldList = MonitorParamsList;
-			MonitorParamsList = new ObservableCollection<DeviceParameterData>();
-
-			foreach (DeviceParameterData param in logParametersList)
+			try
 			{
-				if (oldList != null && isAlwaysAdd == false)
+
+				ObservableCollection<DeviceParameterData> oldList = 
+					new ObservableCollection<DeviceParameterData>(MonitorParamsList);
+				MonitorParamsList = new ObservableCollection<DeviceParameterData>();
+
+				foreach (DeviceParameterData param in logParametersList)
 				{
-					if (oldList.Contains(param) == false)
-						AddSingleParamToRepository(param);
-					else
+					if (oldList != null && isAlwaysAdd == false)
 					{
-						oldList.Remove(param);
+						if (oldList.Contains(param) == false)
+							AddSingleParamToRepository(param);
+						else
+						{
+							oldList.Remove(param);
+						}
 					}
+					else
+						AddSingleParamToRepository(param);
+
+
+					MonitorParamsList.Add(param);
 				}
-				else
-					AddSingleParamToRepository(param);
 
+				if (oldList == null || isAlwaysAdd)
+					return;
 
-				MonitorParamsList.Add(param);
+				foreach (DeviceParameterData param in oldList)
+				{
+					RemoveSingleParamToRepository(param);
+				}
 			}
-
-			if (oldList == null || isAlwaysAdd)
-				return;
-
-			foreach (DeviceParameterData param in oldList)
+			catch (Exception ex)
 			{
-				RemoveSingleParamToRepository(param);
+				LoggerService.Error(this, "Failed to load parameters", "Error", ex);
 			}
 		}
 

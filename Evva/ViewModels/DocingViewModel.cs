@@ -68,7 +68,6 @@ namespace Evva.ViewModels
 				design,
 				recordParam,
 				monitorRecParam,
-				monitorSecurityParam,
 				faults,
 				switchRelayState,
 				communicationSettings,
@@ -165,13 +164,6 @@ namespace Evva.ViewModels
 			SetHeader(_monitorRecParam, "Monitor - Record Param");
 			SetState(_monitorRecParam, DockState.Hidden);
 			Children.Add(_monitorRecParam);
-
-			_monitorSecurityParam = new ContentControl();
-			monitorView = new MonitorView() { DataContext = monitorSecurityParam };
-			_monitorSecurityParam.Content = monitorView;
-			SetHeader(_monitorSecurityParam, "Monitor - Security Param");
-			SetState(_monitorSecurityParam, DockState.Hidden);
-			Children.Add(_monitorSecurityParam);
 
 			_faultsMCU = new ContentControl();
 			FaultsMCUDataView faultsMCUView = new FaultsMCUDataView() { DataContext = faultsMCU };
