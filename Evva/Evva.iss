@@ -5,8 +5,8 @@ WizardStyle=modern
 DefaultDirName={autopf}\EVVA
 DefaultGroupName=EVVA
 
-SourceDir=C:\Projects\Evva_1.4.2.0\Evva\bin\Release\net6.0-windows
-OutputDir=C:\Projects\Evva_1.4.2.0\Evva\Output
+SourceDir=C:\Projects\Evva_1.4.4.0\Evva\bin\Release\net6.0-windows
+OutputDir=C:\Projects\Evva_1.4.4.0\Evva\Output
 OutputBaseFilename=EvvaSetup
 
 [Files]
