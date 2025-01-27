@@ -140,8 +140,16 @@ namespace Evva.ViewModels
 			}
 		}
 
+		protected virtual bool IsAddSingleParamToRepository(DeviceParameterData data)
+		{
+			return true;
+		}
+
 		protected void AddSingleParamToRepository(DeviceParameterData data)
 		{
+			if (IsAddSingleParamToRepository(data) == false)
+				return;
+
 			if (_devicesContainer.TypeToDevicesFullData.ContainsKey(data.DeviceType) == false)
 				return;
 

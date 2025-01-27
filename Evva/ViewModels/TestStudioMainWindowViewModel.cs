@@ -568,7 +568,8 @@ namespace Evva.ViewModels
 
 				MonitorRecParam = new MonitorRecParamViewModel(
 					DevicesContainer,
-					RecordParam.RecordParamList.ParametersList);
+					RecordParam.RecordParamList.ParametersList,
+					_canMessageSender);
 
 
 

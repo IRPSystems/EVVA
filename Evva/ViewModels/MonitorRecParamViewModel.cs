@@ -1,10 +1,14 @@
 ﻿
 using CommunityToolkit.Mvvm.Messaging;
+using DeviceCommunicators.DBC;
 using DeviceCommunicators.Models;
 using DeviceHandler.Models;
 using Entities.Models;
 using ScriptRunner.Models;
+using ScriptRunner.ViewModels;
 using System.Collections.ObjectModel;
+using static ScriptRunner.ViewModels.CANMessageSenderViewModel;
+using System.Linq;
 
 namespace Evva.ViewModels
 {
@@ -12,13 +16,18 @@ namespace Evva.ViewModels
 	{
 		private bool _isRcordingListChanged;
 
+		private CANMessageSenderViewModel _canMessageSender;
+
 		#region Constructor
 
 		public MonitorRecParamViewModel(
 			DevicesContainer devicesContainer,
-			ObservableCollection<DeviceParameterData> logParametersList) :
+			ObservableCollection<DeviceParameterData> logParametersList,
+			CANMessageSenderViewModel canMessageSender) :
 			base(devicesContainer)
 		{
+			_canMessageSender = canMessageSender;
+
 			MonitorParamsList = new ObservableCollection<DeviceParameterData>();
 			foreach (DeviceParameterData param in logParametersList)
 			{
@@ -88,6 +97,18 @@ namespace Evva.ViewModels
 			_isRcordingListChanged = false;
 		}
 
+		protected override bool IsAddSingleParamToRepository(DeviceParameterData param)
+		{
+			if(param is DBC_ParamData dbcParam)
+			{
+				CANMessageForSenderData canMsgData = _canMessageSender.CANMessagesList.ToList().Find((d) =>
+							d.Message.NodeId == dbcParam.ParentMessage.ID);
+				if (canMsgData != null)
+					return false;
+			}
+
+			return true;
+		}
 
 		#endregion Method
 	}
