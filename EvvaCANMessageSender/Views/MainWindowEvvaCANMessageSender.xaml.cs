@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EvvaCANMessageSender.ViewModels;
+using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,21 +15,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Evva.Views
+namespace EvvaCANMessageSender.Views
 {
 	/// <summary>
-	/// Interaction logic for RunExplorerView.xaml
+	/// Interaction logic for MainWindowEvvaCANMessageSender.xaml
 	/// </summary>
-	public partial class RunExplorerView : UserControl
+	public partial class MainWindowEvvaCANMessageSender : MetroWindow
 	{
-		public RunExplorerView()
+		public MainWindowEvvaCANMessageSender()
 		{
 			InitializeComponent();
+
+			DataContext = new EvvaCANMessageSenderViewModel();
 		}
-
-		private void lb_Loaded(object sender, RoutedEventArgs e)
-		{
-
-        }
-    }
+	}
 }
