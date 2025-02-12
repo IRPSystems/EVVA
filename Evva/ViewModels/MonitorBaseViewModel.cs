@@ -1,11 +1,14 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using DeviceCommunicators.Models;
 using DeviceHandler.Enums;
 using DeviceHandler.Models;
 using DeviceHandler.Models.DeviceFullDataModels;
 using Entities.Models;
+using ScriptRunner.Models;
+using Services.Services;
 using System;
 using System.Collections.ObjectModel;
 
@@ -23,9 +26,30 @@ namespace Evva.ViewModels
 		#region Fields
 
 		protected DevicesContainer _devicesContainer;
+
 		private bool _isFirstLoaded;
+		private bool _isStartupEnded;
+
+		public bool IsOpened;
 
 		public bool IsLoaded;
+
+		private bool _isExecutLoaded
+		{
+			get
+			{
+				if(IsOpened == false)
+					return false;
+
+				if (_isStartupEnded)
+					return true;
+
+				if(_isFirstLoaded)
+					return true;
+
+				return false;
+			}
+		}
 
 		#endregion Fields
 
@@ -34,13 +58,17 @@ namespace Evva.ViewModels
 		public MonitorBaseViewModel(
 			DevicesContainer devicesContainer)
 		{
-			_isFirstLoaded = false;
+			_isFirstLoaded = true;
+			IsOpened = false;
 			_devicesContainer = devicesContainer;
 
 			LoadedCommand = new RelayCommand(Loaded);
 			UnLoadedCommand = new RelayCommand(UnLoaded);
 
 			IsLoaded = false;
+
+			WeakReferenceMessenger.Default.Register<STARTUP_ENDEDMessage>(
+				this, new MessageHandler<object, STARTUP_ENDEDMessage>(STARTUP_ENDEDMessageHandler));
 		}
 
 		#endregion Constructor
@@ -52,32 +80,86 @@ namespace Evva.ViewModels
 		{
 		}
 
-		public void Loaded()
+		public virtual void Loaded()
 		{
-			if(!_isFirstLoaded)
-			{
-				_isFirstLoaded = true;
+			if (!_isExecutLoaded)
 				return;
-			}
 
 			if (MonitorParamsList == null)
 				return;
 
-			foreach (DeviceParameterData data in MonitorParamsList)
-			{
-				if (_devicesContainer.TypeToDevicesFullData.ContainsKey(data.DeviceType) == false)
-					continue;
+			_isFirstLoaded = false;
 
-				DeviceFullData deviceFullData =
-					_devicesContainer.TypeToDevicesFullData[data.DeviceType];
-				if (deviceFullData == null)
-					continue;
 
-				if(deviceFullData.ParametersRepository != null)
-					deviceFullData.ParametersRepository.Add(data, RepositoryPriorityEnum.Medium, null);
-			}
+			ObservableCollection<DeviceParameterData> oldList = new ObservableCollection<DeviceParameterData>(MonitorParamsList);
+			GetMonitorRecParamsList(oldList, true);
 
 			IsLoaded = true;
+		}
+
+		public void GetMonitorRecParamsList(
+			ObservableCollection<DeviceParameterData> logParametersList,
+			bool isAlwaysAdd = false)
+		{
+			try
+			{
+
+				ObservableCollection<DeviceParameterData> oldList = 
+					new ObservableCollection<DeviceParameterData>(MonitorParamsList);
+				MonitorParamsList = new ObservableCollection<DeviceParameterData>();
+
+				foreach (DeviceParameterData param in logParametersList)
+				{
+					if (oldList != null && isAlwaysAdd == false)
+					{
+						if (oldList.Contains(param) == false)
+							AddSingleParamToRepository(param);
+						else
+						{
+							oldList.Remove(param);
+						}
+					}
+					else
+						AddSingleParamToRepository(param);
+
+
+					MonitorParamsList.Add(param);
+				}
+
+				if (oldList == null || isAlwaysAdd)
+					return;
+
+				foreach (DeviceParameterData param in oldList)
+				{
+					RemoveSingleParamToRepository(param);
+				}
+			}
+			catch (Exception ex)
+			{
+				LoggerService.Error(this, "Failed to load parameters", "Error", ex);
+			}
+		}
+
+		protected virtual bool IsAddSingleParamToRepository(DeviceParameterData data)
+		{
+			return true;
+		}
+
+		protected void AddSingleParamToRepository(DeviceParameterData data)
+		{
+			if (IsAddSingleParamToRepository(data) == false)
+				return;
+
+			if (_devicesContainer.TypeToDevicesFullData.ContainsKey(data.DeviceType) == false)
+				return;
+
+			DeviceFullData deviceFullData =
+				_devicesContainer.TypeToDevicesFullData[data.DeviceType];
+			if (deviceFullData == null)
+				return;
+
+			if (deviceFullData.ParametersRepository != null)
+				deviceFullData.ParametersRepository.Add(data, RepositoryPriorityEnum.Medium, null);
 		}
 
 		protected void UnLoaded()
@@ -87,15 +169,25 @@ namespace Evva.ViewModels
 
 			foreach (DeviceParameterData data in MonitorParamsList)
 			{
-				DeviceFullData deviceFullData =
-					_devicesContainer.TypeToDevicesFullData[data.DeviceType];
-				if (deviceFullData == null)
-					return;
-
-				deviceFullData.ParametersRepository.Remove(data, null);
+				RemoveSingleParamToRepository(data);
 			}
 
 			IsLoaded = false;
+		}
+
+		protected void RemoveSingleParamToRepository(DeviceParameterData data)
+		{
+			DeviceFullData deviceFullData =
+					_devicesContainer.TypeToDevicesFullData[data.DeviceType];
+			if (deviceFullData == null)
+				return;
+
+			deviceFullData.ParametersRepository.Remove(data, null);
+		}
+
+		private void STARTUP_ENDEDMessageHandler(object sender, STARTUP_ENDEDMessage e)
+		{
+			_isStartupEnded = true;
 		}
 
 		#endregion Method

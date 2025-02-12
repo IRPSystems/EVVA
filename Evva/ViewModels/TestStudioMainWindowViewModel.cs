@@ -61,7 +61,6 @@ namespace Evva.ViewModels
 		public DesignViewModel Design { get; set; }
 		public ParametersViewModel RecordParam { get; set; }
 		public MonitorRecParamViewModel MonitorRecParam { get; set; }
-		public MonitorSecurityParamViewModel MonitorSecurityParam { get; set; }
 		public DeviceHandler.Faults.FaultsMCUViewModel Faults { get; set; }
 		public SwitchRelayStateViewModel SwitchRelayState { get; set; }
 		public CommunicationViewModel CommunicationSettings { get; set; }
@@ -569,10 +568,8 @@ namespace Evva.ViewModels
 
 				MonitorRecParam = new MonitorRecParamViewModel(
 					DevicesContainer,
-					RecordParam.RecordParamList.ParametersList);
-				MonitorSecurityParam = new MonitorSecurityParamViewModel(
-					DevicesContainer,
-					Run.RunScript);
+					RecordParam.RecordParamList.ParametersList,
+					_canMessageSender);
 
 
 
@@ -627,7 +624,6 @@ namespace Evva.ViewModels
 						Design,
 						RecordParam,
 						MonitorRecParam,
-						MonitorSecurityParam,
 						Faults,
 						SwitchRelayState,
 						CommunicationSettings,
@@ -643,8 +639,6 @@ namespace Evva.ViewModels
 				MonitorTypesList = new List<MonitorType>
 				{
 					new MonitorType() { Name = "Recording parameters" },
-					new MonitorType() { Name = "Scurity parameters" },
-					//new MonitorType() { Name = "Faults" },
 					new MonitorType() { Name = "Switch Relay State" },
 				};
 
@@ -1039,15 +1033,15 @@ namespace Evva.ViewModels
 				//	Faults.Loaded();
 				//}
 
-				if (MonitorRecParam != null && MonitorRecParam.IsLoaded)
-				{
-					MonitorRecParam.Loaded();
-				}
+				//if (MonitorRecParam != null && MonitorRecParam.IsLoaded)
+				//{
+				//	MonitorRecParam.Loaded();
+				//}
 
-				if (MonitorSecurityParam != null && MonitorSecurityParam.IsLoaded)
-				{
-					MonitorSecurityParam.Loaded();
-				}
+				//if (MonitorSecurityParam != null && MonitorSecurityParam.IsLoaded)
+				//{
+				//	MonitorSecurityParam.Loaded();
+				//}
 
 				
 

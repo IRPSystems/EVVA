@@ -12,6 +12,7 @@ using ScriptRunner.Views;
 using Syncfusion.Windows.Tools.Controls;
 using System;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Evva.ViewModels
@@ -51,7 +52,6 @@ namespace Evva.ViewModels
 			DesignViewModel design,
 			ParametersViewModel recordParam,
 			MonitorRecParamViewModel monitorRecParam,
-			MonitorSecurityParamViewModel monitorSecurityParam,
 			DeviceHandler.Faults.FaultsMCUViewModel faults,
 			SwitchRelayStateViewModel switchRelayState,
 			CommunicationViewModel communicationSettings,
@@ -68,7 +68,6 @@ namespace Evva.ViewModels
 				design,
 				recordParam,
 				monitorRecParam,
-				monitorSecurityParam,
 				faults,
 				switchRelayState,
 				communicationSettings,
@@ -88,7 +87,6 @@ namespace Evva.ViewModels
 			DesignViewModel design,
 			ParametersViewModel parameters,
 			MonitorRecParamViewModel monitorRecParam,
-			MonitorSecurityParamViewModel monitorSecurityParam,
 			DeviceHandler.Faults.FaultsMCUViewModel faultsMCU,
 			SwitchRelayStateViewModel switchRelayState,
 			CommunicationViewModel communicationSettings,
@@ -166,13 +164,6 @@ namespace Evva.ViewModels
 			SetHeader(_monitorRecParam, "Monitor - Record Param");
 			SetState(_monitorRecParam, DockState.Hidden);
 			Children.Add(_monitorRecParam);
-
-			_monitorSecurityParam = new ContentControl();
-			monitorView = new MonitorView() { DataContext = monitorSecurityParam };
-			_monitorSecurityParam.Content = monitorView;
-			SetHeader(_monitorSecurityParam, "Monitor - Security Param");
-			SetState(_monitorSecurityParam, DockState.Hidden);
-			Children.Add(_monitorSecurityParam);
 
 			_faultsMCU = new ContentControl();
 			FaultsMCUDataView faultsMCUView = new FaultsMCUDataView() { DataContext = faultsMCU };
@@ -323,6 +314,34 @@ namespace Evva.ViewModels
 				LoadDockState(path);
 		}
 
-#endregion Methods
+		protected override void LoadEventHandler_Specific()
+		{
+			SetRecMonitorIsOpened(_monitorRecParam);
+		}
+
+		protected override void DocingBaseViewModel_DockStateChanged_Specific(FrameworkElement sender, DockStateEventArgs e)
+		{
+			if (!(sender is ContentControl contentControl))
+				return;
+
+			SetRecMonitorIsOpened(contentControl);
+		}
+
+		protected void SetRecMonitorIsOpened(ContentControl contentControl)
+		{
+			if (!(contentControl.Content is MonitorView view))
+				return;
+
+			if (!(view.DataContext is MonitorRecParamViewModel viewModel))
+				return;
+
+			DockState state = GetState(_monitorRecParam);
+			if (state == DockState.Hidden)
+				viewModel.IsOpened = false;
+			else
+				viewModel.IsOpened = true;
+		}
+
+		#endregion Methods
 	}
 }
