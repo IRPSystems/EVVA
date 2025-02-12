@@ -2318,6 +2318,27 @@
           }
         ]
       },
+	  {
+        "Name": "Current Sensor Factory Gain                             ",
+        "Value": "",
+        "Description": "Choose whether this fault is ignored or not",
+        "Default": "Enabled",
+        "Cmd": "fltcfi",
+        "Range": null,
+        "Units": null,
+        "Note": null,
+        "Save": true,
+        "DropDown": [
+          {
+            "Name": "Enabled",
+            "Value": "0"
+          },
+          {
+            "Name": "Disabled",
+            "Value": "1"
+          }
+        ]
+      },
       {
         "Name": "CAN BUS No Communication       - 0x8180",
         "Value": "",
