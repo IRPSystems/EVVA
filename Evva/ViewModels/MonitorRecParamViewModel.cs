@@ -61,8 +61,8 @@ namespace Evva.ViewModels
 		//{
 			
 
-			foreach (DeviceParameterData param in logParametersList)
-			{
+			//foreach (DeviceParameterData param in logParametersList)
+			//{
 
 
 				//if (param.Value == null)
@@ -75,13 +75,13 @@ namespace Evva.ViewModels
 		//	if (oldList == null)
 		//		return;
 
-				if (param is DBC_ParamData dbcParam)
-				{
-					CANMessageForSenderData canMsgData = _canMessageSender.CANMessagesList.ToList().Find((d) =>
-								d.Message.NodeId == dbcParam.ParentMessage.ID);
-					if (canMsgData != null)
-						continue;
-				}
+				//if (param is DBC_ParamData dbcParam)
+				//{
+				//	CANMessageForSenderData canMsgData = _canMessageSender.CANMessagesList.ToList().Find((d) =>
+				//				d.Message.NodeId == dbcParam.ParentMessage.ID);
+				//	if (canMsgData != null)
+				//		continue;
+				//}
 
 		
 		private void RECORD_LIST_CHANGEDHandler(object sender, RECORD_LIST_CHANGEDMessage e)

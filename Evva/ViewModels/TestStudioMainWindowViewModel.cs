@@ -570,9 +570,6 @@ namespace Evva.ViewModels
 					DevicesContainer,
 					RecordParam.RecordParamList.ParametersList,
 					_canMessageSender);
-				MonitorSecurityParam = new MonitorSecurityParamViewModel(
-					DevicesContainer,
-					Run.RunScript);
 
 
 

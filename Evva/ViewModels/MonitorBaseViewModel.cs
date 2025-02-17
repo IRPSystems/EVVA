@@ -103,6 +103,8 @@ namespace Evva.ViewModels
 		{
 			try
 			{
+				if (MonitorParamsList == null)
+					return;
 
 				ObservableCollection<DeviceParameterData> oldList = 
 					new ObservableCollection<DeviceParameterData>(MonitorParamsList);
