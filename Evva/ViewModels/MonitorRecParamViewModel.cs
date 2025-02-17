@@ -28,6 +28,8 @@ namespace Evva.ViewModels
 		{
 			_canMessageSender = canMessageSender;
 
+			GetMonitorRecParamsList(logParametersList);
+
 			MonitorParamsList = new ObservableCollection<DeviceParameterData>();
 			foreach (DeviceParameterData param in logParametersList)
 			{
@@ -59,22 +61,12 @@ namespace Evva.ViewModels
 		//{
 			
 
-		//	ObservableCollection<DeviceParameterData> oldList = MonitorParamsList;
-		//	MonitorParamsList = new ObservableCollection<DeviceParameterData>();
+			foreach (DeviceParameterData param in logParametersList)
+			{
 
-		//	foreach (DeviceParameterData param in logParametersList)
-		//	{
-		//		if (oldList != null)
-		//		{
-		//			if (oldList.Contains(param) == false)
-		//				AddSingleParamToRepository(param);
-		//			else
-		//			{
-		//				oldList.Remove(param);
-		//			}
-		//		}
-		//		else
-		//			AddSingleParamToRepository(param);
+
+				//if (param.Value == null)
+				//	return;
 
 
 		//		MonitorParamsList.Add(param);
@@ -83,11 +75,13 @@ namespace Evva.ViewModels
 		//	if (oldList == null)
 		//		return;
 
-		//	foreach (DeviceParameterData param in oldList)
-		//	{
-		//		RemoveSingleParamToRepository(param);
-		//	}
-		//}
+				if (param is DBC_ParamData dbcParam)
+				{
+					CANMessageForSenderData canMsgData = _canMessageSender.CANMessagesList.ToList().Find((d) =>
+								d.Message.NodeId == dbcParam.ParentMessage.ID);
+					if (canMsgData != null)
+						continue;
+				}
 
 		
 		private void RECORD_LIST_CHANGEDHandler(object sender, RECORD_LIST_CHANGEDMessage e)
