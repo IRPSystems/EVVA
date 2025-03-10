@@ -207,15 +207,6 @@ namespace Evva.ViewModels
 			Children.Add(_mainScriptLogger);
 		}
 
-		private void SetFloatWindow(ContentControl control)
-		{
-			SetSizetoContentInDock(control, true);
-			SetSizetoContentInFloat(control, true);
-			SetState(control, DockState.Hidden);
-		}
-
-
-
 
 		public void OpenSettings()
 		{
