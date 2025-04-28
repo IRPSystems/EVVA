@@ -7,9 +7,9 @@
     <UseWPF>true</UseWPF>
 
 
-	  <Version>1.4.6.4</Version>
-	  <AssemblyVersion>1.4.6.4</AssemblyVersion>
-	  <FileVersion>1.4.6.4</FileVersion>
+	  <Version>1.4.6.5</Version>
+	  <AssemblyVersion>1.4.6.5</AssemblyVersion>
+	  <FileVersion>1.4.6.5</FileVersion>
 	  <ApplicationIcon>Resources\EVVA ICON.ico</ApplicationIcon>
 	  <Platforms>AnyCPU;x86;x64</Platforms>
 	  <PlatformTarget>x64</PlatformTarget>
