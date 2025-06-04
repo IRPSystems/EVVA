@@ -367,7 +367,7 @@
         "$type": "DeviceCommunicators.PowerSupplayEA.PowerSupplayEA_ParamData, DeviceCommunicators",
         "Name": "Remote On/Off",
         "Cmd": "SYST:LOCK",
-        "CommunicationTimeout": 3000,
+        "CommunicationTimeout": 10000,
         "Max": 1,
         "Units": null,
         "Value": null,
