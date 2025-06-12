@@ -6,11 +6,13 @@ using DesignDiagram.Views;
 using Newtonsoft.Json;
 using ScriptHandler.Models;
 using ScriptHandler.Models.ScriptNodes;
+using Services.Services;
 using Syncfusion.UI.Xaml.Diagram;
 using Syncfusion.UI.Xaml.Diagram.Stencil;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace DesignDiagram.ViewModels
@@ -142,20 +144,34 @@ namespace DesignDiagram.ViewModels
 			File.WriteAllText(DesignDiagram.ScriptPath, sz);
 		}
 
-		public void Open()//string path)
+		public async void Open()
 		{
-			string jsonString = File.ReadAllText(DesignDiagram.ScriptPath);
+			Mouse.OverrideCursor = Cursors.Wait;
 
-			JsonSerializerSettings settings = new JsonSerializerSettings();
-			settings.Formatting = Formatting.Indented;
-			settings.TypeNameHandling = TypeNameHandling.All;
-			DesignDiagram = JsonConvert.DeserializeObject(jsonString, settings) as ScriptData;
-
-			foreach (ScriptNodeBase tool in DesignDiagram.ScriptItemsList)
+			try
 			{
-				string toolName = tool.GetType().Name;
-				InitNodeBySymbol(null, toolName, tool);
+
+				string jsonString = File.ReadAllText(DesignDiagram.ScriptPath);
+
+				JsonSerializerSettings settings = new JsonSerializerSettings();
+				settings.Formatting = Formatting.Indented;
+				settings.TypeNameHandling = TypeNameHandling.All;
+				DesignDiagram = JsonConvert.DeserializeObject(jsonString, settings) as ScriptData;
+
+				foreach (ScriptNodeBase tool in DesignDiagram.ScriptItemsList)
+				{
+					string toolName = tool.GetType().Name;
+					InitNodeBySymbol(null, toolName, tool);
+
+					await Task.Delay(1);
+				}
 			}
+			catch (Exception ex)
+			{
+				LoggerService.Error(this, $"Failed to load the script \"{Name}\"", "Error", ex);
+			}
+
+			Mouse.OverrideCursor = null;
 		}
 
 		private void ItemAdded(object item)
