@@ -1,0 +1,434 @@
+﻿
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Controls.Interfaces;
+using DesignDiagram.Views;
+using Newtonsoft.Json;
+using ScriptHandler.Models;
+using ScriptHandler.Models.ScriptNodes;
+using Syncfusion.UI.Xaml.Diagram;
+using Syncfusion.UI.Xaml.Diagram.Stencil;
+using System.ComponentModel;
+using System.IO;
+using System.Windows;
+using System.Windows.Media;
+
+namespace DesignDiagram.ViewModels
+{
+	public class DesignDiagramViewModel: ObservableObject, IDocumentVM
+	{
+		#region Properties
+
+		public ScriptData DesignDiagram { get; set; }
+
+		public NodeCollection Nodes { get; set; }
+		public SnapSettings SnapSettings { get; set; }
+
+		public Syncfusion.UI.Xaml.Diagram.CommandManager CommandManager { get; set; }
+
+		public PageSettings PageSettings { get; set; }
+
+		public double OffsetX { get; set; }
+		public double OffsetY { get; set; }
+
+		public string Name
+		{
+			get
+			{
+				if(DesignDiagram == null)
+					return null;
+				return DesignDiagram.Name;
+			}
+			set { }
+		}
+
+		#endregion Properties
+
+		#region Fields
+
+		private NodePropertiesView _nodeProperties;
+
+		private bool _isChangingOffsetX;
+		private bool _isChangingOffsetY;
+
+		private const double _toolHeight = 35;
+		private const double _toolWidth = 300;
+		private const double _betweenTools = 60;
+		private const double _toolOffsetX = 100;
+
+		#endregion Fields
+
+		#region Constructor
+
+		public DesignDiagramViewModel(
+			string name,
+			string filePath,
+			NodePropertiesView nodeProperties,
+			double offsetX)
+		{
+			DesignDiagram = new ScriptData();
+			DesignDiagram.Name = name;
+			DesignDiagram.ScriptPath = filePath;
+
+			_nodeProperties = nodeProperties;
+			OffsetX = offsetX;
+
+			_isChangingOffsetX = false;
+			_isChangingOffsetY = false;
+
+			Nodes = new NodeCollection();
+			PageSettings = new PageSettings();
+
+			ItemAddedCommand = new RelayCommand<object>(ItemAdded);
+			ItemDeletedCommand = new RelayCommand<object>(ItemDeleted);
+			ItemSelectedCommand = new RelayCommand<object>(ItemSelected);
+			SaveDiagramCommand = new RelayCommand(Save);
+			OpenDiagramCommand = new RelayCommand(Open);
+
+			SetSnapAndGrid();
+
+			ChangeDarkLight();
+
+			OffsetY = 50;
+			AddHeaderNode();
+
+			//for (int i = 0; i < 500; i++)
+			//{
+			//	InitNodeBySymbol(null, "ScriptNodeDelay");
+			//}
+
+			//Save();
+			
+		}
+
+		#endregion Constructor
+
+		#region Methods
+
+		private void AddHeaderNode()
+		{
+			NodeViewModel node = new NodeViewModel();
+			node.Content = DesignDiagram;
+			node.ContentTemplate = 
+				Application.Current.FindResource("ScriptLogDiagramTemplate_Script") as DataTemplate;
+			node.UnitHeight = _toolHeight;
+			node.UnitWidth = _toolWidth;
+
+			node.OffsetX = 50;
+			node.OffsetY = OffsetY;
+
+			OffsetY += 40;
+
+			node.Pivot = new Point(0, 0);
+
+			Nodes.Add(node);
+		}
+
+		private void SetSnapAndGrid()
+		{
+			SnapSettings = new SnapSettings()
+			{
+				SnapConstraints = SnapConstraints.ShowLines,
+				SnapToObject = SnapToObject.All,
+			};
+		}
+
+		public void Save()
+		{
+			JsonSerializerSettings settings = new JsonSerializerSettings();
+			settings.Formatting = Formatting.Indented;
+			settings.TypeNameHandling = TypeNameHandling.All;
+			var sz = JsonConvert.SerializeObject(DesignDiagram, settings);
+			File.WriteAllText(DesignDiagram.ScriptPath, sz);
+		}
+
+		public void Open()//string path)
+		{
+			string jsonString = File.ReadAllText(DesignDiagram.ScriptPath);
+
+			JsonSerializerSettings settings = new JsonSerializerSettings();
+			settings.Formatting = Formatting.Indented;
+			settings.TypeNameHandling = TypeNameHandling.All;
+			DesignDiagram = JsonConvert.DeserializeObject(jsonString, settings) as ScriptData;
+
+			foreach (ScriptNodeBase tool in DesignDiagram.ScriptItemsList)
+			{
+				string toolName = tool.GetType().Name;
+				InitNodeBySymbol(null, toolName, tool);
+			}
+		}
+
+		private void ItemAdded(object item)
+		{
+			if (!(item is ItemAddedEventArgs itemAdded))
+				return;
+
+			if (!(itemAdded.Item is NodeViewModel node))
+				return;
+
+			if (itemAdded.OriginalSource is SymbolViewModel symbol)
+			{
+				InitNodeBySymbol(node, symbol.Symbol as string);
+			}
+			else
+			{
+				if(itemAdded != null && itemAdded.Info != null)
+					InitNodeBySymbol(node, (itemAdded.Info as PasteCommandInfo).SourceId as string);
+			}
+		}
+
+		private void ItemDeleted(object item)
+		{
+			if (!(item is ItemDeletedEventArgs itemDeleted))
+				return;
+
+			if (!(itemDeleted.Item is NodeViewModel node))
+				return;
+
+			DesignDiagram.ScriptItemsList.Remove(node.Content as ScriptNodeBase	);
+		}
+
+		private void InitNodeBySymbol(
+			NodeViewModel node,
+			string toolName,
+			ScriptNodeBase tool = null)
+		{
+			if(node == null)
+			{
+				node = new NodeViewModel();
+				node.Content = tool;
+				Nodes.Add(node);
+			}
+
+			node.ID = toolName;
+			node.Pivot = new Point(0, 0);
+
+			if (tool == null)
+			{
+				SetContent(node, toolName);
+			}
+
+			SetNodeTemplateAndSize(node, toolName);
+
+			//MatchNewNodeToTool(node, tool);
+
+			node.PropertyChanged += Node_PropertyChanged;
+
+			if (tool == null)
+				DesignDiagram.ScriptItemsList.Add(node.Content as ScriptNodeBase);
+		}
+
+		private void SetContent(
+			NodeViewModel node,
+			string toolName)
+		{
+			switch (toolName)
+			{
+				case "ScriptNodeCompare":
+					node.Content = new ScriptNodeCompare();
+					break;
+				case "ScriptNodeDelay":
+					node.Content = new ScriptNodeDelay();
+					break;
+				case "ScriptNodeDynamicControl":
+					node.Content = new ScriptNodeDynamicControl();
+					break;
+				case "ScriptNodeSweep":
+					node.Content = new ScriptNodeSweep();
+					break;
+				case "ScriptNodeSetParameter":
+					node.Content = new ScriptNodeSetParameter();
+					break;
+				case "ScriptNodeSetSaveParameter":
+					node.Content = new ScriptNodeSetSaveParameter();
+					break;
+				case "ScriptNodeSaveParameter":
+					node.Content = new ScriptNodeSaveParameter();
+					break;
+				case "ScriptNodeNotification":
+					node.Content = new ScriptNodeNotification();
+					break;
+				case "ScriptNodeSubScript":
+					node.Content = new ScriptNodeSubScript();
+					break;
+				case "ScriptNodeIncrementValue":
+					node.Content = new ScriptNodeIncrementValue();
+					break;
+				case "ScriptNodeLoopIncrement":
+					node.Content = new ScriptNodeLoopIncrement();
+					break;
+				case "ScriptNodeConverge":
+					node.Content = new ScriptNodeConverge();
+					break;
+				case "ScriptNodeCompareRange":
+					node.Content = new ScriptNodeCompareRange();
+					break;
+				case "ScriptNodeCompareWithTolerance":
+					node.Content = new ScriptNodeCompareWithTolerance();
+					break;
+				case "ScriptNodeCANMessage":
+					node.Content = new ScriptNodeCANMessage();
+					break;
+				case "ScriptNodeCANMessageUpdate":
+					node.Content = new ScriptNodeCANMessageUpdate();
+					break;
+				case "ScriptNodeCANMessageStop":
+					node.Content = new ScriptNodeCANMessageStop();
+					break;
+				case "ScriptNodeStopContinuous":
+					node.Content = new ScriptNodeStopContinuous();
+					break;
+				case "ScriptNodeEOLFlash":
+					node.Content = new ScriptNodeEOLFlash();
+					break;
+				case "ScriptNodeEOLCalibrate":
+					node.Content = new ScriptNodeEOLCalibrate();
+					break;
+				case "ScriptNodeEOLSendSN":
+					node.Content = new ScriptNodeEOLSendSN();
+					break;
+				case "ScriptNodeResetParentSweep":
+					node.Content = new ScriptNodeResetParentSweep();
+					break;
+				case "ScriptNodeScopeSave":
+					node.Content = new ScriptNodeScopeSave();
+					break;
+				case "ScriptNodeEOLPrint":
+					node.Content = new ScriptNodeEOLPrint();
+					break;
+				case "ScriptNodeCompareBit":
+					node.Content = new ScriptNodeCompareBit();
+					break;
+			}
+		}
+
+		private void SetNodeTemplateAndSize(
+			NodeViewModel node,
+			string toolName)
+		{
+			
+
+			node.ContentTemplate = 
+				Application.Current.FindResource("ScriptLogDiagramTemplate_Step") as DataTemplate;
+
+
+			node.UnitHeight = _toolHeight;
+			node.UnitWidth = _toolWidth;
+
+			node.OffsetX = _toolOffsetX;
+			node.OffsetY = OffsetY;
+			(node.Content as ScriptNodeBase).OffsetX = _toolOffsetX;
+			(node.Content as ScriptNodeBase).OffsetY = OffsetY;
+			OffsetY += _betweenTools;
+		}
+
+		private void MatchNewNodeToTool(
+			NodeViewModel node,
+			ScriptNodeBase tool)
+		{
+			if (node == null)
+				return;
+
+			
+
+			if (tool != null)
+			{
+				node.OffsetX = tool.OffsetX;
+				node.OffsetY = tool.OffsetY;
+				node.UnitWidth = tool.Width;
+				node.UnitHeight = tool.Height;
+			}
+
+			else if (node.Content is ScriptNodeBase toolNew)
+			{
+				toolNew.OffsetX = node.OffsetX;
+				toolNew.OffsetY = node.OffsetY;
+				toolNew.Width = node.UnitWidth;
+				toolNew.Height = node.UnitHeight;
+			}
+		}
+
+		
+		private void Node_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if(!(sender is NodeViewModel node))
+				return;
+
+			if (!(node.Content is ScriptNodeBase tool))
+				return;
+			
+			if (e.PropertyName == "OffsetX")
+			{
+				if (_isChangingOffsetX)
+					return;
+
+				_isChangingOffsetX = true;
+				node.OffsetX = (node.Content as ScriptNodeBase).OffsetX;
+				_isChangingOffsetX = false;
+			}
+
+			if (e.PropertyName == "OffsetY")
+			{
+				if (_isChangingOffsetY)
+					return;
+
+				_isChangingOffsetY = true;
+				node.OffsetY = (node.Content as ScriptNodeBase).OffsetY;
+				_isChangingOffsetY = false;
+			}
+
+			if (e.PropertyName == "UnitWidth")
+			{
+				tool.Width = node.UnitWidth;
+			}
+
+			if (e.PropertyName == "UnitHeight")
+			{
+				tool.Height = node.UnitHeight;
+			}
+		}
+
+		private void ItemSelected(object e)
+		{
+			if (!(e is ItemSelectedEventArgs itemSelectedData))
+				return;
+
+			if (!(itemSelectedData.Item is NodeViewModel node))
+				return;
+
+			if (!(node.Content is ScriptNodeBase toolBase))
+				return;
+
+			SetPropertyGridSelectedNode(toolBase);
+		}
+
+		private void SetPropertyGridSelectedNode(ScriptNodeBase toolBase)
+		{
+			_nodeProperties.DataContext = toolBase;
+		}
+
+		public void ChangeDarkLight()
+		{
+			PageSettings.PageBackground =
+				App.Current.Resources["MahApps.Brushes.ThemeBackground"] as SolidColorBrush;
+		}
+
+		#endregion Methods
+
+		#region Commands
+
+		public RelayCommand<object> ItemAddedCommand { get; private set; }
+		public RelayCommand<object> ItemDeletedCommand { get; private set; }
+		public RelayCommand<object> ItemSelectedCommand { get; private set; }
+
+
+		public RelayCommand SaveDiagramCommand { get; private set; }
+		public RelayCommand OpenDiagramCommand { get; private set; }
+
+		public RelayCommand CopyCommand { get; private set; }
+		public RelayCommand PastCommand { get; private set; }
+		public RelayCommand SaveCommand { get; private set; }
+
+		#endregion Commands
+	}
+}
