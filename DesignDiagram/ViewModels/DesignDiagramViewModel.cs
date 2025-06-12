@@ -50,8 +50,7 @@ namespace DesignDiagram.ViewModels
 
 		private NodePropertiesView _nodeProperties;
 
-		private bool _isChangingOffsetX;
-		private bool _isChangingOffsetY;
+		private bool _isInPropertyChanged;
 
 		private const double _toolHeight = 35;
 		private const double _toolWidth = 300;
@@ -75,8 +74,7 @@ namespace DesignDiagram.ViewModels
 			_nodeProperties = nodeProperties;
 			OffsetX = offsetX;
 
-			_isChangingOffsetX = false;
-			_isChangingOffsetY = false;
+			_isInPropertyChanged = false;
 
 			Nodes = new NodeCollection();
 			PageSettings = new PageSettings();
@@ -113,13 +111,13 @@ namespace DesignDiagram.ViewModels
 			node.Content = DesignDiagram;
 			node.ContentTemplate = 
 				Application.Current.FindResource("ScriptLogDiagramTemplate_Script") as DataTemplate;
-			node.UnitHeight = _toolHeight;
+			node.UnitHeight = 50;
 			node.UnitWidth = _toolWidth;
 
 			node.OffsetX = 50;
 			node.OffsetY = OffsetY;
 
-			OffsetY += 40;
+			OffsetY += 35;
 
 			node.Pivot = new Point(0, 0);
 
@@ -202,6 +200,21 @@ namespace DesignDiagram.ViewModels
 				return;
 
 			DesignDiagram.ScriptItemsList.Remove(node.Content as ScriptNodeBase	);
+
+			OffsetY = 50 + 35;
+
+			foreach(NodeViewModel nodeItem in Nodes)
+			{
+				if(!(nodeItem.Content is ScriptNodeBase scriptNodeBase))
+					continue;
+
+				scriptNodeBase.OffsetX = _toolOffsetX;
+				scriptNodeBase.OffsetY = OffsetY;
+				nodeItem.OffsetX = _toolOffsetX;
+				nodeItem.OffsetY = OffsetY;
+
+				OffsetY += _betweenTools;
+			}
 		}
 
 		private void InitNodeBySymbol(
@@ -330,6 +343,8 @@ namespace DesignDiagram.ViewModels
 
 			node.UnitHeight = _toolHeight;
 			node.UnitWidth = _toolWidth;
+			(node.Content as ScriptNodeBase).Height = _toolHeight;
+			(node.Content as ScriptNodeBase).Width = _toolWidth;
 
 			node.OffsetX = _toolOffsetX;
 			node.OffsetY = OffsetY;
@@ -375,32 +390,42 @@ namespace DesignDiagram.ViewModels
 			
 			if (e.PropertyName == "OffsetX")
 			{
-				if (_isChangingOffsetX)
+				if (_isInPropertyChanged)
 					return;
 
-				_isChangingOffsetX = true;
+				_isInPropertyChanged = true;
 				node.OffsetX = (node.Content as ScriptNodeBase).OffsetX;
-				_isChangingOffsetX = false;
+				_isInPropertyChanged = false;
 			}
 
 			if (e.PropertyName == "OffsetY")
 			{
-				if (_isChangingOffsetY)
+				if (_isInPropertyChanged)
 					return;
 
-				_isChangingOffsetY = true;
+				_isInPropertyChanged = true;
 				node.OffsetY = (node.Content as ScriptNodeBase).OffsetY;
-				_isChangingOffsetY = false;
+				_isInPropertyChanged = false;
 			}
 
 			if (e.PropertyName == "UnitWidth")
 			{
-				tool.Width = node.UnitWidth;
+				if (_isInPropertyChanged)
+					return;
+
+				_isInPropertyChanged = true;
+				node.UnitWidth = (node.Content as ScriptNodeBase).Width;
+				_isInPropertyChanged = false;
 			}
 
 			if (e.PropertyName == "UnitHeight")
 			{
-				tool.Height = node.UnitHeight;
+				if (_isInPropertyChanged)
+					return;
+
+				_isInPropertyChanged = true;
+				node.UnitHeight = (node.Content as ScriptNodeBase).Height;
+				_isInPropertyChanged = false;
 			}
 		}
 
