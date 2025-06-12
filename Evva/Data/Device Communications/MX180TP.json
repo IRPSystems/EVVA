@@ -1,0 +1,124 @@
+{
+  "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.MX180TP.MX180TP_ParamData, DeviceCommunicators",
+        "Name": "Set Voltage",
+        "Cmd": "V",
+        "Units": "V",
+        "Max": 120,
+        "Value": null,
+        "DeviceType": 25,
+        "HasValue": true,
+        "Channel": null
+      },
+      {
+        "$type": "DeviceCommunicators.MX180TP.MX180TP_ParamData, DeviceCommunicators",
+        "Name": "Set Current",
+        "Cmd": "I",
+        "Units": "A",
+        "Max": 20,
+        "Value": null,
+        "DeviceType": 25,
+        "HasValue": true,
+        "Channel": null
+      },
+	  {
+        "$type": "DeviceCommunicators.MX180TP.MX180TP_ParamData, DeviceCommunicators",
+        "Name": "Set Overcurrent Protection Value",
+        "Cmd": "OCP",
+        "Units": "A",
+        "Max": 20,
+        "Value": null,
+        "DeviceType": 25,
+        "HasValue": true,
+        "Channel": null
+      },
+	  {
+        "$type": "DeviceCommunicators.MX180TP.MX180TP_ParamData, DeviceCommunicators",
+        "Name": "Enable/Disable Overcurrent Protection ",
+        "Cmd": "OCP",
+        "Units": "A",
+        "Value": null,
+        "DeviceType": 25,
+        "HasValue": true,
+        "Channel": null,
+		"DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "OFF",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ON",
+              "Value": "1"
+            }
+          ]
+        }
+      },
+      {
+        "$type": "DeviceCommunicators.MX180TP.MX180TP_ParamData, DeviceCommunicators",
+        "Name": "Turn Output ON/OFF",
+        "Cmd": "OP<N>",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 25,
+        "HasValue": true,
+        "Channel": null,
+		"DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "OFF",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ON",
+              "Value": "1"
+            }
+          ]
+        }
+      },
+      {
+        "$type": "DeviceCommunicators.MX180TP.MX180TP_ParamData, DeviceCommunicators",
+        "Name": "Read Voltage Output",
+        "Cmd": "VO<N>?",
+        "Units": "V",
+        "Value": null,
+        "DeviceType": 25,
+        "HasValue": false,
+        "Channel": null
+      },
+	  {
+        "$type": "DeviceCommunicators.MX180TP.MX180TP_ParamData, DeviceCommunicators",
+        "Name": "Read Current Output",
+        "Cmd": "I<N>?",
+        "Units": "I",
+        "Value": null,
+        "DeviceType": 25,
+        "HasValue": false,
+        "Channel": null
+      },
+      {
+        "$type": "DeviceCommunicators.MX180TP.MX180TP_ParamData, DeviceCommunicators",
+        "Name": "Identify",
+        "Cmd": "*IDN?",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 25,
+        "HasValue": false,
+        "Channel": null
+      },
+    ]
+  },
+  "Name": "MX180TP",
+  "AcquisitionRate": 10,
+  "DeviceType": 25
+}

@@ -1,0 +1,104 @@
+{
+  "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.IT_M3100.IT_M3100_ParamData, DeviceCommunicators",
+        "Name": "Set Voltage",
+        "Cmd": "VOLT",
+        "Units": "V",
+        "Max": 600,
+        "Value": null,
+        "DeviceType": 26,
+        "HasValue": true
+      },
+      {
+        "$type": "DeviceCommunicators.IT_M3100.IT_M3100_ParamData, DeviceCommunicators",
+        "Name": "Set Current",
+        "Cmd": "CURR",
+        "Units": "A",
+        "Max": 100,
+        "Value": null,
+        "DeviceType": 26,
+        "HasValue": true
+      },
+      {
+        "$type": "DeviceCommunicators.IT_M3100.IT_M3100_ParamData, DeviceCommunicators",
+        "Name": "Turn Output ON/OFF",
+        "Cmd": "OUTP",
+        "Units": null,
+        "Max": 1,
+        "Value": null,
+        "DeviceType": 26,
+        "HasValue": true
+      },
+      {
+        "$type": "DeviceCommunicators.IT_M3100.IT_M3100_ParamData, DeviceCommunicators",
+        "Name": "Read Current",
+        "Cmd": "MEAS:CURR?",
+        "Units": "A",
+        "Max": 100,
+        "Value": null,
+        "DeviceType": 26,
+        "HasValue": false
+      },
+      {
+        "$type": "DeviceCommunicators.IT_M3100.IT_M3100_ParamData, DeviceCommunicators",
+        "Name": "Set Overcurrent Protection",
+        "Cmd": "CURR:PROT",
+        "Units": "A",
+        "Max": 100,
+        "Value": null,
+        "DeviceType": 26,
+        "HasValue": true
+      },
+      {
+        "$type": "DeviceCommunicators.IT_M3100.IT_M3100_ParamData, DeviceCommunicators",
+        "Name": "Enable/Disable Overcurrent Protection",
+        "Cmd": "CURR:PROT:STAT",
+        "Units": null,
+        "Max": 1,
+        "Value": null,
+        "DeviceType": 26,
+        "HasValue": true,
+        "DropDown": {
+          "$type": "System.Collections.Generic.List`1[[Entities.Models.DropDownParamData, Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "OFF",
+              "Value": "0"
+            },
+            {
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ON",
+              "Value": "1"
+            }
+          ]
+        }
+      },
+      {
+        "$type": "DeviceCommunicators.IT_M3100.IT_M3100_ParamData, DeviceCommunicators",
+        "Name": "Identify",
+        "Cmd": "*IDN?",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 26,
+        "HasValue": false
+      },
+      {
+        "$type": "DeviceCommunicators.IT_M3100.IT_M3100_ParamData, DeviceCommunicators",
+        "Name": "System Error Query",
+        "Cmd": "SYST:ERR?",
+        "Units": null,
+        "Value": null,
+        "DeviceType": 26,
+        "HasValue": false
+      }
+    ]
+  },
+  "Name": "IT-M3100",
+  "AcquisitionRate": 10,
+  "DeviceType": 26
+}

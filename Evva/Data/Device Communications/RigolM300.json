@@ -1,0 +1,190 @@
+{
+  "$type": "DeviceCommunicators.Models.DeviceData, DeviceCommunicators",
+  "ParemetersList": {
+    "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DeviceCommunicators.Models.DeviceParameterData, DeviceCommunicators]], System.ObjectModel",
+    "$values": [
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "DC Voltage",
+        "Cmd": "CONF:VOLT:DC",
+        "Max": 300,
+        "Units": "V",
+        "Value": null,
+        "DeviceType": 24,
+        "ValueType": "float",
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "AC Voltage",
+        "Cmd": "CONF:VOLT:AC",
+        "Max": 300,
+        "Units": "V",
+        "Value": null,
+        "DeviceType": 24,
+        "ValueType": "float",
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "DC Current",
+        "Cmd": "CONF:CURR:DC",
+        "Max": 1,
+        "Units": "A",
+        "Value": null,
+        "DeviceType": 24,
+        "ValueType": "float",
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "AC Current",
+        "Cmd": "CONF:CURR:AC",
+        "Max": 1,
+        "Units": "A",
+        "Value": null,
+        "DeviceType": 24,
+        "ValueType": "float",
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Resistance 2W",
+        "Cmd": "CONF:RES",
+        "Max": 100000000,
+        "Units": "Ω",
+        "Value": null,
+        "DeviceType": 24,
+        "ValueType": "float",
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Frequency",
+        "Cmd": "CONF:FREQ",
+        "Max": 1000000,
+        "Units": "Hz",
+        "Value": null,
+        "DeviceType": 24,
+        "ValueType": "float",
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Temperature (Thermocouple K)",
+        "Cmd": "CONF:TEMP",
+        "Max": 1372,
+        "Units": "°C",
+        "Value": null,
+        "DeviceType": 24,
+        "ValueType": "float",
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Identify",
+        "Cmd": "*IDN?",
+        "DeviceType": 24,
+        "ValueType": "string",
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Last Reading",
+        "Cmd": "DATA:LAST?",
+        "DeviceType": 24,
+        "ValueType": "string",
+        "Channel": null,
+        "Slot": null
+      },
+	  {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Measure DC Voltage",
+        "Cmd": "MEAS:VOLT:DC",
+        "DeviceType": 24,
+        "Units": "V",
+        "ValueType": "float",
+        "Value": null,
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Measure AC Voltage",
+        "Cmd": "MEAS:VOLT:AC",
+        "DeviceType": 24,
+        "Units": "V",
+        "ValueType": "float",
+        "Value": null,
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Measure DC Current",
+        "Cmd": "MEAS:CURR:DC",
+        "DeviceType": 24,
+        "Units": "A",
+        "ValueType": "float",
+        "Value": null,
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Measure AC Current",
+        "Cmd": "MEAS:CURR:AC",
+        "DeviceType": 24,
+        "Units": "A",
+        "ValueType": "float",
+        "Value": null,
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Measure Resistance",
+        "Cmd": "MEAS:RES",
+        "DeviceType": 24,
+        "Units": "\u03a9",
+        "ValueType": "float",
+        "Value": null,
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Measure Frequency",
+        "Cmd": "MEAS:FREQ",
+        "DeviceType": 24,
+        "Units": "Hz",
+        "ValueType": "float",
+        "Value": null,
+        "Channel": null,
+        "Slot": null
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Measure Temperature",
+        "Cmd": "MEAS:TEMP",
+        "DeviceType": 24,
+        "Units": "\u00b0C",
+        "ValueType": "float",
+        "Value": null,
+        "Channel": null,
+        "Slot": null
+      }
+    ]
+  },
+  "Name": "Rigol M300",
+  "AcquisitionRate": 10,
+  "DeviceType": 24
+}
