@@ -55,7 +55,7 @@ namespace DesignDiagram.ViewModels
 
 		private const double _toolHeight = 35;
 		private const double _toolWidth = 300;
-		private const double _betweenTools = 60;
+		private const double _betweenTools = 45;
 		private const double _toolOffsetX = 100;
 
 		private bool _isMouseDown;
@@ -502,15 +502,13 @@ namespace DesignDiagram.ViewModels
 			Vector diff = _startPoint - mousePos;
 
 			if (e.LeftButton == MouseButtonState.Pressed &&
-				Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+				//Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
 				Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
 			{
 
 				Node node = FindAncestorService.FindAncestor<Node>((DependencyObject)e.OriginalSource);
 				if(node == null)
 					return;
-
-				if(node.DataContext == null) { }
 
 				DataObject dragData = new DataObject("SfDiagram", node);
 				DragDrop.DoDragDrop(
@@ -532,8 +530,6 @@ namespace DesignDiagram.ViewModels
 		{
 			Node nodeDropedOn =
 					FindAncestorService.FindAncestor<Node>((DependencyObject)e.OriginalSource);
-			//if (nodeDropedOn == null)
-			//	return;
 
 			NodeViewModel nodeVMDropedOn = null;
 			if (nodeDropedOn != null)
