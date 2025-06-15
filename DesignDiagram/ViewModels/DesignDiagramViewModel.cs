@@ -12,6 +12,7 @@ using Syncfusion.UI.Xaml.Diagram.Stencil;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -57,6 +58,9 @@ namespace DesignDiagram.ViewModels
 		private const double _betweenTools = 60;
 		private const double _toolOffsetX = 100;
 
+		private bool _isMouseDown;
+		private Point _startPoint;
+
 		#endregion Fields
 
 		#region Constructor
@@ -82,6 +86,7 @@ namespace DesignDiagram.ViewModels
 			ItemAddedCommand = new RelayCommand<object>(ItemAdded);
 			ItemDeletedCommand = new RelayCommand<object>(ItemDeleted);
 			ItemSelectedCommand = new RelayCommand<object>(ItemSelected);
+
 			SaveDiagramCommand = new RelayCommand(Save);
 			OpenDiagramCommand = new RelayCommand(Open);
 
@@ -199,7 +204,13 @@ namespace DesignDiagram.ViewModels
 			if (!(itemDeleted.Item is NodeViewModel node))
 				return;
 
-			DesignDiagram.ScriptItemsList.Remove(node.Content as ScriptNodeBase	);
+			DesignDiagram.ScriptItemsList.Remove(node.Content as ScriptNodeBase);
+
+			ReAragneNodex();
+		}
+
+		private void ReAragneNodex()
+		{ 
 
 			OffsetY = 50 + 35;
 
@@ -454,6 +465,127 @@ namespace DesignDiagram.ViewModels
 				App.Current.Resources["MahApps.Brushes.ThemeBackground"] as SolidColorBrush;
 		}
 
+
+		#region Drag
+
+		private void Diagram_MouseEnter(MouseEventArgs e)
+		{
+			if (e.MouseDevice.LeftButton == MouseButtonState.Pressed)
+				_isMouseDown = true;
+			else
+				_isMouseDown = false;
+		}
+
+		private void Diagram_PreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+		{
+			_isMouseDown = true;
+			_startPoint = e.GetPosition(null);
+		}
+
+		private void Diagram_PreviewMouseLeftButtonUp(MouseButtonEventArgs e)
+		{
+			_isMouseDown = false;
+		}
+
+		private void Diagram_MouseMove(MouseEventArgs e)
+		{
+			if (_isMouseDown == false)
+				return;
+
+			DragObject(e);
+		}
+
+		private void DragObject(MouseEventArgs e)
+		{
+			
+			Point mousePos = e.GetPosition(null);
+			Vector diff = _startPoint - mousePos;
+
+			if (e.LeftButton == MouseButtonState.Pressed &&
+				Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+				Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+			{
+
+				Node node = FindAncestorService.FindAncestor<Node>((DependencyObject)e.OriginalSource);
+				if(node == null)
+					return;
+
+				if(node.DataContext == null) { }
+
+				DataObject dragData = new DataObject("SfDiagram", node);
+				DragDrop.DoDragDrop(
+					node,
+					dragData,
+					DragDropEffects.Move);
+
+			}
+		}
+
+		
+
+		#endregion Drag
+
+
+		#region Drop
+
+		private void Diagram_Drop(DragEventArgs e)
+		{
+			Node nodeDropedOn =
+					FindAncestorService.FindAncestor<Node>((DependencyObject)e.OriginalSource);
+			//if (nodeDropedOn == null)
+			//	return;
+
+			NodeViewModel nodeVMDropedOn = null;
+			if (nodeDropedOn != null)
+				nodeVMDropedOn = nodeDropedOn.DataContext as NodeViewModel;
+
+
+			var dragData = e.Data.GetData("SfDiagram");
+			if (!(dragData is Node dragedNode))
+				return;
+
+			NodeViewModel dragedNodeVM = null;
+			if (dragedNode.DataContext is SelectorViewModel selectorVM)
+			{
+				dragedNodeVM = selectorVM.SelectedItem as NodeViewModel;
+			}
+			else if (dragedNode.DataContext is NodeViewModel)
+			{
+				dragedNodeVM = (NodeViewModel)dragedNode.DataContext;
+			}
+			else if(dragedNodeVM == null)
+			{
+				return;
+			}
+
+			NodeViewModel temp = dragedNodeVM;
+			int dragedIndex = Nodes.IndexOf(dragedNodeVM);
+			Nodes.RemoveAt(dragedIndex);
+
+			int dropedOnIndex = Nodes.IndexOf(nodeVMDropedOn);
+			if (dropedOnIndex < 0)
+			{
+				Nodes.Add(temp);
+			}
+			else
+			{
+				Nodes.Insert(dropedOnIndex, dragedNodeVM);
+			}
+
+			ReAragneNodex();
+		}
+
+
+		private void Diagram_DragEnter(DragEventArgs e)
+		{
+			if (!e.Data.GetDataPresent(DeviceHandler.ViewModel.ParametersViewModel.DragDropFormat))
+			{
+				e.Effects = DragDropEffects.None;
+			}
+		}
+
+		#endregion Drop		
+
 		#endregion Methods
 
 		#region Commands
@@ -469,6 +601,80 @@ namespace DesignDiagram.ViewModels
 		public RelayCommand CopyCommand { get; private set; }
 		public RelayCommand PastCommand { get; private set; }
 		public RelayCommand SaveCommand { get; private set; }
+
+
+		#region Drag
+
+		private RelayCommand<MouseEventArgs> _Diagram_MouseEnterCommand;
+		public RelayCommand<MouseEventArgs> Diagram_MouseEnterCommand
+		{
+			get
+			{
+				return _Diagram_MouseEnterCommand ?? (_Diagram_MouseEnterCommand =
+					new RelayCommand<MouseEventArgs>(Diagram_MouseEnter));
+			}
+		}
+
+		private RelayCommand<MouseButtonEventArgs> _Diagram_PreviewMouseLeftButtonDownCommant;
+		public RelayCommand<MouseButtonEventArgs> Diagram_PreviewMouseLeftButtonDownCommant
+		{
+			get
+			{
+				return _Diagram_PreviewMouseLeftButtonDownCommant ?? (_Diagram_PreviewMouseLeftButtonDownCommant =
+					new RelayCommand<MouseButtonEventArgs>(Diagram_PreviewMouseLeftButtonDown));
+			}
+		}
+
+		private RelayCommand<MouseButtonEventArgs> _Diagram_PreviewMouseLeftButtonUpCommant;
+		public RelayCommand<MouseButtonEventArgs> Diagram_PreviewMouseLeftButtonUpCommant
+		{
+			get
+			{
+				return _Diagram_PreviewMouseLeftButtonUpCommant ?? (_Diagram_PreviewMouseLeftButtonUpCommant =
+					new RelayCommand<MouseButtonEventArgs>(Diagram_PreviewMouseLeftButtonUp));
+			}
+		}
+
+		private RelayCommand<MouseEventArgs> _Diagram_MouseMoveCommand;
+		public RelayCommand<MouseEventArgs> Diagram_MouseMoveCommand
+		{
+			get
+			{
+				return _Diagram_MouseMoveCommand ?? (_Diagram_MouseMoveCommand =
+					new RelayCommand<MouseEventArgs>(Diagram_MouseMove));
+			}
+		}
+
+
+
+
+
+		#endregion Drag
+
+
+		#region Drop
+
+		private RelayCommand<DragEventArgs> _Diagram_DropCommand;
+		public RelayCommand<DragEventArgs> Diagram_DropCommand
+		{
+			get
+			{
+				return _Diagram_DropCommand ?? (_Diagram_DropCommand =
+					new RelayCommand<DragEventArgs>(Diagram_Drop));
+			}
+		}
+
+		private RelayCommand<DragEventArgs> _Diagram_DragEnterCommand;
+		public RelayCommand<DragEventArgs> Diagram_DragEnterCommand
+		{
+			get
+			{
+				return _Diagram_DragEnterCommand ?? (_Diagram_DragEnterCommand =
+					new RelayCommand<DragEventArgs>(Diagram_DragEnter));
+			}
+		}
+
+		#endregion Drop
 
 		#endregion Commands
 	}

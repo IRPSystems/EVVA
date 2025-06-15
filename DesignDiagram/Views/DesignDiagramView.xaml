@@ -64,11 +64,63 @@
         <syncfusion:SfDiagram Grid.Row="2"
                               Nodes="{Binding Nodes}"
                               SnapSettings="{Binding SnapSettings}"
+                              PageSettings="{Binding PageSettings}"
                               ItemAddedCommand="{Binding ItemAddedCommand}"
                               ItemSelectedCommand="{Binding ItemSelectedCommand}"
                               ItemDeletedCommand="{Binding ItemDeletedCommand}"
-                              PageSettings="{Binding PageSettings}"
-                              Background="{DynamicResource MahApps.Brushes.ThemeBackground}"/>
+                              DragEnterCommand="{Binding DragEnterCommand}"
+                              Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
+
+            <i:Interaction.Triggers>
+
+                <i:EventTrigger EventName="Drop">
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.Diagram_DropCommand, 
+                                                 Mode=OneWay, 
+                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=syncfusion:SfDiagram}}" 
+                               PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+
+                <i:EventTrigger EventName="DragEnter">
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.Diagram_DragEnterCommand, 
+                                                 Mode=OneWay, 
+                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=syncfusion:SfDiagram}}" 
+                               PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+
+                
+
+                <i:EventTrigger EventName="MouseEnter">
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.Diagram_MouseEnterCommand, 
+                                                 Mode=OneWay, 
+                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=syncfusion:SfDiagram}}" 
+                               PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+
+                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.Diagram_PreviewMouseLeftButtonDownCommant, 
+                                                 Mode=OneWay, 
+                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=syncfusion:SfDiagram}}" 
+                               PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+
+                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.Diagram_PreviewMouseLeftButtonUpCommant, 
+                                                 Mode=OneWay, 
+                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=syncfusion:SfDiagram}}" 
+                               PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+
+                <i:EventTrigger EventName="MouseMove">
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.Diagram_MouseMoveCommand, 
+                                                 Mode=OneWay, 
+                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=syncfusion:SfDiagram}}" 
+                               PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+
+
+            </i:Interaction.Triggers>
+
+        </syncfusion:SfDiagram>
 
 
     </Grid>
