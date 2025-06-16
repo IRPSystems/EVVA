@@ -26,6 +26,7 @@ namespace DesignDiagram.ViewModels
 
 		public NodeCollection Nodes { get; set; }
 		public SnapSettings SnapSettings { get; set; }
+		public ConnectorCollection Connectors { get; set; }
 
 		public Syncfusion.UI.Xaml.Diagram.CommandManager CommandManager { get; set; }
 
@@ -82,6 +83,7 @@ namespace DesignDiagram.ViewModels
 
 			Nodes = new NodeCollection();
 			PageSettings = new PageSettings();
+			Connectors = new ConnectorCollection();
 
 			ItemAddedCommand = new RelayCommand<object>(ItemAdded);
 			ItemDeletedCommand = new RelayCommand<object>(ItemDeleted);
@@ -177,6 +179,8 @@ namespace DesignDiagram.ViewModels
 			Mouse.OverrideCursor = null;
 		}
 
+		#region Add item
+
 		private void ItemAdded(object item)
 		{
 			if (!(item is ItemAddedEventArgs itemAdded))
@@ -196,37 +200,7 @@ namespace DesignDiagram.ViewModels
 			}
 		}
 
-		private void ItemDeleted(object item)
-		{
-			if (!(item is ItemDeletedEventArgs itemDeleted))
-				return;
-
-			if (!(itemDeleted.Item is NodeViewModel node))
-				return;
-
-			DesignDiagram.ScriptItemsList.Remove(node.Content as ScriptNodeBase);
-
-			ReAragneNodex();
-		}
-
-		private void ReAragneNodex()
-		{ 
-
-			OffsetY = 50 + 35;
-
-			foreach(NodeViewModel nodeItem in Nodes)
-			{
-				if(!(nodeItem.Content is ScriptNodeBase scriptNodeBase))
-					continue;
-
-				scriptNodeBase.OffsetX = _toolOffsetX;
-				scriptNodeBase.OffsetY = OffsetY;
-				nodeItem.OffsetX = _toolOffsetX;
-				nodeItem.OffsetY = OffsetY;
-
-				OffsetY += _betweenTools;
-			}
-		}
+		
 
 		private void InitNodeBySymbol(
 			NodeViewModel node,
@@ -249,13 +223,82 @@ namespace DesignDiagram.ViewModels
 			}
 
 			SetNodeTemplateAndSize(node, toolName);
-
-			//MatchNewNodeToTool(node, tool);
+			SetPorts(node);
+			
 
 			node.PropertyChanged += Node_PropertyChanged;
 
 			if (tool == null)
+			{
+				SetNextPassConnector(node);
 				DesignDiagram.ScriptItemsList.Add(node.Content as ScriptNodeBase);
+			}
+		}
+
+		private void SetNextPassConnector(
+			NodeViewModel node)
+		{
+			if (Nodes.Count == 2)
+				return;
+
+			NodeViewModel prevLastNode =
+				Nodes[Nodes.Count - 2];
+			ScriptNodeBase prevLastTool = 
+				prevLastNode.Content as ScriptNodeBase;
+			if (prevLastTool == null)
+				return;
+
+			ScriptNodeBase tool = node.Content as ScriptNodeBase;
+			prevLastTool.PassNext = tool;
+
+			ConnectorViewModel simpleConnector = new ConnectorViewModel()
+			{
+				SourceNode = prevLastNode,
+				SourcePort = (prevLastNode.Ports as PortCollection)[1],
+
+				TargetNode = node,
+				TargetPort = (node.Ports as PortCollection)[0],
+
+				ConnectorGeometryStyle =
+					Application.Current.FindResource("PassConnectorLineStyle") as Style,
+				TargetDecorator = 
+					Application.Current.FindResource("ClosedSharp"),
+				TargetDecoratorStyle = Application.Current.FindResource("DecoratorFillStyle") as Style
+			};
+
+			Connectors.Add(simpleConnector);
+
+		}
+
+		private void SetPorts(NodeViewModel node)
+		{
+			NodePortViewModel port = new NodePortViewModel()
+			{
+				NodeOffsetX = 0,
+				NodeOffsetY = 0.25,
+			};
+			(node.Ports as PortCollection).Add(port);
+
+			port = new NodePortViewModel()
+			{
+				NodeOffsetX = 0,
+				NodeOffsetY = 0.75,
+			};
+			(node.Ports as PortCollection).Add(port);
+
+			port = new NodePortViewModel()
+			{
+				NodeOffsetX = 1,
+				NodeOffsetY = 0.25,
+			};
+			(node.Ports as PortCollection).Add(port);
+
+			port = new NodePortViewModel()
+			{
+				NodeOffsetX = 1,
+				NodeOffsetY = 0.75,
+			};
+			(node.Ports as PortCollection).Add(port);
 		}
 
 		private void SetContent(
@@ -364,33 +407,8 @@ namespace DesignDiagram.ViewModels
 			OffsetY += _betweenTools;
 		}
 
-		private void MatchNewNodeToTool(
-			NodeViewModel node,
-			ScriptNodeBase tool)
-		{
-			if (node == null)
-				return;
+		#endregion Add item
 
-			
-
-			if (tool != null)
-			{
-				node.OffsetX = tool.OffsetX;
-				node.OffsetY = tool.OffsetY;
-				node.UnitWidth = tool.Width;
-				node.UnitHeight = tool.Height;
-			}
-
-			else if (node.Content is ScriptNodeBase toolNew)
-			{
-				toolNew.OffsetX = node.OffsetX;
-				toolNew.OffsetY = node.OffsetY;
-				toolNew.Width = node.UnitWidth;
-				toolNew.Height = node.UnitHeight;
-			}
-		}
-
-		
 		private void Node_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if(!(sender is NodeViewModel node))
@@ -457,6 +475,38 @@ namespace DesignDiagram.ViewModels
 		private void SetPropertyGridSelectedNode(ScriptNodeBase toolBase)
 		{
 			_nodeProperties.DataContext = toolBase;
+		}
+
+		private void ItemDeleted(object item)
+		{
+			if (!(item is ItemDeletedEventArgs itemDeleted))
+				return;
+
+			if (!(itemDeleted.Item is NodeViewModel node))
+				return;
+
+			DesignDiagram.ScriptItemsList.Remove(node.Content as ScriptNodeBase);
+
+			ReAragneNodex();
+		}
+
+		private void ReAragneNodex()
+		{
+
+			OffsetY = 50 + 35;
+
+			foreach (NodeViewModel nodeItem in Nodes)
+			{
+				if (!(nodeItem.Content is ScriptNodeBase scriptNodeBase))
+					continue;
+
+				scriptNodeBase.OffsetX = _toolOffsetX;
+				scriptNodeBase.OffsetY = OffsetY;
+				nodeItem.OffsetX = _toolOffsetX;
+				nodeItem.OffsetY = OffsetY;
+
+				OffsetY += _betweenTools;
+			}
 		}
 
 		public void ChangeDarkLight()

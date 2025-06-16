@@ -62,9 +62,12 @@
 
 
         <syncfusion:SfDiagram Grid.Row="2"
+                              DefaultConnectorType="Orthogonal"
                               Nodes="{Binding Nodes}"
                               SnapSettings="{Binding SnapSettings}"
                               PageSettings="{Binding PageSettings}"
+                              Connectors="{Binding Connectors}"
+                              
                               ItemAddedCommand="{Binding ItemAddedCommand}"
                               ItemSelectedCommand="{Binding ItemSelectedCommand}"
                               ItemDeletedCommand="{Binding ItemDeletedCommand}"
