@@ -191,9 +191,22 @@ namespace DesignDiagram.ViewModels
 			if (!(item is ItemAddedEventArgs itemAdded))
 				return;
 
-			if (!(itemAdded.Item is NodeViewModel node))
-				return;
+			if (itemAdded.Item is NodeViewModel node)
+			{
+				NodeAdded(itemAdded, node);
+			}
+			else if (itemAdded.Item is ConnectorViewModel connector)
+			{
+				if (connector.ID is string str && str.Contains("PassNext_"))
+					return;
+			}
 
+		}
+
+		private void NodeAdded(
+			ItemAddedEventArgs itemAdded,
+			NodeViewModel node)
+		{
 			ItemSelecting(null);
 
 			if (itemAdded.OriginalSource is SymbolViewModel symbol)
@@ -202,12 +215,10 @@ namespace DesignDiagram.ViewModels
 			}
 			else
 			{
-				if(itemAdded != null && itemAdded.Info != null)
+				if (itemAdded != null && itemAdded.Info != null)
 					InitNodeBySymbol(node, (itemAdded.Info as PasteCommandInfo).SourceId as string);
 			}
 		}
-
-		
 
 		private void InitNodeBySymbol(
 			NodeViewModel node,
@@ -260,6 +271,7 @@ namespace DesignDiagram.ViewModels
 
 			ConnectorViewModel simpleConnector = new ConnectorViewModel()
 			{
+				ID = $"PassNext_{prevLastNode.ID}",
 				SourceNode = prevLastNode,
 				SourcePort = (prevLastNode.Ports as PortCollection)[1],
 
@@ -268,7 +280,7 @@ namespace DesignDiagram.ViewModels
 
 				ConnectorGeometryStyle =
 					Application.Current.FindResource("PassConnectorLineStyle") as Style,
-				TargetDecorator = 
+				TargetDecorator =
 					Application.Current.FindResource("ClosedSharp"),
 				TargetDecoratorStyle = Application.Current.FindResource("DecoratorFillStyle") as Style
 			};
