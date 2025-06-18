@@ -35,6 +35,8 @@ namespace DesignDiagram.ViewModels
 		public double OffsetX { get; set; }
 		public double OffsetY { get; set; }
 
+		public object SelectedItems { get; set; }
+
 		public string Name
 		{
 			get
@@ -88,6 +90,7 @@ namespace DesignDiagram.ViewModels
 			ItemAddedCommand = new RelayCommand<object>(ItemAdded);
 			ItemDeletedCommand = new RelayCommand<object>(ItemDeleted);
 			ItemSelectedCommand = new RelayCommand<object>(ItemSelected);
+			ItemSelectingCommand = new RelayCommand<object>(ItemSelecting);
 
 			SaveDiagramCommand = new RelayCommand(Save);
 			OpenDiagramCommand = new RelayCommand(Open);
@@ -99,13 +102,15 @@ namespace DesignDiagram.ViewModels
 			OffsetY = 50;
 			AddHeaderNode();
 
+			SelectedItems = new SelectorViewModel();
+
 			//for (int i = 0; i < 500; i++)
 			//{
 			//	InitNodeBySymbol(null, "ScriptNodeDelay");
 			//}
 
 			//Save();
-			
+
 		}
 
 		#endregion Constructor
@@ -188,6 +193,8 @@ namespace DesignDiagram.ViewModels
 
 			if (!(itemAdded.Item is NodeViewModel node))
 				return;
+
+			ItemSelecting(null);
 
 			if (itemAdded.OriginalSource is SymbolViewModel symbol)
 			{
@@ -472,6 +479,12 @@ namespace DesignDiagram.ViewModels
 			SetPropertyGridSelectedNode(toolBase);
 		}
 
+		private void ItemSelecting(object e)
+		{
+			SelectorViewModel svm = (SelectedItems as SelectorViewModel);
+			svm.SelectorConstraints = svm.SelectorConstraints & ~SelectorConstraints.QuickCommands;
+		}
+
 		private void SetPropertyGridSelectedNode(ScriptNodeBase toolBase)
 		{
 			_nodeProperties.DataContext = toolBase;
@@ -547,25 +560,31 @@ namespace DesignDiagram.ViewModels
 
 		private void DragObject(MouseEventArgs e)
 		{
-			
-			Point mousePos = e.GetPosition(null);
-			Vector diff = _startPoint - mousePos;
-
-			if (e.LeftButton == MouseButtonState.Pressed &&
-				//Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-				Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+			try
 			{
+				Point mousePos = e.GetPosition(null);
+				Vector diff = _startPoint - mousePos;
 
-				Node node = FindAncestorService.FindAncestor<Node>((DependencyObject)e.OriginalSource);
-				if(node == null)
-					return;
+				if (e.LeftButton == MouseButtonState.Pressed &&
+					//Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+					Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+				{
 
-				DataObject dragData = new DataObject("SfDiagram", node);
-				DragDrop.DoDragDrop(
-					node,
-					dragData,
-					DragDropEffects.Move);
+					Node node = FindAncestorService.FindAncestor<Node>((DependencyObject)e.OriginalSource);
+					if (node == null)
+						return;
 
+					DataObject dragData = new DataObject("SfDiagram", node);
+					DragDrop.DoDragDrop(
+						node,
+						dragData,
+						DragDropEffects.Move);
+
+				}
+			}
+			catch (Exception ex)
+			{
+				LoggerService.Error(this, "Failed to handle dropped item", "Error", ex);
 			}
 		}
 
@@ -624,10 +643,10 @@ namespace DesignDiagram.ViewModels
 
 		private void Diagram_DragEnter(DragEventArgs e)
 		{
-			if (!e.Data.GetDataPresent(DeviceHandler.ViewModel.ParametersViewModel.DragDropFormat))
-			{
-				e.Effects = DragDropEffects.None;
-			}
+			//if (!e.Data.GetDataPresent(DeviceHandler.ViewModel.ParametersViewModel.DragDropFormat))
+			//{
+			//	e.Effects = DragDropEffects.None;
+			//}
 		}
 
 		#endregion Drop		
@@ -639,6 +658,7 @@ namespace DesignDiagram.ViewModels
 		public RelayCommand<object> ItemAddedCommand { get; private set; }
 		public RelayCommand<object> ItemDeletedCommand { get; private set; }
 		public RelayCommand<object> ItemSelectedCommand { get; private set; }
+		public RelayCommand<object> ItemSelectingCommand { get; private set; }
 
 
 		public RelayCommand SaveDiagramCommand { get; private set; }

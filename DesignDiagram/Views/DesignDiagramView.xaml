@@ -67,11 +67,15 @@
                               SnapSettings="{Binding SnapSettings}"
                               PageSettings="{Binding PageSettings}"
                               Connectors="{Binding Connectors}"
+                              SelectedItems="{Binding SelectedItems}"
                               
                               ItemAddedCommand="{Binding ItemAddedCommand}"
                               ItemSelectedCommand="{Binding ItemSelectedCommand}"
+                              ItemSelectingCommand="{Binding ItemSelectingCommand}"
                               ItemDeletedCommand="{Binding ItemDeletedCommand}"
                               DragEnterCommand="{Binding DragEnterCommand}"
+                              
+                              
                               Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
 
             <i:Interaction.Triggers>
