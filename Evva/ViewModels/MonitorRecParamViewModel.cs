@@ -14,7 +14,7 @@ namespace Evva.ViewModels
 {
 	public class MonitorRecParamViewModel: MonitorBaseViewModel
 	{
-		private bool _isRcordingListChanged;
+		//private bool _isRcordingListChanged;
 
 		private CANMessageSenderViewModel _canMessageSender;
 
@@ -39,7 +39,7 @@ namespace Evva.ViewModels
 			WeakReferenceMessenger.Default.Register<RECORD_LIST_CHANGEDMessage>(
 				this, new MessageHandler<object, RECORD_LIST_CHANGEDMessage>(RECORD_LIST_CHANGEDHandler));
 
-			_isRcordingListChanged = false;
+			//_isRcordingListChanged = false;
 		}
 
 		#endregion Constructor
@@ -86,9 +86,9 @@ namespace Evva.ViewModels
 		
 		private void RECORD_LIST_CHANGEDHandler(object sender, RECORD_LIST_CHANGEDMessage e)
 		{
-			_isRcordingListChanged = true;
+			//_isRcordingListChanged = true;
 			GetMonitorRecParamsList(e.LogParametersList);
-			_isRcordingListChanged = false;
+			//_isRcordingListChanged = false;
 		}
 
 		protected override bool IsAddSingleParamToRepository(DeviceParameterData param)

@@ -28,7 +28,7 @@ namespace Evva.ViewModels
 		private ContentControl _mainScriptLogger;
 
 		private ContentControl _monitorRecParam;
-		private ContentControl _monitorSecurityParam;
+		//private ContentControl _monitorSecurityParam;
 		private ContentControl _faultsMCU;
 		private ContentControl _switchRelayState;
 
@@ -207,13 +207,6 @@ namespace Evva.ViewModels
 			Children.Add(_mainScriptLogger);
 		}
 
-		private void SetFloatWindow(ContentControl control)
-		{
-			SetSizetoContentInDock(control, true);
-			SetSizetoContentInFloat(control, true);
-			SetState(control, DockState.Hidden);
-		}
-
 
 
 
@@ -268,10 +261,10 @@ namespace Evva.ViewModels
 			SetState(_monitorRecParam, DockState.Dock);
 		}
 
-		public void OpenMonitorSecurityParam()
-		{
-			SetState(_monitorSecurityParam, DockState.Dock);
-		}
+		//public void OpenMonitorSecurityParam()
+		//{
+		//	SetState(_monitorSecurityParam, DockState.Dock);
+		//}
 
 		public void OpenMonitorFaults()
 		{

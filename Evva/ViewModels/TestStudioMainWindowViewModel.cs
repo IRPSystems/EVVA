@@ -859,9 +859,9 @@ namespace Evva.ViewModels
 				case "Recording parameters":
 					Docking.OpenMonitorRecParam();
 					break;
-				case "Scurity parameters":
-					Docking.OpenMonitorSecurityParam();
-					break;
+				//case "Scurity parameters":
+				//	Docking.OpenMonitorSecurityParam();
+				//	break;
 				case "Faults":
 					Docking.OpenMonitorFaults();
 					break;

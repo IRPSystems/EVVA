@@ -17,8 +17,6 @@ namespace Evva.ViewModels
 	{
 		#region Fields	
 
-		private DocingViewModel _docking;
-
 		#endregion Fields
 
 		#region Properties
