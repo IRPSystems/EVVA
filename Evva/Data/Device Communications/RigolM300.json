@@ -12,7 +12,8 @@
         "Value": null,
         "DeviceType": 24,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -23,7 +24,8 @@
         "Value": null,
         "DeviceType": 24,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -34,7 +36,8 @@
         "Value": null,
         "DeviceType": 24,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -45,18 +48,20 @@
         "Value": null,
         "DeviceType": 24,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
         "Name": "Resistance 2W",
         "Cmd": "CONF:RES",
         "Max": 100000000,
-        "Units": "Ω",
+        "Units": "\u03a9",
         "Value": null,
         "DeviceType": 24,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -67,18 +72,20 @@
         "Value": null,
         "DeviceType": 24,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
         "Name": "Temperature (Thermocouple K)",
         "Cmd": "CONF:TEMP",
         "Max": 1372,
-        "Units": "°C",
+        "Units": "\u00b0C",
         "Value": null,
         "DeviceType": 24,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -86,7 +93,8 @@
         "Cmd": "*IDN?",
         "DeviceType": 24,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -94,7 +102,8 @@
         "Cmd": "DATA:LAST?",
         "DeviceType": 24,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -105,8 +114,8 @@
         "Value": null,
         "Channel": null,
         "Slot": null,
-        "CommunicationTimeout": 3000
-
+        "CommunicationTimeout": 3000,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -116,7 +125,8 @@
         "Units": "V",
         "Value": null,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -127,7 +137,8 @@
         "Value": null,
         "Channel": null,
         "Slot": null,
-        "CommunicationTimeout": 2000
+        "CommunicationTimeout": 2000,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -137,7 +148,8 @@
         "Units": "A",
         "Value": null,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -147,7 +159,8 @@
         "Units": "\u03a9",
         "Value": null,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -157,7 +170,8 @@
         "Units": "Hz",
         "Value": null,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       },
       {
         "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
@@ -167,7 +181,8 @@
         "Units": "\u00b0C",
         "Value": null,
         "Channel": null,
-        "Slot": null
+        "Slot": null,
+        "Range": null
       }
     ]
   },
