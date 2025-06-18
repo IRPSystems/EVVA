@@ -183,7 +183,18 @@
         "Channel": null,
         "Slot": null,
         "Range": null
-      }
+      },
+      {
+        "$type": "DeviceCommunicators.RigolM300.RigolM300_ParamData, DeviceCommunicators",
+        "Name": "Actuator Open/Close",
+        "Cmd": "ROUT:",
+        "DeviceType": 24,
+        "Channel": null,
+        "Slot": null,
+        "Range": null,
+        "Value": null
+      },
+
     ]
   },
   "Name": "Rigol M300",
