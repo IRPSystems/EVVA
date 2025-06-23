@@ -8,7 +8,8 @@
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:local="clr-namespace:DesignDiagram.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -62,6 +63,7 @@
 
 
         <syncfusion:SfDiagram Grid.Row="2"
+                              Name="diagram"
                               DefaultConnectorType="Orthogonal"
                               Nodes="{Binding Nodes}"
                               SnapSettings="{Binding SnapSettings}"
@@ -71,7 +73,6 @@
                               
                               ItemAddedCommand="{Binding ItemAddedCommand}"
                               ItemSelectedCommand="{Binding ItemSelectedCommand}"
-                              ItemSelectingCommand="{Binding ItemSelectingCommand}"
                               ItemDeletedCommand="{Binding ItemDeletedCommand}"
                               DragEnterCommand="{Binding DragEnterCommand}"
                               

@@ -90,7 +90,6 @@ namespace DesignDiagram.ViewModels
 			ItemAddedCommand = new RelayCommand<object>(ItemAdded);
 			ItemDeletedCommand = new RelayCommand<object>(ItemDeleted);
 			ItemSelectedCommand = new RelayCommand<object>(ItemSelected);
-			ItemSelectingCommand = new RelayCommand<object>(ItemSelecting);
 
 			SaveDiagramCommand = new RelayCommand(Save);
 			OpenDiagramCommand = new RelayCommand(Open);
@@ -207,7 +206,6 @@ namespace DesignDiagram.ViewModels
 			ItemAddedEventArgs itemAdded,
 			NodeViewModel node)
 		{
-			ItemSelecting(null);
 
 			if (itemAdded.OriginalSource is SymbolViewModel symbol)
 			{
@@ -491,12 +489,6 @@ namespace DesignDiagram.ViewModels
 			SetPropertyGridSelectedNode(toolBase);
 		}
 
-		private void ItemSelecting(object e)
-		{
-			SelectorViewModel svm = (SelectedItems as SelectorViewModel);
-			svm.SelectorConstraints = svm.SelectorConstraints & ~SelectorConstraints.QuickCommands;
-		}
-
 		private void SetPropertyGridSelectedNode(ScriptNodeBase toolBase)
 		{
 			_nodeProperties.DataContext = toolBase;
@@ -670,7 +662,6 @@ namespace DesignDiagram.ViewModels
 		public RelayCommand<object> ItemAddedCommand { get; private set; }
 		public RelayCommand<object> ItemDeletedCommand { get; private set; }
 		public RelayCommand<object> ItemSelectedCommand { get; private set; }
-		public RelayCommand<object> ItemSelectingCommand { get; private set; }
 
 
 		public RelayCommand SaveDiagramCommand { get; private set; }
