@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace DesignDiagram.ViewModels
 {
-    public class DesignDiagramDockingViewModes: DocumantsDokcingViewModel
+    public class DesignDiagramDockingViewModel: DocumantsDokcingViewModel
 	{
 		#region Fields
 
@@ -19,7 +19,7 @@ namespace DesignDiagram.ViewModels
 
 		#endregion Fields
 
-		public DesignDiagramDockingViewModes(
+		public DesignDiagramDockingViewModel(
 		DevicesContainer devicesContainer,
 			StencilViewModel stencil,
 			NodePropertiesView nodeDataView) :

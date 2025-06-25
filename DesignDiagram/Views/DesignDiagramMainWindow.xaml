@@ -3,21 +3,55 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
                  xmlns:local="clr-namespace:DesignDiagram.Views"
                  mc:Ignorable="d"
                  Title="Design Diagram" Height="450" Width="800"
                  WindowState="Maximized">
-    
+
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/ButtonWithIcon.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </mah:MetroWindow.Resources>
+
     <Grid>
-        
         <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="5" />
             <RowDefinition Height="*" />
             <RowDefinition Height="5" />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
-        <ContentControl Content="{Binding Docking}" />
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+
+            <Button Style="{StaticResource ButtonWithIconStyle}"
+                    Width="25"
+                    Height="25"
+                    Margin="0,0,5,0"
+                    ToolTip="New script"
+                    Command="{Binding NewScriptCommand}"
+                    VerticalAlignment="Center">
+                <iconPacks:PackIconModern Kind="PageNew" />
+            </Button>
+
+            <Button Style="{StaticResource ButtonWithIconStyle}"
+                    Width="25"
+                    Height="25"
+                    Margin="0,0,5,0"
+                    ToolTip="Load script"
+                    Command="{Binding LoadScriptCommand}">
+                <iconPacks:PackIconMaterial Kind="FolderOpen" />
+            </Button>
+
+        </StackPanel>
+
+        <ContentControl Grid.Row="2" Content="{Binding Docking}" />
 
         <Border Grid.Row="4" Background="{DynamicResource MahApps.Brushes.Accent}">
             <StackPanel Orientation="Horizontal">

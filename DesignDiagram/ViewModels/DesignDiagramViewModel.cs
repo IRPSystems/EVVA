@@ -9,8 +9,10 @@ using ScriptHandler.Models.ScriptNodes;
 using Services.Services;
 using Syncfusion.UI.Xaml.Diagram;
 using Syncfusion.UI.Xaml.Diagram.Stencil;
+using Syncfusion.Windows.Tools;
 using System.ComponentModel;
 using System.IO;
+using System.IO.Packaging;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -64,6 +66,8 @@ namespace DesignDiagram.ViewModels
 		private bool _isMouseDown;
 		private Point _startPoint;
 
+		private int _idCounter;
+
 		#endregion Fields
 
 		#region Constructor
@@ -80,6 +84,7 @@ namespace DesignDiagram.ViewModels
 
 			_nodeProperties = nodeProperties;
 			OffsetX = offsetX;
+			_idCounter = 1;
 
 			_isInPropertyChanged = false;
 
@@ -92,7 +97,6 @@ namespace DesignDiagram.ViewModels
 			ItemSelectedCommand = new RelayCommand<object>(ItemSelected);
 
 			SaveDiagramCommand = new RelayCommand(Save);
-			OpenDiagramCommand = new RelayCommand(Open);
 
 			SetSnapAndGrid();
 
@@ -153,19 +157,21 @@ namespace DesignDiagram.ViewModels
 			File.WriteAllText(DesignDiagram.ScriptPath, sz);
 		}
 
-		public async void Open()
+		public async void Open(string path)
 		{
 			Mouse.OverrideCursor = Cursors.Wait;
 
 			try
 			{
 
-				string jsonString = File.ReadAllText(DesignDiagram.ScriptPath);
+				string jsonString = File.ReadAllText(path);
 
 				JsonSerializerSettings settings = new JsonSerializerSettings();
 				settings.Formatting = Formatting.Indented;
 				settings.TypeNameHandling = TypeNameHandling.All;
 				DesignDiagram = JsonConvert.DeserializeObject(jsonString, settings) as ScriptData;
+
+				DesignDiagram.ScriptPath = path;
 
 				foreach (ScriptNodeBase tool in DesignDiagram.ScriptItemsList)
 				{
@@ -174,6 +180,8 @@ namespace DesignDiagram.ViewModels
 
 					await Task.Delay(1);
 				}
+
+				InitNextArrows();
 			}
 			catch (Exception ex)
 			{
@@ -228,6 +236,8 @@ namespace DesignDiagram.ViewModels
 				node = new NodeViewModel();
 				node.Content = tool;
 				Nodes.Add(node);
+
+				_idCounter++;
 			}
 
 			node.ID = toolName;
@@ -259,7 +269,7 @@ namespace DesignDiagram.ViewModels
 
 			NodeViewModel prevLastNode =
 				Nodes[Nodes.Count - 2];
-			ScriptNodeBase prevLastTool = 
+			ScriptNodeBase prevLastTool =
 				prevLastNode.Content as ScriptNodeBase;
 			if (prevLastTool == null)
 				return;
@@ -267,14 +277,21 @@ namespace DesignDiagram.ViewModels
 			ScriptNodeBase tool = node.Content as ScriptNodeBase;
 			prevLastTool.PassNext = tool;
 
+			AddConnector(prevLastNode, node);
+		}
+
+		private void AddConnector(
+			NodeViewModel sourceNode,
+			NodeViewModel targetNode)
+		{ 
 			ConnectorViewModel simpleConnector = new ConnectorViewModel()
 			{
-				ID = $"PassNext_{prevLastNode.ID}",
-				SourceNode = prevLastNode,
-				SourcePort = (prevLastNode.Ports as PortCollection)[1],
+				ID = $"PassNext_{sourceNode.ID}",
+				SourceNode = sourceNode,
+				SourcePort = (sourceNode.Ports as PortCollection)[1],
 
-				TargetNode = node,
-				TargetPort = (node.Ports as PortCollection)[0],
+				TargetNode = targetNode,
+				TargetPort = (targetNode.Ports as PortCollection)[0],
 
 				ConnectorGeometryStyle =
 					Application.Current.FindResource("PassConnectorLineStyle") as Style,
@@ -400,6 +417,8 @@ namespace DesignDiagram.ViewModels
 					node.Content = new ScriptNodeCompareBit();
 					break;
 			}
+
+			(node.Content as ScriptNodeBase).ID = _idCounter++;
 		}
 
 		private void SetNodeTemplateAndSize(
@@ -499,12 +518,60 @@ namespace DesignDiagram.ViewModels
 			if (!(item is ItemDeletedEventArgs itemDeleted))
 				return;
 
-			if (!(itemDeleted.Item is NodeViewModel node))
-				return;
+			if (itemDeleted.Item is NodeViewModel node)
+			{
+				DeleteNode(node);
+			}
+			else if (itemDeleted.Item is ConnectorViewModel connector)
+			{
+				DeleteConnector(connector);
+			}
+		}
+
+		private void DeleteNode(NodeViewModel node)
+		{			
+
+			#region Remove relevant connectors
+			List<ConnectorViewModel> connectorsToRemove = new List<ConnectorViewModel>();
+			foreach (ConnectorViewModel connecter in Connectors)
+			{
+				if (connecter.SourceNode == node ||
+					connecter.TargetNode == node)
+				{
+					connectorsToRemove.Add(connecter);
+				}
+			}
+
+			foreach (ConnectorViewModel connecter in connectorsToRemove)
+			{
+				Connectors.Remove(connecter);
+			}
+			#endregion Remove relevant connectors
+
+			foreach(var item in DesignDiagram.ScriptItemsList)
+			{
+				if (item.PassNext == node.Content as ScriptNodeBase)
+					item.PassNext = null;
+
+				if (item.FailNext == node.Content as ScriptNodeBase)
+					item.FailNext = null;
+			}
+			
 
 			DesignDiagram.ScriptItemsList.Remove(node.Content as ScriptNodeBase);
-
 			ReAragneNodex();
+		}
+
+		private void DeleteConnector(ConnectorViewModel connector)
+		{
+			NodeViewModel node = connector.SourceNode as NodeViewModel;
+			if (node == null) 
+				return;
+
+			if((connector.ID as string).StartsWith("PassNext"))
+				(node.Content as ScriptNodeBase).PassNext = null;
+			else if ((connector.ID as string).StartsWith("FailNext"))
+				(node.Content as ScriptNodeBase).FailNext = null;
 		}
 
 		private void ReAragneNodex()
@@ -512,10 +579,13 @@ namespace DesignDiagram.ViewModels
 
 			OffsetY = 50 + 35;
 
+			int idCounter = 1;
 			foreach (NodeViewModel nodeItem in Nodes)
 			{
 				if (!(nodeItem.Content is ScriptNodeBase scriptNodeBase))
 					continue;
+
+				scriptNodeBase.ID = idCounter++;
 
 				scriptNodeBase.OffsetX = _toolOffsetX;
 				scriptNodeBase.OffsetY = OffsetY;
@@ -655,6 +725,27 @@ namespace DesignDiagram.ViewModels
 
 		#endregion Drop		
 
+		private void InitNextArrows()
+		{
+			foreach (var node in Nodes)
+			{
+				if (!(node.Content is ScriptNodeBase scriptNodeBase))
+					continue;
+
+				if (scriptNodeBase.PassNextId < 0)
+					continue;
+
+				var nextNode = Nodes.ToList().Find((n) => (
+					n.Content is ScriptNodeBase scriptNodeBase1) &&
+						scriptNodeBase1.ID == scriptNodeBase.PassNextId);
+				if(nextNode == null)
+					continue;
+
+				scriptNodeBase.PassNext = nextNode.Content as ScriptNodeBase;
+				AddConnector(node, nextNode);
+			}
+		}
+
 		#endregion Methods
 
 		#region Commands
@@ -665,7 +756,6 @@ namespace DesignDiagram.ViewModels
 
 
 		public RelayCommand SaveDiagramCommand { get; private set; }
-		public RelayCommand OpenDiagramCommand { get; private set; }
 
 		public RelayCommand CopyCommand { get; private set; }
 		public RelayCommand PastCommand { get; private set; }
