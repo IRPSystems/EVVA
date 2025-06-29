@@ -89,7 +89,7 @@
       {
         "$type": "DeviceCommunicators.MX180TP.MX180TP_ParamData, DeviceCommunicators",
         "Name": "Read Voltage Output",
-        "Cmd": "VO<N>?",
+        "Cmd": "V<N>O?",
         "Units": "V",
         "Value": null,
         "DeviceType": 25,
@@ -99,7 +99,7 @@
 	  {
         "$type": "DeviceCommunicators.MX180TP.MX180TP_ParamData, DeviceCommunicators",
         "Name": "Read Current Output",
-        "Cmd": "I<N>?",
+        "Cmd": "I<N>O?",
         "Units": "I",
         "Value": null,
         "DeviceType": 25,
