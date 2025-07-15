@@ -9,12 +9,9 @@ using ScriptHandler.Models.ScriptNodes;
 using Services.Services;
 using Syncfusion.UI.Xaml.Diagram;
 using Syncfusion.UI.Xaml.Diagram.Stencil;
-using Syncfusion.Windows.Tools;
 using System.ComponentModel;
 using System.IO;
-using System.IO.Packaging;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -93,6 +90,7 @@ namespace DesignDiagram.ViewModels
 			Connectors = new ConnectorCollection();
 
 			ItemAddedCommand = new RelayCommand<object>(ItemAdded);
+			ItemAddingCommand = new RelayCommand<object>(ItemAdding);
 			ItemDeletedCommand = new RelayCommand<object>(ItemDeleted);
 			ItemSelectedCommand = new RelayCommand<object>(ItemSelected);
 
@@ -207,6 +205,11 @@ namespace DesignDiagram.ViewModels
 				if (connector.ID is string str && str.Contains("PassNext_"))
 					return;
 			}
+
+		}
+
+		private void ItemAdding(object item)
+		{
 
 		}
 
@@ -751,6 +754,7 @@ namespace DesignDiagram.ViewModels
 		#region Commands
 
 		public RelayCommand<object> ItemAddedCommand { get; private set; }
+		public RelayCommand<object> ItemAddingCommand { get; private set; }
 		public RelayCommand<object> ItemDeletedCommand { get; private set; }
 		public RelayCommand<object> ItemSelectedCommand { get; private set; }
 

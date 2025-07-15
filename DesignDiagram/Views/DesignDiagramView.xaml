@@ -62,6 +62,7 @@
                               SelectedItems="{Binding SelectedItems}"
                               
                               ItemAddedCommand="{Binding ItemAddedCommand}"
+                              ItemAddingCommand="{Binding ItemAddingCommand}"
                               ItemSelectedCommand="{Binding ItemSelectedCommand}"
                               ItemDeletedCommand="{Binding ItemDeletedCommand}"
                               DragEnterCommand="{Binding DragEnterCommand}"
