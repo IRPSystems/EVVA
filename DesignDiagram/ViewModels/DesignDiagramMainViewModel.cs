@@ -128,7 +128,8 @@ namespace DesignDiagram.ViewModels
 				return;
 
 			string scriptName = Path.GetFileName(openFileDialog.FileName);
-			scriptName = scriptName.Replace(".db", string.Empty);
+			string extension = Path.GetExtension(openFileDialog.FileName);
+			scriptName = scriptName.Replace(extension, string.Empty);
 
 			DesignDiagramViewModel vm = new DesignDiagramViewModel(
 					scriptName,
