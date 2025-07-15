@@ -63,8 +63,8 @@ namespace DesignDiagram.ViewModels
 			{ DataContext = stencil };
 			CreateWindow(
 			stencilView,
-				"Stencil",
-				"Stencil",
+				"Tools",
+				"Tools",
 				DockSide.Left,
 				out _stencil);
 			SetCanClose(_stencil, false);
