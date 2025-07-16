@@ -9,8 +9,10 @@ using ScriptHandler.Models.ScriptNodes;
 using Services.Services;
 using Syncfusion.UI.Xaml.Diagram;
 using Syncfusion.UI.Xaml.Diagram.Stencil;
+using Syncfusion.Windows.Tools;
 using System.ComponentModel;
 using System.IO;
+using System.IO.Packaging;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -204,6 +206,21 @@ namespace DesignDiagram.ViewModels
 			{
 				if (connector.ID is string str && str.Contains("PassNext_"))
 					return;
+				else
+				{
+					connector.ID = $"FailNext_";//{sourceNode.ID}",
+												//SourceNode = sourceNode,
+												//SourcePort = (sourceNode.Ports as PortCollection)[1],
+
+					//TargetNode = targetNode,
+					//TargetPort = (targetNode.Ports as PortCollection)[0],
+
+					connector.ConnectorGeometryStyle =
+						Application.Current.FindResource("FailConnectorLineStyle") as Style;
+					connector.TargetDecorator =
+						Application.Current.FindResource("ClosedSharp");
+					connector.TargetDecoratorStyle = Application.Current.FindResource("FailDecoratorFillStyle") as Style;
+				}
 			}
 
 		}
@@ -300,7 +317,7 @@ namespace DesignDiagram.ViewModels
 					Application.Current.FindResource("PassConnectorLineStyle") as Style,
 				TargetDecorator =
 					Application.Current.FindResource("ClosedSharp"),
-				TargetDecoratorStyle = Application.Current.FindResource("DecoratorFillStyle") as Style
+				TargetDecoratorStyle = Application.Current.FindResource("PassDecoratorFillStyle") as Style
 			};
 
 			Connectors.Add(simpleConnector);
