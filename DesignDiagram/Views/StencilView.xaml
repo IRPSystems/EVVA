@@ -6,7 +6,7 @@
              xmlns:stencil="clr-namespace:Syncfusion.UI.Xaml.Diagram.Stencil;assembly=Syncfusion.SfDiagram.WPF"
              xmlns:local="clr-namespace:DesignDiagram.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" Width="350">
+             d:DesignHeight="450" d:DesignWidth="350">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -34,7 +34,9 @@
     
     
     <Grid>
+
         <stencil:Stencil SymbolSource="{Binding SymbolSource}" 
-                         ShowSearchTextBox="False" />
+                         ShowSearchTextBox="False"
+                         ScrollViewer.VerticalScrollBarVisibility="Visible"/>
     </Grid>
 </UserControl>

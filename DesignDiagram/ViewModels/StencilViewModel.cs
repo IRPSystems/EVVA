@@ -37,7 +37,6 @@ namespace DesignDiagram.ViewModels
 
 		private void AddSymbols()
 		{
-			ScriptNodeBase scriptNodeBase = null;
 			var assemblyList = AppDomain.CurrentDomain.GetAssemblies();
 			Assembly assembly = assemblyList.
 				SingleOrDefault(assembly => assembly.GetName().Name == "ScriptHandler");
@@ -55,10 +54,11 @@ namespace DesignDiagram.ViewModels
 					type.Name == "ScriptNodeStopContinuous")
 					continue;
 
+				var c = Activator.CreateInstance(type);
 				SymbolViewModel symbol = new SymbolViewModel()
 				{
-					Symbol = type.Name,
-					Name = type.Name,
+					Symbol = (c as ScriptNodeBase).Name,
+					Name = (c as ScriptNodeBase).Name,
 					SymbolTemplate = Application.Current.Resources["SymbolTemplate"] as DataTemplate,
 				};
 				SymbolSource.Add(symbol);
