@@ -24,9 +24,7 @@
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}"/>
             </Style>
 
-            <DataTemplate x:Key="SymbolTemplate">
-                <TextBlock Text="{Binding Name}" />
-            </DataTemplate>
+            
 
 
         </ResourceDictionary>
