@@ -175,7 +175,7 @@ namespace DesignDiagram.ViewModels
 
 				foreach (ScriptNodeBase tool in DesignDiagram.ScriptItemsList)
 				{
-					string toolName = tool.GetType().Name;
+					string toolName = tool.Name;
 					InitNodeBySymbol(null, toolName, tool);
 
 					await Task.Delay(1);
@@ -361,79 +361,79 @@ namespace DesignDiagram.ViewModels
 		{
 			switch (toolName)
 			{
-				case "ScriptNodeCompare":
+				case "Compare":
 					node.Content = new ScriptNodeCompare();
 					break;
-				case "ScriptNodeDelay":
+				case "Delay":
 					node.Content = new ScriptNodeDelay();
 					break;
-				case "ScriptNodeDynamicControl":
+				case "Dynamic Control":
 					node.Content = new ScriptNodeDynamicControl();
 					break;
-				case "ScriptNodeSweep":
+				case "Sweep":
 					node.Content = new ScriptNodeSweep();
 					break;
-				case "ScriptNodeSetParameter":
+				case "Set Parameter":
 					node.Content = new ScriptNodeSetParameter();
 					break;
-				case "ScriptNodeSetSaveParameter":
+				case "Set and Save Parameter":
 					node.Content = new ScriptNodeSetSaveParameter();
 					break;
-				case "ScriptNodeSaveParameter":
+				case "Save Parameter":
 					node.Content = new ScriptNodeSaveParameter();
 					break;
-				case "ScriptNodeNotification":
+				case "Notification":
 					node.Content = new ScriptNodeNotification();
 					break;
-				case "ScriptNodeSubScript":
+				case "Sub Script":
 					node.Content = new ScriptNodeSubScript();
 					break;
-				case "ScriptNodeIncrementValue":
+				case "Increment Value":
 					node.Content = new ScriptNodeIncrementValue();
 					break;
-				case "ScriptNodeLoopIncrement":
+				case "Loop Increment":
 					node.Content = new ScriptNodeLoopIncrement();
 					break;
-				case "ScriptNodeConverge":
+				case "Converge":
 					node.Content = new ScriptNodeConverge();
 					break;
-				case "ScriptNodeCompareRange":
+				case "Compare Range":
 					node.Content = new ScriptNodeCompareRange();
 					break;
-				case "ScriptNodeCompareWithTolerance":
+				case "Compare With Tolerance":
 					node.Content = new ScriptNodeCompareWithTolerance();
 					break;
-				case "ScriptNodeCANMessage":
+				case "CAN Message":
 					node.Content = new ScriptNodeCANMessage();
 					break;
-				case "ScriptNodeCANMessageUpdate":
+				case "CAN Message Update":
 					node.Content = new ScriptNodeCANMessageUpdate();
 					break;
-				case "ScriptNodeCANMessageStop":
+				case "CAN Message Stop":
 					node.Content = new ScriptNodeCANMessageStop();
 					break;
-				case "ScriptNodeStopContinuous":
+				case "Stop Continuous":
 					node.Content = new ScriptNodeStopContinuous();
 					break;
-				case "ScriptNodeEOLFlash":
+				case "EOL Flash":
 					node.Content = new ScriptNodeEOLFlash();
 					break;
-				case "ScriptNodeEOLCalibrate":
+				case "EOL Calibrate":
 					node.Content = new ScriptNodeEOLCalibrate();
 					break;
-				case "ScriptNodeEOLSendSN":
+				case "EOL Send SN":
 					node.Content = new ScriptNodeEOLSendSN();
 					break;
-				case "ScriptNodeResetParentSweep":
+				case "Reset Parent Sweep":
 					node.Content = new ScriptNodeResetParentSweep();
 					break;
-				case "ScriptNodeScopeSave":
+				case "Scope Save":
 					node.Content = new ScriptNodeScopeSave();
 					break;
-				case "ScriptNodeEOLPrint":
+				case "EOL Print":
 					node.Content = new ScriptNodeEOLPrint();
 					break;
-				case "ScriptNodeCompareBit":
+				case "Compare Bit":
 					node.Content = new ScriptNodeCompareBit();
 					break;
 			}

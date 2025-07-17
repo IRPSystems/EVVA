@@ -3,14 +3,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using ScriptHandler.Models;
 using Syncfusion.UI.Xaml.Diagram;
 using Syncfusion.UI.Xaml.Diagram.Stencil;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Media;
-using System.Xaml;
-using System.Xml;
 
 namespace DesignDiagram.ViewModels
 {
@@ -30,10 +25,6 @@ namespace DesignDiagram.ViewModels
 		public StencilViewModel()
 		{
 			SymbolSource = new SymbolCollection();
-
-			ResourceDictionary rd = new ResourceDictionary();
-			rd.Source = new Uri("pack://application:,,,/ScriptHandler;component/Resources/SymbolTemplates.xaml");
-			Application.Current.Resources.MergedDictionaries.Add(rd);
 
 
 			AddSymbols();
@@ -65,7 +56,7 @@ namespace DesignDiagram.ViewModels
 				var c = Activator.CreateInstance(type);
 				SymbolViewModel symbol = new SymbolViewModel()
 				{
-					Symbol = type.Name,
+					Symbol = (c as ScriptNodeBase).Name,
 					Name = (c as ScriptNodeBase).Name,
 					SymbolTemplate = Application.Current.Resources["SymbolTemplate"] as DataTemplate,
 				};
