@@ -8,6 +8,7 @@ using ScriptHandler.Models;
 using ScriptHandler.Models.ScriptNodes;
 using Services.Services;
 using Syncfusion.UI.Xaml.Diagram;
+//using Syncfusion.UI.Xaml.Diagram.Serializer;
 using Syncfusion.UI.Xaml.Diagram.Stencil;
 using Syncfusion.Windows.Tools;
 using System.ComponentModel;
@@ -95,6 +96,8 @@ namespace DesignDiagram.ViewModels
 			ItemAddingCommand = new RelayCommand<object>(ItemAdding);
 			ItemDeletedCommand = new RelayCommand<object>(ItemDeleted);
 			ItemSelectedCommand = new RelayCommand<object>(ItemSelected);
+			ConnectorSourceChangedCommand = new RelayCommand<object>(ConnectorSourceChanged);
+			ConnectorTargetChangedCommand = new RelayCommand<object>(ConnectorTargetChanged);
 
 			SaveDiagramCommand = new RelayCommand(Save);
 
@@ -208,18 +211,7 @@ namespace DesignDiagram.ViewModels
 					return;
 				else
 				{
-					connector.ID = $"FailNext_";//{sourceNode.ID}",
-												//SourceNode = sourceNode,
-												//SourcePort = (sourceNode.Ports as PortCollection)[1],
-
-					//TargetNode = targetNode,
-					//TargetPort = (targetNode.Ports as PortCollection)[0],
-
-					connector.ConnectorGeometryStyle =
-						Application.Current.FindResource("FailConnectorLineStyle") as Style;
-					connector.TargetDecorator =
-						Application.Current.FindResource("ClosedSharp");
-					connector.TargetDecoratorStyle = Application.Current.FindResource("FailDecoratorFillStyle") as Style;
+					
 				}
 			}
 
@@ -228,6 +220,44 @@ namespace DesignDiagram.ViewModels
 		private void ItemAdding(object item)
 		{
 
+		}
+
+		private void ConnectorSourceChanged(object item)
+		{
+			if (!(item is ChangeEventArgs<object, ConnectorChangedEventArgs> connectorChanged))
+				return;
+
+			if (!(connectorChanged.Item is ConnectorViewModel connector))
+				return;
+
+			if (connector.ID is string str && str.Contains("PassNext_"))
+				return;
+
+			if (!(connector.SourceNode is NodeViewModel sourceNode))
+				return;
+
+			if (!(connector.SourcePort is NodePortViewModel port))
+				return;
+
+			if (port.NodeOffsetX != 1)
+			{
+				Connectors.Remove(connector);
+				return;
+			}
+
+			connector.ID = $"FailNext_{sourceNode.ID}";
+
+			connector.ConnectorGeometryStyle =
+				Application.Current.FindResource("FailConnectorLineStyle") as Style;
+			connector.TargetDecorator =
+				Application.Current.FindResource("ClosedSharp");
+			connector.TargetDecoratorStyle = Application.Current.FindResource("FailDecoratorFillStyle") as Style;
+		}
+
+		private void ConnectorTargetChanged(object item)
+		{
+			if (!(item is ChangeEventArgs<object, ConnectorChangedEventArgs> connectorChanged))
+				return;
 		}
 
 		private void NodeAdded(
@@ -588,6 +618,9 @@ namespace DesignDiagram.ViewModels
 			if (node == null) 
 				return;
 
+			if (connector.ID == null)
+				return;
+
 			if((connector.ID as string).StartsWith("PassNext"))
 				(node.Content as ScriptNodeBase).PassNext = null;
 			else if ((connector.ID as string).StartsWith("FailNext"))
@@ -774,6 +807,8 @@ namespace DesignDiagram.ViewModels
 		public RelayCommand<object> ItemAddingCommand { get; private set; }
 		public RelayCommand<object> ItemDeletedCommand { get; private set; }
 		public RelayCommand<object> ItemSelectedCommand { get; private set; }
+		public RelayCommand<object> ConnectorSourceChangedCommand { get; private set; }
+		public RelayCommand<object> ConnectorTargetChangedCommand { get; private set; }
 
 
 		public RelayCommand SaveDiagramCommand { get; private set; }

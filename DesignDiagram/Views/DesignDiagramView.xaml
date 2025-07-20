@@ -85,6 +85,8 @@
                               ItemSelectedCommand="{Binding ItemSelectedCommand}"
                               ItemDeletedCommand="{Binding ItemDeletedCommand}"
                               DragEnterCommand="{Binding DragEnterCommand}"
+                              ConnectorSourceChangedCommand="{Binding ConnectorSourceChangedCommand}"
+                              ConnectorTargetChangedCommand="{Binding ConnectorTargetChangedCommand}"
                               
                               
                               Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
