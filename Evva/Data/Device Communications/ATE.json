@@ -370,6 +370,11 @@
               "Name": "ATE_GET_5V_ENABLE",
               "Value": "33"
             },
+			{
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ATE_GET_GDOutputSense",
+              "Value": "34"
+            },
           ]
         },
         "Value": null,
