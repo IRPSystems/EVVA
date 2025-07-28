@@ -176,6 +176,16 @@
 			"$type": "Entities.Models.DropDownParamData, Entities",
             "Name": "ATE_SET_EN_5V_OFF",
             "Value": "26"
+          },
+		  {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_PhasesVH",
+            "Value": "27"
+          },
+		  {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_PhasesWH",
+            "Value": "28"
           },		  
           ]
         },
