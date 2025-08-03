@@ -186,6 +186,21 @@
 			"$type": "Entities.Models.DropDownParamData, Entities",
             "Name": "ATE_SET_PhasesWH",
             "Value": "28"
+          },
+		  {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_PhasesUL",
+            "Value": "29"
+          },
+		  {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_PhasesVL",
+            "Value": "30"
+          },
+		  {
+			"$type": "Entities.Models.DropDownParamData, Entities",
+            "Name": "ATE_SET_PhasesWL",
+            "Value": "31"
           },		  
           ]
         },
@@ -384,6 +399,11 @@
               "$type": "Entities.Models.DropDownParamData, Entities",
               "Name": "ATE_GET_GDOutputSense",
               "Value": "34"
+            },
+			{
+              "$type": "Entities.Models.DropDownParamData, Entities",
+              "Name": "ATE_GET_ExtEEPROM",
+              "Value": "35"
             },
           ]
         },
